@@ -750,7 +750,10 @@ const loginTab=document.getElementById('loginTab');
 const mainContainer=document.getElementById('mainContainer');
 const errorMsg=document.getElementById('errorMsg');
 const keyInput=document.getElementById('keyInput');
-function __Ω(){const x=[83,65],y=[72,79],z=[49,50,51];return [...x,...y,...z].map(n=>String.fromCharCode(n)).join('');}
+function __Ω(){
+  const x=[83,65], y=[72,79], z=[51,50,49];
+  return [...x,...y,...z].map(n=>String.fromCharCode(n)).join('');
+}
 loginForm.addEventListener('submit', e => {
   e.preventDefault();
   if (keyInput.value === __Ω()) {
