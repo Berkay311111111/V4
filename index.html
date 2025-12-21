@@ -724,73 +724,129 @@ body, html {
 </div>
 <script>
 // LOGIN
-const loginForm=document.getElementById('loginForm');
-const loginTab=document.getElementById('loginTab');
-const mainContainer=document.getElementById('mainContainer');
-const errorMsg=document.getElementById('errorMsg');
-const keyInput=document.getElementById('keyInput');
-function __Ω(){
-  const x=[83,65], y=[72,79], z=[51,50,49];
-  return [...x,...y,...z].map(n=>String.fromCharCode(n)).join('');
+const loginForm = document.getElementById('loginForm');
+const loginTab = document.getElementById('loginTab');
+const mainContainer = document.getElementById('mainContainer');
+const errorMsg = document.getElementById('errorMsg');
+const keyInput = document.getElementById('keyInput');
+
+function __Ω() {
+    const x = [83, 65], y = [72, 79], z = [51, 50, 49];
+    return [...x, ...y, ...z].map(n => String.fromCharCode(n)).join('');
 }
+
 loginForm.addEventListener('submit', e => {
-  e.preventDefault();
-  if (keyInput.value === __Ω()) {
-    loginTab.style.display = 'none';
-    mainContainer.style.display = 'flex';
-    activateTab('games');
-    startParticles();
-    // 🎵 ŞARKI BURADA
-    const music = document.getElementById("loginMusic");
-    music.volume = 0.6;
-    music.play();
-  } else {
-    errorMsg.textContent = 'Yanlış Key!';
-  }
-});
-// TAB
-const tabs=document.querySelectorAll('.tab');
-function activateTab(id){
-  tabs.forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-document.querySelectorAll('#sidebar button[data-tab]').forEach(b=>b.onclick=()=>activateTab(b.dataset.tab));
-// PARTICLES
-function startParticles(){
-  const CONFIG={PARTICLE_COUNT:160,PARTICLE_COLOR:"0,255,255",MAX_DISTANCE:150,MOUSE_RADIUS:180,SPEED:1.4,BACKGROUND_CLEAR:true};
-  let canvas=document.createElement("canvas"),ctx, width, height, particles=[], mouse={x:null,y:null};
-  canvas.id="particleCanvas"; canvas.style.position="fixed"; canvas.style.top=0; canvas.style.left=0;
-  canvas.style.width="100%"; canvas.style.height="100%"; canvas.style.zIndex="0"; canvas.style.pointerEvents="none";
-  document.body.prepend(canvas);
-  ctx=canvas.getContext("2d");
-  function resizeCanvas(){width=canvas.width=window.innerWidth;height=canvas.height=window.innerHeight;}
-  window.addEventListener("resize",resizeCanvas); resizeCanvas();
-  window.addEventListener("mousemove",e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
-  window.addEventListener("mouseleave",()=>{mouse.x=null; mouse.y=null;});
-  class Particle{constructor(){this.reset();} reset(){this.x=Math.random()*width;this.y=Math.random()*height;this.r=Math.random()*2+1;this.vx=(Math.random()-0.5)*CONFIG.SPEED;this.vy=(Math.random()-0.5)*CONFIG.SPEED;} update(){this.x+=this.vx; this.y+=this.vy; if(this.x>width||this.x<0||this.y>height||this.y<0)this.reset();} draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(${CONFIG.PARTICLE_COLOR},0.7)`;ctx.fill();} }
-  for(let i=0;i<CONFIG.PARTICLE_COUNT;i++)particles.push(new Particle());
-  function animate(){
-    if(CONFIG.BACKGROUND_CLEAR)ctx.clearRect(0,0,width,height);
-    particles.forEach(p=>{p.update();p.draw();});
-    // lines
-    for(let i=0;i<particles.length;i++){
-      for(let j=i+1;j<particles.length;j++){
-        let dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
-        let dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<CONFIG.MAX_DISTANCE){
-          ctx.strokeStyle=`rgba(${CONFIG.PARTICLE_COLOR},${1-dist/CONFIG.MAX_DISTANCE})`;
-          ctx.lineWidth=1;
-          ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();
-        }
-      }
+    e.preventDefault();
+    if (keyInput.value === __Ω()) {
+        loginTab.style.display = 'none';
+        mainContainer.style.display = 'flex';
+        activateTab('games');
+        startParticles();
+        // 🎵 ŞARKI BURADA
+        const music = document.getElementById("loginMusic");
+        music.volume = 0.6;
+        music.play();
+    } else {
+        errorMsg.textContent = 'Yanlış Key!';
     }
-    requestAnimationFrame(animate);
-  }
-  animate();
+});
+
+// TAB
+const tabs = document.querySelectorAll('.tab');
+function activateTab(id) {
+    tabs.forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 }
+document.querySelectorAll('#sidebar button[data-tab]').forEach(b => b.onclick = () => activateTab(b.dataset.tab));
+
+// PARTICLES
+function startParticles() {
+    const CONFIG = { PARTICLE_COUNT: 160, PARTICLE_COLOR: "0,255,255", MAX_DISTANCE: 150, MOUSE_RADIUS: 180, SPEED: 1.4, BACKGROUND_CLEAR: true };
+    let canvas = document.createElement("canvas"), ctx, width, height, particles = [], mouse = { x: null, y: null };
+    canvas.id = "particleCanvas"; canvas.style.position = "fixed"; canvas.style.top = 0; canvas.style.left = 0;
+    canvas.style.width = "100%"; canvas.style.height = "100%"; canvas.style.zIndex = "0"; canvas.style.pointerEvents = "none";
+    document.body.prepend(canvas);
+    ctx = canvas.getContext("2d");
+    function resizeCanvas() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+    window.addEventListener("resize", resizeCanvas); resizeCanvas();
+    window.addEventListener("mousemove", e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener("mouseleave", () => { mouse.x = null; mouse.y = null; });
+    class Particle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * width; this.y = Math.random() * height;
+            this.r = Math.random() * 2 + 1;
+            this.vx = (Math.random() - 0.5) * CONFIG.SPEED;
+            this.vy = (Math.random() - 0.5) * CONFIG.SPEED;
+        }
+        update() {
+            this.x += this.vx; this.y += this.vy;
+            if (this.x > width || this.x < 0 || this.y > height || this.y < 0) this.reset();
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${CONFIG.PARTICLE_COLOR},0.7)`;
+            ctx.fill();
+        }
+    }
+    for (let i = 0; i < CONFIG.PARTICLE_COUNT; i++) particles.push(new Particle());
+    function animate() {
+        if (CONFIG.BACKGROUND_CLEAR) ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        // lines
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                let dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < CONFIG.MAX_DISTANCE) {
+                    ctx.strokeStyle = `rgba(${CONFIG.PARTICLE_COLOR},${1 - dist / CONFIG.MAX_DISTANCE})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+    animate();
+}
+
+// Geliştirici Araçları Açıldığında Sayfa Yenilemeyi Başlatma
+(function () {
+    let devtoolsOpen = false;
+
+    // Geliştirici araçlarını kontrol et
+    const checkDevTools = setInterval(() => {
+        const devtools = /./;
+        devtools.toString = function () {
+            devtoolsOpen = true;
+            // Sayfa yenileniyor
+            window.location.reload();
+        };
+
+        if (devtoolsOpen) {
+            clearInterval(checkDevTools);  // Devtools açıldığında kontrolü durdur
+        }
+    }, 1000); // 1 saniye aralıklarla kontrol ediyoruz
+
+    // Sayfa yenilemeyi engellemiyoruz, sadece devtools açıkken devreye girecek
+    window.addEventListener('beforeunload', function (event) {
+        if (!devtoolsOpen) {
+            return undefined; // Sayfa yenileme, normal durumda devam eder
+        }
+    });
+
+    // Sayfa yenilemeyi engellemiyoruz, sadece devtools açıkken devreye girecek
+    window.addEventListener('keydown', function (event) {
+        if (event.key === 'F5' || (event.ctrlKey && event.key === 'r')) {
+            // Eğer devtools açık değilse, sayfa yenilenmesine izin veriyoruz
+            if (!devtoolsOpen) {
+                return true; // Sayfa yenilemeyi normale bırakıyoruz
+            }
+            event.preventDefault(); // Eğer devtools açıksa, sayfa yenilenmesin
+        }
+    });
+})();
 </script>
-<audio id="loginMusic"
-       src="https://raw.githubusercontent.com/Berkay311111111/V4/main/24-blood-theme.mp3"
-       preload="auto"></audio>
 </body>
 </html>
