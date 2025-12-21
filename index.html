@@ -709,20 +709,37 @@ body, html {
     </span>
     <a href="https://drive.google.com/file/d/1v1eEmdNQ5wtY2qz2SeDmbtGJ6Ct4NAC2/view?usp=drive_link" target="_blank">İndir</a>
   </div>
-  <!-- Sistem ve Dosya Araçları -->
-  <h3>Sistem ve Dosya Araçları</h3>
-  <div class="item">
-    <span>
-      <b>WinRAR x64</b><br>
-      64 Bit Windows sistemler için<br>
-      RAR ve ZIP dosyalarını açar ve arşivleme işlemleri yapar. Tüm Windows sistemleriyle uyumludur.
-    </span>
-    <a href="https://www.mediafire.com/file/6z050qr2p4ryxfu/winrar-x64-713.exe/file" target="_blank">İndir</a>
-  </div>
+ <!-- Sistem ve Dosya Araçları -->
+<h3>Sistem ve Dosya Araçları</h3>
+<div class="item">
+  <span>
+    <b>WinRAR x64</b><br>
+    64 Bit Windows sistemler için<br>
+    RAR ve ZIP dosyalarını açar ve arşivleme işlemleri yapar. Tüm Windows sistemleriyle uyumludur.
+  </span>
+  <a href="https://www.mediafire.com/file/6z050qr2p4ryxfu/winrar-x64-713.exe/file" target="_blank">İndir</a>
 </div>
-  </div>
+<div class="item">
+  <span>
+    <b>7-Zip x64</b><br>
+    Ücretsiz ve açık kaynaklı güçlü bir arşiv yöneticisi<br>
+    ZIP, RAR, 7z, ISO ve daha birçok formatı destekler. WinRAR'dan daha hızlı ve hafif.
+  </span>
+  <a href="https://www.7-zip.org/a/7z2408-x64.exe" target="_blank">İndir</a>
 </div>
-<script>
+<div class="item">
+  <span>
+    <b>Everything</b><br>
+    Bilgisayarınızdaki tüm dosyaları anında arayın<br>
+    Saniyenin altında milyonlarca dosyayı tarar, isimle arama için en iyisi.
+  </span>
+  <a href="https://www.voidtools.com/downloads/" target="_blank">İndir</a>
+</div>
+
+</div> <!-- .tab#tools kapanışı -->
+  </div> <!-- #main kapanışı -->
+</div> <!-- .container#mainContainer kapanışı -->
+
 <script>
 // LOGIN
 const loginForm=document.getElementById('loginForm');
@@ -789,12 +806,10 @@ function startParticles(){
   }
   animate();
 }
-
 // === GÜÇLÜ ANTI-F12 & ANTI-INSPECT KORUMASI ===
 (function() {
   let devtoolsOpen = false;
   const threshold = 160; // DevTools açıkken oluşan boyut farkı
-
   // 1. Kısayol tuşlarını engelle (F12, Ctrl+Shift+I/J/C, Ctrl+U)
   document.addEventListener('keydown', function(e) {
     if (
@@ -807,7 +822,6 @@ function startParticles(){
       location.reload();
     }
   });
-
   // 2. DevTools'un açıldığını boyut farkından tespit et
   setInterval(() => {
     if (
@@ -822,14 +836,12 @@ function startParticles(){
       devtoolsOpen = false;
     }
   }, 300);
-
   // 3. Console'da debugger veya sonsuz döngü engelleme
   setInterval(() => {
     (function() {
       return false;
     }).constructor('while(true){}')();
   }, 1000);
-
   // 4. DOM değişikliklerini izle (element inspect edilip değiştirilirse)
   const observer = new MutationObserver(() => {
     location.reload();
@@ -840,7 +852,6 @@ function startParticles(){
     subtree: true,
     characterData: true
   });
-
   // 5. Debugger zaman kontrolü (console'da durdurma engelleme)
   let startTime = new Date().getTime();
   setInterval(() => {
@@ -850,7 +861,6 @@ function startParticles(){
       location.reload();
     }
   }, 100);
-
 })();
 </script>
 
