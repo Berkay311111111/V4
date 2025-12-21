@@ -811,42 +811,70 @@ function startParticles() {
     animate();
 }
 
-// Geliştirici Araçları Açıldığında Sayfa Yenilemeyi Başlatma
-(function () {
-    let devtoolsOpen = false;
-
-    // Geliştirici araçlarını kontrol et
-    const checkDevTools = setInterval(() => {
-        const devtools = /./;
-        devtools.toString = function () {
-            devtoolsOpen = true;
-            // Sayfa yenileniyor
-            window.location.reload();
-        };
-
-        if (devtoolsOpen) {
-            clearInterval(checkDevTools);  // Devtools açıldığında kontrolü durdur
+    // Geliştirici Araçları Engelleme (F12, Ctrl+Shift+I, Ctrl+Shift+C)
+    document.addEventListener('keydown', function(event) {
+        // F12'yi engelle
+        if (event.keyCode === 123) {
+            event.preventDefault();
+            alert('Developer tools are disabled.');
         }
-    }, 1000); // 1 saniye aralıklarla kontrol ediyoruz
 
-    // Sayfa yenilemeyi engellemiyoruz, sadece devtools açıkken devreye girecek
-    window.addEventListener('beforeunload', function (event) {
-        if (!devtoolsOpen) {
-            return undefined; // Sayfa yenileme, normal durumda devam eder
+        // Ctrl + Shift + I ve Ctrl + Shift + C'yi engelle
+        if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C')) {
+            event.preventDefault();
+            alert('Developer tools are disabled.');
+        }
+
+        // F5 ve Ctrl + R'yi engelle
+        if ((event.key === 'F5') || (event.ctrlKey && event.key === 'r')) {
+            event.preventDefault();
+            alert('Page refresh is disabled.');
         }
     });
 
-    // Sayfa yenilemeyi engellemiyoruz, sadece devtools açıkken devreye girecek
-    window.addEventListener('keydown', function (event) {
-        if (event.key === 'F5' || (event.ctrlKey && event.key === 'r')) {
-            // Eğer devtools açık değilse, sayfa yenilenmesine izin veriyoruz
-            if (!devtoolsOpen) {
-                return true; // Sayfa yenilemeyi normale bırakıyoruz
+    // Sağ Tıklamayı Engelleme (Inspect Element)
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+        alert('Right-click is disabled.');
+    });
+
+    // Geliştirici Araçları Açıldığında Sayfa Yenilemeyi Başlatma
+    (function () {
+        let devtoolsOpen = false;
+
+        // Geliştirici araçlarını kontrol et
+        const checkDevTools = setInterval(() => {
+            const devtools = /./;
+            devtools.toString = function () {
+                devtoolsOpen = true;
+                // Sayfa yenileniyor
+                window.location.reload();
+            };
+
+            if (devtoolsOpen) {
+                clearInterval(checkDevTools);  // Devtools açıldığında kontrolü durdur
             }
-            event.preventDefault(); // Eğer devtools açıksa, sayfa yenilenmesin
-        }
-    });
-})();
+        }, 1000); // 1 saniye aralıklarla kontrol ediyoruz
+
+        // Sayfa yenilemeyi engellemiyoruz, sadece devtools açıkken devreye girecek
+        window.addEventListener('beforeunload', function (event) {
+            if (!devtoolsOpen) {
+                return undefined; // Sayfa yenileme, normal durumda devam eder
+            }
+        });
+
+        // Sayfa yenilemeyi engellemiyoruz, sadece devtools açıkken devreye girecek
+        window.addEventListener('keydown', function (event) {
+            if (event.key === 'F5' || (event.ctrlKey && event.key === 'r')) {
+                // Eğer devtools açık değilse, sayfa yenilenmesine izin veriyoruz
+                if (!devtoolsOpen) {
+                    return true; // Sayfa yenilemeyi normale bırakıyoruz
+                }
+                event.preventDefault(); // Eğer devtools açıksa, sayfa yenilenmesin
+            }
+        });
+    })();
 </script>
-</body>
+
+  </body>
 </html>
