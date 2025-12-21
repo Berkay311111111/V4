@@ -709,38 +709,19 @@ body, html {
     </span>
     <a href="https://drive.google.com/file/d/1v1eEmdNQ5wtY2qz2SeDmbtGJ6Ct4NAC2/view?usp=drive_link" target="_blank">İndir</a>
   </div>
- <!-- Sistem ve Dosya Araçları -->
-<h3>Sistem ve Dosya Araçları</h3>
-<div class="item">
-  <span>
-    <b>WinRAR x64</b><br>
-    64 Bit Windows sistemler için<br>
-    RAR ve ZIP dosyalarını açar ve arşivleme işlemleri yapar. Tüm Windows sistemleriyle uyumludur.
-  </span>
-  <a href="https://www.mediafire.com/file/6z050qr2p4ryxfu/winrar-x64-713.exe/file" target="_blank">İndir</a>
+  <!-- Sistem ve Dosya Araçları -->
+  <h3>Sistem ve Dosya Araçları</h3>
+  <div class="item">
+    <span>
+      <b>WinRAR x64</b><br>
+      64 Bit Windows sistemler için<br>
+      RAR ve ZIP dosyalarını açar ve arşivleme işlemleri yapar. Tüm Windows sistemleriyle uyumludur.
+    </span>
+    <a href="https://www.mediafire.com/file/6z050qr2p4ryxfu/winrar-x64-713.exe/file" target="_blank">İndir</a>
+  </div>
 </div>
-<div class="item">
-  <span>
-    <b>7-Zip x64</b><br>
-    Ücretsiz ve açık kaynaklı güçlü bir arşiv yöneticisi<br>
-    ZIP, RAR, 7z, ISO ve daha birçok formatı destekler. WinRAR'dan daha hızlı ve hafif.
-  </span>
-  <a href="https://www.7-zip.org/a/7z2408-x64.exe" target="_blank">İndir</a>
+  </div>
 </div>
-<div class="item">
-  <span>
-    <b>Everything</b><br>
-    Bilgisayarınızdaki tüm dosyaları anında arayın<br>
-    Saniyenin altında milyonlarca dosyayı tarar, isimle arama için en iyisi.
-  </span>
-  <a href="https://www.voidtools.com/downloads/" target="_blank">İndir</a>
-</div>
-
-</div> <!-- .tab#tools kapanışı -->
-  </div> <!-- #main kapanışı -->
-</div> <!-- .container#mainContainer kapanışı -->
-
-<script>
 <script>
 // LOGIN
 const loginForm=document.getElementById('loginForm');
@@ -759,6 +740,7 @@ loginForm.addEventListener('submit', e => {
     mainContainer.style.display = 'flex';
     activateTab('games');
     startParticles();
+    // 🎵 ŞARKI BURADA
     const music = document.getElementById("loginMusic");
     music.volume = 0.6;
     music.play();
@@ -790,6 +772,7 @@ function startParticles(){
   function animate(){
     if(CONFIG.BACKGROUND_CLEAR)ctx.clearRect(0,0,width,height);
     particles.forEach(p=>{p.update();p.draw();});
+    // lines
     for(let i=0;i<particles.length;i++){
       for(let j=i+1;j<particles.length;j++){
         let dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
@@ -805,63 +788,7 @@ function startParticles(){
   }
   animate();
 }
-
-// === YENİ VE SORUNSUZ ANTİ-INSPECT KORUMASI ===
-(function() {
-  let devtoolsOpen = false;
-  const threshold = 100; // DevTools açıkken pencere farkı
-
-  // 1. Kısayol tuşlarını engelle
-  document.addEventListener('keydown', function(e) {
-    if (
-      e.key === 'F12' ||
-      (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
-      (e.ctrlKey && (e.key === 'u' || e.key === 'U'))
-    ) {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      location.reload();
-    }
-  }, true);
-
-  // 2. DevTools açık mı kontrol et (boyut farkı)
-  setInterval(() => {
-    if (
-      (window.outerWidth - window.innerWidth > threshold) ||
-      (window.outerHeight - window.innerHeight > threshold)
-    ) {
-      if (!devtoolsOpen) {
-        devtoolsOpen = true;
-        location.reload();
-      }
-    } else {
-      devtoolsOpen = false;
-    }
-  }, 500);
-
-  // 3. DOM değişikliklerini izle (element değiştirme)
-  const observer = new MutationObserver((mutations) => {
-    // Sadece kullanıcı tarafından yapılan değişiklikleri yakala (otomatik olanları değil)
-    for (let mutation of mutations) {
-      if (mutation.type === 'attributes' || mutation.type === 'childList') {
-        // Login ekranı aktifken değişiklik yapma (particles vs. normal değişiklikler)
-        if (mainContainer.style.display === 'flex') {
-          location.reload();
-        }
-      }
-    }
-  });
-
-  observer.observe(document.body, {
-    attributes: true,
-    childList: true,
-    subtree: true,
-    characterData: false
-  });
-
-})();
 </script>
-
 <audio id="loginMusic"
        src="https://raw.githubusercontent.com/Berkay311111111/V4/main/24-blood-theme.mp3"
        preload="auto"></audio>
