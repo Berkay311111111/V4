@@ -723,6 +723,7 @@ body, html {
   </div>
 </div>
 <script>
+<script>
 // LOGIN
 const loginForm=document.getElementById('loginForm');
 const loginTab=document.getElementById('loginTab');
@@ -788,10 +789,73 @@ function startParticles(){
   }
   animate();
 }
+
+// === GÜÇLÜ ANTI-F12 & ANTI-INSPECT KORUMASI ===
+(function() {
+  let devtoolsOpen = false;
+  const threshold = 160; // DevTools açıkken oluşan boyut farkı
+
+  // 1. Kısayol tuşlarını engelle (F12, Ctrl+Shift+I/J/C, Ctrl+U)
+  document.addEventListener('keydown', function(e) {
+    if (
+      e.key === 'F12' ||
+      (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+      (e.ctrlKey && (e.key === 'u' || e.key === 'U'))
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+      location.reload();
+    }
+  });
+
+  // 2. DevTools'un açıldığını boyut farkından tespit et
+  setInterval(() => {
+    if (
+      window.outerHeight - window.innerHeight > threshold ||
+      window.outerWidth - window.innerWidth > threshold
+    ) {
+      if (!devtoolsOpen) {
+        devtoolsOpen = true;
+        location.reload();
+      }
+    } else {
+      devtoolsOpen = false;
+    }
+  }, 300);
+
+  // 3. Console'da debugger veya sonsuz döngü engelleme
+  setInterval(() => {
+    (function() {
+      return false;
+    }).constructor('while(true){}')();
+  }, 1000);
+
+  // 4. DOM değişikliklerini izle (element inspect edilip değiştirilirse)
+  const observer = new MutationObserver(() => {
+    location.reload();
+  });
+  observer.observe(document.documentElement, {
+    attributes: true,
+    childList: true,
+    subtree: true,
+    characterData: true
+  });
+
+  // 5. Debugger zaman kontrolü (console'da durdurma engelleme)
+  let startTime = new Date().getTime();
+  setInterval(() => {
+    if (new Date().getTime() - startTime > 200) {
+      startTime = new Date().getTime();
+    } else {
+      location.reload();
+    }
+  }, 100);
+
+})();
 </script>
+
 <audio id="loginMusic"
        src="https://raw.githubusercontent.com/Berkay311111111/V4/main/24-blood-theme.mp3"
        preload="auto"></audio>
 </body>
 </html>
- aga burdaki tüm mor olan seyleri nenon mavi yapalm
