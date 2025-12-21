@@ -741,6 +741,7 @@ body, html {
 </div> <!-- .container#mainContainer kapanışı -->
 
 <script>
+<script>
 // LOGIN
 const loginForm=document.getElementById('loginForm');
 const loginTab=document.getElementById('loginTab');
@@ -758,7 +759,6 @@ loginForm.addEventListener('submit', e => {
     mainContainer.style.display = 'flex';
     activateTab('games');
     startParticles();
-    // 🎵 ŞARKI BURADA
     const music = document.getElementById("loginMusic");
     music.volume = 0.6;
     music.play();
@@ -790,7 +790,6 @@ function startParticles(){
   function animate(){
     if(CONFIG.BACKGROUND_CLEAR)ctx.clearRect(0,0,width,height);
     particles.forEach(p=>{p.update();p.draw();});
-    // lines
     for(let i=0;i<particles.length;i++){
       for(let j=i+1;j<particles.length;j++){
         let dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
@@ -806,11 +805,13 @@ function startParticles(){
   }
   animate();
 }
-// === GÜÇLÜ ANTI-F12 & ANTI-INSPECT KORUMASI ===
+
+// === YENİ VE SORUNSUZ ANTİ-INSPECT KORUMASI ===
 (function() {
   let devtoolsOpen = false;
-  const threshold = 160; // DevTools açıkken oluşan boyut farkı
-  // 1. Kısayol tuşlarını engelle (F12, Ctrl+Shift+I/J/C, Ctrl+U)
+  const threshold = 100; // DevTools açıkken pencere farkı
+
+  // 1. Kısayol tuşlarını engelle
   document.addEventListener('keydown', function(e) {
     if (
       e.key === 'F12' ||
@@ -818,15 +819,16 @@ function startParticles(){
       (e.ctrlKey && (e.key === 'u' || e.key === 'U'))
     ) {
       e.preventDefault();
-      e.stopPropagation();
+      e.stopImmediatePropagation();
       location.reload();
     }
-  });
-  // 2. DevTools'un açıldığını boyut farkından tespit et
+  }, true);
+
+  // 2. DevTools açık mı kontrol et (boyut farkı)
   setInterval(() => {
     if (
-      window.outerHeight - window.innerHeight > threshold ||
-      window.outerWidth - window.innerWidth > threshold
+      (window.outerWidth - window.innerWidth > threshold) ||
+      (window.outerHeight - window.innerHeight > threshold)
     ) {
       if (!devtoolsOpen) {
         devtoolsOpen = true;
@@ -835,32 +837,28 @@ function startParticles(){
     } else {
       devtoolsOpen = false;
     }
-  }, 300);
-  // 3. Console'da debugger veya sonsuz döngü engelleme
-  setInterval(() => {
-    (function() {
-      return false;
-    }).constructor('while(true){}')();
-  }, 1000);
-  // 4. DOM değişikliklerini izle (element inspect edilip değiştirilirse)
-  const observer = new MutationObserver(() => {
-    location.reload();
+  }, 500);
+
+  // 3. DOM değişikliklerini izle (element değiştirme)
+  const observer = new MutationObserver((mutations) => {
+    // Sadece kullanıcı tarafından yapılan değişiklikleri yakala (otomatik olanları değil)
+    for (let mutation of mutations) {
+      if (mutation.type === 'attributes' || mutation.type === 'childList') {
+        // Login ekranı aktifken değişiklik yapma (particles vs. normal değişiklikler)
+        if (mainContainer.style.display === 'flex') {
+          location.reload();
+        }
+      }
+    }
   });
-  observer.observe(document.documentElement, {
+
+  observer.observe(document.body, {
     attributes: true,
     childList: true,
     subtree: true,
-    characterData: true
+    characterData: false
   });
-  // 5. Debugger zaman kontrolü (console'da durdurma engelleme)
-  let startTime = new Date().getTime();
-  setInterval(() => {
-    if (new Date().getTime() - startTime > 200) {
-      startTime = new Date().getTime();
-    } else {
-      location.reload();
-    }
-  }, 100);
+
 })();
 </script>
 
