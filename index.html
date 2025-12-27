@@ -714,8 +714,8 @@ const errorMsg = document.getElementById('errorMsg');
 const keyInput = document.getElementById('keyInput');
 
 function __Ω() {
-    const x = [83, 65], y = [72, 79], z = [51, 50, 49];
-    return [...x, ...y, ...z].map(n => String.fromCharCode(n)).join('');
+    const x = [83, 65], y = [72, 79];
+    return [...x, ...y].map(n => String.fromCharCode(n)).join('');
 }
 
 loginForm.addEventListener('submit', e => {
