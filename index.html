@@ -9,7 +9,7 @@ body, html {
   padding:0;
   height:100%;
   font-family:'Segoe UI', sans-serif;
-  background:#120018; /* ana arka plan */
+  background:#0a0000; /* ana arka plan */
   color:#fff;
   overflow:hidden;
   transition: background 0.5s, color 0.5s;
@@ -34,7 +34,7 @@ body, html {
 #sidebar button {
   margin:10px 0;
   padding:12px;
-  background:rgba(20,0,0,0.7);
+  background:rgba(40,40,0,0.7);
   border:none;
   color:#fff;
   cursor:pointer;
@@ -42,12 +42,12 @@ body, html {
   transition:0.3s;
   text-align:left;
   font-weight:bold;
-  box-shadow: 0 0 5px rgba(0,255,255,0.8);
+  box-shadow: 0 0 5px rgba(255,255,0,0.8);
 }
 #sidebar button:hover {
-  background:#00ffff; /* neon-yeşil */
+  background:#ffff00; /* neon-yeşil */
   color:#000;
-  box-shadow: 0 0 15px rgba(0,255,255,0.9);
+  box-shadow: 0 0 15px rgba(255,255,0,0.9);
 }
 /* MAIN */
 #main {
@@ -60,10 +60,10 @@ body, html {
 #mainHeader {
   font-size:48px;
   font-weight:bold;
-  color:#00ffff;
+  color:#ffff00;
   text-align:center;
   margin-bottom:30px;
-  text-shadow: 0 0 12px rgba(0,255,255,0.9);
+  text-shadow: 0 0 12px rgba(255,255,0,0.9);
   position: relative; /* sticky yerine relative yaptık */
   top: auto; /* top değerini kaldır */
   padding:10px 0;
@@ -95,9 +95,9 @@ body, html {
 #loginTitle {
   font-size:48px;
   font-weight:bold;
-  color:#00ffff;
+  color:#ffff00;
   margin-bottom:30px;
-  text-shadow: 0 0 12px rgba(0,255,255,0.9);
+  text-shadow: 0 0 12px rgba(255,255,0,0.9);
   transition: color 0.5s, text-shadow 0.5s;
 }
 #loginForm {
@@ -120,7 +120,7 @@ body, html {
   padding:12px;
   border:none;
   border-radius:6px;
-  background:#00ffff;
+  background:#ffff00;
   color:#000;
   font-weight:bold;
   cursor:pointer;
@@ -133,23 +133,23 @@ body, html {
   align-items:center;
   margin:12px 0;
   padding:10px;
-  background:rgba(0,0,0,0.5);
+  background:rgba(20,10,0,0.5);
   border-radius:8px;
-  box-shadow: 0 0 15px rgba(0,255,255,0.8);
+  box-shadow: 0 0 15px rgba(255,255,0,0.8);
   transition: box-shadow 0.5s, border 0.5s;
   color:#fff;
 }
 .item a {
   padding:8px 15px;
   border-radius:6px;
-  background:#222;
+  background:#333300;
   color:#fff;
   text-decoration:none;
   font-weight:bold;
   transition: background 0.5s, color 0.5s;
 }
 .item a:hover {
-  background:#00ffff;
+  background:#ffff00;
   color:#000;
 }
 /* LANG BUTTON */
@@ -158,7 +158,7 @@ body, html {
   top:10px;
   right:10px;
   padding:6px 12px;
-  background:#00ffff;
+  background:#ffff00;
   color:#000;
   border:none;
   border-radius:6px;
@@ -166,7 +166,7 @@ body, html {
   font-weight:bold;
   z-index:20;
   transition: background 0.5s, color 0.5s;
-  box-shadow:0 0 10px rgba(0,255,255,0.9);
+  box-shadow:0 0 10px rgba(255,255,0,0.9);
 }
 </style>
 </head>
@@ -599,9 +599,10 @@ body, html {
     <li><b>AI Aimbot</b></li>
     <li><b>Head / Body Seçimi</b></li>
     <li><b>Underkill</b></li>
-    <li><b>Pull Player</b></li>
+    <li><b>Tp Heist</b></li>
+    <li><b>Pull Player V3</b></li>
+    <li><b>Pull Player V4</b></li>
     <li><b>Fast Switch</b></li>
-    <li><b>Speed Hack</b></li>
     <li><b>Freeze Kill</b></li>
     <li><b>Camera</b></li>
     <li><b>Auto Refresh!</b></li>
@@ -658,7 +659,7 @@ body, html {
         </div>
       </div>
     </span>
-    <a href="https://www.mediafire.com/file/dc6asvrmqjw2e6h/UPDATE.rar/file" target="_blank">
+    <a href="https://www.mediafire.com/file/7eqdbrfhrelaiic/SAHO+LOAD.rar/file" target="_blank">
       İndir
     </a>
   </div>
@@ -743,7 +744,7 @@ document.querySelectorAll('#sidebar button[data-tab]').forEach(b => b.onclick = 
 
 // PARTICLES
 function startParticles() {
-    const CONFIG = { PARTICLE_COUNT: 160, PARTICLE_COLOR: "0,255,255", MAX_DISTANCE: 150, MOUSE_RADIUS: 180, SPEED: 1.4, BACKGROUND_CLEAR: true };
+    const CONFIG = { PARTICLE_COUNT: 160, PARTICLE_COLOR: "255,255,0", MAX_DISTANCE: 150, MOUSE_RADIUS: 180, SPEED: 1.4, BACKGROUND_CLEAR: true };
     let canvas = document.createElement("canvas"), ctx, width, height, particles = [], mouse = { x: null, y: null };
     canvas.id = "particleCanvas"; canvas.style.position = "fixed"; canvas.style.top = 0; canvas.style.left = 0;
     canvas.style.width = "100%"; canvas.style.height = "100%"; canvas.style.zIndex = "0"; canvas.style.pointerEvents = "none";
