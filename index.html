@@ -9,7 +9,7 @@ body, html {
   padding:0;
   height:100%;
   font-family:'Segoe UI', sans-serif;
-  background:#0f0005; /* ana arka plan */
+  background:#0a0000; /* ana arka plan */
   color:#fff;
   overflow:hidden;
   transition: background 0.5s, color 0.5s;
@@ -42,12 +42,12 @@ body, html {
   transition:0.3s;
   text-align:left;
   font-weight:bold;
-  box-shadow: 0 0 5px rgba(255,215,0,0.8);
+  box-shadow: 0 0 5px rgba(255,255,0,0.8);
 }
 #sidebar button:hover {
-  background:#ffd700; /* neon-yeşil */
+  background:#ffff00; /* neon-yeşil */
   color:#000;
-  box-shadow: 0 0 15px rgba(255,215,0,0.9);
+  box-shadow: 0 0 15px rgba(255,255,0,0.9);
 }
 /* MAIN */
 #main {
@@ -60,10 +60,10 @@ body, html {
 #mainHeader {
   font-size:48px;
   font-weight:bold;
-  color:#ffd700;
+  color:#ffff00;
   text-align:center;
   margin-bottom:30px;
-  text-shadow: 0 0 12px rgba(255,215,0,0.9);
+  text-shadow: 0 0 12px rgba(255,255,0,0.9);
   position: relative; /* sticky yerine relative yaptık */
   top: auto; /* top değerini kaldır */
   padding:10px 0;
@@ -95,9 +95,9 @@ body, html {
 #loginTitle {
   font-size:48px;
   font-weight:bold;
-  color:#ffd700;
+  color:#ffff00;
   margin-bottom:30px;
-  text-shadow: 0 0 12px rgba(255,215,0,0.9);
+  text-shadow: 0 0 12px rgba(255,255,0,0.9);
   transition: color 0.5s, text-shadow 0.5s;
 }
 #loginForm {
@@ -120,7 +120,7 @@ body, html {
   padding:12px;
   border:none;
   border-radius:6px;
-  background:#ffd700;
+  background:#ffff00;
   color:#000;
   font-weight:bold;
   cursor:pointer;
@@ -135,7 +135,7 @@ body, html {
   padding:10px;
   background:rgba(20,10,0,0.5);
   border-radius:8px;
-  box-shadow: 0 0 15px rgba(255,215,0,0.8);
+  box-shadow: 0 0 15px rgba(255,255,0,0.8);
   transition: box-shadow 0.5s, border 0.5s;
   color:#fff;
 }
@@ -149,7 +149,7 @@ body, html {
   transition: background 0.5s, color 0.5s;
 }
 .item a:hover {
-  background:#ffd700;
+  background:#ffff00;
   color:#000;
 }
 /* LANG BUTTON */
@@ -158,7 +158,7 @@ body, html {
   top:10px;
   right:10px;
   padding:6px 12px;
-  background:#ffd700;
+  background:#ffff00;
   color:#000;
   border:none;
   border-radius:6px;
@@ -166,14 +166,15 @@ body, html {
   font-weight:bold;
   z-index:20;
   transition: background 0.5s, color 0.5s;
-  box-shadow:0 0 10px rgba(255,215,0,0.9);
+  box-shadow:0 0 10px rgba(255,255,0,0.9);
 }
 </style>
 </head>
 <body>
 <!-- LOGIN -->
 <div id="loginTab" class="tab active">
-  <div id="loginTitle">SAHO AGAPATOR HAPPY NEW YEAR</div>
+  <div id="loginTitle">SAHO AGAPATOR V4</div>
+  <div class="newyear-text">HAPPY NEW YEAR 2026!</div>  <!-- YENİ EKLENEN SATIR -->
   <form id="loginForm">
     <input type="text" id="keyInput" placeholder="Giriş Key" required>
     <button type="submit">Giriş</button>
@@ -191,8 +192,9 @@ body, html {
     <button data-tab="tools">Tools</button>
     <button onclick="window.location.href='codeConverter.html'">Code Converter</button>
   </div>
-  <div id="main">
-    <div id="mainHeader">SAHO AGAPATOR HAPPY NEW YEAR</div>
+ <div id="main">
+  <div id="mainHeader">SAHO AGAPATOR V4</div>
+  <div class="newyear-text">HAPPY NEW YEAR 2026!</div>  <!-- YENİ EKLENEN SATIR -->
 <!-- OYUNLAR -->
 <div class="tab" id="games">
   <h2>🎮 Oyun İndirme Merkezi</h2>
@@ -819,18 +821,17 @@ body, html {
   </div>
 </div>
 <script>
+<script>
 // LOGIN
 const loginForm = document.getElementById('loginForm');
 const loginTab = document.getElementById('loginTab');
 const mainContainer = document.getElementById('mainContainer');
 const errorMsg = document.getElementById('errorMsg');
 const keyInput = document.getElementById('keyInput');
-
 function __Ω() {
     const x = [83, 65], y = [72, 79];
     return [...x, ...y].map(n => String.fromCharCode(n)).join('');
 }
-
 loginForm.addEventListener('submit', e => {
     e.preventDefault();
     if (keyInput.value === __Ω()) {
@@ -846,7 +847,6 @@ loginForm.addEventListener('submit', e => {
         errorMsg.textContent = 'Yanlış Key!';
     }
 });
-
 // TAB
 const tabs = document.querySelectorAll('.tab');
 function activateTab(id) {
@@ -854,7 +854,6 @@ function activateTab(id) {
     document.getElementById(id).classList.add('active');
 }
 document.querySelectorAll('#sidebar button[data-tab]').forEach(b => b.onclick = () => activateTab(b.dataset.tab));
-
 // PARTICLES
 function startParticles() {
     const CONFIG = { PARTICLE_COUNT: 160, PARTICLE_COLOR: "255,215,0", MAX_DISTANCE: 150, MOUSE_RADIUS: 180, SPEED: 1.4, BACKGROUND_CLEAR: true };
@@ -907,70 +906,39 @@ function startParticles() {
     animate();
 }
 
-    // Geliştirici Araçları Engelleme (F12, Ctrl+Shift+I, Ctrl+Shift+C)
-    document.addEventListener('keydown', function(event) {
-        // F12'yi engelle
-        if (event.keyCode === 123) {
-            event.preventDefault();
-            alert('SUCK MY DICK.');
-        }
-
-        // Ctrl + Shift + I ve Ctrl + Shift + C'yi engelle
-        if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C')) {
-            event.preventDefault();
-            alert('SUCK MY DICK.');
-        }
-
-        // F5 ve Ctrl + R'yi engelle
-        if ((event.key === 'F5') || (event.ctrlKey && event.key === 'r')) {
-            event.preventDefault();
-            alert('SUCK MY DICK.');
-        }
-    });
-
-    // Sağ Tıklamayı Engelleme (Inspect Element)
-    document.addEventListener('contextmenu', function(event) {
+// GELİŞTİRİCİ ARAÇLARI ENGELLEME (SIKIŞTIR GİTSİN)
+document.addEventListener('keydown', function(event) {
+    if (event.keyCode === 123) {
         event.preventDefault();
         alert('SUCK MY DICK.');
-    });
-
-    // Geliştirici Araçları Açıldığında Sayfa Yenilemeyi Başlatma
-    (function () {
-        let devtoolsOpen = false;
-
-        // Geliştirici araçlarını kontrol et
-        const checkDevTools = setInterval(() => {
-            const devtools = /./;
-            devtools.toString = function () {
-                devtoolsOpen = true;
-                // Sayfa yenileniyor
-                window.location.reload();
-            };
-
-            if (devtoolsOpen) {
-                clearInterval(checkDevTools);  // Devtools açıldığında kontrolü durdur
-            }
-        }, 1000); // 1 saniye aralıklarla kontrol ediyoruz
-
-        // Sayfa yenilemeyi engellemiyoruz, sadece devtools açıkken devreye girecek
-        window.addEventListener('beforeunload', function (event) {
-            if (!devtoolsOpen) {
-                return undefined; // Sayfa yenileme, normal durumda devam eder
-            }
-        });
-
-        // Sayfa yenilemeyi engellemiyoruz, sadece devtools açıkken devreye girecek
-        window.addEventListener('keydown', function (event) {
-            if (event.key === 'F5' || (event.ctrlKey && event.key === 'r')) {
-                // Eğer devtools açık değilse, sayfa yenilenmesine izin veriyoruz
-                if (!devtoolsOpen) {
-                    return true; // Sayfa yenilemeyi normale bırakıyoruz
-                }
-                event.preventDefault(); // Eğer devtools açıksa, sayfa yenilenmesin
-            }
-        });
-    })();
+    }
+    if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C')) {
+        event.preventDefault();
+        alert('SUCK MY DICK.');
+    }
+    if ((event.key === 'F5') || (event.ctrlKey && event.key === 'r')) {
+        event.preventDefault();
+        alert('SUCK MY DICK.');
+    }
+});
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+    alert('SUCK MY DICK.');
+});
+(function () {
+    let devtoolsOpen = false;
+    const checkDevTools = setInterval(() => {
+        const devtools = /./;
+        devtools.toString = function () {
+            devtoolsOpen = true;
+            window.location.reload();
+        };
+        if (devtoolsOpen) {
+            clearInterval(checkDevTools);
+        }
+    }, 1000);
+})();
 </script>
 <audio id="loginMusic" src="https://raw.githubusercontent.com/Berkay311111111/V4/main/tak-tak-super-slowed--reverb.mp3" preload="auto"></audio>
-  </body>
+</body>
 </html>
