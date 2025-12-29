@@ -828,10 +828,13 @@ const loginTab = document.getElementById('loginTab');
 const mainContainer = document.getElementById('mainContainer');
 const errorMsg = document.getElementById('errorMsg');
 const keyInput = document.getElementById('keyInput');
+
 function __Ω() {
-    const x = [83, 65], y = [72, 79];
+    const x = [50, 48], y = [50, 54];
     return [...x, ...y].map(n => String.fromCharCode(n)).join('');
 }
+
+
 loginForm.addEventListener('submit', e => {
     e.preventDefault();
     if (keyInput.value === __Ω()) {
@@ -847,6 +850,7 @@ loginForm.addEventListener('submit', e => {
         errorMsg.textContent = 'Yanlış Key!';
     }
 });
+
 // TAB
 const tabs = document.querySelectorAll('.tab');
 function activateTab(id) {
@@ -854,9 +858,10 @@ function activateTab(id) {
     document.getElementById(id).classList.add('active');
 }
 document.querySelectorAll('#sidebar button[data-tab]').forEach(b => b.onclick = () => activateTab(b.dataset.tab));
+
 // PARTICLES
 function startParticles() {
-    const CONFIG = { PARTICLE_COUNT: 160, PARTICLE_COLOR: "255,215,0", MAX_DISTANCE: 150, MOUSE_RADIUS: 180, SPEED: 1.4, BACKGROUND_CLEAR: true };
+    const CONFIG = { PARTICLE_COUNT: 160, PARTICLE_COLOR: "255,255,0", MAX_DISTANCE: 150, MOUSE_RADIUS: 180, SPEED: 1.4, BACKGROUND_CLEAR: true };
     let canvas = document.createElement("canvas"), ctx, width, height, particles = [], mouse = { x: null, y: null };
     canvas.id = "particleCanvas"; canvas.style.position = "fixed"; canvas.style.top = 0; canvas.style.left = 0;
     canvas.style.width = "100%"; canvas.style.height = "100%"; canvas.style.zIndex = "0"; canvas.style.pointerEvents = "none";
@@ -906,39 +911,70 @@ function startParticles() {
     animate();
 }
 
-// GELİŞTİRİCİ ARAÇLARI ENGELLEME (SIKIŞTIR GİTSİN)
-document.addEventListener('keydown', function(event) {
-    if (event.keyCode === 123) {
-        event.preventDefault();
-        alert('SUCK MY DICK.');
-    }
-    if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C')) {
-        event.preventDefault();
-        alert('SUCK MY DICK.');
-    }
-    if ((event.key === 'F5') || (event.ctrlKey && event.key === 'r')) {
-        event.preventDefault();
-        alert('SUCK MY DICK.');
-    }
-});
-document.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
-    alert('SUCK MY DICK.');
-});
-(function () {
-    let devtoolsOpen = false;
-    const checkDevTools = setInterval(() => {
-        const devtools = /./;
-        devtools.toString = function () {
-            devtoolsOpen = true;
-            window.location.reload();
-        };
-        if (devtoolsOpen) {
-            clearInterval(checkDevTools);
+    // Geliştirici Araçları Engelleme (F12, Ctrl+Shift+I, Ctrl+Shift+C)
+    document.addEventListener('keydown', function(event) {
+        // F12'yi engelle
+        if (event.keyCode === 123) {
+            event.preventDefault();
+            alert('SUCK MY DICK.');
         }
-    }, 1000);
-})();
+
+        // Ctrl + Shift + I ve Ctrl + Shift + C'yi engelle
+        if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C')) {
+            event.preventDefault();
+            alert('SUCK MY DICK.');
+        }
+
+        // F5 ve Ctrl + R'yi engelle
+        if ((event.key === 'F5') || (event.ctrlKey && event.key === 'r')) {
+            event.preventDefault();
+            alert('SUCK MY DICK.');
+        }
+    });
+
+    // Sağ Tıklamayı Engelleme (Inspect Element)
+    document.addEventListener('contextmenu', function(event) {
+        event.preventDefault();
+        alert('SUCK MY DICK.');
+    });
+
+    // Geliştirici Araçları Açıldığında Sayfa Yenilemeyi Başlatma
+    (function () {
+        let devtoolsOpen = false;
+
+        // Geliştirici araçlarını kontrol et
+        const checkDevTools = setInterval(() => {
+            const devtools = /./;
+            devtools.toString = function () {
+                devtoolsOpen = true;
+                // Sayfa yenileniyor
+                window.location.reload();
+            };
+
+            if (devtoolsOpen) {
+                clearInterval(checkDevTools);  // Devtools açıldığında kontrolü durdur
+            }
+        }, 1000); // 1 saniye aralıklarla kontrol ediyoruz
+
+        // Sayfa yenilemeyi engellemiyoruz, sadece devtools açıkken devreye girecek
+        window.addEventListener('beforeunload', function (event) {
+            if (!devtoolsOpen) {
+                return undefined; // Sayfa yenileme, normal durumda devam eder
+            }
+        });
+
+        // Sayfa yenilemeyi engellemiyoruz, sadece devtools açıkken devreye girecek
+        window.addEventListener('keydown', function (event) {
+            if (event.key === 'F5' || (event.ctrlKey && event.key === 'r')) {
+                // Eğer devtools açık değilse, sayfa yenilenmesine izin veriyoruz
+                if (!devtoolsOpen) {
+                    return true; // Sayfa yenilemeyi normale bırakıyoruz
+                }
+                event.preventDefault(); // Eğer devtools açıksa, sayfa yenilenmesin
+            }
+        });
+    })();
 </script>
 <audio id="loginMusic" src="https://raw.githubusercontent.com/Berkay311111111/V4/main/tak-tak-super-slowed--reverb.mp3" preload="auto"></audio>
-</body>
+  </body>
 </html>
