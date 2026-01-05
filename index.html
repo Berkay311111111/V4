@@ -646,7 +646,7 @@ body, html {
     </div>
   </div>
 </div>
- <!-- FREE FIRE -->
+<!-- FREE FIRE -->
 <div class="tab" id="freefire">
   <h2>Premium Panel + Free Fire</h2>
   <p style="font-size:14px; opacity:0.8;">
@@ -789,7 +789,8 @@ body, html {
             <li>Externaller ile sorunsuz uyumluluk</li>
           </ul>
         </div>
-        <!-- AIMBOT & SCOPE (örnek olarak aynı özellikler eklendi) -->
+
+        <!-- AIMBOT & SCOPE -->
         <div class="feature-group">
           <b>🎯 AIMBOT & SCOPE SYSTEM</b>
           <ul>
@@ -805,7 +806,73 @@ body, html {
             <li>Glitch Fire</li>
           </ul>
         </div>
-        <!-- Diğer özellik grupları aynı şekilde eklenebilir -->
+
+        <!-- SNIPER & WEAPON MODS -->
+        <div class="feature-group">
+          <b>🔫 SNIPER & WEAPON MODS</b>
+          <ul>
+            <li>Unlimited Ammo</li>
+            <li>Fast Reload</li>
+          </ul>
+        </div>
+
+        <!-- ESP & VISUALS -->
+        <div class="feature-group">
+          <b>👁 ESP & VISUALS</b>
+          <ul>
+            <li>ESP Menu – Tüm ESP ayarlarını tek panelden kontrol etme</li>
+            <li>Player ESP – Rakiplerin konumunu duvar arkasından görme</li>
+            <li>Distance ESP – Oyuncuya olan mesafeyi metre cinsinden gösterir</li>
+            <li>Health ESP – Rakiplerin can durumunu anlık görüntüler</li>
+            <li>Wallhack</li>
+            <li>CHams Menu</li>
+            <li>Camera Left</li>
+            <li>Black Sky</li>
+          </ul>
+        </div>
+
+        <!-- PLAYER CONTROL -->
+        <div class="feature-group">
+          <b>🧲 PLAYER CONTROL</b>
+          <ul>
+            <li>Pull Player Menu V3</li>
+            <li>Pull Player Menu V4</li>
+            <li>Freeze Player</li>
+            <li>Fakelag</li>
+          </ul>
+        </div>
+
+        <!-- MOVEMENT & TELEPORT -->
+        <div class="feature-group">
+          <b>⚡ MOVEMENT & TELEPORT</b>
+          <ul>
+            <li>Teleport</li>
+            <li>TP Heist</li>
+            <li>Spawn Kill</li>
+            <li>Fast Landing</li>
+            <li>Speed Hack (10x / 20x / 40x / 50x / 60x)</li>
+          </ul>
+        </div>
+
+        <!-- MISC & PERFORMANCE -->
+        <div class="feature-group">
+          <b>⚙️ MISC & PERFORMANCE</b>
+          <ul>
+            <li>Performance Stabilizer – FPS düşüşlerini azaltır</li>
+            <li>Auto Refresh</li>
+            <li>Reset Guest</li>
+          </ul>
+        </div>
+
+        <!-- SYSTEM & SECURITY -->
+        <div class="feature-group">
+          <b>🔒 SYSTEM & SECURITY</b>
+          <ul>
+            <li>Safe Panel – Limitli kullanım ile risk kontrolü</li>
+            <li>Internal Çalışma – Oyuna direkt entegre yapı</li>
+            <li>UI Tanımlı Sistem – Dış müdahale olmadan stabil arayüz</li>
+          </ul>
+        </div>
       </div>
     </span>
     <a href="https://www.mediafire.com/file/ta9nfkc8pjzfs9n/Saho+Blackengine.rar/file" target="_blank">
@@ -813,6 +880,7 @@ body, html {
     </a>
   </div>
 
+  <!-- Tools Tab -->
   <div class="tab" id="tools">
     <h2>🛠️ Tools</h2>
     <!-- Cheat Araçları -->
@@ -841,6 +909,7 @@ body, html {
       </span>
       <a href="https://drive.google.com/file/d/1v1eEmdNQ5wtY2qz2SeDmbtGJ6Ct4NAC2/view?usp=drive_link" target="_blank">İndir</a>
     </div>
+
     <!-- Sistem ve Dosya Araçları -->
     <h3>Sistem ve Dosya Araçları</h3>
     <div class="item">
@@ -853,6 +922,9 @@ body, html {
     </div>
   </div>
 </div>
+
+<!-- JavaScript Kısmı (Login, Tab, Particles, Güvenlik) -->
+<script>
 // LOGIN
 const loginForm = document.getElementById('loginForm');
 const loginTab = document.getElementById('loginTab');
@@ -874,8 +946,10 @@ loginForm.addEventListener('submit', e => {
         startParticles();
         // 🎵 ŞARKI BURADA
         const music = document.getElementById("loginMusic");
-        music.volume = 0.6;
-        music.play();
+        if (music) {
+            music.volume = 0.6;
+            music.play();
+        }
     } else {
         errorMsg.textContent = 'Yanlış Key!';
     }
@@ -941,70 +1015,42 @@ function startParticles() {
     animate();
 }
 
-    // Geliştirici Araçları Engelleme (F12, Ctrl+Shift+I, Ctrl+Shift+C)
-    document.addEventListener('keydown', function(event) {
-        // F12'yi engelle
-        if (event.keyCode === 123) {
-            event.preventDefault();
-            alert('SUCK MY DICK.');
-        }
-
-        // Ctrl + Shift + I ve Ctrl + Shift + C'yi engelle
-        if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C')) {
-            event.preventDefault();
-            alert('SUCK MY DICK.');
-        }
-
-        // F5 ve Ctrl + R'yi engelle
-        if ((event.key === 'F5') || (event.ctrlKey && event.key === 'r')) {
-            event.preventDefault();
-            alert('SUCK MY DICK.');
-        }
-    });
-
-    // Sağ Tıklamayı Engelleme (Inspect Element)
-    document.addEventListener('contextmenu', function(event) {
+// Geliştirici Araçları Engelleme
+document.addEventListener('keydown', function(event) {
+    if (event.keyCode === 123) {
         event.preventDefault();
         alert('SUCK MY DICK.');
-    });
+    }
+    if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'C')) {
+        event.preventDefault();
+        alert('SUCK MY DICK.');
+    }
+    if ((event.key === 'F5') || (event.ctrlKey && event.key === 'r')) {
+        event.preventDefault();
+        alert('SUCK MY DICK.');
+    }
+});
 
-    // Geliştirici Araçları Açıldığında Sayfa Yenilemeyi Başlatma
-    (function () {
-        let devtoolsOpen = false;
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+    alert('SUCK MY DICK.');
+});
 
-        // Geliştirici araçlarını kontrol et
-        const checkDevTools = setInterval(() => {
-            const devtools = /./;
-            devtools.toString = function () {
-                devtoolsOpen = true;
-                // Sayfa yenileniyor
-                window.location.reload();
-            };
-
-            if (devtoolsOpen) {
-                clearInterval(checkDevTools);  // Devtools açıldığında kontrolü durdur
-            }
-        }, 1000); // 1 saniye aralıklarla kontrol ediyoruz
-
-        // Sayfa yenilemeyi engellemiyoruz, sadece devtools açıkken devreye girecek
-        window.addEventListener('beforeunload', function (event) {
-            if (!devtoolsOpen) {
-                return undefined; // Sayfa yenileme, normal durumda devam eder
-            }
-        });
-
-        // Sayfa yenilemeyi engellemiyoruz, sadece devtools açıkken devreye girecek
-        window.addEventListener('keydown', function (event) {
-            if (event.key === 'F5' || (event.ctrlKey && event.key === 'r')) {
-                // Eğer devtools açık değilse, sayfa yenilenmesine izin veriyoruz
-                if (!devtoolsOpen) {
-                    return true; // Sayfa yenilemeyi normale bırakıyoruz
-                }
-                event.preventDefault(); // Eğer devtools açıksa, sayfa yenilenmesin
-            }
-        });
-    })();
+(function () {
+    let devtoolsOpen = false;
+    const checkDevTools = setInterval(() => {
+        const devtools = /./;
+        devtools.toString = function () {
+            devtoolsOpen = true;
+            window.location.reload();
+        };
+        if (devtoolsOpen) {
+            clearInterval(checkDevTools);
+        }
+    }, 1000);
+})();
 </script>
+
 <audio id="loginMusic" src="https://raw.githubusercontent.com/Berkay311111111/V4/main/tak-tak-super-slowed--reverb.mp3" preload="auto"></audio>
-  </body>
+</body>
 </html>
