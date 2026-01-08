@@ -2,142 +2,100 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>License Kontrol</title>
+<title>License Login</title>
 
 <style>
 body {
-    background: #0f172a;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    background:#0f172a;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial;
 }
-
 .box {
-    background: #020617;
-    padding: 30px;
-    border-radius: 10px;
-    width: 350px;
-    text-align: center;
+    background:#020617;
+    padding:30px;
+    border-radius:10px;
+    width:300px;
+    text-align:center;
 }
-
-input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: none;
+input,button {
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:5px;
+    border:none;
 }
-
 button {
-    width: 100%;
-    padding: 10px;
-    background: #22c55e;
-    border: none;
-    color: black;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
+    background:#22c55e;
+    font-weight:bold;
+    cursor:pointer;
 }
-
-button:hover {
-    background: #16a34a;
-}
-
-#status {
-    margin-top: 15px;
-    min-height: 20px;
-}
-
-.loading {
-    color: #38bdf8;
-}
-
-.error {
-    color: #f87171;
-}
-
-.success {
-    color: #4ade80;
-}
+#status { margin-top:10px; }
+.error { color:#f87171 }
+.success { color:#4ade80 }
 </style>
 </head>
 
 <body>
 <div class="box">
     <h2>License Login</h2>
-
-    <input id="username" placeholder="Kullanıcı Adı">
-    <input id="password" type="password" placeholder="Şifre">
+    <input id="key" placeholder="License Key">
     <button onclick="login()">Giriş Yap</button>
-
     <div id="status"></div>
 </div>
 
 <script>
-// Buraya senin ngrok linkini yaz
 const API_URL = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
 
+// fingerprint (hwid)
+function getHWID() {
+    return btoa(
+        navigator.userAgent +
+        screen.width + screen.height +
+        navigator.language +
+        Intl.DateTimeFormat().resolvedOptions().timeZone
+    );
+}
+
 async function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    const key = document.getElementById("key").value;
     const status = document.getElementById("status");
 
-    status.className = "loading";
-    status.innerText = "Kontrol ediliyor...";
-
-    if (!username || !password) {
-        status.className = "error";
-        status.innerText = "Kullanıcı adı ve şifre boş olamaz";
+    if (!key) {
+        status.className="error";
+        status.innerText="Key boş";
         return;
     }
 
+    status.innerText="Kontrol ediliyor...";
+
     try {
-        const res = await fetch(`${API_URL}/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                key: username,
-                password: password,
-                hwid: navigator.userAgent
+        const res = await fetch(API_URL + "/login", {
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({
+                key:key,
+                hwid:getHWID()
             })
         });
 
         const data = await res.json();
 
         if (!data.ok) {
-            status.className = "error";
-            switch (data.code) {
-                case "Invalid License":
-                    status.innerText = "❌ Key veya şifre geçersiz";
-                    break;
-                case "License Expired":
-                    status.innerText = "⌛ License süresi dolmuş";
-                    break;
-                case "HWID Mismatch":
-                    status.innerText = "🖥️ HWID uyuşmuyor";
-                    break;
-                case "SERVER_DOWN":
-                    status.innerText = "🌐 Sunucuya bağlanılamıyor";
-                    break;
-                default:
-                    status.innerText = "❌ Hata: " + data.message;
-            }
+            status.className="error";
+            status.innerText=data.message;
             return;
         }
 
-        status.className = "success";
-        status.innerHTML = `
-            ✔ Giriş başarılı <br>
-            Kullanıcı: ${data.username} <br>
-            Bitiş: ${data.expiry}
-        `;
+        status.className="success";
+        status.innerText=data.message;
 
-    } catch (e) {
-        status.className = "error";
-        status.innerText = "⚠ Sunucu kapalı / erişilemiyor";
+    } catch {
+        status.className="error";
+        status.innerText="Sunucuya bağlanılamıyor";
     }
 }
 </script>
