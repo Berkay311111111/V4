@@ -184,7 +184,7 @@
         <h1>🔐 SAHO TITAN ENGINE</h1>
         <input id="keyInput" placeholder="License Key">
         <button onclick="login()">Giriş Yap</button>
-        <div id="loginStatus" class="infoBox"></div>
+        <div id="loginStatus" class="infoBox hidden"></div>
     </div>
 
     <!-- DASHBOARD -->
@@ -265,7 +265,6 @@
     </div>
 
     <script>
-        // Güncellenmiş server linki
         const API = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
         let starNow = 0, starToday = 0, serverData = {};
 
@@ -283,22 +282,25 @@
         async function login() {
             const key = document.getElementById("keyInput").value.trim();
             const status = document.getElementById("loginStatus");
+            status.classList.add("hidden");
+            status.innerText = "";
+
             if (!key) {
-                status.innerText = "❌ Key boş";
+                status.innerText = "❌ Key boş olamaz!";
+                status.classList.remove("hidden");
                 return;
             }
 
+            // Loading ve dashboard göster
             document.getElementById("loginCard").classList.add("hidden");
             const dash = document.getElementById("dashboard");
             dash.classList.remove("hidden");
-
             const loading = document.getElementById("loading");
-            const content = document.getElementById("dashboardContent");
             loading.classList.remove("hidden");
 
+            // 7 saniye bekle
             await new Promise(r => setTimeout(r, 7000));
             loading.classList.add("hidden");
-            content.classList.remove("hidden");
 
             try {
                 const r = await fetch(API + "/login", {
@@ -306,26 +308,44 @@
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ key, hwid: hwid() })
                 });
+
+                if (!r.ok) {
+                    throw new Error("Sunucu hatası");
+                }
+
                 const d = await r.json();
+
                 if (!d.ok) {
-                    status.innerText = "❌ " + d.message;
+                    // Geçersiz key - login ekranına geri dön
+                    dash.classList.add("hidden");
+                    document.getElementById("loginCard").classList.remove("hidden");
+                    status.innerText = "❌ " + (d.message || "Geçersiz License Key!");
+                    status.classList.remove("hidden");
                     return;
                 }
+
+                // Başarılı - dashboard içeriğini göster
                 serverData = d;
+                document.getElementById("dashboardContent").classList.remove("hidden");
 
                 document.getElementById("info").innerText = d.info || "Hoş geldin!";
-                document.getElementById("playerId").innerText = "Oyuncu ID: " + (d.playerId || "1961018265");
-                document.getElementById("username").innerText = "Kullanıcı: " + (d.username || "Umut");
-                document.getElementById("level").innerText = "Level: " + (d.level || "71");
-                document.getElementById("region").innerText = "Region: " + (d.region || "Europa");
-                document.getElementById("ban").innerText = "Ban durumu: " + (d.banStatus || "Herhangi bir ban yok");
-                document.getElementById("createDate").innerText = "Kurulum tarihi: " + (d.createDate || "26/04/2020, 08:05:38");
+                document.getElementById("playerId").innerText = "Oyuncu ID: " + (d.playerId || "Bilinmiyor");
+                document.getElementById("username").innerText = "Kullanıcı: " + (d.username || "Bilinmiyor");
+                document.getElementById("level").innerText = "Level: " + (d.level || "Bilinmiyor");
+                document.getElementById("region").innerText = "Region: " + (d.region || "Bilinmiyor");
+                document.getElementById("ban").innerText = "Ban durumu: " + (d.banStatus || "Yok");
+                document.getElementById("createDate").innerText = "Kurulum tarihi: " + (d.createDate || "Bilinmiyor");
                 document.getElementById("language").innerText = "Language: " + (d.language || "Türkçe");
 
                 const ip = await getIP();
                 document.getElementById("extraInfo").innerText = `IP: ${ip}\nTarayıcı: ${navigator.userAgent}\nSaat: ${new Date().toLocaleTimeString()}`;
+
             } catch (err) {
-                status.innerText = "❌ API hatası";
+                // Hata durumunda login ekranına dön
+                dash.classList.add("hidden");
+                document.getElementById("loginCard").classList.remove("hidden");
+                status.innerText = "❌ Sunucu bağlantı hatası veya geçersiz key!";
+                status.classList.remove("hidden");
                 console.error(err);
             }
         }
