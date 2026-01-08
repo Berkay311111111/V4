@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ödeme Kontrolü</title>
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/0/09/Instagram_logo_2022.svg" type="image/svg+xml">
+    <style>
+        /* Genel stil ayarları */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            flex-direction: column;
+        }
+
+        /* Mesaj ve daire animasyonu */
+        .message {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            display: none;
+        }
+
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1.5s linear infinite;
+            margin-top: 20px;
+        }
+
+        /* Dönme animasyonu */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Bağlantılar ve ikonlar */
+        .links {
+            margin-top: 30px;
+        }
+
+        .links a {
+            margin: 10px;
+            text-decoration: none;
+        }
+
+        .links img {
+            width: 40px;
+            height: 40px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="spinner" class="spinner"></div>
+    <div id="paymentStatus" class="message">Ödeme Kontrol Ediliyor...</div>
+    <div id="errorMessage" class="message">Maalesef Ödeme Bulunamadı. Developer ile İletişime Geçin.</div>
+
+    <div class="links">
+        <a href="https://www.instagram.com/ff.saho/" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram">
+        </a>
+        <a href="https://discord.gg/JCdZtmSf" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Discord_logo_2021.svg/1200px-Discord_logo_2021.svg.png" alt="Discord">
+        </a>
+    </div>
+
+    <script>
+        window.onload = () => {
+            // Sayfa yüklendiğinde ilk olarak mesaj ve daireyi göster
+            setTimeout(() => {
+                // 7 saniye sonra ödeme kontrol mesajını göster
+                document.getElementById("paymentStatus").style.display = "block";
+                document.getElementById("spinner").style.display = "block";
+            }, 1000);
+
+            setTimeout(() => {
+                // 7 saniye sonra "Maalesef ödeme bulunamadı" mesajını göster
+                document.getElementById("spinner").style.display = "none";
+                document.getElementById("paymentStatus").style.display = "none";
+                document.getElementById("errorMessage").style.display = "block";
+            }, 7000);
+        }
+    </script>
+
+</body>
+</html>
 
