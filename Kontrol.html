@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Saho Titan Engine</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
@@ -17,108 +16,55 @@
   --ok:#22c55e;
   --warn:#f59e0b;
 }
-
 *{box-sizing:border-box;font-family:Inter,sans-serif}
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--txt);
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  margin:0;background:var(--bg);color:var(--txt);
+  min-height:100vh;display:flex;justify-content:center;align-items:center;
 }
-
 .hidden{display:none}
-
 .card{
   background:linear-gradient(135deg,#1f1f2e,#2c2c3a);
-  border-radius:18px;
-  padding:20px;
-  box-shadow:0 0 20px rgba(0,255,255,.25);
+  border-radius:18px;padding:20px;
+  box-shadow:0 0 25px rgba(0,255,255,.25);
 }
-
 h1,h2,h3{text-align:center;color:var(--primary);margin-top:0}
-
-/* LOGIN */
-#loginCard{
-  width:360px;
-  text-align:center;
-}
-
-/* INPUT & BUTTON */
 input,button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  margin-top:10px;
-  background:#111827;
-  color:var(--txt);
-  font-size:15px;
+  width:100%;padding:12px;border:none;border-radius:12px;
+  margin-top:10px;background:#111827;color:var(--txt);font-size:15px;
 }
+button{background:linear-gradient(135deg,var(--primary),var(--secondary));font-weight:800;cursor:pointer}
+#loginCard{width:360px;text-align:center}
 
-button{
-  background:linear-gradient(135deg,var(--primary),var(--secondary));
-  font-weight:800;
-  cursor:pointer;
-}
-
-/* LOADING */
+/* loading */
 .spinner{
-  width:70px;
-  height:70px;
-  border:7px solid rgba(255,255,255,.2);
-  border-top:7px solid var(--primary);
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-  margin:20px auto;
+  width:70px;height:70px;border:7px solid rgba(255,255,255,.2);
+  border-top:7px solid var(--primary);border-radius:50%;
+  animation:spin 1s linear infinite;margin:20px auto;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* DASHBOARD */
-#dashboard{
-  width:95%;
-  max-width:1200px;
-}
-
+/* dashboard */
+#dashboard{width:95%;max-width:1200px}
 .announce{
-  text-align:center;
-  font-weight:800;
-  padding:10px;
-  border-radius:12px;
-  background:rgba(0,255,255,0.12);
-  margin-bottom:15px;
+  text-align:center;font-weight:800;padding:10px;border-radius:12px;
+  background:rgba(0,255,255,0.15);margin-bottom:15px;
 }
-
-.panels{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
+.panels{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
 .panelBox{
   background:rgba(0,255,255,0.05);
-  border-radius:14px;
-  padding:15px;
+  border-radius:14px;padding:15px;
 }
 
-/* CHECKBOX */
-.checkbox label{
-  display:flex;
-  align-items:center;
-  margin-bottom:6px;
-  gap:6px;
+/* checkbox */
+.cb label{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 10px;margin-bottom:6px;
+  border-radius:10px;background:rgba(0,255,255,0.08);
+  cursor:pointer;
 }
 
-/* FOOTER */
-.footer{
-  margin-top:15px;
-  font-size:13px;
-  opacity:.85;
-  text-align:center;
-  white-space:pre-line;
-}
+/* footer */
+.footer{margin-top:15px;font-size:13px;opacity:.85;text-align:center;white-space:pre-line}
 </style>
 </head>
 <body>
@@ -140,14 +86,11 @@ button{
 
 <!-- DASHBOARD -->
 <div class="card hidden" id="dashboard">
-
-  <div class="announce">
-    🚀 Güncel Panel Özellikleri – Hepsi %100 SAFE
-  </div>
+  <div class="announce">🚀 Güncel Panel Özellikleri – Hepsi %100 SAFE</div>
 
   <div class="panels">
 
-    <!-- INFO PANEL -->
+    <!-- INFO -->
     <div class="panelBox">
       <h3>👤 Hesap Bilgileri</h3>
       <div id="info"></div>
@@ -160,42 +103,39 @@ button{
       <div id="expires"></div>
     </div>
 
-    <!-- YILDIZ PANEL -->
+    <!-- YILDIZ -->
     <div class="panelBox">
       <h3>⭐ Yıldız Hesaplama</h3>
 
       <input type="number" id="starNow" placeholder="Şu anki yıldız">
       <input type="number" id="starToday" placeholder="Bugün kasılan">
 
-      <div class="checkbox">
-        <label><input type="checkbox" value="Aimbot"> Aimbot</label>
+      <div class="cb">
+        <label><input type="checkbox" value="Pull Player"> Pull Player</label>
         <label><input type="checkbox" value="UID Bypass"> UID Bypass</label>
-        <label><input type="checkbox" value="Chams"> Chams</label>
+        <label><input type="checkbox" value="Aimbot"> Aimbot</label>
+        <label><input type="checkbox" value="Fast Switch"> Fast Switch</label>
         <label><input type="checkbox" value="Macro"> Macro</label>
+        <label><input type="checkbox" value="Hex"> Hex</label>
+        <label><input type="checkbox" value="ESP Menü"> ESP Menü</label>
+        <label><input type="checkbox" value="Chams Menü"> Chams Menü</label>
       </div>
 
       <button onclick="calc()">Hesapla</button>
       <div id="result"></div>
     </div>
 
-    <!-- DOWNLOAD PANEL -->
+    <!-- DOWNLOAD -->
     <div class="panelBox">
       <h3>⬇️ Panel İndir</h3>
-
       <a href="https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file"
          target="_blank"
-         style="display:block;text-align:center;padding:14px;
-         border-radius:14px;
-         font-weight:800;
-         text-decoration:none;
-         background:linear-gradient(135deg,#00fff7,#ff00f7);
-         color:#000;">
+         style="display:block;text-align:center;padding:14px;border-radius:14px;
+         font-weight:800;text-decoration:none;
+         background:linear-gradient(135deg,#00fff7,#ff00f7);color:#000;">
         SAHO V5 BLACK ENGINE
       </a>
-
-      <p style="text-align:center;margin-top:10px">
-        Son Güncelleme: <b>08.01.2026</b>
-      </p>
+      <p style="text-align:center;margin-top:10px">Son Güncelleme: <b>08.01.2026</b></p>
     </div>
 
   </div>
@@ -204,7 +144,7 @@ button{
 </div>
 
 <script>
-const API = "https://SENIN-NGROK-URL"; // SADECE URL
+const API = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
 
 async function login(){
   const key = keyInput.value.trim();
@@ -214,20 +154,19 @@ async function login(){
   loadingCard.classList.remove("hidden");
 
   try{
-    const res = await fetch(API+"/login",{
+    const r = await fetch(API+"/login",{
       method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({key})
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ key })
     });
-    const data = await res.json();
-
-    if(!data.success) throw "fail";
+    const d = await r.json();
+    if(!d.success) throw "fail";
 
     setTimeout(async ()=>{
       loadingCard.classList.add("hidden");
       dashboard.classList.remove("hidden");
 
-      const u = data.user;
+      const u = d.user;
       info.innerText = u.info;
       playerId.innerText = "Player ID: "+u.playerId;
       username.innerText = "Username: "+u.username;
@@ -238,13 +177,12 @@ async function login(){
       expires.innerText = "Bitiş: "+u.expiresAt;
 
       const ip = await fetch("https://api.ipify.org?format=json")
-        .then(r=>r.json()).then(d=>d.ip).catch(()=>"-");
+        .then(r=>r.json()).then(x=>x.ip).catch(()=>"-");
 
       footerInfo.innerText =
         "IP: "+ip+
         "\nTarayıcı: "+navigator.userAgent+
         "\nSaat: "+new Date().toLocaleString();
-
     },7000);
 
   }catch{
@@ -253,12 +191,31 @@ async function login(){
   }
 }
 
+/* ⭐ CHECKBOXLAR GERÇEKTEN ETKİ EDİYOR */
 function calc(){
-  const now=+starNow.value, today=+starToday.value;
-  const final=now+today;
-  result.innerHTML = final>now+50
-    ? "<span style='color:#f59e0b'>⚠️ Riskli</span>"
-    : "<span style='color:#22c55e'>✔️ Güvenli</span>";
+  const now = Number(starNow.value||0);
+  const today = Number(starToday.value||0);
+
+  const checked = [...document.querySelectorAll(".cb input:checked")]
+                  .map(c=>c.value);
+
+  let maxAdd = 55; // default güvenli
+
+  if(checked.includes("UID Bypass") && checked.includes("Aimbot")) maxAdd = 45;
+  if(checked.includes("Chams Menü") && checked.includes("ESP Menü")) maxAdd = 50;
+  if(checked.length >= 5) maxAdd = 40;
+
+  const final = now + today;
+  const limit = now + maxAdd;
+
+  result.innerHTML = `
+    <p>Seçilenler: ${checked.join(", ") || "Yok"}</p>
+    <p>Final: ${final}</p>
+    <p>Max Güvenli: ${limit}</p>
+    <b style="color:${final>limit?'#f59e0b':'#22c55e'}">
+      ${final>limit ? '⚠️ RİSKLİ' : '✔️ GÜVENLİ'}
+    </b>
+  `;
 }
 </script>
 </body>
