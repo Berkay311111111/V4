@@ -12,94 +12,110 @@
   --card:#111827;
   --acc:#22c55e;
   --txt:#e5e7eb;
-  --shadow:0 15px 40px rgba(0,0,0,.6);
 }
 *{box-sizing:border-box;font-family:Inter;margin:0;padding:0}
-body{background:var(--bg);color:var(--txt);display:flex;justify-content:center;min-height:100vh}
-.center{width:100%;max-width:520px;padding:20px}
-.card{background:linear-gradient(135deg,#111827,#1c1f2a);border-radius:20px;padding:25px;margin:15px 0;box-shadow:var(--shadow)}
+body{background:var(--bg);color:var(--txt);min-height:100vh}
+
+/* GRID */
+.wrapper{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:20px;
+  padding:25px;
+  max-width:1200px;
+  margin:auto;
+}
+
+.card{
+  background:linear-gradient(135deg,#111827,#1c1f2a);
+  border-radius:18px;
+  padding:20px;
+}
+
 h1,h2{margin-bottom:10px}
-input,select,button{width:100%;padding:12px;border-radius:12px;border:none;margin:8px 0;font-size:15px}
-button{background:linear-gradient(135deg,#22c55e,#16a34a);font-weight:800;color:#fff;cursor:pointer}
+input,select,button{
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  border-radius:10px;
+  border:none;
+}
+button{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+}
 .hidden{display:none}
-.info-box{background:#1f2937;padding:15px;border-radius:12px;margin-top:10px}
 ul{padding-left:18px}
-li{margin:5px 0}
-.toggle-btn{cursor:pointer;color:#22c55e;font-weight:700;margin:8px 0}
-.toggle-content{display:none}
-.download-btn{background:#2563eb}
-.change-btn{background:#f59e0b}
+li{margin:4px 0}
+.toggle{cursor:pointer;color:#22c55e;font-weight:700}
+.download{background:#2563eb}
+.reset{background:#f59e0b}
 </style>
 </head>
 
 <body>
-<div class="center">
 
 <!-- LOGIN -->
-<div class="card" id="loginBox">
-  <h1>License Kontrol</h1>
-  <input id="keyInput" placeholder="License Key">
-  <button onclick="login()">Giriş Yap</button>
+<div class="wrapper" id="loginBox">
+  <div class="card">
+    <h1>🔐 KeyAuth Login</h1>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <input id="license" placeholder="License Key">
+    <button onclick="login()">Giriş Yap</button>
+  </div>
+
+  <div class="card">
+    <h2>ℹ️ Sistem Bilgisi</h2>
+    <p>✔ KeyAuth Style</p>
+    <p>✔ HWID Check</p>
+    <p>✔ Secure Login</p>
+  </div>
 </div>
 
 <!-- PANEL -->
-<div class="card hidden" id="panelBox">
-  <h1 id="welcome"></h1>
+<div class="wrapper hidden" id="panelBox">
 
-  <div class="info-box">
-    <p id="keyInfo"></p>
-    <p id="expiryInfo"></p>
+<!-- SOL -->
+<div>
+  <div class="card">
+    <h1 id="welcome"></h1>
+    <p id="userInfo"></p>
   </div>
 
-  <!-- SORU 1 -->
-  <div class="card" id="q1">
-    <h2>Toplam Yıldız</h2>
-    <input type="number" id="totalStars">
-    <button onclick="saveTotal()">Devam</button>
+  <div class="card">
+    <h2>⭐ Yıldız Bilgisi</h2>
+    <input type="number" id="totalStars" placeholder="Toplam Yıldız">
+    <input type="number" id="todayStars" placeholder="Bugün Kastığın">
+    <button onclick="saveStars()">Kaydet</button>
   </div>
 
-  <!-- SORU 2 -->
-  <div class="card hidden" id="q2">
-    <h2>Bugün Kastığın Yıldız</h2>
-    <input type="number" id="todayStars">
-    <button onclick="saveToday()">Devam</button>
-  </div>
+  <div class="card hidden" id="resultBox"></div>
 
-  <!-- SORU 3 -->
-  <div class="card hidden" id="q3">
-    <h2>Kullandığın Özellikler (ÇOKLU)</h2>
+  <button class="download" onclick="window.open('https://saho.exe','_blank')">⬇️ İNDİR</button>
+  <button class="reset" onclick="resetUser()">🔄 Kullanıcı Değiştir</button>
+</div>
+
+<!-- SAĞ -->
+<div>
+  <div class="card">
+    <h2>🛠 Özellikler (ÇOKLU)</h2>
     <select id="features" multiple size="8">
       <option>Aimbot</option>
       <option>Fast Switch</option>
-      <option>Macro Gelişmiş Seçenekler</option>
+      <option>Macro Gelişmiş</option>
       <option>64x Chams Menü</option>
-      <option>Zero Detection System</option>
+      <option>Zero Detection</option>
       <option>UID Bypass</option>
       <option>Hex Macro</option>
     </select>
-    <button onclick="saveFeatures()">Kaydet</button>
   </div>
 
-  <!-- SONUÇ -->
-  <div class="card hidden" id="finalBox"></div>
-
-  <!-- ÖZELLİKLER -->
   <div class="card">
-    <b>🔥 PANEL ÖZELLİKLERİ</b>
-    <ul>
-      <li>Aimbot</li>
-      <li>Fast Switch</li>
-      <li>Macro Gelişmiş Seçenekler</li>
-      <li>64x Chams Menü</li>
-      <li>Zero Detection System</li>
-    </ul>
-  </div>
-
-  <!-- AYARLAR -->
-  <div class="card">
-    <b>⚙️ AYARLAR</b>
-    <div class="toggle-btn" onclick="toggle('settings')">▶ Göster / Gizle</div>
-    <ul class="toggle-content" id="settings">
+    <h2 class="toggle" onclick="toggle('settings')">⚙️ Ayarlar</h2>
+    <ul id="settings" class="hidden">
       <li>Teleport</li>
       <li>Underkill</li>
       <li>Spawn Kill</li>
@@ -108,93 +124,63 @@ li{margin:5px 0}
     </ul>
   </div>
 
-  <!-- ÖNERİLER -->
   <div class="card">
-    <b>⚙️ ÖNERİLEN AYARLAR</b>
+    <h2>✅ Önerilen</h2>
     <ul>
-      <li>HUD Kodu: <b>#FFHUDT6O3jR0zSb5Po7eP</b></li>
-      <li>BlueStacks: <b>1920x1080 - 320 DPI</b></li>
-      <li>Hassasiyet: <b>100 - 110</b></li>
+      <li>HUD: <b>#FFHUDT6O3jR0zSb5Po7eP</b></li>
+      <li>BlueStacks: <b>1920x1080 / 320 DPI</b></li>
+      <li>Hassasiyet: <b>100-110</b></li>
     </ul>
   </div>
-
-  <button class="download-btn" onclick="window.open('https://saho.exe','_blank')">⬇️ İNDİR</button>
-  <button class="change-btn" onclick="resetUser()">🔄 Kullanıcı Değiştir</button>
 </div>
 
 </div>
 
 <script>
-let data = JSON.parse(localStorage.getItem("sahoData")) || {};
+let data = JSON.parse(localStorage.getItem("saho")) || {};
 
 function login(){
-  const key = keyInput.value;
-  if(!key) return;
-  data.key = key;
-  data.expires = new Date(Date.now()+86400000).toLocaleString();
-  save();
+  data.user = username.value;
+  data.pass = password.value;
+  data.license = license.value;
+  localStorage.setItem("saho",JSON.stringify(data));
   loadPanel();
 }
 
 function loadPanel(){
   loginBox.classList.add("hidden");
   panelBox.classList.remove("hidden");
-  welcome.innerText = "Hoşgeldin 👑";
-  keyInfo.innerText = "Key: " + data.key;
-  expiryInfo.innerText = "Bitiş: " + data.expires;
-  if(data.total){ q1.classList.add("hidden"); q2.classList.remove("hidden"); }
-  if(data.today){ q2.classList.add("hidden"); q3.classList.remove("hidden"); }
-  if(data.features){ showFinal(); }
+  welcome.innerText = "Hoşgeldin " + data.user;
+  userInfo.innerText = "Key: " + data.license;
 }
 
-function saveTotal(){
+function saveStars(){
   data.total = Number(totalStars.value);
-  save();
-  q1.classList.add("hidden");
-  q2.classList.remove("hidden");
-}
-
-function saveToday(){
   data.today = Number(todayStars.value);
-  save();
-  q2.classList.add("hidden");
-  q3.classList.remove("hidden");
-}
-
-function saveFeatures(){
   data.features = [...features.selectedOptions].map(o=>o.value);
-  save();
-  showFinal();
-}
+  localStorage.setItem("saho",JSON.stringify(data));
 
-function showFinal(){
-  q3.classList.add("hidden");
   const final = data.total + data.today;
-  finalBox.innerHTML = `
-    <h2>📊 Günlük Sonuç</h2>
-    <p>Toplam Yıldız: <b>${data.total}</b></p>
+  resultBox.innerHTML = `
+    <h2>📊 Sonuç</h2>
+    <p>Toplam: <b>${data.total}</b></p>
     <p>Bugün: <b>${data.today}</b></p>
-    <p>🎯 Final Yıldız: <b>${final}</b></p>
-    <p>🛠 Özellikler: ${data.features.join(", ")}</p>
+    <p>🎯 Final: <b>${final}</b></p>
+    <p>🛠 ${data.features.join(", ")}</p>
   `;
-  finalBox.classList.remove("hidden");
+  resultBox.classList.remove("hidden");
 }
 
 function toggle(id){
-  const el = document.getElementById(id);
-  el.style.display = el.style.display==="block"?"none":"block";
-}
-
-function save(){
-  localStorage.setItem("sahoData",JSON.stringify(data));
+  document.getElementById(id).classList.toggle("hidden");
 }
 
 function resetUser(){
-  localStorage.removeItem("sahoData");
+  localStorage.removeItem("saho");
   location.reload();
 }
 
-if(data.key) loadPanel();
+if(data.user) loadPanel();
 </script>
 </body>
 </html>
