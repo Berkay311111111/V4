@@ -7,26 +7,109 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b1220; --card:#111827; --acc:#22c55e; --warn:#f59e0b; --err:#ef4444; --txt:#e5e7eb;
+  --bg:#0b1220; 
+  --card:#111827; 
+  --acc:#22c55e; 
+  --warn:#f59e0b; 
+  --err:#ef4444; 
+  --txt:#e5e7eb;
+  --shadow:0 15px 40px rgba(0,0,0,0.6);
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:Inter}
-body{background:var(--bg);color:var(--txt)}
-.center{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;transition:all .3s}
-.card{width:min(480px,90vw);background:var(--card);border-radius:18px;padding:25px;box-shadow:0 25px 60px rgba(0,0,0,.5);margin:10px 0;transition:all .3s}
-h1,h2{margin:.2em 0}
-input,select,button{width:100%;padding:12px;border-radius:12px;border:none;margin:8px 0}
-button{background:linear-gradient(135deg,#22c55e,#16a34a);color:#02110a;font-weight:800;cursor:pointer;transition:.3s}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+}
+
+.center{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  width:100%;
+  transition:all .3s;
+}
+
+.card{
+  width:min(480px,90vw);
+  background:linear-gradient(135deg,#111827,#1c1f2a);
+  border-radius:20px;
+  padding:30px;
+  box-shadow:var(--shadow);
+  margin:15px 0;
+  transition:all .3s;
+  text-align:center;
+}
+
+h1,h2{margin:.3em 0;font-weight:800}
+
+input,select,button{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:none;
+  margin:10px 0;
+  font-size:16px;
+}
+
+button{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+  transition:.3s;
+}
+
 button:hover{opacity:.9}
+
 .hidden{display:none}
-.topbar{position:fixed;top:0;left:0;right:0;padding:10px;text-align:center;font-weight:800;z-index:5}
-.topbar.warn{background:linear-gradient(90deg,#f59e0b,#fbbf24);color:#1f1300}
-.topbar.err{background:linear-gradient(90deg,#ef4444,#f87171);color:#fff}
-#loadingAnim{width:80px;height:80px;border:8px solid rgba(255,255,255,.2);border-top:8px solid #22c55e;border-radius:50%;animation:spin 1.5s linear infinite;margin:20px auto}
+
+#loadingAnim{
+  width:80px;
+  height:80px;
+  border:8px solid rgba(255,255,255,.2);
+  border-top:8px solid #22c55e;
+  border-radius:50%;
+  animation:spin 1.5s linear infinite;
+  margin:20px auto;
+}
+
 @keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-.info-box{background:#1f2937;padding:15px;border-radius:12px;margin-top:15px;}
-.info-box p{margin:5px 0}
-.links{display:flex;justify-content:space-between;margin-top:10px}
-.links a img{width:40px;height:40px}
+
+.info-box{
+  background:#1f2937;
+  padding:15px;
+  border-radius:12px;
+  margin-top:15px;
+}
+
+.info-box p{margin:6px 0;font-size:15px}
+
+.links{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-top:10px;
+}
+
+.links a img{width:40px;height:40px;transition:.3s}
+.links a img:hover{transform:scale(1.1)}
+
+input, select{background:#1a1f2d;color:#e5e7eb;}
+select option{background:#111827;color:#fff;}
+
+.card, .info-box{
+  animation:fadeIn 0.5s ease forwards;
+  opacity:0;
+}
+
+@keyframes fadeIn{
+  to{opacity:1;}
+}
 </style>
 </head>
 <body>
@@ -35,7 +118,7 @@ button:hover{opacity:.9}
 
 <!-- LOGIN -->
 <div class="center" id="loginScreen">
-  <div class="card">
+  <div class="card" style="opacity:1;">
     <h1>License Kontrol</h1>
     <input id="key" placeholder="License Key (Örn: BLA BLA BLA)">
     <button onclick="startLogin()">Giriş Yap</button>
@@ -51,9 +134,9 @@ button:hover{opacity:.9}
 
 <!-- PANEL -->
 <div class="center hidden" id="panelScreen">
-  <div class="card">
+  <div class="card" style="opacity:1;">
     <h1 id="welcomeText">Hoşgeldin!</h1>
-    <div class="info-box">
+    <div class="info-box" style="opacity:1;">
       <p id="keyInfo"></p>
       <p id="expiryInfo"></p>
       <div class="links">
@@ -63,7 +146,7 @@ button:hover{opacity:.9}
     </div>
 
     <!-- Soru 1 -->
-    <div class="card" id="q1">
+    <div class="card" id="q1" style="opacity:1;">
       <h2>Oyunda toplam kaç yıldızın var? (0-999)</h2>
       <input type="number" id="totalStars" min="0" max="999">
       <button onclick="submitTotalStars()">Gönder</button>
@@ -135,7 +218,7 @@ function showLoading(data){
   const loadScreen = document.getElementById("loadingScreen");
   loadScreen.classList.remove("hidden");
 
-  setTimeout(()=>{ // 7 saniye animasyon
+  setTimeout(()=>{ 
     loadScreen.classList.add("hidden");
     showPanel(data);
   },7000);
