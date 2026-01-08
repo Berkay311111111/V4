@@ -16,12 +16,10 @@
             --err: #ff1f4c;
             --txt: #e5e7eb;
         }
-
         * {
             box-sizing: border-box;
             font-family: Inter, sans-serif;
         }
-
         body {
             margin: 0;
             background: var(--bg);
@@ -31,7 +29,6 @@
             align-items: center;
             height: 100vh;
         }
-
         .card {
             background: linear-gradient(135deg, #1f1f2e, #2c2c3a);
             border-radius: 20px;
@@ -40,16 +37,13 @@
             transition: 0.3s;
             width: 380px;
         }
-
         h1, h2, h3 {
             color: var(--primary);
             text-align: center;
         }
-
         .hidden {
             display: none;
         }
-
         input, button {
             width: 100%;
             padding: 12px;
@@ -60,11 +54,9 @@
             background: #111827;
             color: var(--txt);
         }
-
         input::placeholder {
             color: rgba(255, 255, 255, 0.5)
         }
-
         button {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -72,11 +64,9 @@
             cursor: pointer;
             transition: 0.3s;
         }
-
         button:hover {
             opacity: 0.8;
         }
-
         .spinner {
             width: 60px;
             height: 60px;
@@ -86,13 +76,11 @@
             animation: spin 1s linear infinite;
             margin: auto;
         }
-
         @keyframes spin {
             to {
                 transform: rotate(360deg)
             }
         }
-
         .infoBox {
             background: rgba(0, 255, 255, 0.1);
             padding: 10px;
@@ -101,14 +89,12 @@
             font-size: 14px;
             text-align: center;
         }
-
         .checkbox {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-top: 10px;
         }
-
         .checkbox label {
             display: flex;
             align-items: center;
@@ -119,15 +105,12 @@
             cursor: pointer;
             transition: 0.2s;
         }
-
         .checkbox input[type=checkbox] {
             margin-right: 8px;
         }
-
         .checkbox label:hover {
             background: rgba(0, 255, 255, 0.15);
         }
-
         .announcement {
             background: linear-gradient(135deg, rgba(0, 255, 247, 0.2), rgba(255, 0, 247, 0.2));
             padding: 12px;
@@ -139,31 +122,40 @@
             color: var(--acc);
             border: 1px solid rgba(0, 255, 255, 0.3);
         }
-
+        /* DEĞİŞTİRİLEN KISIM - Özellikler artık 3 sütunlu grid */
         .features {
             margin: 20px 0;
             text-align: center;
         }
-
+        .features h2 {
+            margin-bottom: 15px;
+        }
         .features ul {
             list-style: none;
             padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 1fr; /* mobil için tek sütun */
             gap: 10px;
         }
-
         .features li {
             background: rgba(0, 255, 255, 0.08);
-            padding: 10px 14px;
+            padding: 12px;
             border-radius: 10px;
             font-size: 14px;
-            min-width: 120px;
-            flex: 1;
-            max-width: 160px;
         }
-
+        /* Card genişliği yeterli olduğunda (380px) 3 sütuna geç */
+        @media (min-width: 380px) {
+            .features ul {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        /* Daha geniş ekranlarda da güzel dursun */
+        @media (min-width: 500px) {
+            .card {
+                width: 480px;
+            }
+        }
         .download-btn {
             background: linear-gradient(135deg, #22c55e, #16a34a);
             font-size: 18px;
@@ -171,7 +163,6 @@
             margin: 25px 0;
             box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
         }
-
         .download-btn:hover {
             transform: scale(1.03);
             opacity: 1;
@@ -186,25 +177,21 @@
         <button onclick="login()">Giriş Yap</button>
         <div id="loginStatus" class="infoBox hidden"></div>
     </div>
-
     <!-- DASHBOARD -->
     <div class="card hidden" id="dashboard">
         <h1>Saho V5 Black Engine</h1>
-
         <!-- Loading -->
         <div id="loading" class="hidden">
             <div class="spinner"></div>
             <p>SAHO TITAN ENGINE serverine bağlanılıyor...</p>
         </div>
-
         <!-- Ana İçerik -->
         <div id="dashboardContent" class="hidden">
             <!-- Üst Anons -->
             <div class="announcement">
                 Güncellenmiş Paneldeki Özellikler Hepsi 100% Safe! 🚀 Güvenle Kullan!
             </div>
-
-            <!-- Özellikler Listesi - Yatay -->
+            <!-- Özellikler Listesi - Artık 3 sütun -->
             <div class="features">
                 <h2>Saho V5 Black Engine Panel Özellikleri</h2>
                 <ul>
@@ -217,12 +204,10 @@
                     <li>🌈 Chams Menü</li>
                 </ul>
             </div>
-
             <!-- İndirme Butonu -->
             <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file', '_blank')">
                 📥 SAHO V5 BLACK ENGINE İNDİR
             </button>
-
             <!-- Sorular Paneli -->
             <div id="questionPanel" style="margin-top: 30px;">
                 <div id="q1">
@@ -249,7 +234,6 @@
                 </div>
                 <div id="result" class="hidden"></div>
             </div>
-
             <!-- Hesap Bilgileri -->
             <h2 style="margin-top: 30px;">👤 Hesap Bilgileri</h2>
             <div id="info"></div>
@@ -263,58 +247,47 @@
             <div class="infoBox" id="extraInfo"></div>
         </div>
     </div>
-
     <script>
         const API = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
         let starNow = 0, starToday = 0, serverData = {};
-
         function hwid() {
             return btoa(navigator.userAgent + screen.width + screen.height);
         }
-
         function getIP() {
             return fetch('https://api.ipify.org?format=json')
                 .then(r => r.json())
                 .then(d => d.ip)
                 .catch(() => 'Bilinmiyor');
         }
-
         async function login() {
             const key = document.getElementById("keyInput").value.trim();
             const status = document.getElementById("loginStatus");
             status.classList.add("hidden");
             status.innerText = "";
-
             if (!key) {
                 status.innerText = "❌ Key boş olamaz!";
                 status.classList.remove("hidden");
                 return;
             }
-
             // Loading ve dashboard göster
             document.getElementById("loginCard").classList.add("hidden");
             const dash = document.getElementById("dashboard");
             dash.classList.remove("hidden");
             const loading = document.getElementById("loading");
             loading.classList.remove("hidden");
-
             // 7 saniye bekle
             await new Promise(r => setTimeout(r, 7000));
             loading.classList.add("hidden");
-
             try {
                 const r = await fetch(API + "/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ key, hwid: hwid() })
                 });
-
                 if (!r.ok) {
                     throw new Error("Sunucu hatası");
                 }
-
                 const d = await r.json();
-
                 if (!d.ok) {
                     // Geçersiz key - login ekranına geri dön
                     dash.classList.add("hidden");
@@ -323,11 +296,9 @@
                     status.classList.remove("hidden");
                     return;
                 }
-
                 // Başarılı - dashboard içeriğini göster
                 serverData = d;
                 document.getElementById("dashboardContent").classList.remove("hidden");
-
                 document.getElementById("info").innerText = d.info || "Hoş geldin!";
                 document.getElementById("playerId").innerText = "Oyuncu ID: " + (d.playerId || "Bilinmiyor");
                 document.getElementById("username").innerText = "Kullanıcı: " + (d.username || "Bilinmiyor");
@@ -336,10 +307,8 @@
                 document.getElementById("ban").innerText = "Ban durumu: " + (d.banStatus || "Yok");
                 document.getElementById("createDate").innerText = "Kurulum tarihi: " + (d.createDate || "Bilinmiyor");
                 document.getElementById("language").innerText = "Language: " + (d.language || "Türkçe");
-
                 const ip = await getIP();
                 document.getElementById("extraInfo").innerText = `IP: ${ip}\nTarayıcı: ${navigator.userAgent}\nSaat: ${new Date().toLocaleTimeString()}`;
-
             } catch (err) {
                 // Hata durumunda login ekranına dön
                 dash.classList.add("hidden");
@@ -349,21 +318,18 @@
                 console.error(err);
             }
         }
-
         function next1() {
             starNow = Number(document.getElementById("starNowInput").value);
             if (isNaN(starNow) || starNow < 50 || starNow > 999) return;
             document.getElementById("q1").classList.add("hidden");
             document.getElementById("q2").classList.remove("hidden");
         }
-
         function next2() {
             starToday = Number(document.getElementById("starTodayInput").value);
             if (isNaN(starToday) || starToday < 0 || starToday > 55) return;
             document.getElementById("q2").classList.add("hidden");
             document.getElementById("q3").classList.remove("hidden");
         }
-
         function calculate() {
             document.getElementById("q3").classList.add("hidden");
             const checked = [...document.querySelectorAll('#q3 input[type=checkbox]:checked')].map(c => c.value);
@@ -372,10 +338,8 @@
             if (checked.includes("Aimbot") && checked.includes("UID Bypass")) maxAdd = 50;
             if (checked.includes("Chams") && checked.includes("Macro") && checked.includes("UID Bypass")) maxAdd = 55;
             if (checked.length >= 5) maxAdd = 40;
-
             const final = starNow + starToday;
             const limit = starNow + maxAdd;
-
             const res = document.getElementById("result");
             res.innerHTML = `
                 <h3>📌 Sonuç</h3>
