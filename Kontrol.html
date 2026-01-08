@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Saho Secure Panel</title>
+<title>Saho Secure Dashboard</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
@@ -17,15 +17,7 @@
   --txt:#e5e7eb;
 }
 *{box-sizing:border-box;font-family:Inter, sans-serif;}
-body{margin:0;background:var(--bg);color:var(--txt);}
-
-.container{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:20px;
-  padding:20px;
-  height:100vh;
-}
+body{margin:0;background:var(--bg);color:var(--txt);display:flex;justify-content:center;align-items:center;height:100vh;}
 
 .card{
   background:linear-gradient(135deg,#1f1f2e,#2c2c3a);
@@ -33,18 +25,11 @@ body{margin:0;background:var(--bg);color:var(--txt);}
   padding:25px;
   box-shadow:0 0 20px rgba(0,255,255,.3),0 0 40px rgba(255,0,255,.2);
   transition:0.3s;
+  width:350px;
 }
 
-.card h1,h2,h3{color:var(--primary)}
-
-.center{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-}
-
-.hidden{display:none}
+h1,h2,h3{color:var(--primary); text-align:center;}
+.hidden{display:none;}
 
 input,button{
   width:100%;
@@ -56,7 +41,6 @@ input,button{
   background:#111827;
   color:var(--txt);
 }
-
 input::placeholder{color:rgba(255,255,255,0.5)}
 
 button{
@@ -66,14 +50,7 @@ button{
   cursor:pointer;
   transition:0.3s;
 }
-button:hover{opacity:0.8}
-
-.checkbox label{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin:8px 0;
-}
+button:hover{opacity:0.8;}
 
 .spinner{
   width:70px;height:70px;
@@ -85,97 +62,161 @@ button:hover{opacity:0.8}
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.ok{color:var(--acc)}
-.warn{color:var(--warn)}
-.err{color:var(--err)}
-
 .infoBox{
   background:rgba(0,255,255,0.1);
   padding:10px;
   border-radius:12px;
   margin-top:10px;
   font-size:14px;
+  text-align:center;
+}
+
+.checkbox label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:8px 0;
 }
 </style>
 </head>
 <body>
 
-<div class="container">
-
-<!-- SOL: Sorular -->
-<div class="card" id="leftPanel" class="hidden">
-  <h2>📊 Yıldız Kontrol</h2>
-
-  <div id="q1">
-    <p>Şu an hesabınız kaç yıldız?</p>
-    <input type="number" id="starNowInput" min="50" max="999">
-    <button onclick="next1()">Devam</button>
-  </div>
-
-  <div id="q2" class="hidden">
-    <p>Bugün kaç yıldız kastınız?</p>
-    <input type="number" id="starTodayInput" min="0" max="55">
-    <button onclick="next2()">Devam</button>
-  </div>
-
-  <div id="q3" class="hidden">
-    <p>Bugün hangi özellikleri kullandınız?</p>
-    <div class="checkbox">
-      <label><input type="checkbox" value="Pull Player"> Pull Player</label>
-      <label><input type="checkbox" value="Aimbot"> Aimbot</label>
-      <label><input type="checkbox" value="Chams"> Chams</label>
-      <label><input type="checkbox" value="Macro"> Macro</label>
-      <label><input type="checkbox" value="UID Bypass"> UID Bypass</label>
-      <label><input type="checkbox" value="Teleport"> Teleport</label>
-    </div>
-    <button onclick="calculate()">Hesapla</button>
-  </div>
-
-  <div id="loading" class="hidden">
-    <div class="spinner"></div>
-    <p style="text-align:center;margin-top:10px">7 saniye içinde SAHO TITAN ENGINE Serverine bağlanılıyor...</p>
-  </div>
-
-  <div id="result" class="hidden"></div>
-</div>
-
-<!-- ORTA: Login -->
-<div class="card center" id="loginPanel">
+<!-- LOGIN EKRANI -->
+<div class="card" id="loginCard">
   <h1>🔐 KeyAuth</h1>
   <input id="keyInput" placeholder="License Key">
   <button onclick="login()">Giriş Yap</button>
   <div id="loginStatus" class="infoBox"></div>
 </div>
 
-<!-- SAĞ: Hesap Bilgileri -->
-<div class="card" id="rightPanel">
-  <h2>👤 Hesap Bilgileri</h2>
-  <div id="info">Giriş bekleniyor...</div>
-  <div id="playerId"></div>
-  <div id="username"></div>
-  <div id="level"></div>
-  <div id="region"></div>
-  <div id="ban"></div>
-  <div id="createDate"></div>
-  <div id="language"></div>
-  <div class="infoBox" id="extraInfo"></div>
-</div>
+<!-- DASHBOARD -->
+<div class="card hidden" id="dashboard">
+  <h1>🚀 Saho Dashboard</h1>
+  
+  <div id="loading" class="hidden">
+    <div class="spinner"></div>
+    <p>7 saniye içinde SAHO TITAN ENGINE Serverine bağlanılıyor...</p>
+  </div>
 
+  <div id="dashboardContent" class="hidden">
+    <h2>📊 Yıldız Kontrol</h2>
+    <p>Şu an hesabınız kaç yıldız?</p>
+    <input type="number" id="starNowInput" min="50" max="999">
+    <button onclick="next1()">Devam</button>
+
+    <div id="q2" class="hidden">
+      <p>Bugün kaç yıldız kastınız?</p>
+      <input type="number" id="starTodayInput" min="0" max="55">
+      <button onclick="next2()">Devam</button>
+    </div>
+
+    <div id="q3" class="hidden">
+      <p>Bugün hangi özellikleri kullandınız?</p>
+      <div class="checkbox">
+        <label><input type="checkbox" value="Pull Player"> Pull Player</label>
+        <label><input type="checkbox" value="Aimbot"> Aimbot</label>
+        <label><input type="checkbox" value="Chams"> Chams</label>
+        <label><input type="checkbox" value="Macro"> Macro</label>
+        <label><input type="checkbox" value="UID Bypass"> UID Bypass</label>
+        <label><input type="checkbox" value="Teleport"> Teleport</label>
+      </div>
+      <button onclick="calculate()">Hesapla</button>
+    </div>
+
+    <div id="result" class="hidden"></div>
+
+    <h2>👤 Hesap Bilgileri</h2>
+    <div id="info"></div>
+    <div id="playerId"></div>
+    <div id="username"></div>
+    <div id="level"></div>
+    <div id="region"></div>
+    <div id="ban"></div>
+    <div id="createDate"></div>
+    <div id="language"></div>
+    <div class="infoBox" id="extraInfo"></div>
+  </div>
 </div>
 
 <script>
-const API = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
-let starNow = 0;
-let starToday = 0;
-let serverData = {};
+let starNow=0, starToday=0, serverData={};
 
 function hwid(){ return btoa(navigator.userAgent+screen.width+screen.height); }
-
-function getIP(){
-  return fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>d.ip).catch(()=>'Bilinmiyor');
-}
+function getIP(){ return fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>d.ip).catch(()=> 'Bilinmiyor'); }
 
 async function login(){
-  const key = keyInput.value.trim();
-  if(!key) return loginStatus.innerText="❌ Key boş";
-  login
+  const key = document.getElementById("keyInput").value.trim();
+  const status = document.getElementById("loginStatus");
+  if(!key){ status.innerText="❌ Key boş"; return; }
+
+  // LOGIN CARD GİZLE, DASHBOARD GÖSTER
+  document.getElementById("loginCard").classList.add("hidden");
+  const dash = document.getElementById("dashboard");
+  dash.classList.remove("hidden");
+  const loading = document.getElementById("loading");
+  const content = document.getElementById("dashboardContent");
+
+  loading.classList.remove("hidden");
+  await new Promise(r=>setTimeout(r,7000)); // 7 saniye animasyon
+  loading.classList.add("hidden");
+  content.classList.remove("hidden");
+
+  // FAKE SERVER DATA
+  serverData = {
+    info:"Giriş başarılı!",
+    playerId:"1961018265",
+    username:"Umut",
+    level:"71",
+    region:"Europa",
+    banStatus:"Herhangi bir ban yok",
+    createDate:"26/04/2020, 08:05:38",
+    language:"Türkçe"
+  };
+
+  document.getElementById("info").innerText = serverData.info;
+  document.getElementById("playerId").innerText = "Oyuncu ID: "+serverData.playerId;
+  document.getElementById("username").innerText = "Kullanıcı: "+serverData.username;
+  document.getElementById("level").innerText = "Level: "+serverData.level;
+  document.getElementById("region").innerText = "Region: "+serverData.region;
+  document.getElementById("ban").innerText = "Ban durumu: "+serverData.banStatus;
+  document.getElementById("createDate").innerText = "Kurulum tarihi: "+serverData.createDate;
+  document.getElementById("language").innerText = "Language: "+serverData.language;
+
+  const ip = await getIP();
+  document.getElementById("extraInfo").innerText = `IP Adresi: ${ip}\nTarayıcı: ${navigator.userAgent}\nSaat: ${new Date().toLocaleTimeString()}`;
+}
+
+// SORULAR
+function next1(){ 
+  starNow=Number(document.getElementById("starNowInput").value); 
+  if(isNaN(starNow) || starNow<50||starNow>999) return; 
+  document.getElementById("q2").classList.remove("hidden"); 
+}
+function next2(){ 
+  starToday=Number(document.getElementById("starTodayInput").value); 
+  if(isNaN(starToday)||starToday<0||starToday>55)return; 
+  document.getElementById("q3").classList.remove("hidden"); 
+}
+function calculate(){
+  document.getElementById("q3").classList.add("hidden");
+  const checked = [...document.querySelectorAll('#q3 input[type=checkbox]:checked')].map(c=>c.value);
+  let maxAdd=55;
+  if(checked.includes("Pull Player") && checked.includes("UID Bypass")) maxAdd=45;
+  if(checked.includes("Aimbot") && checked.includes("UID Bypass")) maxAdd=50;
+  if(checked.includes("Chams") && checked.includes("Macro") && checked.includes("UID Bypass")) maxAdd=55;
+  if(checked.length>=5) maxAdd=40;
+  const final=starNow+starToday, limit=starNow+maxAdd;
+  const res = document.getElementById("result");
+  res.innerHTML=`<h3>📌 Sonuç</h3>
+  <p>Şu an: ${starNow}</p>
+  <p>Bugün: ${starToday}</p>
+  <p>Final: ${final}</p>
+  <p>Max Güvenli: ${limit}</p>
+  <p class="${final>limit?'err':'ok'}">${final>limit?'⚠️ BAN RİSKİ':'✔️ Güvenli'}</p>
+  <p>Seçilen Özellikler: ${checked.join(", ")}</p>`;
+  res.classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
