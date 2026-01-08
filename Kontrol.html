@@ -85,47 +85,118 @@ button{
 
 <div class="container">
 
-  <!-- SOL: Sorular -->
-  <div class="card" id="leftPanel">
-    <h2>📊 Yıldız Kontrol</h2>
+ <!-- SOL: Sorular -->
+<div class="card" id="leftPanel" class="hidden">
+  <h2>📊 Yıldız Kontrol</h2>
 
-    <!-- 1. soru -->
-    <div id="q1">
-      <p>Şu an hesabınız kaç yıldız?</p>
-      <input type="number" id="starNowInput" min="50" max="999">
-      <button onclick="next1()">Devam</button>
-    </div>
-
-    <!-- 2. soru -->
-    <div id="q2" class="hidden">
-      <p>Bugün kaç yıldız kastınız?</p>
-      <input type="number" id="starTodayInput" min="0" max="55">
-      <button onclick="next2()">Devam</button>
-    </div>
-
-    <!-- 3. soru -->
-    <div id="q3" class="hidden">
-      <p>Bugün hangi özellikleri kullandınız?</p>
-      <div class="checkbox">
-        <label><input type="checkbox" value="Pull Player"> Pull Player</label>
-        <label><input type="checkbox" value="Aimbot"> Aimbot</label>
-        <label><input type="checkbox" value="Chams"> Chams</label>
-        <label><input type="checkbox" value="Macro"> Macro</label>
-        <label><input type="checkbox" value="UID Bypass"> UID Bypass</label>
-        <label><input type="checkbox" value="Teleport"> Teleport</label>
-      </div>
-      <button onclick="calculate()">Hesapla</button>
-    </div>
-
-    <!-- Loading -->
-    <div id="loading" class="hidden">
-      <div class="spinner"></div>
-      <p style="text-align:center;margin-top:10px">Sonuç hesaplanıyor...</p>
-    </div>
-
-    <!-- Sonuç -->
-    <div id="result" class="hidden"></div>
+  <!-- 1. soru -->
+  <div id="q1">
+    <p>Şu an hesabınız kaç yıldız?</p>
+    <input type="number" id="starNowInput" min="50" max="999">
+    <button onclick="next1()">Devam</button>
   </div>
+
+  <!-- 2. soru -->
+  <div id="q2" class="hidden">
+    <p>Bugün kaç yıldız kastınız?</p>
+    <input type="number" id="starTodayInput" min="0" max="55">
+    <button onclick="next2()">Devam</button>
+  </div>
+
+  <!-- 3. soru -->
+  <div id="q3" class="hidden">
+    <p>Bugün hangi özellikleri kullandınız?</p>
+    <div class="checkbox">
+      <label><input type="checkbox" value="Pull Player"> Pull Player</label>
+      <label><input type="checkbox" value="Aimbot"> Aimbot</label>
+      <label><input type="checkbox" value="Chams"> Chams</label>
+      <label><input type="checkbox" value="Macro"> Macro</label>
+      <label><input type="checkbox" value="UID Bypass"> UID Bypass</label>
+      <label><input type="checkbox" value="Teleport"> Teleport</label>
+    </div>
+    <button onclick="calculate()">Hesapla</button>
+  </div>
+
+  <!-- Loading -->
+  <div id="loading" class="hidden">
+    <div class="spinner"></div>
+    <p style="text-align:center;margin-top:10px">Sonuç hesaplanıyor...</p>
+  </div>
+
+  <!-- Sonuç -->
+  <div id="result" class="hidden"></div>
+</div>
+
+<script>
+// INPUT ELEMENTLERİ TANIMLA
+const starNowInput = document.getElementById("starNowInput");
+const starTodayInput = document.getElementById("starTodayInput");
+const q1 = document.getElementById("q1");
+const q2 = document.getElementById("q2");
+const q3 = document.getElementById("q3");
+const loading = document.getElementById("loading");
+const result = document.getElementById("result");
+
+// Devam butonları
+let starNow = 0;
+let starToday = 0;
+
+function next1(){
+  starNow = Number(starNowInput.value);
+  if(isNaN(starNow) || starNow<50 || starNow>999){
+    alert("50-999 arası bir sayı girin");
+    return;
+  }
+  q1.classList.add("hidden");
+  q2.classList.remove("hidden");
+}
+
+function next2(){
+  starToday = Number(starTodayInput.value);
+  if(isNaN(starToday) || starToday<0 || starToday>55){
+    alert("0-55 arası bir sayı girin");
+    return;
+  }
+  q2.classList.add("hidden");
+  q3.classList.remove("hidden");
+}
+
+// Hesaplama
+function calculate(){
+  q3.classList.add("hidden");
+  loading.classList.remove("hidden");
+
+  setTimeout(()=>{
+    loading.classList.add("hidden");
+
+    const checked = [...document.querySelectorAll('#q3 input[type=checkbox]:checked')]
+      .map(c=>c.value);
+
+    let maxAdd = 55;
+    if(checked.includes("Pull Player") && checked.includes("UID Bypass")) maxAdd = 45;
+    if(checked.includes("Aimbot") && checked.includes("UID Bypass")) maxAdd = 50;
+    if(checked.includes("Chams") && checked.includes("Macro") && checked.includes("UID Bypass")) maxAdd = 55;
+    if(checked.length >= 5) maxAdd = 40;
+
+    const final = starNow + starToday;
+    const limit = starNow + maxAdd;
+
+    result.innerHTML = `
+      <h3>📌 Sonuç</h3>
+      <p>Şu an: ${starNow}</p>
+      <p>Bugün: ${starToday}</p>
+      <p>Final: ${final}</p>
+      <p>Max Güvenli: ${limit}</p>
+      <p class="${final>limit?'err':'ok'}">
+        ${final>limit?'⚠️ BAN RİSKİ':'✔️ Güvenli'}
+      </p>
+      <p>Seçilen Özellikler: ${checked.join(", ")}</p>
+    `;
+    result.classList.remove("hidden");
+  },5000);
+}
+</script>
+
 
   <!-- ORTA: KeyAuth -->
   <div class="card center" id="loginPanel">
