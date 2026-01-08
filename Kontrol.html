@@ -65,11 +65,14 @@
 
         .status-info {
             font-size: 18px;
-            margin-top: 20px;
+            margin-top: 30px; /* Daha alt kısma konumlandırdık */
             font-family: 'Courier New', monospace;
             color: #76d7c4;
             white-space: pre-wrap;
             display: none;
+            text-align: left; /* Sol hizalama */
+            max-width: 80%; /* Daha dar alan */
+            margin-bottom: 20px; /* Alt kısmı daha düzenli yap */
         }
 
         .links {
@@ -151,10 +154,10 @@
         function updateStatusInfo() {
             const statusElement = document.getElementById("statusInfo");
             
-            // Örnek dinamik bilgiler: IP adresi, kullanıcı ajanı, zaman damgası
-            const ipAddress = "192.168.1.1"; // Gerçek IP için bir API kullanılabilir
+            // Tarayıcı bilgisi, ama daha doğru ve detaylı bir formatta
             const userAgent = navigator.userAgent;
             const timestamp = new Date().toLocaleString();
+            const ipAddress = "192.168.1.1"; // Bu statik ama API ile gerçek IP de alınabilir
 
             const statusMessage = `
                 Bağlantı Başlatıldı...
