@@ -2,100 +2,101 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>License Login</title>
-
+<title>License Kontrol</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 body {
-    background:#0f172a;
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    margin:0; padding:0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg,#1f2937,#111827);
+    color:#fff;
+    display:flex; justify-content:center; align-items:center;
     height:100vh;
-    font-family:Arial;
 }
-.box {
-    background:#020617;
+.container {
+    background:#111827;
     padding:30px;
-    border-radius:10px;
-    width:300px;
-    text-align:center;
+    border-radius:15px;
+    width:400px;
+    box-shadow:0 0 20px rgba(0,0,0,0.5);
 }
-input,button {
-    width:100%;
-    padding:10px;
-    margin:8px 0;
-    border-radius:5px;
-    border:none;
-}
-button {
-    background:#22c55e;
-    font-weight:bold;
-    cursor:pointer;
-}
-#status { margin-top:10px; }
-.error { color:#f87171 }
-.success { color:#4ade80 }
+h1 { text-align:center; color:#facc15; }
+input { width:100%; padding:12px; margin:10px 0; border-radius:8px; border:none; }
+button { width:100%; padding:12px; background:#22c55e; border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:#000; }
+button:hover { background:#16a34a; }
+#status { margin-top:15px; min-height:24px; text-align:center; }
+.info-box { margin-top:20px; padding:15px; background:#1f2937; border-radius:10px; }
+.info-box h2 { margin:0 0 10px 0; color:#38bdf8; font-size:20px; }
+.info-box p { margin:5px 0; font-size:16px; }
+.links { margin-top:15px; display:flex; justify-content:space-between; }
+.links a img { width:40px; height:40px; }
+.loading { color:#38bdf8; }
+.error { color:#f87171; }
+.success { color:#4ade80; }
 </style>
 </head>
-
 <body>
-<div class="box">
-    <h2>License Login</h2>
-    <input id="key" placeholder="License Key">
+<div class="container">
+    <h1>License Kontrol</h1>
+    <input id="key" placeholder="License Key (Örn: UMUT-DUUHED)">
     <button onclick="login()">Giriş Yap</button>
     <div id="status"></div>
+    <div id="infoPanel" class="info-box" style="display:none;">
+        <h2>Key Bilgileri</h2>
+        <p id="userInfo"></p>
+        <p id="expiryInfo"></p>
+        <div class="links">
+            <a href="#" target="_blank" id="instaLink"><img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"></a>
+            <a href="#" target="_blank" id="discordLink"><img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Discord_logo_%282019%29.svg"></a>
+        </div>
+    </div>
 </div>
 
 <script>
 const API_URL = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
 
-// fingerprint (hwid)
-function getHWID() {
-    return btoa(
-        navigator.userAgent +
-        screen.width + screen.height +
-        navigator.language +
-        Intl.DateTimeFormat().resolvedOptions().timeZone
-    );
+function getHWID(){
+    return btoa(navigator.userAgent+screen.width+screen.height+navigator.language+Intl.DateTimeFormat().resolvedOptions().timeZone);
 }
 
-async function login() {
-    const key = document.getElementById("key").value;
+async function login(){
+    const key = document.getElementById("key").value.trim();
     const status = document.getElementById("status");
+    const infoPanel = document.getElementById("infoPanel");
 
-    if (!key) {
-        status.className="error";
-        status.innerText="Key boş";
-        return;
-    }
+    if(!key){ status.className="error"; status.innerText="❌ License key boş"; return; }
 
+    status.className="loading";
     status.innerText="Kontrol ediliyor...";
+    infoPanel.style.display="none";
 
     try {
-        const res = await fetch(API_URL + "/login", {
+        const res = await fetch(API_URL+"/login", {
             method:"POST",
-            headers:{ "Content-Type":"application/json" },
-            body:JSON.stringify({
-                key:key,
-                hwid:getHWID()
-            })
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({ key:key, hwid:getHWID() })
         });
 
         const data = await res.json();
 
-        if (!data.ok) {
+        if(!data.ok){
             status.className="error";
-            status.innerText=data.message;
+            status.innerText="❌ "+data.message;
             return;
         }
 
         status.className="success";
-        status.innerText=data.message;
+        status.innerText="✔ Key geçerli";
 
-    } catch {
+        infoPanel.style.display="block";
+        document.getElementById("userInfo").innerText=data.info;
+        document.getElementById("expiryInfo").innerText="Bitiş Tarihi: "+new Date(data.expiresAt).toLocaleString();
+        document.getElementById("instaLink").href=data.instagram;
+        document.getElementById("discordLink").href=data.discord;
+
+    } catch(e){
         status.className="error";
-        status.innerText="Sunucuya bağlanılamıyor";
+        status.innerText="🌐 Sunucuya bağlanılamıyor";
     }
 }
 </script>
