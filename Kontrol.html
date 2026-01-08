@@ -15,7 +15,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #ff6b6b, #f39c12); /* Daha etkileyici bir renk geçişi */
+            background: linear-gradient(135deg, #ff6b6b, #f39c12);
             color: white;
             flex-direction: column;
             text-align: center;
@@ -28,7 +28,7 @@
             margin-bottom: 20px;
             font-weight: 900;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
-            color: #ffeb3b; /* Neon sarı */
+            color: #ffeb3b;
         }
 
         p {
@@ -63,7 +63,15 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Bağlantılar ve ikonlar */
+        .status-info {
+            font-size: 18px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            color: #76d7c4;
+            white-space: pre-wrap;
+            display: none;
+        }
+
         .links {
             margin-top: 50px;
             display: flex;
@@ -112,12 +120,15 @@
     <div id="paymentStatus" class="message">Ödeme Kontrol Ediliyor...</div>
     <div id="errorMessage" class="message">Maalesef Ödeme Bulunamadı. Developer ile İletişime Geçin.</div>
 
+    <div class="status-info" id="statusInfo"></div>
+
     <div class="links">
+        <!-- Yeni şık bir logo ekleyelim -->
+        <a href="https://discord.gg/JCdZtmSf" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Discord_logo_%282019%29.svg" alt="Discord">
+        </a>
         <a href="https://www.instagram.com/ff.saho/" target="_blank">
             <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram">
-        </a>
-        <a href="https://discord.gg/JCdZtmSf" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Discord_logo_2015.svg" alt="Discord">
         </a>
     </div>
 
@@ -126,6 +137,8 @@
             setTimeout(() => {
                 document.getElementById("paymentStatus").style.display = "block";
                 document.getElementById("spinner").style.display = "block";
+                document.getElementById("statusInfo").style.display = "block";
+                updateStatusInfo();  // Dinamik bilgi güncelleme
             }, 1000);
 
             setTimeout(() => {
@@ -133,6 +146,27 @@
                 document.getElementById("paymentStatus").style.display = "none";
                 document.getElementById("errorMessage").style.display = "block";
             }, 7000);
+        }
+
+        function updateStatusInfo() {
+            const statusElement = document.getElementById("statusInfo");
+            
+            // Örnek dinamik bilgiler: IP adresi, kullanıcı ajanı, zaman damgası
+            const ipAddress = "192.168.1.1"; // Gerçek IP için bir API kullanılabilir
+            const userAgent = navigator.userAgent;
+            const timestamp = new Date().toLocaleString();
+
+            const statusMessage = `
+                Bağlantı Başlatıldı...
+                IP Adresi: ${ipAddress}
+                Sistem: ${userAgent}
+                Zaman: ${timestamp}
+
+                Saho Black Engine Server'e Bağlanıyor...
+                Son Bağlantı: Başarılı
+            `;
+
+            statusElement.textContent = statusMessage;
         }
     </script>
 
