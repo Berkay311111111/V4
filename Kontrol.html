@@ -15,36 +15,41 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #f39c12, #ffeb3b); /* Neon sarı */
-            color: black;
+            background: linear-gradient(135deg, #ff6b6b, #f39c12); /* Daha etkileyici bir renk geçişi */
+            color: white;
             flex-direction: column;
             text-align: center;
             overflow: hidden;
+            transition: background 0.3s ease-in-out;
         }
 
         h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-            font-weight: 700;
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 900;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            color: #ffeb3b; /* Neon sarı */
         }
 
         p {
-            font-size: 18px;
-            margin: 10px;
+            font-size: 20px;
+            margin: 15px;
             opacity: 0.9;
+            color: #fff;
         }
 
         /* Mesaj ve daire animasyonu */
         .message {
-            font-size: 20px;
-            color: #000;
+            font-size: 24px;
+            color: white;
             text-align: center;
             display: none;
+            font-weight: 500;
         }
 
         .spinner {
-            border: 8px solid rgba(0, 0, 0, 0.3);
-            border-top: 8px solid #000;
+            border: 8px solid rgba(255, 255, 255, 0.3);
+            border-top: 8px solid #fff;
             border-radius: 50%;
             width: 60px;
             height: 60px;
@@ -60,25 +65,42 @@
 
         /* Bağlantılar ve ikonlar */
         .links {
-            margin-top: 40px;
+            margin-top: 50px;
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 50px;
         }
 
         .links a {
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
         }
 
         .links a:hover {
             transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
         }
 
         .links img {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
         }
 
+        /* Ekran için bazı stil ayarları */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 32px;
+            }
+            p {
+                font-size: 18px;
+            }
+            .links {
+                gap: 30px;
+            }
+            .links img {
+                width: 50px;
+                height: 50px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -95,7 +117,7 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram">
         </a>
         <a href="https://discord.gg/JCdZtmSf" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Discord_logo_2021.svg/1200px-Discord_logo_2021.svg.png" alt="Discord">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Discord_logo_2015.svg" alt="Discord">
         </a>
     </div>
 
