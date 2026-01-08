@@ -1,180 +1,140 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ödeme Kontrolü</title>
-    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/0/09/Instagram_logo_2022.svg" type="image/svg+xml">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Stil ayarları */
-        body {
-            font-family: 'Roboto', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #ff6b6b, #f39c12);
-            color: white;
-            flex-direction: column;
-            text-align: center;
-            overflow: hidden;
-            transition: background 0.3s ease-in-out;
-        }
+<meta charset="UTF-8">
+<title>License Kontrol</title>
 
-        h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            font-weight: 900;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
-            color: #ffeb3b;
-        }
+<style>
+body {
+    background: #0f172a;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
-        p {
-            font-size: 20px;
-            margin: 15px;
-            opacity: 0.9;
-            color: #fff;
-        }
+.box {
+    background: #020617;
+    padding: 30px;
+    border-radius: 10px;
+    width: 350px;
+    text-align: center;
+}
 
-        /* Mesajlar */
-        .message {
-            font-size: 24px;
-            color: white;
-            text-align: center;
-            display: none;
-            font-weight: 500;
-        }
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+}
 
-        .spinner {
-            border: 8px solid rgba(255, 255, 255, 0.3);
-            border-top: 8px solid #fff;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1.5s linear infinite;
-            margin-top: 20px;
-        }
+button {
+    width: 100%;
+    padding: 10px;
+    background: #22c55e;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+button:hover {
+    background: #16a34a;
+}
 
-        /* Kullanıcı giriş formu */
-        .login-form {
-            margin-top: 30px;
-        }
+#status {
+    margin-top: 15px;
+    min-height: 20px;
+}
 
-        .login-form input {
-            margin: 10px;
-            padding: 10px;
-            font-size: 18px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            width: 200px;
-        }
+.loading {
+    color: #38bdf8;
+}
 
-        /* Durum Bilgisi */
-        .status-info {
-            font-size: 18px;
-            margin-top: 30px;
-            font-family: 'Courier New', monospace;
-            color: #76d7c4;
-            white-space: pre-wrap;
-            display: none;
-            text-align: left;
-        }
+.error {
+    color: #f87171;
+}
 
-        .links {
-            margin-top: 50px;
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-        }
-
-        .links img {
-            width: 60px;
-            height: 60px;
-        }
-    </style>
+.success {
+    color: #4ade80;
+}
+</style>
 </head>
+
 <body>
+<div class="box">
+    <h2>License Login</h2>
 
-    <h1>Ödeme Kontrolü</h1>
-    
-    <!-- Kullanıcı giriş formu -->
-    <div class="login-form">
-        <input type="text" id="username" placeholder="Kullanıcı Adı" />
-        <input type="password" id="password" placeholder="Şifre" />
-        <button onclick="login()">Giriş Yap</button>
-    </div>
+    <input id="key" placeholder="License Key">
+    <button onclick="login()">Giriş Yap</button>
 
-    <!-- Mesajlar -->
-    <div id="spinner" class="spinner"></div>
-    <div id="paymentStatus" class="message">Ödeme Kontrol Ediliyor...</div>
-    <div id="errorMessage" class="message">Maalesef Ödeme Bulunamadı. Developer ile İletişime Geçin.</div>
+    <div id="status"></div>
+</div>
 
-    <!-- Durum Bilgisi -->
-    <div id="statusInfo" class="status-info"></div>
+<script>
+async function login() {
+    const key = document.getElementById("key").value;
+    const status = document.getElementById("status");
 
-    <div class="links">
-        <a href="https://discord.gg/JCdZtmSf" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Discord_logo_%282019%29.svg" alt="Discord">
-        </a>
-        <a href="https://www.instagram.com/ff.saho/" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram">
-        </a>
-    </div>
+    status.className = "loading";
+    status.innerText = "Kontrol ediliyor...";
 
-    <script>
-        async function login() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+    if (!key) {
+        status.className = "error";
+        status.innerText = "License key boş";
+        return;
+    }
 
-            if (!username || !password) {
-                alert("Lütfen tüm alanları doldurun.");
-                return;
+    try {
+        const res = await fetch("/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                key: key,
+                hwid: navigator.userAgent
+            })
+        });
+
+        const data = await res.json();
+
+        if (!data.ok) {
+            status.className = "error";
+
+            switch (data.code) {
+                case "Invalid License":
+                    status.innerText = "❌ Key geçersiz";
+                    break;
+                case "License Expired":
+                    status.innerText = "⌛ License süresi dolmuş";
+                    break;
+                case "HWID Mismatch":
+                    status.innerText = "🖥️ HWID uyuşmuyor";
+                    break;
+                case "SERVER_DOWN":
+                    status.innerText = "🌐 Sunucuya bağlanılamıyor";
+                    break;
+                default:
+                    status.innerText = "❌ Hata: " + data.message;
             }
-
-            // Ödeme kontrolüne başla
-            document.getElementById("spinner").style.display = "block";
-            document.getElementById("paymentStatus").style.display = "block";
-            document.getElementById("statusInfo").style.display = "block";
-
-            try {
-                const response = await fetch("http://localhost:3000/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        key: username,
-                        password: password,
-                    }),
-                });
-
-                const data = await response.json();
-
-                if (data.ok) {
-                    // Giriş başarılı
-                    document.getElementById("paymentStatus").innerText = "Ödeme Başarılı";
-                    document.getElementById("statusInfo").innerText = `
-                        Key Bitiş Tarihi: ${data.expiryDate}
-                    `;
-                } else {
-                    // Giriş başarısız
-                    document.getElementById("paymentStatus").innerText = "Ödeme Bulunamadı";
-                    document.getElementById("errorMessage").style.display = "block";
-                }
-            } catch (error) {
-                console.error("Hata:", error);
-                document.getElementById("paymentStatus").innerText = "Bir hata oluştu.";
-            } finally {
-                document.getElementById("spinner").style.display = "none";
-            }
+            return;
         }
-    </script>
+
+        status.className = "success";
+        status.innerHTML = `
+            ✔ Giriş başarılı <br>
+            Kullanıcı: ${data.username} <br>
+            Bitiş: ${data.expiry}
+        `;
+
+    } catch (e) {
+        status.className = "error";
+        status.innerText = "⚠ Sunucu kapalı / erişilemiyor";
+    }
+}
+</script>
 </body>
 </html>
