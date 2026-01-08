@@ -223,9 +223,9 @@ async function startLogin(){
     const data = await res.json();
     if(!data.ok){ status.innerText="❌ "+data.message; return; }
     currentKey = key;
-    username = data.username || "";
-    password = data.password || "";
-
+    username = data.username || "Bilinmiyor";
+    password = data.password || "Bilinmiyor";
+    // Bitiş tarihini saat 18:00 yap
     if(data.expiresAt){
       const d = new Date(data.expiresAt);
       d.setHours(18,0,0,0);
@@ -251,12 +251,11 @@ function showLoading(data){
 function showPanel(data){
   const panel = document.getElementById("panelScreen");
   panel.classList.remove("hidden");
-
-  document.getElementById("welcomeText").innerText = username ? "Hoşgeldin "+username : "Hoşgeldin!";
+  document.getElementById("welcomeText").innerText = "Hoşgeldin "+username;
   document.getElementById("keyInfo").innerText = "Key: "+currentKey;
   document.getElementById("expiryInfo").innerText = "Bitiş Tarihi: "+new Date(data.expiresAt).toLocaleString();
-  document.getElementById("instaLink").href = data.instagram || "#";
-  document.getElementById("discordLink").href = data.discord || "#";
+  document.getElementById("instaLink").href = data.instagram;
+  document.getElementById("discordLink").href = data.discord;
 }
 
 function nextQuestion(currentId, nextId){
@@ -308,18 +307,13 @@ function submitFeatures(){
     document.getElementById("q3").classList.add("hidden");
     document.getElementById("q3").classList.remove("fadeOut");
     const final = document.getElementById("finalInfo");
-    
-    let credsHTML = "";
-    if(username) credsHTML += `<p><strong>Kullanıcı Adı:</strong> ${username}</p>`;
-    if(password) credsHTML += `<p><strong>Şifre:</strong> ${password}</p>`;
-
     final.innerHTML = `<h2>Bugünkü Bilgiler</h2>
       <p>Toplam Yıldız: ${totalStarsVal}</p>
       <p>Bugün Kazandığınız: ${todayStarsVal}</p>
       <p>Max Limit: ${maxStars}</p>
       <p>Seçilen Özellikler: ${featuresSelected.join(", ")}</p>
-      ${credsHTML}`;
-      
+      <p><strong>Kullanıcı Adı:</strong> ${username}</p>
+      <p><strong>Şifre:</strong> ${password}</p>`;
     final.classList.remove("hidden");
     final.classList.add("fadeIn");
   },500);
