@@ -43,6 +43,7 @@ body{
   margin:15px 0;
   transition:all .3s;
   text-align:center;
+  opacity:1;
 }
 
 h1,h2{margin:.3em 0;font-weight:800}
@@ -66,7 +67,7 @@ button{
 
 button:hover{opacity:.9}
 
-.hidden{display:none}
+.hidden{display:none !important;}
 
 #loadingAnim{
   width:80px;
@@ -102,23 +103,17 @@ button:hover{opacity:.9}
 input, select{background:#1a1f2d;color:#e5e7eb;}
 select option{background:#111827;color:#fff;}
 
-.card, .info-box{
-  animation:fadeIn 0.5s ease forwards;
-  opacity:0;
-}
-
-@keyframes fadeIn{
-  to{opacity:1;}
-}
+/* Animations */
+.fadeIn{animation:fadeIn 0.5s ease forwards;opacity:0;}
+.fadeOut{animation:fadeOut 0.5s ease forwards;opacity:1;}
+@keyframes fadeIn{to{opacity:1;}}
+@keyframes fadeOut{to{opacity:0;}}
 </style>
 </head>
 <body>
 
-<div class="topbar hidden" id="alertTop"></div>
-
-<!-- LOGIN -->
 <div class="center" id="loginScreen">
-  <div class="card" style="opacity:1;">
+  <div class="card">
     <h1>License Kontrol</h1>
     <input id="key" placeholder="License Key (Örn: BLA BLA BLA)">
     <button onclick="startLogin()">Giriş Yap</button>
@@ -126,17 +121,15 @@ select option{background:#111827;color:#fff;}
   </div>
 </div>
 
-<!-- LOADING ANIMATION -->
 <div class="center hidden" id="loadingScreen">
   <div id="loadingAnim"></div>
   <h2>Kontrol ediliyor...</h2>
 </div>
 
-<!-- PANEL -->
 <div class="center hidden" id="panelScreen">
-  <div class="card" style="opacity:1;">
+  <div class="card">
     <h1 id="welcomeText">Hoşgeldin!</h1>
-    <div class="info-box" style="opacity:1;">
+    <div class="info-box">
       <p id="keyInfo"></p>
       <p id="expiryInfo"></p>
       <div class="links">
@@ -145,24 +138,22 @@ select option{background:#111827;color:#fff;}
       </div>
     </div>
 
-    <!-- Soru 1 -->
-    <div class="card" id="q1" style="opacity:1;">
+    <!-- Sorular -->
+    <div class="card fadeIn" id="q1">
       <h2>Oyunda toplam kaç yıldızın var? (0-999)</h2>
       <input type="number" id="totalStars" min="0" max="999">
       <button onclick="submitTotalStars()">Gönder</button>
       <div id="totalStarsStatus"></div>
     </div>
 
-    <!-- Soru 2 -->
-    <div class="card hidden" id="q2">
+    <div class="card fadeIn hidden" id="q2">
       <h2>Bugün kaç yıldız kastın? (0-55)</h2>
       <input type="number" id="todayStars" min="0" max="55">
       <button onclick="submitTodayStars()">Gönder</button>
       <div id="todayStarsStatus"></div>
     </div>
 
-    <!-- Soru 3 -->
-    <div class="card hidden" id="q3">
+    <div class="card fadeIn hidden" id="q3">
       <h2>Panelde hangi özellikleri kullandın / kullanacaksın?</h2>
       <select id="featureSelect" multiple size="5">
         <option>Chams</option>
@@ -175,7 +166,7 @@ select option{background:#111827;color:#fff;}
       <div id="featureStatus"></div>
     </div>
 
-    <div class="card info-box hidden" id="finalInfo"></div>
+    <div class="card info-box fadeIn hidden" id="finalInfo"></div>
   </div>
 </div>
 
@@ -191,7 +182,6 @@ function getHWID(){
   return btoa(navigator.userAgent+screen.width+screen.height+navigator.language+Intl.DateTimeFormat().resolvedOptions().timeZone);
 }
 
-// LOGIN
 async function startLogin(){
   const key = document.getElementById("key").value.trim();
   const status = document.getElementById("loginStatus");
@@ -212,7 +202,6 @@ async function startLogin(){
   }
 }
 
-// LOADING ANIMATION
 function showLoading(data){
   document.getElementById("loginScreen").classList.add("hidden");
   const loadScreen = document.getElementById("loadingScreen");
@@ -221,10 +210,9 @@ function showLoading(data){
   setTimeout(()=>{ 
     loadScreen.classList.add("hidden");
     showPanel(data);
-  },7000);
+  },2000); // animasyon daha hızlı
 }
 
-// PANEL
 function showPanel(data){
   const panel = document.getElementById("panelScreen");
   panel.classList.remove("hidden");
@@ -235,19 +223,30 @@ function showPanel(data){
   document.getElementById("discordLink").href = data.discord;
 }
 
-// SORU 1
+// Sorular step by step
+function nextQuestion(currentId, nextId){
+  const current = document.getElementById(currentId);
+  const next = document.getElementById(nextId);
+  current.classList.add("fadeOut");
+  setTimeout(()=>{
+    current.classList.add("hidden");
+    current.classList.remove("fadeOut");
+    next.classList.remove("hidden");
+    next.classList.add("fadeIn");
+  },500);
+}
+
+// Soru 1
 function submitTotalStars(){
   const val = parseInt(document.getElementById("totalStars").value);
   const status = document.getElementById("totalStarsStatus");
   if(isNaN(val) || val<0){ status.innerText="❌ Geçersiz değer"; return; }
   totalStarsVal = val;
   status.innerText="✔ Toplam yıldız kaydedildi: "+totalStarsVal;
-
-  document.getElementById("q1").classList.add("hidden");
-  document.getElementById("q2").classList.remove("hidden");
+  nextQuestion("q1","q2");
 }
 
-// SORU 2
+// Soru 2
 function submitTodayStars(){
   const val = parseInt(document.getElementById("todayStars").value);
   const status = document.getElementById("todayStarsStatus");
@@ -261,12 +260,10 @@ function submitTodayStars(){
   }
   todayStarsVal = val;
   status.innerText="✔ Bugünkü yıldız kaydedildi: "+todayStarsVal;
-
-  document.getElementById("q2").classList.add("hidden");
-  document.getElementById("q3").classList.remove("hidden");
+  nextQuestion("q2","q3");
 }
 
-// SORU 3
+// Soru 3
 function submitFeatures(){
   const select = document.getElementById("featureSelect");
   const status = document.getElementById("featureStatus");
@@ -274,14 +271,19 @@ function submitFeatures(){
   if(featuresSelected.length==0){ status.innerText="❌ Özellik seçmediniz"; return; }
   status.innerText="✔ Seçilen Özellikler: "+featuresSelected.join(", ");
 
-  const final = document.getElementById("finalInfo");
-  final.innerHTML = `<h2>Bugünkü Bilgiler</h2>
-    <p>Toplam Yıldız: ${totalStarsVal}</p>
-    <p>Bugün Kastığınız: ${todayStarsVal}</p>
-    <p>Max Kasabileceğiniz Limit: ${maxStars}</p>
-    <p>Seçilen Özellikler: ${featuresSelected.join(", ")}</p>`;
-  final.classList.remove("hidden");
-  document.getElementById("q3").classList.add("hidden");
+  document.getElementById("q3").classList.add("fadeOut");
+  setTimeout(()=>{
+    document.getElementById("q3").classList.add("hidden");
+    document.getElementById("q3").classList.remove("fadeOut");
+    const final = document.getElementById("finalInfo");
+    final.innerHTML = `<h2>Bugünkü Bilgiler</h2>
+      <p>Toplam Yıldız: ${totalStarsVal}</p>
+      <p>Bugün Kastığınız: ${todayStarsVal}</p>
+      <p>Max Kasabileceğiniz Limit: ${maxStars}</p>
+      <p>Seçilen Özellikler: ${featuresSelected.join(", ")}</p>`;
+    final.classList.remove("hidden");
+    final.classList.add("fadeIn");
+  },500);
 }
 </script>
 
