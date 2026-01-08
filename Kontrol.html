@@ -5,33 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ödeme Kontrolü</title>
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/0/09/Instagram_logo_2022.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         /* Genel stil ayarları */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, #6c5ce7, #00b894);
+            color: white;
             flex-direction: column;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 10px;
+            opacity: 0.9;
         }
 
         /* Mesaj ve daire animasyonu */
         .message {
-            font-size: 24px;
-            color: #333;
+            font-size: 20px;
+            color: #fff;
             text-align: center;
             display: none;
         }
 
         .spinner {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #3498db;
+            border: 8px solid rgba(255, 255, 255, 0.3);
+            border-top: 8px solid #fff;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             animation: spin 1.5s linear infinite;
             margin-top: 20px;
         }
@@ -44,23 +60,32 @@
 
         /* Bağlantılar ve ikonlar */
         .links {
-            margin-top: 30px;
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
         }
 
         .links a {
-            margin: 10px;
-            text-decoration: none;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .links a:hover {
+            transform: scale(1.1);
         }
 
         .links img {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
         }
 
     </style>
 </head>
 <body>
 
+    <h1>Ödeme Kontrolü</h1>
+    <p>Lütfen bekleyin, işleminiz kontrol ediliyor...</p>
+    
     <div id="spinner" class="spinner"></div>
     <div id="paymentStatus" class="message">Ödeme Kontrol Ediliyor...</div>
     <div id="errorMessage" class="message">Maalesef Ödeme Bulunamadı. Developer ile İletişime Geçin.</div>
@@ -76,15 +101,12 @@
 
     <script>
         window.onload = () => {
-            // Sayfa yüklendiğinde ilk olarak mesaj ve daireyi göster
             setTimeout(() => {
-                // 7 saniye sonra ödeme kontrol mesajını göster
                 document.getElementById("paymentStatus").style.display = "block";
                 document.getElementById("spinner").style.display = "block";
             }, 1000);
 
             setTimeout(() => {
-                // 7 saniye sonra "Maalesef ödeme bulunamadı" mesajını göster
                 document.getElementById("spinner").style.display = "none";
                 document.getElementById("paymentStatus").style.display = "none";
                 document.getElementById("errorMessage").style.display = "block";
@@ -94,4 +116,3 @@
 
 </body>
 </html>
-
