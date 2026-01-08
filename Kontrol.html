@@ -11,8 +11,8 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:Inter}
 body{background:var(--bg);color:var(--txt)}
-.center{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column}
-.card{width:min(460px,90vw);background:var(--card);border-radius:18px;padding:25px;box-shadow:0 25px 60px rgba(0,0,0,.5)}
+.center{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;transition:all .3s}
+.card{width:min(480px,90vw);background:var(--card);border-radius:18px;padding:25px;box-shadow:0 25px 60px rgba(0,0,0,.5);margin:10px 0;transition:all .3s}
 h1,h2{margin:.2em 0}
 input,select,button{width:100%;padding:12px;border-radius:12px;border:none;margin:8px 0}
 button{background:linear-gradient(135deg,#22c55e,#16a34a);color:#02110a;font-weight:800;cursor:pointer;transition:.3s}
@@ -33,6 +33,7 @@ button:hover{opacity:.9}
 
 <div class="topbar hidden" id="alertTop"></div>
 
+<!-- LOGIN -->
 <div class="center" id="loginScreen">
   <div class="card">
     <h1>License Kontrol</h1>
@@ -42,11 +43,13 @@ button:hover{opacity:.9}
   </div>
 </div>
 
+<!-- LOADING ANIMATION -->
 <div class="center hidden" id="loadingScreen">
   <div id="loadingAnim"></div>
   <h2>Kontrol ediliyor...</h2>
 </div>
 
+<!-- PANEL -->
 <div class="center hidden" id="panelScreen">
   <div class="card">
     <h1 id="welcomeText">Hoşgeldin!</h1>
@@ -58,15 +61,27 @@ button:hover{opacity:.9}
         <a href="#" target="_blank" id="discordLink"><img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Discord_logo_%282019%29.svg"></a>
       </div>
     </div>
-    <div class="card" style="margin-top:15px;">
-      <h2>Bugün kaç yıldız kastın? (0-55)</h2>
-      <input type="number" id="starInput" min="0" max="55">
-      <button onclick="submitStar()">Gönder</button>
-      <div id="starStatus" style="margin-top:10px;"></div>
+
+    <!-- Soru 1: Toplam yıldız -->
+    <div class="card">
+      <h2>Oyunda toplam kaç yıldızın var? (0-999)</h2>
+      <input type="number" id="totalStars" min="0" max="999">
+      <button onclick="submitTotalStars()">Gönder</button>
+      <div id="totalStarsStatus"></div>
     </div>
-    <div class="card" style="margin-top:15px;">
+
+    <!-- Soru 2: Bugün kaç yıldız -->
+    <div class="card">
+      <h2>Bugün kaç yıldız kastın? (0-55)</h2>
+      <input type="number" id="todayStars" min="0" max="55">
+      <button onclick="submitTodayStars()">Gönder</button>
+      <div id="todayStarsStatus"></div>
+    </div>
+
+    <!-- Soru 3: Panelde hangi özellikler -->
+    <div class="card">
       <h2>Panelde hangi özellikleri kullandın / kullanacaksın?</h2>
-      <select id="featureSelect" multiple>
+      <select id="featureSelect" multiple size="5">
         <option>Chams</option>
         <option>Aimbot</option>
         <option>Fast switch</option>
@@ -74,21 +89,27 @@ button:hover{opacity:.9}
         <option>UID Bypass</option>
       </select>
       <button onclick="submitFeatures()">Gönder</button>
-      <div id="featureStatus" style="margin-top:10px"></div>
+      <div id="featureStatus"></div>
     </div>
-    <div id="finalInfo" class="info-box hidden"></div>
+
+    <!-- Final info -->
+    <div class="card info-box hidden" id="finalInfo"></div>
   </div>
 </div>
 
 <script>
 const API_URL = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
 let currentKey = "";
-let maxStars = 55; // default limit
+let maxStars = 55;
+let totalStarsVal = 0;
+let todayStarsVal = 0;
+let featuresSelected = [];
 
 function getHWID(){
   return btoa(navigator.userAgent+screen.width+screen.height+navigator.language+Intl.DateTimeFormat().resolvedOptions().timeZone);
 }
 
+// LOGIN
 async function startLogin(){
   const key = document.getElementById("key").value.trim();
   const status = document.getElementById("loginStatus");
@@ -109,6 +130,7 @@ async function startLogin(){
   }
 }
 
+// LOADING ANIMATION
 function showLoading(data){
   document.getElementById("loginScreen").classList.add("hidden");
   const loadScreen = document.getElementById("loadingScreen");
@@ -120,6 +142,7 @@ function showLoading(data){
   },7000);
 }
 
+// PANEL
 function showPanel(data){
   const panel = document.getElementById("panelScreen");
   panel.classList.remove("hidden");
@@ -130,25 +153,32 @@ function showPanel(data){
   document.getElementById("discordLink").href = data.discord;
 }
 
-// ⭐ Yıldız giriş
-let todayStars = 0;
-function submitStar(){
-  const val = parseInt(document.getElementById("starInput").value);
-  const status = document.getElementById("starStatus");
+// SORU 1: Toplam yıldız
+function submitTotalStars(){
+  const val = parseInt(document.getElementById("totalStars").value);
+  const status = document.getElementById("totalStarsStatus");
+  if(isNaN(val) || val<0){ status.innerText="❌ Geçersiz değer"; return; }
+  totalStarsVal = val;
+  status.innerText="✔ Toplam yıldız kaydedildi: "+totalStarsVal;
+}
+
+// SORU 2: Bugün kaç yıldız
+function submitTodayStars(){
+  const val = parseInt(document.getElementById("todayStars").value);
+  const status = document.getElementById("todayStarsStatus");
   if(isNaN(val) || val<0){ status.innerText="❌ Geçersiz değer"; return; }
   if(val>maxStars){
     const ans = confirm("⚠ Lütfen Paneli kullanmayı bırakın! Onaylıyor musunuz?");
     if(!ans){ return; }
     status.innerText="⚠ Limit üstü yıldız girdiniz!";
-    document.getElementById("starInput").value="";
+    document.getElementById("todayStars").value="";
     return;
   }
-  todayStars = val;
-  status.innerText="✔ Yıldız kaydedildi: "+todayStars;
+  todayStarsVal = val;
+  status.innerText="✔ Bugünkü yıldız kaydedildi: "+todayStarsVal;
 }
 
-// 🛠️ Feature seçim
-let featuresSelected = [];
+// SORU 3: Özellikler
 function submitFeatures(){
   const select = document.getElementById("featureSelect");
   const status = document.getElementById("featureStatus");
@@ -159,11 +189,13 @@ function submitFeatures(){
   // Final info göster
   const final = document.getElementById("finalInfo");
   final.innerHTML = `<h2>Bugünkü Bilgiler</h2>
-  <p>Başlangıç Yıldız: 0</p>
-  <p>Bugün Kastığınız: ${todayStars}</p>
-  <p>Bugün Max Kasabileceğiniz Limit: ${maxStars}</p>`;
+  <p>Toplam Yıldız: ${totalStarsVal}</p>
+  <p>Bugün Kastığınız: ${todayStarsVal}</p>
+  <p>Max Kasabileceğiniz Limit: ${maxStars}</p>
+  <p>Seçilen Özellikler: ${featuresSelected.join(", ")}</p>`;
   final.classList.remove("hidden");
 }
 </script>
+
 </body>
 </html>
