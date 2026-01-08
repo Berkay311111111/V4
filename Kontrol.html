@@ -69,32 +69,38 @@ button:hover {
 <div class="box">
     <h2>License Login</h2>
 
-    <input id="key" placeholder="License Key">
+    <input id="username" placeholder="Kullanıcı Adı">
+    <input id="password" type="password" placeholder="Şifre">
     <button onclick="login()">Giriş Yap</button>
 
     <div id="status"></div>
 </div>
 
 <script>
+// Buraya senin ngrok linkini yaz
+const API_URL = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
+
 async function login() {
-    const key = document.getElementById("key").value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
     const status = document.getElementById("status");
 
     status.className = "loading";
     status.innerText = "Kontrol ediliyor...";
 
-    if (!key) {
+    if (!username || !password) {
         status.className = "error";
-        status.innerText = "License key boş";
+        status.innerText = "Kullanıcı adı ve şifre boş olamaz";
         return;
     }
 
     try {
-        const res = await fetch("/login", {
+        const res = await fetch(`${API_URL}/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                key: key,
+                key: username,
+                password: password,
                 hwid: navigator.userAgent
             })
         });
@@ -103,10 +109,9 @@ async function login() {
 
         if (!data.ok) {
             status.className = "error";
-
             switch (data.code) {
                 case "Invalid License":
-                    status.innerText = "❌ Key geçersiz";
+                    status.innerText = "❌ Key veya şifre geçersiz";
                     break;
                 case "License Expired":
                     status.innerText = "⌛ License süresi dolmuş";
