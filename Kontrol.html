@@ -86,6 +86,7 @@ button:hover{opacity:.9}
   padding:15px;
   border-radius:12px;
   margin-top:15px;
+  text-align:left;
 }
 
 .info-box p{margin:6px 0;font-size:15px}
@@ -108,10 +109,32 @@ select option{background:#111827;color:#fff;}
 .fadeOut{animation:fadeOut 0.5s ease forwards;opacity:1;}
 @keyframes fadeIn{to{opacity:1;}}
 @keyframes fadeOut{to{opacity:0;}}
+
+/* Question box */
+.question-box{
+  margin-top:25px;
+  padding:20px;
+  background:#0f172a;
+  border-radius:16px;
+  animation:fadeIn .4s ease forwards;
+}
+
+.question-box h2{
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:12px;
+}
+
+.question-box p{
+  font-size:14px;
+  opacity:.8;
+  margin-bottom:10px;
+}
 </style>
 </head>
 <body>
 
+<!-- Login Screen -->
 <div class="center" id="loginScreen">
   <div class="card">
     <h1>License Kontrol</h1>
@@ -121,11 +144,13 @@ select option{background:#111827;color:#fff;}
   </div>
 </div>
 
+<!-- Loading Screen -->
 <div class="center hidden" id="loadingScreen">
   <div id="loadingAnim"></div>
   <h2>Kontrol ediliyor...</h2>
 </div>
 
+<!-- Panel Screen -->
 <div class="center hidden" id="panelScreen">
   <div class="card">
     <h1 id="welcomeText">Hoşgeldin!</h1>
@@ -139,22 +164,22 @@ select option{background:#111827;color:#fff;}
     </div>
 
     <!-- Sorular -->
-    <div class="card fadeIn" id="q1">
-      <h2>Oyunda toplam kaç yıldızın var? (0-999)</h2>
+    <div class="question-box fadeIn" id="q1">
+      <h2>Toplam yıldız sayınız nedir? (0-999)</h2>
       <input type="number" id="totalStars" min="0" max="999">
       <button onclick="submitTotalStars()">Gönder</button>
       <div id="totalStarsStatus"></div>
     </div>
 
-    <div class="card fadeIn hidden" id="q2">
-      <h2>Bugün kaç yıldız kastın? (0-55)</h2>
+    <div class="question-box fadeIn hidden" id="q2">
+      <h2>Bugün kaç yıldız kazandınız? (0-55)</h2>
       <input type="number" id="todayStars" min="0" max="55">
       <button onclick="submitTodayStars()">Gönder</button>
       <div id="todayStarsStatus"></div>
     </div>
 
-    <div class="card fadeIn hidden" id="q3">
-      <h2>Panelde hangi özellikleri kullandın / kullanacaksın?</h2>
+    <div class="question-box fadeIn hidden" id="q3">
+      <h2>Panelde hangi özellikleri kullandınız / kullanacaksınız?</h2>
       <select id="featureSelect" multiple size="5">
         <option>Chams</option>
         <option>Aimbot</option>
@@ -177,6 +202,8 @@ let maxStars = 55;
 let totalStarsVal = 0;
 let todayStarsVal = 0;
 let featuresSelected = [];
+let username = "";
+let password = "";
 
 function getHWID(){
   return btoa(navigator.userAgent+screen.width+screen.height+navigator.language+Intl.DateTimeFormat().resolvedOptions().timeZone);
@@ -196,6 +223,14 @@ async function startLogin(){
     const data = await res.json();
     if(!data.ok){ status.innerText="❌ "+data.message; return; }
     currentKey = key;
+    username = data.username || "Bilinmiyor";
+    password = data.password || "Bilinmiyor";
+    // Bitiş tarihini saat 18:00 yap
+    if(data.expiresAt){
+      const d = new Date(data.expiresAt);
+      d.setHours(18,0,0,0);
+      data.expiresAt = d.toISOString();
+    }
     showLoading(data);
   }catch(e){
     status.innerText="🌐 Sunucuya bağlanılamıyor";
@@ -210,20 +245,19 @@ function showLoading(data){
   setTimeout(()=>{ 
     loadScreen.classList.add("hidden");
     showPanel(data);
-  },2000); // animasyon daha hızlı
+  },2000);
 }
 
 function showPanel(data){
   const panel = document.getElementById("panelScreen");
   panel.classList.remove("hidden");
-  document.getElementById("welcomeText").innerText = "Hoşgeldin "+data.info.split(":")[1].trim();
-  document.getElementById("keyInfo").innerText = data.info;
+  document.getElementById("welcomeText").innerText = "Hoşgeldin "+username;
+  document.getElementById("keyInfo").innerText = "Key: "+currentKey;
   document.getElementById("expiryInfo").innerText = "Bitiş Tarihi: "+new Date(data.expiresAt).toLocaleString();
   document.getElementById("instaLink").href = data.instagram;
   document.getElementById("discordLink").href = data.discord;
 }
 
-// Sorular step by step
 function nextQuestion(currentId, nextId){
   const current = document.getElementById(currentId);
   const next = document.getElementById(nextId);
@@ -236,7 +270,6 @@ function nextQuestion(currentId, nextId){
   },500);
 }
 
-// Soru 1
 function submitTotalStars(){
   const val = parseInt(document.getElementById("totalStars").value);
   const status = document.getElementById("totalStarsStatus");
@@ -246,7 +279,6 @@ function submitTotalStars(){
   nextQuestion("q1","q2");
 }
 
-// Soru 2
 function submitTodayStars(){
   const val = parseInt(document.getElementById("todayStars").value);
   const status = document.getElementById("todayStarsStatus");
@@ -263,7 +295,6 @@ function submitTodayStars(){
   nextQuestion("q2","q3");
 }
 
-// Soru 3
 function submitFeatures(){
   const select = document.getElementById("featureSelect");
   const status = document.getElementById("featureStatus");
@@ -278,9 +309,11 @@ function submitFeatures(){
     const final = document.getElementById("finalInfo");
     final.innerHTML = `<h2>Bugünkü Bilgiler</h2>
       <p>Toplam Yıldız: ${totalStarsVal}</p>
-      <p>Bugün Kastığınız: ${todayStarsVal}</p>
-      <p>Max Kasabileceğiniz Limit: ${maxStars}</p>
-      <p>Seçilen Özellikler: ${featuresSelected.join(", ")}</p>`;
+      <p>Bugün Kazandığınız: ${todayStarsVal}</p>
+      <p>Max Limit: ${maxStars}</p>
+      <p>Seçilen Özellikler: ${featuresSelected.join(", ")}</p>
+      <p><strong>Kullanıcı Adı:</strong> ${username}</p>
+      <p><strong>Şifre:</strong> ${password}</p>`;
     final.classList.remove("hidden");
     final.classList.add("fadeIn");
   },500);
