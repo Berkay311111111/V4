@@ -128,7 +128,6 @@
             background: rgba(0, 255, 255, 0.15);
         }
 
-        /* Yeni Eklenen Stil */
         .announcement {
             background: linear-gradient(135deg, rgba(0, 255, 247, 0.2), rgba(255, 0, 247, 0.2));
             padding: 12px;
@@ -146,7 +145,6 @@
             text-align: center;
         }
 
-        /* Yatay Özellik Listesi */
         .features ul {
             list-style: none;
             padding: 0;
@@ -181,7 +179,7 @@
     </style>
 </head>
 <body>
-    <!-- LOGIN EKRANI - SADECE GİRİŞ -->
+    <!-- LOGIN EKRANI -->
     <div class="card" id="loginCard">
         <h1>🔐 SAHO TITAN ENGINE</h1>
         <input id="keyInput" placeholder="License Key">
@@ -206,7 +204,7 @@
                 Güncellenmiş Paneldeki Özellikler Hepsi 100% Safe! 🚀 Güvenle Kullan!
             </div>
 
-            <!-- Özellikler Listesi - YATAY -->
+            <!-- Özellikler Listesi - Yatay -->
             <div class="features">
                 <h2>Saho V5 Black Engine Panel Özellikleri</h2>
                 <ul>
@@ -220,7 +218,7 @@
                 </ul>
             </div>
 
-            <!-- İndirme Butonu - Gerçek Linkli -->
+            <!-- İndirme Butonu -->
             <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file', '_blank')">
                 📥 SAHO V5 BLACK ENGINE İNDİR
             </button>
@@ -267,6 +265,7 @@
     </div>
 
     <script>
+        // Güncellenmiş server linki
         const API = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
         let starNow = 0, starToday = 0, serverData = {};
 
@@ -314,7 +313,7 @@
                 }
                 serverData = d;
 
-                document.getElementById("info").innerText = d.info;
+                document.getElementById("info").innerText = d.info || "Hoş geldin!";
                 document.getElementById("playerId").innerText = "Oyuncu ID: " + (d.playerId || "1961018265");
                 document.getElementById("username").innerText = "Kullanıcı: " + (d.username || "Umut");
                 document.getElementById("level").innerText = "Level: " + (d.level || "71");
@@ -331,7 +330,6 @@
             }
         }
 
-        // Sorular Fonksiyonları
         function next1() {
             starNow = Number(document.getElementById("starNowInput").value);
             if (isNaN(starNow) || starNow < 50 || starNow > 999) return;
