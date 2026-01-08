@@ -62,24 +62,24 @@ button:hover{opacity:.9}
       </div>
     </div>
 
-    <!-- Soru 1: Toplam yıldız -->
-    <div class="card">
+    <!-- Soru 1 -->
+    <div class="card" id="q1">
       <h2>Oyunda toplam kaç yıldızın var? (0-999)</h2>
       <input type="number" id="totalStars" min="0" max="999">
       <button onclick="submitTotalStars()">Gönder</button>
       <div id="totalStarsStatus"></div>
     </div>
 
-    <!-- Soru 2: Bugün kaç yıldız -->
-    <div class="card">
+    <!-- Soru 2 -->
+    <div class="card hidden" id="q2">
       <h2>Bugün kaç yıldız kastın? (0-55)</h2>
       <input type="number" id="todayStars" min="0" max="55">
       <button onclick="submitTodayStars()">Gönder</button>
       <div id="todayStarsStatus"></div>
     </div>
 
-    <!-- Soru 3: Panelde hangi özellikler -->
-    <div class="card">
+    <!-- Soru 3 -->
+    <div class="card hidden" id="q3">
       <h2>Panelde hangi özellikleri kullandın / kullanacaksın?</h2>
       <select id="featureSelect" multiple size="5">
         <option>Chams</option>
@@ -92,7 +92,6 @@ button:hover{opacity:.9}
       <div id="featureStatus"></div>
     </div>
 
-    <!-- Final info -->
     <div class="card info-box hidden" id="finalInfo"></div>
   </div>
 </div>
@@ -153,16 +152,19 @@ function showPanel(data){
   document.getElementById("discordLink").href = data.discord;
 }
 
-// SORU 1: Toplam yıldız
+// SORU 1
 function submitTotalStars(){
   const val = parseInt(document.getElementById("totalStars").value);
   const status = document.getElementById("totalStarsStatus");
   if(isNaN(val) || val<0){ status.innerText="❌ Geçersiz değer"; return; }
   totalStarsVal = val;
   status.innerText="✔ Toplam yıldız kaydedildi: "+totalStarsVal;
+
+  document.getElementById("q1").classList.add("hidden");
+  document.getElementById("q2").classList.remove("hidden");
 }
 
-// SORU 2: Bugün kaç yıldız
+// SORU 2
 function submitTodayStars(){
   const val = parseInt(document.getElementById("todayStars").value);
   const status = document.getElementById("todayStarsStatus");
@@ -176,9 +178,12 @@ function submitTodayStars(){
   }
   todayStarsVal = val;
   status.innerText="✔ Bugünkü yıldız kaydedildi: "+todayStarsVal;
+
+  document.getElementById("q2").classList.add("hidden");
+  document.getElementById("q3").classList.remove("hidden");
 }
 
-// SORU 3: Özellikler
+// SORU 3
 function submitFeatures(){
   const select = document.getElementById("featureSelect");
   const status = document.getElementById("featureStatus");
@@ -186,14 +191,14 @@ function submitFeatures(){
   if(featuresSelected.length==0){ status.innerText="❌ Özellik seçmediniz"; return; }
   status.innerText="✔ Seçilen Özellikler: "+featuresSelected.join(", ");
 
-  // Final info göster
   const final = document.getElementById("finalInfo");
   final.innerHTML = `<h2>Bugünkü Bilgiler</h2>
-  <p>Toplam Yıldız: ${totalStarsVal}</p>
-  <p>Bugün Kastığınız: ${todayStarsVal}</p>
-  <p>Max Kasabileceğiniz Limit: ${maxStars}</p>
-  <p>Seçilen Özellikler: ${featuresSelected.join(", ")}</p>`;
+    <p>Toplam Yıldız: ${totalStarsVal}</p>
+    <p>Bugün Kastığınız: ${todayStarsVal}</p>
+    <p>Max Kasabileceğiniz Limit: ${maxStars}</p>
+    <p>Seçilen Özellikler: ${featuresSelected.join(", ")}</p>`;
   final.classList.remove("hidden");
+  document.getElementById("q3").classList.add("hidden");
 }
 </script>
 
