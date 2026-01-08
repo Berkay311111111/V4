@@ -137,38 +137,74 @@ li{margin:4px 0}
 </div>
 
 <script>
+const API_URL = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
 let data = JSON.parse(localStorage.getItem("saho")) || {};
 
-function login(){
-  data.user = username.value;
-  data.pass = password.value;
-  data.license = license.value;
-  localStorage.setItem("saho",JSON.stringify(data));
-  loadPanel();
+function getHWID(){
+  return btoa(navigator.userAgent + screen.width + screen.height);
+}
+
+async function login(){
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const license  = document.getElementById("license").value.trim();
+
+  if(!username || !password || !license){
+    alert("Boş alan bırakma");
+    return;
+  }
+
+  try{
+    const res = await fetch(API_URL+"/login",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({username,password,license,hwid:getHWID()})
+    });
+    const resp = await res.json();
+
+    if(!resp.ok){ alert("❌ "+resp.message); return; }
+
+    data.user = resp.user;
+    data.token = resp.token;
+    data.expires = resp.expiresAt;
+    localStorage.setItem("saho",JSON.stringify(data));
+    loadPanel();
+
+  }catch(e){
+    alert("🌐 Sunucuya bağlanılamıyor");
+    console.error(e);
+  }
 }
 
 function loadPanel(){
   loginBox.classList.add("hidden");
   panelBox.classList.remove("hidden");
   welcome.innerText = "Hoşgeldin " + data.user;
-  userInfo.innerText = "Key: " + data.license;
+  userInfo.innerText = "Key: " + data.token;
+  if(data.total && data.today){
+    showFinal();
+  }
 }
 
 function saveStars(){
-  data.total = Number(totalStars.value);
-  data.today = Number(todayStars.value);
-  data.features = [...features.selectedOptions].map(o=>o.value);
+  data.total = Number(document.getElementById("totalStars").value);
+  data.today = Number(document.getElementById("todayStars").value);
+  data.features = [...document.getElementById("features").selectedOptions].map(o=>o.value);
   localStorage.setItem("saho",JSON.stringify(data));
+  showFinal();
+}
 
+function showFinal(){
   const final = data.total + data.today;
-  resultBox.innerHTML = `
+  const box = document.getElementById("resultBox");
+  box.innerHTML = `
     <h2>📊 Sonuç</h2>
     <p>Toplam: <b>${data.total}</b></p>
     <p>Bugün: <b>${data.today}</b></p>
     <p>🎯 Final: <b>${final}</b></p>
-    <p>🛠 ${data.features.join(", ")}</p>
+    <p>🛠 Özellikler: ${data.features.join(", ")}</p>
   `;
-  resultBox.classList.remove("hidden");
+  box.classList.remove("hidden");
 }
 
 function toggle(id){
