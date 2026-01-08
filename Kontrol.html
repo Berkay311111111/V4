@@ -2,9 +2,8 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Saho Control Panel</title>
+<title>Saho Secure Panel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
@@ -18,36 +17,38 @@
 }
 *{box-sizing:border-box;font-family:Inter}
 body{margin:0;background:var(--bg);color:var(--txt)}
-.hidden{display:none}
 
 .container{
-  max-width:1200px;
-  margin:auto;
-  padding:20px;
-}
-
-.grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:1fr 1fr 1fr;
   gap:20px;
+  padding:20px;
+  height:100vh;
 }
 
 .card{
   background:linear-gradient(135deg,#111827,#1c1f2a);
-  padding:25px;
   border-radius:20px;
+  padding:25px;
   box-shadow:0 15px 40px rgba(0,0,0,.6);
 }
 
-h1,h2{margin:0 0 10px}
+.center{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+
+.hidden{display:none}
 
 input,button{
   width:100%;
   padding:14px;
-  border-radius:12px;
   border:none;
-  font-size:16px;
+  border-radius:12px;
   margin-top:10px;
+  font-size:16px;
 }
 
 button{
@@ -57,166 +58,168 @@ button{
   cursor:pointer;
 }
 
-button:hover{opacity:.9}
-
-.checkbox-group label{
+.checkbox label{
   display:flex;
   align-items:center;
   gap:10px;
   margin:8px 0;
 }
 
-.status{margin-top:10px;font-weight:600}
+.spinner{
+  width:70px;height:70px;
+  border:8px solid rgba(255,255,255,.2);
+  border-top:8px solid var(--acc);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:auto;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-.limit{color:var(--warn)}
 .ok{color:var(--acc)}
+.warn{color:var(--warn)}
 .err{color:var(--err)}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div class="container" id="loginBox">
-  <div class="card" style="max-width:420px;margin:auto">
-    <h1>🔐 License Giriş</h1>
-    <input id="keyInput" placeholder="License Key">
-    <button onclick="login()">Giriş Yap</button>
-    <div class="status" id="loginStatus"></div>
-  </div>
-</div>
+<div class="container">
 
-<!-- PANEL -->
-<div class="container hidden" id="panelBox">
+  <!-- SOL: SORULAR -->
+  <div class="card" id="leftPanel">
+    <h2>📊 Yıldız Kontrol</h2>
 
-  <div class="grid">
-
-    <!-- SOL -->
-    <div class="card">
-      <h1 id="welcome"></h1>
-      <p id="banStatus"></p>
-
-      <!-- SORU 1 -->
-      <div id="q1">
-        <h2>🎮 Hesabın şu an kaç yıldız?</h2>
-        <input type="number" id="currentStars">
-        <button onclick="nextQ1()">Devam</button>
-      </div>
-
-      <!-- SORU 2 -->
-      <div id="q2" class="hidden">
-        <h2>⭐ Bugün kaç yıldız kasmak istiyorsun?</h2>
-        <input type="number" id="todayStars">
-        <button onclick="nextQ2()">Devam</button>
-      </div>
-
-      <!-- SONUÇ -->
-      <div id="final" class="hidden"></div>
+    <div id="q1">
+      <p>Şu an hesabınız kaç yıldız?</p>
+      <input type="number" id="starNow" min="50" max="999">
+      <button onclick="next1()">Devam</button>
     </div>
 
-    <!-- SAĞ -->
-    <div class="card">
-      <h2>🛠 Kullanılacak Özellikler</h2>
+    <div id="q2" class="hidden">
+      <p>Bugün kaç yıldız kastınız?</p>
+      <input type="number" id="starToday" min="0" max="55">
+      <button onclick="next2()">Devam</button>
+    </div>
 
-      <div class="checkbox-group">
+    <div id="q3" class="hidden">
+      <p>Bugün hangi özellikleri kullandınız?</p>
+      <div class="checkbox">
         <label><input type="checkbox" value="Pull Player"> Pull Player</label>
         <label><input type="checkbox" value="Aimbot"> Aimbot</label>
         <label><input type="checkbox" value="Chams"> Chams</label>
         <label><input type="checkbox" value="Macro"> Macro</label>
         <label><input type="checkbox" value="UID Bypass"> UID Bypass</label>
+        <label><input type="checkbox" value="Teleport"> Teleport</label>
       </div>
-
       <button onclick="calculate()">Hesapla</button>
-      <div id="limitInfo" class="status"></div>
-
-      <button style="margin-top:20px;background:#2563eb"
-        onclick="window.open('https://saho.exe','_blank')">
-        ⬇️ İNDİR
-      </button>
-
     </div>
 
+    <div id="loading" class="hidden">
+      <div class="spinner"></div>
+      <p style="text-align:center;margin-top:10px">Sonuç hesaplanıyor...</p>
+    </div>
+
+    <div id="result" class="hidden"></div>
   </div>
+
+  <!-- ORTA: KEYAUTH -->
+  <div class="card center" id="loginPanel">
+    <h1>🔐 KeyAuth</h1>
+    <input id="keyInput" placeholder="License Key">
+    <button onclick="login()">Giriş Yap</button>
+    <div id="loginStatus"></div>
+  </div>
+
+  <!-- SAĞ: HESAP -->
+  <div class="card" id="rightPanel">
+    <h2>👤 Hesap Bilgileri</h2>
+    <p id="info">Giriş bekleniyor...</p>
+    <p id="playerId"></p>
+    <p id="username"></p>
+    <p id="level"></p>
+    <p id="region"></p>
+    <p id="ban"></p>
+  </div>
+
 </div>
 
 <script>
-const API_URL = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
-let serverData = {};
-let currentStars = 0;
-let todayStars = 0;
+const API = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
 
-function getHWID(){
-  return btoa(navigator.userAgent + screen.width + screen.height);
+let starNow = 0;
+let starToday = 0;
+
+function hwid(){
+  return btoa(navigator.userAgent+screen.width+screen.height);
 }
 
 async function login(){
   const key = keyInput.value.trim();
   if(!key) return loginStatus.innerText="❌ Key boş";
 
-  loginStatus.innerText="Kontrol ediliyor...";
-
-  const res = await fetch(API_URL+"/login",{
+  const r = await fetch(API+"/login",{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({key, hwid:getHWID()})
+    body:JSON.stringify({key, hwid:hwid()})
   });
 
-  const data = await res.json();
-  if(!data.ok) return loginStatus.innerText="❌ "+data.message;
+  const d = await r.json();
+  if(!d.ok) return loginStatus.innerText="❌ "+d.message;
 
-  serverData = data;
-  loginBox.classList.add("hidden");
-  panelBox.classList.remove("hidden");
-
-  welcome.innerText = data.info;
-  banStatus.innerText = data.banStatus;
+  loginStatus.innerText="✔ Giriş başarılı";
+  info.innerText = d.info;
+  playerId.innerText = "Oyuncu ID: "+d.playerId;
+  username.innerText = "Kullanıcı: "+d.username;
+  level.innerText = "Level: "+d.level;
+  region.innerText = "Region: "+d.region;
+  ban.innerText = d.banStatus;
 }
 
-function nextQ1(){
-  currentStars = Number(currentStarsInput.value);
-  if(isNaN(currentStars)) return;
+function next1(){
+  starNow = Number(starNowInput.value);
+  if(starNow < 50 || starNow > 999) return;
   q1.classList.add("hidden");
   q2.classList.remove("hidden");
 }
 
-function nextQ2(){
-  todayStars = Number(todayStarsInput.value);
-  if(isNaN(todayStars)) return;
+function next2(){
+  starToday = Number(starTodayInput.value);
+  if(starToday < 0 || starToday > 55) return;
+  q2.classList.add("hidden");
+  q3.classList.remove("hidden");
 }
 
 function calculate(){
-  const checked = [...document.querySelectorAll('input[type=checkbox]:checked')]
-    .map(c=>c.value);
+  q3.classList.add("hidden");
+  loading.classList.remove("hidden");
 
-  if(checked.length === 0){
-    limitInfo.innerText="❌ Özellik seçmedin";
-    limitInfo.className="status err";
-    return;
-  }
+  setTimeout(()=>{
+    loading.classList.add("hidden");
 
-  let max = 55;
+    const checked = [...document.querySelectorAll('input[type=checkbox]:checked')]
+      .map(x=>x.value);
 
-  if(checked.includes("Aimbot") && checked.includes("UID Bypass")) max = 50;
-  if(checked.includes("Pull Player") && checked.includes("UID Bypass")) max = 45;
-  if(checked.includes("Chams") && checked.includes("Macro") && checked.includes("UID Bypass")) max = 55;
-  if(checked.length >= 4) max = 40;
+    let maxAdd = 55;
+    if(checked.includes("Pull Player") && checked.includes("UID Bypass")) maxAdd = 45;
+    if(checked.includes("Aimbot") && checked.includes("UID Bypass")) maxAdd = 50;
+    if(checked.includes("Chams") && checked.includes("Macro") && checked.includes("UID Bypass")) maxAdd = 55;
+    if(checked.length >= 5) maxAdd = 40;
 
-  if(todayStars > max){
-    limitInfo.innerHTML = `⚠️ Riskli! Max önerilen: ${max} yıldız`;
-    limitInfo.className="status limit";
-    return;
-  }
+    const final = starNow + starToday;
+    const limit = starNow + maxAdd;
 
-  final.innerHTML = `
-    <h2>📊 Sonuç</h2>
-    <p>Mevcut: ${currentStars}</p>
-    <p>Bugün: ${todayStars}</p>
-    <p>Final: ${currentStars + todayStars}</p>
-    <p>Max Güvenli Limit: ${max}</p>
-  `;
-  final.classList.remove("hidden");
-  limitInfo.innerText="✔️ Güvenli aralık";
-  limitInfo.className="status ok";
+    result.innerHTML = `
+      <h3>📌 Sonuç</h3>
+      <p>Şu an: ${starNow}</p>
+      <p>Bugün: ${starToday}</p>
+      <p>Final: ${final}</p>
+      <p>Max Güvenli: ${limit}</p>
+      <p class="${final>limit?'err':'ok'}">
+        ${final>limit?'⚠️ BAN RİSKİ':'✔️ Güvenli'}
+      </p>
+    `;
+    result.classList.remove("hidden");
+  },5000);
 }
 </script>
 
