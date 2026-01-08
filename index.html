@@ -691,12 +691,76 @@ body, html {
 </div>
 
 <!-- FREE FIRE -->
+<style>
+  .announce {
+    border:1px solid #ffaa00;
+    background:rgba(255,170,0,0.08);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow:0 0 0 rgba(255,170,0,0.0); }
+    50% { box-shadow:0 0 12px rgba(255,170,0,0.6); }
+    100% { box-shadow:0 0 0 rgba(255,170,0,0.0); }
+  }
+  .badge-new {
+    background:#ff0000;
+    color:#fff;
+    font-size:11px;
+    padding:2px 6px;
+    border-radius:6px;
+    margin-left:6px;
+  }
+  .toggle-btn {
+    cursor:pointer;
+    color:#00ffcc;
+    font-size:13px;
+  }
+  .toggle-content {
+    display:none;
+    margin-top:8px;
+  }
+</style>
+
+<script>
+  function toggleSettings(id){
+    var el = document.getElementById(id);
+    el.style.display = (el.style.display === "none") ? "block" : "none";
+  }
+</script>
+
 <div class="tab" id="freefire">
   <h2>Premium Panel + Free Fire</h2>
   <p style="font-size:14px; opacity:0.8;">
     Günlük CSR rankta <b>55 Yıldız</b> ve <b>%85 kafa vuruşu</b> limitine kadar
     <b>Safe Panel</b> üzerinden stabil kullanım.
   </p>
+
+  <!-- 🔔 DUYURU -->
+  <div class="item announce">
+    <span>
+      <b>📢 DUYURU</b><br>
+      <small>
+        Panele yeni eklenen <b>Pull Menü V5</b><span class="badge-new">NEW</span> ile
+        haraket etmenize gerek kalmadan rakiplerinizi indirebilirsiniz.
+        Daha hızlı, daha stabil ve optimize edilmiş sürüm.
+      </small>
+    </span>
+  </div>
+
+  <!-- ⏱ 24 SAAT KULLANIM -->
+  <div class="item" style="border:1px solid #ff4444;">
+    <span>
+      <b>⏱ 24 SAAT KULLANIM</b><br>
+      <small>
+        Panel giriş bilgileri (User & Pass) için aşağıdaki UID'ye
+        <b>500 Elmas</b> gönderilmelidir.  
+        Aksi takdirde panele erişim sağlanmaz.
+        <br><br>
+        <b>UID:</b> <span style="color:#00ff00;">7442955706</span>
+      </small>
+    </span>
+  </div>
+
   <!-- OYUN DOSYALARI -->
   <div class="item">
     <span>
@@ -708,6 +772,7 @@ body, html {
     </span>
     <a href="https://drive.google.com/file/d/1dQ04siVaNnaOiNYWYfgXkDlQnJ-4n1qN/view?usp=drive_link" target="_blank">İndir</a>
   </div>
+
   <div class="item">
     <span>
       Free Fire MAX x86 Native<br>
@@ -718,11 +783,10 @@ body, html {
     </span>
     <a href="https://www.mediafire.com/file/q4996d4t30lgip0/FF_MAX_X86_OB51_7FARFF.xapk/file" target="_blank">İndir</a>
   </div>
+
   <div style="margin-top:30px;"></div>
 
- 
-
-  <!-- External + Bypass Panel -->
+  <!-- PANEL -->
   <div class="item saho-box">
     <span>
       <b>External + Bypass Panel</b><br>
@@ -734,41 +798,47 @@ body, html {
 
       <div class="features">
         <div class="feature-group">
-          <b>🔓 UID BYPASS + EXTERNAL ÖZELLİKLERİ</b>
+          <b>🔓 UID BYPASS + EXTERNAL</b>
           <ul>
-        <li>Sunucu tabanlı UID doğrulama sistemi</li>
-            <li>Herhangi bir client-side kod çalıştırılmaz</li>
-            <li>Black Engine Server üzerinden işlem yapılır</li>
-            <li>Aimbot</li> <!-- Fast Switch ayrı -->
-            <li>Fast Switch</li> <!-- Aimbot ayrı -->
-            <li>Macro Gelismis Seçenekler</li>
-            <li>64x Chams Menü (Tamamı Aktif)</li>
+            <li>Aimbot</li>
+            <li>Fast Switch</li>
+            <li>Macro Gelişmiş Seçenekler</li>
+            <li>64x Chams Menü</li>
             <li>Zero Detection System</li>
-            <li>External Çalışma – Ban Riski Sıfır</li>
+          </ul>
+        </div>
+
+        <!-- ⚙️ TOGGLE AYARLAR -->
+        <div class="feature-group">
+          <b>⚙️ AYARLAR</b>
+          <div class="toggle-btn" onclick="toggleSettings('ffsettings')">
+            ▶ Ayarları Göster / Gizle
+          </div>
+          <ul class="toggle-content" id="ffsettings">
+            <li>Teleport</li>
+            <li>Underkill</li>
+            <li>Spawn Kill</li>
+            <li>TP Heist</li>
+            <li>Auto Refresh</li>
           </ul>
         </div>
 
         <div class="feature-group">
           <b>⚙️ ÖNERİLEN AYARLAR</b>
           <ul>
-            <li>En İyi Macro & Aimbot için HUD Kodu: <b>#FFHUDT6O3jR0zSb5Po7eP</b></li>
-            <li>BlueStacks Görüntü Ayarı: <b>1920x1080 - 320 DPI</b></li>
-            <li>BlueStacks HUD Dosyası:
-            <li>Oyunda Genel Hassasiyet: <b>100 - 110 arası</b> (En stabil performans)</li>
+            <li>HUD Kodu: <b>#FFHUDT6O3jR0zSb5Po7eP</b></li>
+            <li>BlueStacks: <b>1920x1080 - 320 DPI</b></li>
+            <li>Genel Hassasiyet: <b>100 - 110</b></li>
           </ul>
         </div>
       </div>
     </span>
 
-    <!-- 2 YENİ TROLL İNDİRME LİNKİ -->
-    <a href="https://www.mediafire.com/file/mbmonzwgtxo3o3d/com.dts.freefireth.cfg/file" target="_blank">
-      İndir Hud
-    </a>
-     <a href="https://www.mediafire.com/file/jug3y8rynh1vxho/Saho+V5.rar/file" target="_blank">
-      İndir Panel
-    </a>
+    <a href="https://www.mediafire.com/file/mbmonzwgtxo3o3d/com.dts.freefireth.cfg/file" target="_blank">İndir Hud</a>
+    <a href="https://www.mediafire.com/file/jug3y8rynh1vxho/Saho+V5.rar/file" target="_blank">İndir Panel</a>
   </div>
 </div>
+
 
 <!-- Tools Tab -->
 <div class="tab" id="tools" style="display:block;">
