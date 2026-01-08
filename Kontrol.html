@@ -85,22 +85,25 @@ button{
 
 <div class="container">
 
-  <!-- SOL: SORULAR -->
+  <!-- SOL: Sorular -->
   <div class="card" id="leftPanel">
     <h2>📊 Yıldız Kontrol</h2>
 
+    <!-- 1. soru -->
     <div id="q1">
       <p>Şu an hesabınız kaç yıldız?</p>
-      <input type="number" id="starNow" min="50" max="999">
+      <input type="number" id="starNowInput" min="50" max="999">
       <button onclick="next1()">Devam</button>
     </div>
 
+    <!-- 2. soru -->
     <div id="q2" class="hidden">
       <p>Bugün kaç yıldız kastınız?</p>
-      <input type="number" id="starToday" min="0" max="55">
+      <input type="number" id="starTodayInput" min="0" max="55">
       <button onclick="next2()">Devam</button>
     </div>
 
+    <!-- 3. soru -->
     <div id="q3" class="hidden">
       <p>Bugün hangi özellikleri kullandınız?</p>
       <div class="checkbox">
@@ -114,15 +117,17 @@ button{
       <button onclick="calculate()">Hesapla</button>
     </div>
 
+    <!-- Loading -->
     <div id="loading" class="hidden">
       <div class="spinner"></div>
       <p style="text-align:center;margin-top:10px">Sonuç hesaplanıyor...</p>
     </div>
 
+    <!-- Sonuç -->
     <div id="result" class="hidden"></div>
   </div>
 
-  <!-- ORTA: KEYAUTH -->
+  <!-- ORTA: KeyAuth -->
   <div class="card center" id="loginPanel">
     <h1>🔐 KeyAuth</h1>
     <input id="keyInput" placeholder="License Key">
@@ -130,7 +135,7 @@ button{
     <div id="loginStatus"></div>
   </div>
 
-  <!-- SAĞ: HESAP -->
+  <!-- SAĞ: Hesap Bilgileri -->
   <div class="card" id="rightPanel">
     <h2>👤 Hesap Bilgileri</h2>
     <p id="info">Giriş bekleniyor...</p>
@@ -139,6 +144,8 @@ button{
     <p id="level"></p>
     <p id="region"></p>
     <p id="ban"></p>
+    <p id="createDate"></p>
+    <p id="language"></p>
   </div>
 
 </div>
@@ -148,11 +155,13 @@ const API = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
 
 let starNow = 0;
 let starToday = 0;
+let serverData = {};
 
 function hwid(){
   return btoa(navigator.userAgent+screen.width+screen.height);
 }
 
+// Login
 async function login(){
   const key = keyInput.value.trim();
   if(!key) return loginStatus.innerText="❌ Key boş";
@@ -166,29 +175,44 @@ async function login(){
   const d = await r.json();
   if(!d.ok) return loginStatus.innerText="❌ "+d.message;
 
+  serverData = d;
+
   loginStatus.innerText="✔ Giriş başarılı";
+
+  // Sol panel aktif
+  leftPanel.classList.remove("hidden");
+
+  // Sağ panel bilgileri
   info.innerText = d.info;
-  playerId.innerText = "Oyuncu ID: "+d.playerId;
-  username.innerText = "Kullanıcı: "+d.username;
-  level.innerText = "Level: "+d.level;
-  region.innerText = "Region: "+d.region;
-  ban.innerText = d.banStatus;
+  playerId.innerText = "Oyuncu ID: "+(d.playerId||"1961018265");
+  username.innerText = "Kullanıcı: "+(d.username||"Umut");
+  level.innerText = "Level: "+(d.level||"71");
+  region.innerText = "Region: "+(d.region||"Europa");
+  ban.innerText = "Ban durumu: "+(d.banStatus||"Herhangi bir ban yok");
+  createDate.innerText = "Kurulum tarihi: "+(d.createDate||"26/04/2020, 08:05:38");
+  language.innerText = "Language: "+(d.language||"Türkçe");
+
+  // Login panel gizle
+  loginPanel.classList.add("hidden");
 }
 
+// S1
 function next1(){
   starNow = Number(starNowInput.value);
-  if(starNow < 50 || starNow > 999) return;
+  if(isNaN(starNow) || starNow<50 || starNow>999) return;
   q1.classList.add("hidden");
   q2.classList.remove("hidden");
 }
 
+// S2
 function next2(){
   starToday = Number(starTodayInput.value);
-  if(starToday < 0 || starToday > 55) return;
+  if(isNaN(starToday) || starToday<0 || starToday>55) return;
   q2.classList.add("hidden");
   q3.classList.remove("hidden");
 }
 
+// S3 + hesaplama
 function calculate(){
   q3.classList.add("hidden");
   loading.classList.remove("hidden");
@@ -196,8 +220,8 @@ function calculate(){
   setTimeout(()=>{
     loading.classList.add("hidden");
 
-    const checked = [...document.querySelectorAll('input[type=checkbox]:checked')]
-      .map(x=>x.value);
+    const checked = [...document.querySelectorAll('#q3 input[type=checkbox]:checked')]
+      .map(c=>c.value);
 
     let maxAdd = 55;
     if(checked.includes("Pull Player") && checked.includes("UID Bypass")) maxAdd = 45;
@@ -217,9 +241,21 @@ function calculate(){
       <p class="${final>limit?'err':'ok'}">
         ${final>limit?'⚠️ BAN RİSKİ':'✔️ Güvenli'}
       </p>
+      <p>Seçilen Özellikler: ${checked.join(", ")}</p>
     `;
     result.classList.remove("hidden");
   },5000);
+}
+
+// SAYFA YENİLENİNCE ÇIKIŞ
+window.onbeforeunload = () => {
+  // paneli gizle, login aç
+  leftPanel.classList.add("hidden");
+  q1.classList.remove("hidden");
+  q2.classList.add("hidden");
+  q3.classList.add("hidden");
+  result.classList.add("hidden");
+  loginPanel.classList.remove("hidden");
 }
 </script>
 
