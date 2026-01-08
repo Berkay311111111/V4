@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Saho Secure Dashboard</title>
+<title>Saho Titan Engine</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
@@ -16,27 +16,12 @@
   --err:#ff1f4c;
   --txt:#e5e7eb;
 }
-
 *{box-sizing:border-box;font-family:Inter,sans-serif}
-
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--txt);
-  min-height:100vh;
-}
-
-/* BODY STATES */
-body.center{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-body.top{
-  display:block;
-}
-
+body{margin:0;background:var(--bg);color:var(--txt);min-height:100vh}
 .hidden{display:none}
+
+/* CENTER STATES */
+.center{display:flex;justify-content:center;align-items:center}
 
 /* CARD */
 .card{
@@ -45,14 +30,6 @@ body.top{
   padding:25px;
   box-shadow:0 0 20px rgba(0,255,255,.25),0 0 40px rgba(255,0,255,.15);
 }
-
-/* LOGIN */
-.login-wrapper{
-  width:100%;
-  display:flex;
-  justify-content:center;
-}
-.login-card{width:380px}
 
 input,button{
   width:100%;
@@ -63,32 +40,38 @@ input,button{
   background:#111827;
   color:var(--txt);
 }
-
 button{
   background:linear-gradient(135deg,var(--primary),var(--secondary));
   font-weight:800;
   cursor:pointer;
 }
 
-h1,h2,h3{color:var(--primary);text-align:center}
+h1,h2,h3{text-align:center;color:var(--primary)}
 
 .infoBox{
   background:rgba(0,255,255,.12);
   padding:12px;
   border-radius:12px;
   text-align:center;
-  font-size:14px;
+  margin-bottom:20px;
 }
+
+/* LOADING */
+.spinner{
+  width:70px;height:70px;
+  border:7px solid rgba(255,255,255,.15);
+  border-top:7px solid var(--acc);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin-bottom:15px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* DASHBOARD */
-.dashboard-wrapper{
-  width:100%;
-  padding:30px;
-}
-
-.dashboard-grid{
+.dashboard{padding:30px}
+.grid{
   display:grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:25px;
 }
 
@@ -117,53 +100,67 @@ h1,h2,h3{color:var(--primary);text-align:center}
   padding:8px;
   border-radius:10px;
 }
+
+/* FOOTER INFO */
+.footer{
+  margin-top:30px;
+  padding:20px;
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+  font-size:14px;
+}
+.footer div{
+  background:rgba(0,255,255,.08);
+  padding:12px;
+  border-radius:12px;
+}
 </style>
 </head>
 
 <body class="center">
 
 <!-- LOGIN -->
-<div class="login-wrapper" id="loginCard">
-  <div class="card login-card">
-    <h1>🔐 SAHO TITAN ENGINE</h1>
-    <input id="keyInput" placeholder="License Key">
-    <button onclick="login()">Giriş Yap</button>
-    <div id="loginStatus" class="infoBox"></div>
-  </div>
+<div id="loginCard" class="card" style="width:380px">
+  <h1>🔐 SAHO TITAN ENGINE</h1>
+  <input id="keyInput" placeholder="License Key">
+  <button onclick="login()">Giriş Yap</button>
+</div>
+
+<!-- LOADING -->
+<div id="loading" class="hidden center" style="flex-direction:column;width:100%">
+  <div class="spinner"></div>
+  <h3>SAHO TITAN ENGINE<br>Sunucusu ile Bağlanılıyor…</h3>
 </div>
 
 <!-- DASHBOARD -->
-<div class="dashboard-wrapper hidden" id="dashboard">
+<div id="dashboard" class="hidden dashboard">
 
-  <div class="infoBox" style="margin-bottom:25px;font-weight:800">
-    🚀 Güncel Panelde Olan Özellikler • Hepsi %100 SAFE
+  <div class="infoBox">
+    🚀 Güncel Panel Özellikleri • %100 SAFE<br>
+    📅 Son Güncelleme: <b>08.01.2026</b>
   </div>
 
-  <div class="dashboard-grid">
+  <div class="grid">
 
-    <!-- PANEL -->
+    <!-- INFO -->
     <div class="card">
-      <h2>Saho V5 Black Engine</h2>
-      <ul>
-        <li>✔ Pull Player</li>
-        <li>✔ UID Bypass</li>
-        <li>✔ Aimbot</li>
-        <li>✔ Fast Switch</li>
-        <li>✔ Macro</li>
-        <li>✔ HEX ESP Menü</li>
-        <li>✔ Chams Menü</li>
-      </ul>
-
-      <a class="download-btn"
-        href="https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file"
-        target="_blank">
-        ⬇ PANELİ İNDİR
-      </a>
+      <h2>👤 Hesap Bilgileri</h2>
+      <div id="info"></div>
+      <div id="playerId"></div>
+      <div id="username"></div>
+      <div id="level"></div>
+      <div id="region"></div>
+      <div id="ban"></div>
+      <div id="createDate"></div>
+      <div id="language"></div>
     </div>
 
-    <!-- YILDIZ -->
+    <!-- STAR -->
     <div class="card">
-      <h2>⭐ Güvenli Yıldız</h2>
+      <h2>⭐ Yıldız Hesaplama</h2>
 
       <div id="q1">
         <p>Şu an kaç yıldız?</p>
@@ -193,42 +190,92 @@ h1,h2,h3{color:var(--primary);text-align:center}
       <div id="result" class="hidden"></div>
     </div>
 
-    <!-- HESAP -->
+    <!-- PANEL -->
     <div class="card">
-      <h2>👤 Hesap Bilgileri</h2>
-      <div id="info"></div>
-      <div id="playerId"></div>
-      <div id="username"></div>
-      <div id="level"></div>
-      <div id="region"></div>
-      <div id="ban"></div>
-      <div id="createDate"></div>
-      <div id="language"></div>
+      <h2>Saho V5 Black Engine</h2>
+      <ul>
+        <li>✔ Pull Player</li>
+        <li>✔ UID Bypass</li>
+        <li>✔ Aimbot</li>
+        <li>✔ Fast Switch</li>
+        <li>✔ Macro</li>
+        <li>✔ HEX ESP Menü</li>
+        <li>✔ Chams Menü</li>
+      </ul>
+
+      <a class="download-btn"
+         href="https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file"
+         target="_blank">
+         ⬇ PANELİ İNDİR
+      </a>
     </div>
 
   </div>
+
+  <!-- FOOTER REAL INFO -->
+  <div class="footer">
+    <div>🌐 IP Adresi:<br><b id="ip">Alınıyor…</b></div>
+    <div>🧭 Tarayıcı:<br><b id="browser"></b></div>
+    <div>🕒 Saat:<br><b id="clock"></b></div>
+    <div>🖥️ Ekran:<br><b id="screen"></b></div>
+    <div>🔐 HWID Hash:<br><b id="hwid"></b></div>
+  </div>
+
 </div>
 
 <script>
 let starNow=0, starToday=0;
 
-function login(){
-  document.getElementById("loginCard").classList.add("hidden");
-  document.getElementById("dashboard").classList.remove("hidden");
-  document.body.classList.remove("center");
-  document.body.classList.add("top");
-
-  info.innerText="Aktif Lisans";
-  playerId.innerText="ID: 1961018265";
-  username.innerText="Kullanıcı: Umut";
-  level.innerText="Level: 71";
-  region.innerText="Region: EU";
-  ban.innerText="Ban: Yok";
-  createDate.innerText="Kurulum: 26/04/2020";
-  language.innerText="Dil: Türkçe";
+function hwid(){
+  return btoa(navigator.userAgent+screen.width+screen.height);
 }
 
-/* YILDIZ */
+async function getIP(){
+  try{
+    const r=await fetch("https://api.ipify.org?format=json");
+    const d=await r.json();
+    document.getElementById("ip").innerText=d.ip;
+  }catch{
+    document.getElementById("ip").innerText="Bilinmiyor";
+  }
+}
+
+function login(){
+  document.getElementById("loginCard").classList.add("hidden");
+  document.getElementById("loading").classList.remove("hidden");
+
+  setTimeout(()=>{
+    document.body.classList.remove("center");
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+
+    /* INFO – LOGIN'DEN GELEN */
+    info.innerText="Aktif Lisans";
+    playerId.innerText="ID: 1961018265";
+    username.innerText="Kullanıcı: Umut";
+    level.innerText="Level: 71";
+    region.innerText="Region: EU";
+    ban.innerText="Ban: Yok";
+    createDate.innerText="Kurulum: 26/04/2020";
+    language.innerText="Dil: Türkçe";
+
+    /* FOOTER */
+    browser.innerText=navigator.userAgent;
+    screen.innerText=`${screen.width} x ${screen.height}`;
+    hwid.innerText=hwid();
+    getIP();
+    updateClock();
+  },7000);
+}
+
+/* CLOCK */
+function updateClock(){
+  setInterval(()=>{
+    clock.innerText=new Date().toLocaleTimeString();
+  },1000);
+}
+
+/* STAR LOGIC */
 function next1(){
   starNow=+starNowInput?.value||+document.getElementById("starNow").value;
   if(starNow<50)return;
@@ -243,9 +290,11 @@ function calculate(){
   const checked=[...document.querySelectorAll('#q3 input:checked')].length;
   const maxAdd=checked>=5?40:55;
   const final=starNow+starToday;
-  result.innerHTML=`<h3>Sonuç</h3>
-  <p>Final: ${final}</p>
-  <p>${final>starNow+maxAdd?"⚠️ BAN RİSKİ":"✔️ GÜVENLİ"}</p>`;
+  result.innerHTML=`
+    <h3>📌 Sonuç</h3>
+    <p>Final: ${final}</p>
+    <p>${final>starNow+maxAdd?"⚠️ BAN RİSKİ":"✔️ GÜVENLİ"}</p>
+  `;
   result.classList.remove("hidden");
 }
 </script>
