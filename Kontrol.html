@@ -16,17 +16,35 @@
   --err:#ff1f4c;
   --txt:#e5e7eb;
 }
+
 *{box-sizing:border-box;font-family:Inter,sans-serif}
+
 body{
   margin:0;
   background:var(--bg);
   color:var(--txt);
   min-height:100vh;
+}
+
+/* BODY STATES */
+body.center{
   display:flex;
   justify-content:center;
   align-items:center;
 }
+body.top{
+  display:block;
+}
+
 .hidden{display:none}
+
+/* CARD */
+.card{
+  background:linear-gradient(135deg,#1f1f2e,#2c2c3a);
+  border-radius:20px;
+  padding:25px;
+  box-shadow:0 0 20px rgba(0,255,255,.25),0 0 40px rgba(255,0,255,.15);
+}
 
 /* LOGIN */
 .login-wrapper{
@@ -34,12 +52,8 @@ body{
   display:flex;
   justify-content:center;
 }
-.card{
-  background:linear-gradient(135deg,#1f1f2e,#2c2c3a);
-  border-radius:20px;
-  padding:25px;
-  box-shadow:0 0 20px rgba(0,255,255,.25),0 0 40px rgba(255,0,255,.15);
-}
+.login-card{width:380px}
+
 input,button{
   width:100%;
   padding:12px;
@@ -49,11 +63,13 @@ input,button{
   background:#111827;
   color:var(--txt);
 }
+
 button{
   background:linear-gradient(135deg,var(--primary),var(--secondary));
   font-weight:800;
   cursor:pointer;
 }
+
 h1,h2,h3{color:var(--primary);text-align:center}
 
 .infoBox{
@@ -67,26 +83,27 @@ h1,h2,h3{color:var(--primary);text-align:center}
 /* DASHBOARD */
 .dashboard-wrapper{
   width:100%;
-  max-width:1400px;
-  padding:20px;
-}
-.dashboard-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
-  gap:20px;
+  padding:30px;
 }
 
+.dashboard-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:25px;
+}
+
+/* DOWNLOAD */
 .download-btn{
   display:block;
   margin-top:15px;
-  padding:14px;
+  padding:15px;
   text-align:center;
-  border-radius:14px;
+  border-radius:15px;
   font-weight:900;
   text-decoration:none;
   color:#000;
   background:linear-gradient(135deg,#00fff7,#ff00f7);
-  box-shadow:0 0 15px rgba(0,255,255,.5);
+  box-shadow:0 0 20px rgba(0,255,255,.5);
 }
 
 /* CHECKBOX */
@@ -103,11 +120,11 @@ h1,h2,h3{color:var(--primary);text-align:center}
 </style>
 </head>
 
-<body>
+<body class="center">
 
 <!-- LOGIN -->
 <div class="login-wrapper" id="loginCard">
-  <div class="card" style="width:380px">
+  <div class="card login-card">
     <h1>🔐 SAHO TITAN ENGINE</h1>
     <input id="keyInput" placeholder="License Key">
     <button onclick="login()">Giriş Yap</button>
@@ -118,13 +135,13 @@ h1,h2,h3{color:var(--primary);text-align:center}
 <!-- DASHBOARD -->
 <div class="dashboard-wrapper hidden" id="dashboard">
 
-  <div class="infoBox" style="margin-bottom:20px;font-weight:800">
+  <div class="infoBox" style="margin-bottom:25px;font-weight:800">
     🚀 Güncel Panelde Olan Özellikler • Hepsi %100 SAFE
   </div>
 
   <div class="dashboard-grid">
 
-    <!-- PANEL BİLGİ -->
+    <!-- PANEL -->
     <div class="card">
       <h2>Saho V5 Black Engine</h2>
       <ul>
@@ -138,15 +155,15 @@ h1,h2,h3{color:var(--primary);text-align:center}
       </ul>
 
       <a class="download-btn"
-         href="https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file"
-         target="_blank">
-         ⬇ PANELİ İNDİR
+        href="https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file"
+        target="_blank">
+        ⬇ PANELİ İNDİR
       </a>
     </div>
 
-    <!-- YILDIZ PANELİ -->
+    <!-- YILDIZ -->
     <div class="card">
-      <h2>⭐ Güvenli Yıldız Hesaplama</h2>
+      <h2>⭐ Güvenli Yıldız</h2>
 
       <div id="q1">
         <p>Şu an kaç yıldız?</p>
@@ -155,7 +172,7 @@ h1,h2,h3{color:var(--primary);text-align:center}
       </div>
 
       <div id="q2" class="hidden">
-        <p>Bugün kaç yıldız kastın?</p>
+        <p>Bugün kaç yıldız?</p>
         <input type="number" id="starToday" min="0" max="55">
         <button onclick="next2()">Devam</button>
       </div>
@@ -193,65 +210,42 @@ h1,h2,h3{color:var(--primary);text-align:center}
 </div>
 
 <script>
-const API="https://loan-nonbureaucratic-janeth.ngrok-free.dev";
 let starNow=0, starToday=0;
 
-function hwid(){
-  return btoa(navigator.userAgent+screen.width+screen.height);
-}
-
-async function login(){
-  const key=document.getElementById("keyInput").value.trim();
-  if(!key) return;
+function login(){
   document.getElementById("loginCard").classList.add("hidden");
   document.getElementById("dashboard").classList.remove("hidden");
+  document.body.classList.remove("center");
+  document.body.classList.add("top");
 
-  try{
-    const r=await fetch(API+"/login",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({key,hwid:hwid()})
-    });
-    const d=await r.json();
-
-    document.getElementById("info").innerText=d.info||"Aktif Lisans";
-    document.getElementById("playerId").innerText="ID: "+(d.playerId||"1961018265");
-    document.getElementById("username").innerText="Kullanıcı: "+(d.username||"Umut");
-    document.getElementById("level").innerText="Level: "+(d.level||"71");
-    document.getElementById("region").innerText="Region: "+(d.region||"EU");
-    document.getElementById("ban").innerText="Ban: Yok";
-    document.getElementById("createDate").innerText="Kurulum: 26/04/2020";
-    document.getElementById("language").innerText="Dil: Türkçe";
-  }catch(e){console.error(e)}
+  info.innerText="Aktif Lisans";
+  playerId.innerText="ID: 1961018265";
+  username.innerText="Kullanıcı: Umut";
+  level.innerText="Level: 71";
+  region.innerText="Region: EU";
+  ban.innerText="Ban: Yok";
+  createDate.innerText="Kurulum: 26/04/2020";
+  language.innerText="Dil: Türkçe";
 }
 
-/* YILDIZ LOGIC */
+/* YILDIZ */
 function next1(){
-  starNow=Number(document.getElementById("starNow").value);
-  if(starNow<50||starNow>999)return;
-  q1.classList.add("hidden");
-  q2.classList.remove("hidden");
+  starNow=+starNowInput?.value||+document.getElementById("starNow").value;
+  if(starNow<50)return;
+  q1.classList.add("hidden"); q2.classList.remove("hidden");
 }
 function next2(){
-  starToday=Number(document.getElementById("starToday").value);
-  if(starToday<0||starToday>55)return;
-  q2.classList.add("hidden");
-  q3.classList.remove("hidden");
+  starToday=+document.getElementById("starToday").value;
+  q2.classList.add("hidden"); q3.classList.remove("hidden");
 }
 function calculate(){
   q3.classList.add("hidden");
-  const checked=[...document.querySelectorAll('#q3 input:checked')].map(c=>c.value);
-  let maxAdd=55;
-  if(checked.includes("Pull Player")&&checked.includes("UID Bypass"))maxAdd=45;
-  if(checked.length>=5)maxAdd=40;
+  const checked=[...document.querySelectorAll('#q3 input:checked')].length;
+  const maxAdd=checked>=5?40:55;
   const final=starNow+starToday;
-  const limit=starNow+maxAdd;
-  result.innerHTML=`
-    <h3>📌 Sonuç</h3>
-    <p>Final: ${final}</p>
-    <p>Max Güvenli: ${limit}</p>
-    <p>${final>limit?"⚠️ BAN RİSKİ":"✔️ GÜVENLİ"}</p>
-  `;
+  result.innerHTML=`<h3>Sonuç</h3>
+  <p>Final: ${final}</p>
+  <p>${final>starNow+maxAdd?"⚠️ BAN RİSKİ":"✔️ GÜVENLİ"}</p>`;
   result.classList.remove("hidden");
 }
 </script>
