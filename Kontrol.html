@@ -27,15 +27,18 @@ body{
   border-radius:18px;padding:20px;
   box-shadow:0 0 25px rgba(0,255,255,.25);
 }
-h1,h2,h3{text-align:center;color:var(--primary);margin-top:0}
+h1,h2,h3{margin-top:0;text-align:center;color:var(--primary)}
 input,button{
   width:100%;padding:12px;border:none;border-radius:12px;
   margin-top:10px;background:#111827;color:var(--txt);font-size:15px;
 }
-button{background:linear-gradient(135deg,var(--primary),var(--secondary));font-weight:800;cursor:pointer}
+button{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  font-weight:800;cursor:pointer;
+}
 #loginCard{width:360px;text-align:center}
 
-/* loading */
+/* LOADING */
 .spinner{
   width:70px;height:70px;border:7px solid rgba(255,255,255,.2);
   border-top:7px solid var(--primary);border-radius:50%;
@@ -43,7 +46,7 @@ button{background:linear-gradient(135deg,var(--primary),var(--secondary));font-w
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* dashboard */
+/* DASHBOARD */
 #dashboard{width:95%;max-width:1200px}
 .announce{
   text-align:center;font-weight:800;padding:10px;border-radius:12px;
@@ -55,7 +58,7 @@ button{background:linear-gradient(135deg,var(--primary),var(--secondary));font-w
   border-radius:14px;padding:15px;
 }
 
-/* checkbox */
+/* CHECKBOX */
 .cb label{
   display:flex;align-items:center;gap:6px;
   padding:6px 10px;margin-bottom:6px;
@@ -63,8 +66,11 @@ button{background:linear-gradient(135deg,var(--primary),var(--secondary));font-w
   cursor:pointer;
 }
 
-/* footer */
-.footer{margin-top:15px;font-size:13px;opacity:.85;text-align:center;white-space:pre-line}
+/* FOOTER */
+.footer{
+  margin-top:15px;font-size:13px;opacity:.85;
+  text-align:center;white-space:pre-line
+}
 </style>
 </head>
 <body>
@@ -86,11 +92,12 @@ button{background:linear-gradient(135deg,var(--primary),var(--secondary));font-w
 
 <!-- DASHBOARD -->
 <div class="card hidden" id="dashboard">
+
   <div class="announce">🚀 Güncel Panel Özellikleri – Hepsi %100 SAFE</div>
 
   <div class="panels">
 
-    <!-- INFO -->
+    <!-- INFO PANEL -->
     <div class="panelBox">
       <h3>👤 Hesap Bilgileri</h3>
       <div id="info"></div>
@@ -103,10 +110,9 @@ button{background:linear-gradient(135deg,var(--primary),var(--secondary));font-w
       <div id="expires"></div>
     </div>
 
-    <!-- YILDIZ -->
+    <!-- YILDIZ PANEL -->
     <div class="panelBox">
       <h3>⭐ Yıldız Hesaplama</h3>
-
       <input type="number" id="starNow" placeholder="Şu anki yıldız">
       <input type="number" id="starToday" placeholder="Bugün kasılan">
 
@@ -125,7 +131,7 @@ button{background:linear-gradient(135deg,var(--primary),var(--secondary));font-w
       <div id="result"></div>
     </div>
 
-    <!-- DOWNLOAD -->
+    <!-- DOWNLOAD PANEL -->
     <div class="panelBox">
       <h3>⬇️ Panel İndir</h3>
       <a href="https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file"
@@ -135,7 +141,9 @@ button{background:linear-gradient(135deg,var(--primary),var(--secondary));font-w
          background:linear-gradient(135deg,#00fff7,#ff00f7);color:#000;">
         SAHO V5 BLACK ENGINE
       </a>
-      <p style="text-align:center;margin-top:10px">Son Güncelleme: <b>08.01.2026</b></p>
+      <p style="text-align:center;margin-top:10px">
+        Son Güncelleme: <b>08.01.2026</b>
+      </p>
     </div>
 
   </div>
@@ -148,61 +156,61 @@ const API = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
 
 async function login(){
   const key = keyInput.value.trim();
-  if(!key) return;
+  if(!key){ alert("Key gir"); return; }
 
   loginCard.classList.add("hidden");
   loadingCard.classList.remove("hidden");
 
   try{
-    const r = await fetch(API+"/login",{
+    const r = await fetch(API + "/login",{
       method:"POST",
       headers:{ "Content-Type":"application/json" },
       body: JSON.stringify({ key })
     });
     const d = await r.json();
-    if(!d.success) throw "fail";
 
+    // 🔴 DOĞRU KONTROL
+    if(!d.ok) throw new Error("LOGIN_FAIL");
+
+    // ⏳ 7 SN ANİMASYON
     setTimeout(async ()=>{
       loadingCard.classList.add("hidden");
       dashboard.classList.remove("hidden");
 
-      const u = d.user;
-      info.innerText = u.info;
-      playerId.innerText = "Player ID: "+u.playerId;
-      username.innerText = "Username: "+u.username;
-      region.innerText = "Region: "+u.region;
-      level.innerText = "Level: "+u.level;
-      createDate.innerText = "Kurulum: "+u.createTime;
-      language.innerText = "Dil: "+u.language;
-      expires.innerText = "Bitiş: "+u.expiresAt;
+      // INFO’LAR SADECE SERVER’DAN
+      info.innerText       = d.info || "";
+      playerId.innerText   = "Player ID: " + (d.playerId||"-");
+      username.innerText   = "Username: " + (d.username||"-");
+      region.innerText     = "Region: " + (d.region||"-");
+      level.innerText      = "Level: " + (d.level||"-");
+      createDate.innerText = "Kurulum: " + (d.createTime||"-");
+      language.innerText   = "Dil: " + (d.language||"-");
+      expires.innerText    = "Bitiş: " + (d.expiresAt||"-");
 
       const ip = await fetch("https://api.ipify.org?format=json")
         .then(r=>r.json()).then(x=>x.ip).catch(()=>"-");
 
       footerInfo.innerText =
-        "IP: "+ip+
-        "\nTarayıcı: "+navigator.userAgent+
-        "\nSaat: "+new Date().toLocaleString();
+        "IP: " + ip +
+        "\nTarayıcı: " + navigator.userAgent +
+        "\nSaat: " + new Date().toLocaleString();
     },7000);
 
-  }catch{
-    alert("Giriş başarısız");
+  }catch(e){
+    alert("❌ Giriş başarısız / Server offline");
     location.reload();
   }
 }
 
-/* ⭐ CHECKBOXLAR GERÇEKTEN ETKİ EDİYOR */
+// ⭐ CHECKBOXLAR HESABI ETKİLER
 function calc(){
   const now = Number(starNow.value||0);
   const today = Number(starToday.value||0);
+  const checked = [...document.querySelectorAll(".cb input:checked")].map(c=>c.value);
 
-  const checked = [...document.querySelectorAll(".cb input:checked")]
-                  .map(c=>c.value);
-
-  let maxAdd = 55; // default güvenli
-
+  let maxAdd = 55;
   if(checked.includes("UID Bypass") && checked.includes("Aimbot")) maxAdd = 45;
-  if(checked.includes("Chams Menü") && checked.includes("ESP Menü")) maxAdd = 50;
+  if(checked.includes("ESP Menü") && checked.includes("Chams Menü")) maxAdd = 50;
   if(checked.length >= 5) maxAdd = 40;
 
   const final = now + today;
@@ -213,7 +221,7 @@ function calc(){
     <p>Final: ${final}</p>
     <p>Max Güvenli: ${limit}</p>
     <b style="color:${final>limit?'#f59e0b':'#22c55e'}">
-      ${final>limit ? '⚠️ RİSKLİ' : '✔️ GÜVENLİ'}
+      ${final>limit?'⚠️ RİSKLİ':'✔️ GÜVENLİ'}
     </b>
   `;
 }
