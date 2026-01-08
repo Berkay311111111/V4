@@ -16,7 +16,6 @@
   --err:#ff1f4c;
   --txt:#e5e7eb;
 }
-
 *{box-sizing:border-box;font-family:Inter,sans-serif}
 body{
   margin:0;
@@ -27,76 +26,61 @@ body{
   justify-content:center;
   align-items:center;
 }
+.hidden{display:none}
 
-/* LOGIN TEK */
+/* LOGIN */
 .login-wrapper{
   width:100%;
   display:flex;
   justify-content:center;
-  align-items:center;
 }
-
-/* DASHBOARD */
-.dashboard-wrapper{
-  width:100%;
-  max-width:1300px;
-  padding:20px;
-}
-
-.hidden{display:none}
-
-/* GRID */
-.dashboard-grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:20px;
-}
-
 .card{
   background:linear-gradient(135deg,#1f1f2e,#2c2c3a);
   border-radius:20px;
   padding:25px;
   box-shadow:0 0 20px rgba(0,255,255,.25),0 0 40px rgba(255,0,255,.15);
 }
-
-h1,h2,h3{
-  color:var(--primary);
-  text-align:center;
-  margin-bottom:15px;
-}
-
 input,button{
   width:100%;
   padding:12px;
   border:none;
   border-radius:12px;
   margin-top:10px;
-  font-size:15px;
   background:#111827;
   color:var(--txt);
 }
-
 button{
   background:linear-gradient(135deg,var(--primary),var(--secondary));
   font-weight:800;
   cursor:pointer;
-  transition:.25s;
 }
-button:hover{opacity:.85}
+h1,h2,h3{color:var(--primary);text-align:center}
 
 .infoBox{
-  background:rgba(0,255,255,.1);
+  background:rgba(0,255,255,.12);
   padding:12px;
   border-radius:12px;
   text-align:center;
   font-size:14px;
 }
 
+/* DASHBOARD */
+.dashboard-wrapper{
+  width:100%;
+  max-width:1400px;
+  padding:20px;
+}
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+  gap:20px;
+}
+
 .download-btn{
   display:block;
-  text-align:center;
   margin-top:15px;
   padding:14px;
+  text-align:center;
   border-radius:14px;
   font-weight:900;
   text-decoration:none;
@@ -105,28 +89,17 @@ button:hover{opacity:.85}
   box-shadow:0 0 15px rgba(0,255,255,.5);
 }
 
+/* CHECKBOX */
 .checkbox{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
 }
-
 .checkbox label{
   background:rgba(0,255,255,.08);
   padding:8px;
   border-radius:10px;
-  cursor:pointer;
 }
-
-.spinner{
-  width:60px;height:60px;
-  border:6px solid rgba(255,255,255,.2);
-  border-top:6px solid var(--acc);
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-  margin:auto;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 
@@ -145,17 +118,15 @@ button:hover{opacity:.85}
 <!-- DASHBOARD -->
 <div class="dashboard-wrapper hidden" id="dashboard">
 
-  <!-- ANONS -->
   <div class="infoBox" style="margin-bottom:20px;font-weight:800">
     🚀 Güncel Panelde Olan Özellikler • Hepsi %100 SAFE
   </div>
 
   <div class="dashboard-grid">
 
-    <!-- SOL PANEL -->
+    <!-- PANEL BİLGİ -->
     <div class="card">
       <h2>Saho V5 Black Engine</h2>
-
       <ul>
         <li>✔ Pull Player</li>
         <li>✔ UID Bypass</li>
@@ -166,10 +137,46 @@ button:hover{opacity:.85}
         <li>✔ Chams Menü</li>
       </ul>
 
-      <a href="#" class="download-btn">⬇ PANELİ İNDİR</a>
+      <a class="download-btn"
+         href="https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file"
+         target="_blank">
+         ⬇ PANELİ İNDİR
+      </a>
     </div>
 
-    <!-- SAĞ PANEL -->
+    <!-- YILDIZ PANELİ -->
+    <div class="card">
+      <h2>⭐ Güvenli Yıldız Hesaplama</h2>
+
+      <div id="q1">
+        <p>Şu an kaç yıldız?</p>
+        <input type="number" id="starNow" min="50" max="999">
+        <button onclick="next1()">Devam</button>
+      </div>
+
+      <div id="q2" class="hidden">
+        <p>Bugün kaç yıldız kastın?</p>
+        <input type="number" id="starToday" min="0" max="55">
+        <button onclick="next2()">Devam</button>
+      </div>
+
+      <div id="q3" class="hidden">
+        <p>Kullanılan özellikler:</p>
+        <div class="checkbox">
+          <label><input type="checkbox" value="Pull Player"> Pull Player</label>
+          <label><input type="checkbox" value="Aimbot"> Aimbot</label>
+          <label><input type="checkbox" value="Chams"> Chams</label>
+          <label><input type="checkbox" value="Macro"> Macro</label>
+          <label><input type="checkbox" value="UID Bypass"> UID Bypass</label>
+          <label><input type="checkbox" value="Teleport"> Teleport</label>
+        </div>
+        <button onclick="calculate()">Hesapla</button>
+      </div>
+
+      <div id="result" class="hidden"></div>
+    </div>
+
+    <!-- HESAP -->
     <div class="card">
       <h2>👤 Hesap Bilgileri</h2>
       <div id="info"></div>
@@ -187,6 +194,7 @@ button:hover{opacity:.85}
 
 <script>
 const API="https://loan-nonbureaucratic-janeth.ngrok-free.dev";
+let starNow=0, starToday=0;
 
 function hwid(){
   return btoa(navigator.userAgent+screen.width+screen.height);
@@ -194,9 +202,7 @@ function hwid(){
 
 async function login(){
   const key=document.getElementById("keyInput").value.trim();
-  const status=document.getElementById("loginStatus");
-  if(!key){status.innerText="❌ Key boş";return;}
-
+  if(!key) return;
   document.getElementById("loginCard").classList.add("hidden");
   document.getElementById("dashboard").classList.remove("hidden");
 
@@ -216,9 +222,37 @@ async function login(){
     document.getElementById("ban").innerText="Ban: Yok";
     document.getElementById("createDate").innerText="Kurulum: 26/04/2020";
     document.getElementById("language").innerText="Dil: Türkçe";
-  }catch(e){
-    console.error(e);
-  }
+  }catch(e){console.error(e)}
+}
+
+/* YILDIZ LOGIC */
+function next1(){
+  starNow=Number(document.getElementById("starNow").value);
+  if(starNow<50||starNow>999)return;
+  q1.classList.add("hidden");
+  q2.classList.remove("hidden");
+}
+function next2(){
+  starToday=Number(document.getElementById("starToday").value);
+  if(starToday<0||starToday>55)return;
+  q2.classList.add("hidden");
+  q3.classList.remove("hidden");
+}
+function calculate(){
+  q3.classList.add("hidden");
+  const checked=[...document.querySelectorAll('#q3 input:checked')].map(c=>c.value);
+  let maxAdd=55;
+  if(checked.includes("Pull Player")&&checked.includes("UID Bypass"))maxAdd=45;
+  if(checked.length>=5)maxAdd=40;
+  const final=starNow+starToday;
+  const limit=starNow+maxAdd;
+  result.innerHTML=`
+    <h3>📌 Sonuç</h3>
+    <p>Final: ${final}</p>
+    <p>Max Güvenli: ${limit}</p>
+    <p>${final>limit?"⚠️ BAN RİSKİ":"✔️ GÜVENLİ"}</p>
+  `;
+  result.classList.remove("hidden");
 }
 </script>
 
