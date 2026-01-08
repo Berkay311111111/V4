@@ -146,24 +146,31 @@
             text-align: center;
         }
 
+        /* Yatay Özellik Listesi */
         .features ul {
             list-style: none;
             padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
         }
 
         .features li {
             background: rgba(0, 255, 255, 0.08);
-            padding: 10px;
-            margin: 8px 0;
+            padding: 10px 14px;
             border-radius: 10px;
             font-size: 14px;
+            min-width: 120px;
+            flex: 1;
+            max-width: 160px;
         }
 
         .download-btn {
             background: linear-gradient(135deg, #22c55e, #16a34a);
             font-size: 18px;
             padding: 15px;
-            margin-top: 25px;
+            margin: 25px 0;
             box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
         }
 
@@ -182,7 +189,7 @@
         <div id="loginStatus" class="infoBox"></div>
     </div>
 
-    <!-- DASHBOARD - TÜM YENİ İÇERİK BURADA -->
+    <!-- DASHBOARD -->
     <div class="card hidden" id="dashboard">
         <h1>Saho V5 Black Engine</h1>
 
@@ -199,7 +206,7 @@
                 Güncellenmiş Paneldeki Özellikler Hepsi 100% Safe! 🚀 Güvenle Kullan!
             </div>
 
-            <!-- Özellikler Listesi -->
+            <!-- Özellikler Listesi - YATAY -->
             <div class="features">
                 <h2>Saho V5 Black Engine Panel Özellikleri</h2>
                 <ul>
@@ -213,8 +220,8 @@
                 </ul>
             </div>
 
-            <!-- Güzel İndirme Butonu -->
-            <button class="download-btn" onclick="alert('İndirme başlıyor... (Gerçek link buraya eklenecek)')">
+            <!-- İndirme Butonu - Gerçek Linkli -->
+            <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file', '_blank')">
                 📥 SAHO V5 BLACK ENGINE İNDİR
             </button>
 
@@ -358,7 +365,7 @@
                 <p>Bugün: ${starToday}</p>
                 <p>Final: ${final}</p>
                 <p>Max Güvenli: ${limit}</p>
-                <p class="${final > limit ? 'err' : 'acc'}">${final > limit ? '⚠️ BAN RİSKİ' : '✔️ Güvenli'}</p>
+                <p style="color: ${final > limit ? '#ff1f4c' : '#22c55e'};">${final > limit ? '⚠️ BAN RİSKİ' : '✔️ Güvenli'}</p>
                 <p>Seçilen Özellikler: ${checked.join(", ") || "Hiçbiri"}</p>
             `;
             res.classList.remove("hidden");
