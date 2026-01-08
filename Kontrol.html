@@ -2,153 +2,223 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Saho Panel</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Saho Control Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
 <style>
-body{margin:0;font-family:Inter;background:#0b1220;color:#e5e7eb;}
-.container{display:flex;flex-direction:row;gap:20px;padding:20px;max-width:1200px;margin:auto;height:100vh;}
-.card{background:#111827;padding:20px;border-radius:15px;flex:1;display:flex;flex-direction:column;gap:10px;}
-input,button,select{padding:12px;border:none;border-radius:10px;}
-button{cursor:pointer;font-weight:700;background:#22c55e;color:#fff;}
-select[multiple]{height:150px;}
-.hidden{display:none;}
-.download{background:#2563eb;color:white;}
-.reset{background:#f59e0b;color:black;}
-.toggle{cursor:pointer;color:#22c55e;font-weight:700;}
+:root{
+  --bg:#0b1220;
+  --card:#111827;
+  --acc:#22c55e;
+  --warn:#f59e0b;
+  --err:#ef4444;
+  --txt:#e5e7eb;
+}
+*{box-sizing:border-box;font-family:Inter}
+body{margin:0;background:var(--bg);color:var(--txt)}
+.hidden{display:none}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.card{
+  background:linear-gradient(135deg,#111827,#1c1f2a);
+  padding:25px;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,.6);
+}
+
+h1,h2{margin:0 0 10px}
+
+input,button{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:none;
+  font-size:16px;
+  margin-top:10px;
+}
+
+button{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:white;
+  font-weight:800;
+  cursor:pointer;
+}
+
+button:hover{opacity:.9}
+
+.checkbox-group label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:8px 0;
+}
+
+.status{margin-top:10px;font-weight:600}
+
+.limit{color:var(--warn)}
+.ok{color:var(--acc)}
+.err{color:var(--err)}
 </style>
 </head>
+
 <body>
 
+<!-- LOGIN -->
 <div class="container" id="loginBox">
-  <div class="card">
-    <h1>🔐 Key Giriş</h1>
-    <input id="key" placeholder="License Key">
+  <div class="card" style="max-width:420px;margin:auto">
+    <h1>🔐 License Giriş</h1>
+    <input id="keyInput" placeholder="License Key">
     <button onclick="login()">Giriş Yap</button>
+    <div class="status" id="loginStatus"></div>
   </div>
 </div>
 
+<!-- PANEL -->
 <div class="container hidden" id="panelBox">
-  <!-- SOL -->
-  <div class="card">
-    <h1 id="welcome"></h1>
-    <p id="info"></p>
-    <p id="banStatus"></p>
-    <h2>🎮 Oyuncu Bilgileri</h2>
-    <p id="playerId"></p>
-    <p id="username"></p>
-    <p id="region"></p>
-    <p id="level"></p>
-    <p id="createTime"></p>
-    <p id="language"></p>
-    <h2>⭐ Yıldız Bilgisi</h2>
-    <input type="number" id="totalStars" placeholder="Toplam Yıldız">
-    <input type="number" id="todayStars" placeholder="Bugün Kastığın">
-    <button onclick="saveStars()">Kaydet</button>
-    <div id="finalBox" class="hidden"></div>
-    <button class="download" onclick="window.open('https://saho.exe','_blank')">⬇️ İNDİR</button>
-    <button class="reset" onclick="resetUser()">🔄 Kullanıcı Değiştir</button>
-  </div>
 
-  <!-- SAĞ -->
-  <div class="card">
-    <h2>🛠 Özellikler</h2>
-    <select id="features" multiple>
-      <option>Aimbot</option>
-      <option>Fast Switch</option>
-      <option>Macro Gelişmiş</option>
-      <option>64x Chams Menü</option>
-      <option>Zero Detection System</option>
-      <option>UID Bypass</option>
-      <option>Hex Macro</option>
-    </select>
+  <div class="grid">
 
-    <h2 class="toggle" onclick="toggle('settings')">⚙️ Ayarlar</h2>
-    <ul id="settings" class="hidden">
-      <li>Teleport</li>
-      <li>Underkill</li>
-      <li>Spawn Kill</li>
-      <li>TP Heist</li>
-      <li>Auto Refresh</li>
-    </ul>
+    <!-- SOL -->
+    <div class="card">
+      <h1 id="welcome"></h1>
+      <p id="banStatus"></p>
 
-    <h2>✅ Önerilen</h2>
-    <ul>
-      <li>HUD Kodu: <b>#FFHUDT6O3jR0zSb5Po7eP</b></li>
-      <li>BlueStacks: <b>1920x1080 / 320 DPI</b></li>
-      <li>Genel Hassasiyet: <b>100 - 110</b></li>
-    </ul>
+      <!-- SORU 1 -->
+      <div id="q1">
+        <h2>🎮 Hesabın şu an kaç yıldız?</h2>
+        <input type="number" id="currentStars">
+        <button onclick="nextQ1()">Devam</button>
+      </div>
+
+      <!-- SORU 2 -->
+      <div id="q2" class="hidden">
+        <h2>⭐ Bugün kaç yıldız kasmak istiyorsun?</h2>
+        <input type="number" id="todayStars">
+        <button onclick="nextQ2()">Devam</button>
+      </div>
+
+      <!-- SONUÇ -->
+      <div id="final" class="hidden"></div>
+    </div>
+
+    <!-- SAĞ -->
+    <div class="card">
+      <h2>🛠 Kullanılacak Özellikler</h2>
+
+      <div class="checkbox-group">
+        <label><input type="checkbox" value="Pull Player"> Pull Player</label>
+        <label><input type="checkbox" value="Aimbot"> Aimbot</label>
+        <label><input type="checkbox" value="Chams"> Chams</label>
+        <label><input type="checkbox" value="Macro"> Macro</label>
+        <label><input type="checkbox" value="UID Bypass"> UID Bypass</label>
+      </div>
+
+      <button onclick="calculate()">Hesapla</button>
+      <div id="limitInfo" class="status"></div>
+
+      <button style="margin-top:20px;background:#2563eb"
+        onclick="window.open('https://saho.exe','_blank')">
+        ⬇️ İNDİR
+      </button>
+
+    </div>
+
   </div>
 </div>
 
 <script>
 const API_URL = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
-let data = JSON.parse(localStorage.getItem("saho")) || {};
+let serverData = {};
+let currentStars = 0;
+let todayStars = 0;
 
-function getHWID(){return btoa(navigator.userAgent+screen.width+screen.height);}
-
-async function login(){
-  const key = document.getElementById("key").value.trim();
-  if(!key){alert("Key boş"); return;}
-
-  try{
-    const res = await fetch(API_URL+"/login",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({key, hwid:getHWID()})
-    });
-    const resp = await res.json();
-    if(!resp.ok){alert("❌ "+resp.message); return;}
-
-    data = {...resp};
-    localStorage.setItem("saho",JSON.stringify(data));
-    loadPanel();
-  }catch(e){alert("🌐 Server kapalı / ulaşılamıyor"); console.error(e);}
+function getHWID(){
+  return btoa(navigator.userAgent + screen.width + screen.height);
 }
 
-function loadPanel(){
+async function login(){
+  const key = keyInput.value.trim();
+  if(!key) return loginStatus.innerText="❌ Key boş";
+
+  loginStatus.innerText="Kontrol ediliyor...";
+
+  const res = await fetch(API_URL+"/login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({key, hwid:getHWID()})
+  });
+
+  const data = await res.json();
+  if(!data.ok) return loginStatus.innerText="❌ "+data.message;
+
+  serverData = data;
   loginBox.classList.add("hidden");
   panelBox.classList.remove("hidden");
 
   welcome.innerText = data.info;
-  info.innerText = "Bitiş Tarihi: "+new Date(data.expiresAt).toLocaleString();
   banStatus.innerText = data.banStatus;
-  playerId.innerText = "Oyuncu ID: "+data.playerId;
-  username.innerText = "Kullanıcı Adı: "+data.username;
-  region.innerText = "Region: "+data.region;
-  level.innerText = "Level: "+data.level;
-  createTime.innerText = "Create Time: "+data.createTime;
-  language.innerText = "Language: "+data.language;
-
-  if(data.totalStars && data.todayStars) showFinal();
 }
 
-function saveStars(){
-  const total = Number(document.getElementById("totalStars").value);
-  const today = Number(document.getElementById("todayStars").value);
-  const features = [...document.getElementById("features").selectedOptions].map(o=>o.value);
-
-  data.totalStars = total;
-  data.todayStars = today;
-  data.features = features;
-  localStorage.setItem("saho",JSON.stringify(data));
-
-  showFinal();
+function nextQ1(){
+  currentStars = Number(currentStarsInput.value);
+  if(isNaN(currentStars)) return;
+  q1.classList.add("hidden");
+  q2.classList.remove("hidden");
 }
 
-function showFinal(){
-  const final = data.totalStars + data.todayStars;
-  const box = document.getElementById("finalBox");
-  box.innerHTML = `<h3>📊 Bugünkü Bilgiler</h3>
-                   <p>Toplam Yıldız: ${data.totalStars}</p>
-                   <p>Bugün Kastığınız: ${data.todayStars}</p>
-                   <p>Final: ${final}</p>
-                   <p>Seçilen Özellikler: ${data.features.join(", ")}</p>`;
-  box.classList.remove("hidden");
+function nextQ2(){
+  todayStars = Number(todayStarsInput.value);
+  if(isNaN(todayStars)) return;
 }
 
-function toggle(id){document.getElementById(id).classList.toggle("hidden");}
-function resetUser(){localStorage.removeItem("saho"); location.reload();}
-if(data.playerId) loadPanel();
+function calculate(){
+  const checked = [...document.querySelectorAll('input[type=checkbox]:checked')]
+    .map(c=>c.value);
+
+  if(checked.length === 0){
+    limitInfo.innerText="❌ Özellik seçmedin";
+    limitInfo.className="status err";
+    return;
+  }
+
+  let max = 55;
+
+  if(checked.includes("Aimbot") && checked.includes("UID Bypass")) max = 50;
+  if(checked.includes("Pull Player") && checked.includes("UID Bypass")) max = 45;
+  if(checked.includes("Chams") && checked.includes("Macro") && checked.includes("UID Bypass")) max = 55;
+  if(checked.length >= 4) max = 40;
+
+  if(todayStars > max){
+    limitInfo.innerHTML = `⚠️ Riskli! Max önerilen: ${max} yıldız`;
+    limitInfo.className="status limit";
+    return;
+  }
+
+  final.innerHTML = `
+    <h2>📊 Sonuç</h2>
+    <p>Mevcut: ${currentStars}</p>
+    <p>Bugün: ${todayStars}</p>
+    <p>Final: ${currentStars + todayStars}</p>
+    <p>Max Güvenli Limit: ${max}</p>
+  `;
+  final.classList.remove("hidden");
+  limitInfo.innerText="✔️ Güvenli aralık";
+  limitInfo.className="status ok";
+}
 </script>
+
 </body>
 </html>
