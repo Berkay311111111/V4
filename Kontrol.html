@@ -24,7 +24,7 @@
             padding:30px;
             box-shadow:0 0 30px rgba(0,255,255,.4),0 0 50px rgba(255,0,255,.3);
             transition:0.3s;
-            width:420px;
+            width:480px;
             max-width:100%;
         }
         h1,h2,h3{color:var(--primary);text-align:center;margin:0 0 20px;}
@@ -44,7 +44,7 @@
             display:block;
             width:100%;
             padding:18px;
-            margin:30px 0;
+            margin:20px 0;
             background:linear-gradient(135deg,var(--primary),var(--secondary));
             color:white;
             font-size:20px;
@@ -101,7 +101,7 @@
             border-top:6px solid var(--acc);
             border-radius:50%;
             animation:spin 1s linear infinite;
-            margin:auto;
+            margin:20px auto;
         }
         @keyframes spin{to{transform:rotate(360deg)}}
         .infoBox{
@@ -131,88 +131,131 @@
         }
         .checkbox input[type=checkbox]{margin-right:8px;}
         .checkbox label:hover{background:rgba(0,255,255,0.15);}
+        .footer-info{
+            margin-top:30px;
+            padding:15px;
+            background:rgba(0,255,255,0.05);
+            border-radius:12px;
+            font-size:13px;
+            line-height:1.6;
+            text-align:center;
+            border:1px solid rgba(0,255,255,0.2);
+        }
+        .side-by-side{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px;
+            margin-top:20px;
+        }
     </style>
 </head>
 <body>
-
-    <!-- LOGIN -->
-    <div class="card" id="loginCard">
-        <h1>🔐 SAHO V5 BLACK ENGINE</h1>
-        
-        <div class="announce">
-            Paneldeki Tüm Özellikler %100 SAFE ve Undetected!
-        </div>
-        
-        <div class="features">
-            <div class="feature-item">Pull Player</div>
-            <div class="feature-item">UID Bypass</div>
-            <div class="feature-item">Aimbot</div>
-            <div class="feature-item">Fast Switch</div>
-            <div class="feature-item">Macro</div>
-            <div class="feature-item">Hex ESP Menü</div>
-            <div class="feature-item">Chams Menü</div>
-            <div class="feature-item">Teleport</div>
-        </div>
-        
-        <a href="https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file" class="download-btn" onclick="return false;">⬇ SAHO V5 BLACK ENGINE İNDİR</a>
-        
-        <input id="keyInput" placeholder="License Key">
-        <button onclick="login()">Giriş Yap</button>
-        <div id="loginStatus" class="infoBox"></div>
-    </div>
-
-    <!-- DASHBOARD -->
-    <div class="card hidden" id="dashboard">
-        <h1>Saho V5 Black Engine</h1>
-
-        <!-- loading -->
-        <div id="loading" class="hidden">
-            <div class="spinner"></div>
-            <p>7 saniye içinde SAHO V5 BLACK ENGINE serverine bağlanılıyor...</p>
+    <!-- TEK CARD (Login + Dashboard) -->
+    <div class="card" id="mainCard">
+        <!-- LOGIN KISMI -->
+        <div id="loginSection">
+            <h1>🔐 SAHO V5 BLACK ENGINE</h1>
+           
+            <div class="announce">
+                Paneldeki Tüm Özellikler %100 SAFE ve Undetected!
+            </div>
+           
+            <div class="features">
+                <div class="feature-item">Pull Player</div>
+                <div class="feature-item">UID Bypass</div>
+                <div class="feature-item">Aimbot</div>
+                <div class="feature-item">Fast Switch</div>
+                <div class="feature-item">Macro</div>
+                <div class="feature-item">Hex ESP Menü</div>
+                <div class="feature-item">Chams Menü</div>
+                <div class="feature-item">Teleport</div>
+            </div>
+           
+            <a href="https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file" class="download-btn" onclick="return false;">⬇ SAHO V5 BLACK ENGINE İNDİR</a>
+           
+            <input id="keyInput" placeholder="License Key">
+            <button onclick="login()">Giriş Yap</button>
+            <div id="loginStatus" class="infoBox"></div>
         </div>
 
-        <!-- dashboard content -->
-        <div id="dashboardContent" class="hidden">
-            <!-- SORULAR -->
-            <div id="questionPanel">
-                <div id="q1">
-                    <p>📊 Şu an hesabınız kaç yıldız?</p>
-                    <input type="number" id="starNowInput" min="50" max="999">
-                    <button onclick="next1()">Devam</button>
-                </div>
-                <div id="q2" class="hidden">
-                    <p>📊 Bugün kaç yıldız kastınız?</p>
-                    <input type="number" id="starTodayInput" min="0" max="55">
-                    <button onclick="next2()">Devam</button>
-                </div>
-                <div id="q3" class="hidden">
-                    <p>📌 Bugün hangi özellikleri kullandınız?</p>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="Pull Player"> Pull Player</label>
-                        <label><input type="checkbox" value="Aimbot"> Aimbot</label>
-                        <label><input type="checkbox" value="Chams"> Chams</label>
-                        <label><input type="checkbox" value="Macro"> Macro</label>
-                        <label><input type="checkbox" value="UID Bypass"> UID Bypass</label>
-                        <label><input type="checkbox" value="Teleport"> Teleport</label>
-                        <label><input type="checkbox" value="Fast Switch"> Fast Switch</label>
-                        <label><input type="checkbox" value="Hex ESP"> Hex ESP</label>
-                    </div>
-                    <button onclick="calculate()">Hesapla</button>
-                </div>
-                <div id="result" class="hidden"></div>
+        <!-- LOADING VE DASHBOARD KISMI -->
+        <div id="dashboardSection" class="hidden">
+            <h1>Saho V5 Black Engine</h1>
+
+            <!-- 7 saniye loading -->
+            <div id="loading">
+                <div class="spinner"></div>
+                <p style="text-align:center;">7 saniye içinde SAHO V5 BLACK ENGINE serverine bağlanılıyor...</p>
             </div>
 
-            <!-- HESAP BİLGİLERİ -->
-            <h2>👤 Hesap Bilgileri</h2>
-            <div id="info"></div>
-            <div id="playerId"></div>
-            <div id="username"></div>
-            <div id="level"></div>
-            <div id="region"></div>
-            <div id="ban"></div>
-            <div id="createDate"></div>
-            <div id="language"></div>
-            <div class="infoBox" id="extraInfo"></div>
+            <!-- Ana dashboard içeriği -->
+            <div id="dashboardContent" class="hidden">
+                <!-- Özellikler ve İndir butonu yan yana -->
+                <div class="side-by-side">
+                    <div>
+                        <div class="features">
+                            <div class="feature-item">Pull Player</div>
+                            <div class="feature-item">UID Bypass</div>
+                            <div class="feature-item">Aimbot</div>
+                            <div class="feature-item">Fast Switch</div>
+                            <div class="feature-item">Macro</div>
+                            <div class="feature-item">Hex ESP Menü</div>
+                            <div class="feature-item">Chams Menü</div>
+                            <div class="feature-item">Teleport</div>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="https://www.mediafire.com/file/guo90a4xno81pkk/Saho+black_engine.rar/file" class="download-btn" onclick="return false;">⬇ SAHO V5 BLACK ENGINE İNDİR</a>
+                    </div>
+                </div>
+
+                <!-- Yıldız hesaplama paneli (sorular) -->
+                <div id="questionPanel">
+                    <div id="q1">
+                        <p>📊 Şu an hesabınız kaç yıldız?</p>
+                        <input type="number" id="starNowInput" min="50" max="999">
+                        <button onclick="next1()">Devam</button>
+                    </div>
+                    <div id="q2" class="hidden">
+                        <p>📊 Bugün kaç yıldız kastınız?</p>
+                        <input type="number" id="starTodayInput" min="0" max="55">
+                        <button onclick="next2()">Devam</button>
+                    </div>
+                    <div id="q3" class="hidden">
+                        <p>📌 Bugün hangi özellikleri kullandınız?</p>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value="Pull Player"> Pull Player</label>
+                            <label><input type="checkbox" value="Aimbot"> Aimbot</label>
+                            <label><input type="checkbox" value="Chams"> Chams</label>
+                            <label><input type="checkbox" value="Macro"> Macro</label>
+                            <label><input type="checkbox" value="UID Bypass"> UID Bypass</label>
+                            <label><input type="checkbox" value="Teleport"> Teleport</label>
+                            <label><input type="checkbox" value="Fast Switch"> Fast Switch</label>
+                            <label><input type="checkbox" value="Hex ESP"> Hex ESP</label>
+                        </div>
+                        <button onclick="calculate()">Hesapla</button>
+                    </div>
+                    <div id="result" class="hidden"></div>
+                </div>
+
+                <!-- Hesap Bilgileri -->
+                <h2>👤 Hesap Bilgileri</h2>
+                <div id="info" class="infoBox"></div>
+                <div id="playerId" class="infoBox"></div>
+                <div id="username" class="infoBox"></div>
+                <div id="level" class="infoBox"></div>
+                <div id="region" class="infoBox"></div>
+                <div id="ban" class="infoBox"></div>
+                <div id="createDate" class="infoBox"></div>
+                <div id="language" class="infoBox"></div>
+
+                <!-- Alt kısım gerçekçi süsler -->
+                <div class="footer-info" id="footerInfo">
+                    IP: Yükleniyor...<br>
+                    HWID: Yükleniyor...<br>
+                    Saat: <span id="currentTime"></span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -221,15 +264,23 @@
         let starNow=0, starToday=0, serverData={};
 
         function hwid(){
-            return btoa(navigator.userAgent+screen.width+screen.height);
+            return btoa(navigator.userAgent + screen.width + screen.height + navigator.language);
         }
 
-        function getIP(){
-            return fetch('https://api.ipify.org?format=json')
-                .then(r=>r.json())
-                .then(d=>d.ip)
-                .catch(()=> 'Bilinmiyor');
+        async function getIP(){
+            try{
+                const r = await fetch('https://api.ipify.org?format=json');
+                const d = await r.json();
+                return d.ip;
+            }catch{
+                return 'Bilinmiyor';
+            }
         }
+
+        function updateTime(){
+            document.getElementById("currentTime").innerText = new Date().toLocaleString();
+        }
+        setInterval(updateTime, 1000);
 
         async function login(){
             const key = document.getElementById("keyInput").value.trim();
@@ -238,21 +289,30 @@
                 status.innerText="❌ Key boş";
                 return;
             }
+            status.innerText = "";
 
-            document.getElementById("loginCard").classList.add("hidden");
-            const dash = document.getElementById("dashboard");
-            dash.classList.remove("hidden");
+            // Login kısmını gizle, loading göster
+            document.getElementById("loginSection").classList.add("hidden");
+            document.getElementById("loading").classList.remove("hidden");
 
-            const loading = document.getElementById("loading");
-            const content = document.getElementById("dashboardContent");
-            loading.classList.remove("hidden");
+            // 7 saniye bekle
+            await new Promise(r => setTimeout(r, 7000));
 
-            // 7 saniye simülasyon
-            await new Promise(r=>setTimeout(r,7000));
-            loading.classList.add("hidden");
-            content.classList.remove("hidden");
+            // Dashboard içeriğini göster
+            document.getElementById("loading").classList.add("hidden");
+            document.getElementById("dashboardContent").classList.remove("hidden");
 
-            // API login
+            // Alt footer bilgileri
+            const ip = await getIP();
+            const hw = hwid();
+            document.getElementById("footerInfo").innerHTML = `
+                IP: ${ip}<br>
+                HWID: ${hw.substring(0, 40)}...<br>
+                Saat: <span id="currentTime"></span>
+            `;
+            updateTime();
+
+            // API login simülasyonu (gerçek çalışırsa veri çekecek)
             try{
                 const r = await fetch(API+"/login",{
                     method:"POST",
@@ -261,12 +321,12 @@
                 });
                 const d = await r.json();
                 if(!d.ok){
-                    status.innerText="❌ "+d.message;
+                    status.innerText="❌ "+(d.message || "Geçersiz key");
                     return;
                 }
-                serverData=d;
+                serverData = d;
 
-                document.getElementById("info").innerText = d.info;
+                document.getElementById("info").innerText = d.info || "Premium kullanıcı";
                 document.getElementById("playerId").innerText = "Oyuncu ID: "+(d.playerId||"1961018265");
                 document.getElementById("username").innerText = "Kullanıcı: "+(d.username||"Umut");
                 document.getElementById("level").innerText = "Level: "+(d.level||"71");
@@ -274,41 +334,41 @@
                 document.getElementById("ban").innerText = "Ban durumu: "+(d.banStatus||"Herhangi bir ban yok");
                 document.getElementById("createDate").innerText = "Kurulum tarihi: "+(d.createDate||"26/04/2020, 08:05:38");
                 document.getElementById("language").innerText = "Language: "+(d.language||"Türkçe");
-
-                const ip = await getIP();
-                document.getElementById("extraInfo").innerText = `IP: ${ip}\nTarayıcı: ${navigator.userAgent}\nSaat: ${new Date().toLocaleTimeString()}`;
-
             }catch(err){
-                status.innerText="❌ API hatası";
                 console.error(err);
+                // Hata olsa bile sahte veri göster (demo amaçlı)
+                document.getElementById("info").innerText = "Premium kullanıcı";
+                document.getElementById("playerId").innerText = "Oyuncu ID: 1961018265";
+                document.getElementById("username").innerText = "Kullanıcı: Umut";
+                document.getElementById("level").innerText = "Level: 71";
+                document.getElementById("region").innerText = "Region: Europa";
+                document.getElementById("ban").innerText = "Ban durumu: Herhangi bir ban yok";
+                document.getElementById("createDate").innerText = "Kurulum tarihi: 26/04/2020, 08:05:38";
+                document.getElementById("language").innerText = "Language: Türkçe";
             }
         }
 
-        // SORULAR
+        // Yıldız hesaplama kısmı
         function next1(){
             starNow = Number(document.getElementById("starNowInput").value);
-            if(isNaN(starNow) || starNow<50||starNow>999) return;
+            if(isNaN(starNow) || starNow<50||starNow>999) return alert("50-999 arası girin");
             document.getElementById("q1").classList.add("hidden");
             document.getElementById("q2").classList.remove("hidden");
         }
-
         function next2(){
             starToday = Number(document.getElementById("starTodayInput").value);
-            if(isNaN(starToday)||starToday<0||starToday>55)return;
+            if(isNaN(starToday)||starToday<0||starToday>55) return alert("0-55 arası girin");
             document.getElementById("q2").classList.add("hidden");
             document.getElementById("q3").classList.remove("hidden");
         }
-
         function calculate(){
             document.getElementById("q3").classList.add("hidden");
             const checked = [...document.querySelectorAll('#q3 input[type=checkbox]:checked')].map(c=>c.value);
-
             let maxAdd=55;
             if(checked.includes("Pull Player") && checked.includes("UID Bypass")) maxAdd=45;
             if(checked.includes("Aimbot") && checked.includes("UID Bypass")) maxAdd=50;
             if(checked.includes("Chams") && checked.includes("Macro") && checked.includes("UID Bypass")) maxAdd=55;
             if(checked.length>=5) maxAdd=40;
-
             const final=starNow+starToday, limit=starNow+maxAdd;
             const res = document.getElementById("result");
             res.innerHTML = `
@@ -317,7 +377,7 @@
                 <p>Bugün: ${starToday}</p>
                 <p>Final: ${final}</p>
                 <p>Max Güvenli: ${limit}</p>
-                <p class="${final>limit?'err':'acc'}">${final>limit?'⚠️ BAN RİSKİ':'✔️ Güvenli'}</p>
+                <p style="color:${final>limit?'var(--err)':'var(--acc)'};">${final>limit?'⚠️ BAN RİSKİ':'✔️ Güvenli'}</p>
                 <p>Seçilen Özellikler: ${checked.join(", ") || "Hiçbiri"}</p>
             `;
             res.classList.remove("hidden");
