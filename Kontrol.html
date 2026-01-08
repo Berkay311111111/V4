@@ -4,116 +4,64 @@
 <meta charset="UTF-8">
 <title>Saho Panel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
 <style>
-:root{
-  --bg:#0b1220;
-  --card:#111827;
-  --acc:#22c55e;
-  --txt:#e5e7eb;
-}
-*{box-sizing:border-box;font-family:Inter;margin:0;padding:0}
-body{background:var(--bg);color:var(--txt);min-height:100vh}
-
-/* GRID */
-.wrapper{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:20px;
-  padding:25px;
-  max-width:1200px;
-  margin:auto;
-}
-
-.card{
-  background:linear-gradient(135deg,#111827,#1c1f2a);
-  border-radius:18px;
-  padding:20px;
-}
-
-h1,h2{margin-bottom:10px}
-input,select,button{
-  width:100%;
-  padding:12px;
-  margin:6px 0;
-  border-radius:10px;
-  border:none;
-}
-button{
-  background:linear-gradient(135deg,#22c55e,#16a34a);
-  color:#fff;
-  font-weight:800;
-  cursor:pointer;
-}
-.hidden{display:none}
-ul{padding-left:18px}
-li{margin:4px 0}
-.toggle{cursor:pointer;color:#22c55e;font-weight:700}
-.download{background:#2563eb}
-.reset{background:#f59e0b}
+body{margin:0;font-family:Inter;background:#0b1220;color:#e5e7eb;}
+.container{display:flex;flex-direction:row;gap:20px;padding:20px;max-width:1200px;margin:auto;height:100vh;}
+.card{background:#111827;padding:20px;border-radius:15px;flex:1;display:flex;flex-direction:column;gap:10px;}
+input,button,select{padding:12px;border:none;border-radius:10px;}
+button{cursor:pointer;font-weight:700;background:#22c55e;color:#fff;}
+select[multiple]{height:150px;}
+.hidden{display:none;}
+.download{background:#2563eb;color:white;}
+.reset{background:#f59e0b;color:black;}
+.toggle{cursor:pointer;color:#22c55e;font-weight:700;}
 </style>
 </head>
-
 <body>
 
-<!-- LOGIN -->
-<div class="wrapper" id="loginBox">
+<div class="container" id="loginBox">
   <div class="card">
-    <h1>🔐 KeyAuth Login</h1>
-    <input id="username" placeholder="Username">
-    <input id="password" type="password" placeholder="Password">
-    <input id="license" placeholder="License Key">
+    <h1>🔐 Key Giriş</h1>
+    <input id="key" placeholder="License Key">
     <button onclick="login()">Giriş Yap</button>
-  </div>
-
-  <div class="card">
-    <h2>ℹ️ Sistem Bilgisi</h2>
-    <p>✔ KeyAuth Style</p>
-    <p>✔ HWID Check</p>
-    <p>✔ Secure Login</p>
   </div>
 </div>
 
-<!-- PANEL -->
-<div class="wrapper hidden" id="panelBox">
-
-<!-- SOL -->
-<div>
+<div class="container hidden" id="panelBox">
+  <!-- SOL -->
   <div class="card">
     <h1 id="welcome"></h1>
-    <p id="userInfo"></p>
-  </div>
-
-  <div class="card">
+    <p id="info"></p>
+    <p id="banStatus"></p>
+    <h2>🎮 Oyuncu Bilgileri</h2>
+    <p id="playerId"></p>
+    <p id="username"></p>
+    <p id="region"></p>
+    <p id="level"></p>
+    <p id="createTime"></p>
+    <p id="language"></p>
     <h2>⭐ Yıldız Bilgisi</h2>
     <input type="number" id="totalStars" placeholder="Toplam Yıldız">
     <input type="number" id="todayStars" placeholder="Bugün Kastığın">
     <button onclick="saveStars()">Kaydet</button>
+    <div id="finalBox" class="hidden"></div>
+    <button class="download" onclick="window.open('https://saho.exe','_blank')">⬇️ İNDİR</button>
+    <button class="reset" onclick="resetUser()">🔄 Kullanıcı Değiştir</button>
   </div>
 
-  <div class="card hidden" id="resultBox"></div>
-
-  <button class="download" onclick="window.open('https://saho.exe','_blank')">⬇️ İNDİR</button>
-  <button class="reset" onclick="resetUser()">🔄 Kullanıcı Değiştir</button>
-</div>
-
-<!-- SAĞ -->
-<div>
+  <!-- SAĞ -->
   <div class="card">
-    <h2>🛠 Özellikler (ÇOKLU)</h2>
-    <select id="features" multiple size="8">
+    <h2>🛠 Özellikler</h2>
+    <select id="features" multiple>
       <option>Aimbot</option>
       <option>Fast Switch</option>
       <option>Macro Gelişmiş</option>
       <option>64x Chams Menü</option>
-      <option>Zero Detection</option>
+      <option>Zero Detection System</option>
       <option>UID Bypass</option>
       <option>Hex Macro</option>
     </select>
-  </div>
 
-  <div class="card">
     <h2 class="toggle" onclick="toggle('settings')">⚙️ Ayarlar</h2>
     <ul id="settings" class="hidden">
       <li>Teleport</li>
@@ -122,101 +70,85 @@ li{margin:4px 0}
       <li>TP Heist</li>
       <li>Auto Refresh</li>
     </ul>
-  </div>
 
-  <div class="card">
     <h2>✅ Önerilen</h2>
     <ul>
-      <li>HUD: <b>#FFHUDT6O3jR0zSb5Po7eP</b></li>
+      <li>HUD Kodu: <b>#FFHUDT6O3jR0zSb5Po7eP</b></li>
       <li>BlueStacks: <b>1920x1080 / 320 DPI</b></li>
-      <li>Hassasiyet: <b>100-110</b></li>
+      <li>Genel Hassasiyet: <b>100 - 110</b></li>
     </ul>
   </div>
-</div>
-
 </div>
 
 <script>
 const API_URL = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
 let data = JSON.parse(localStorage.getItem("saho")) || {};
 
-function getHWID(){
-  return btoa(navigator.userAgent + screen.width + screen.height);
-}
+function getHWID(){return btoa(navigator.userAgent+screen.width+screen.height);}
 
 async function login(){
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const license  = document.getElementById("license").value.trim();
-
-  if(!username || !password || !license){
-    alert("Boş alan bırakma");
-    return;
-  }
+  const key = document.getElementById("key").value.trim();
+  if(!key){alert("Key boş"); return;}
 
   try{
     const res = await fetch(API_URL+"/login",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({username,password,license,hwid:getHWID()})
+      body:JSON.stringify({key, hwid:getHWID()})
     });
     const resp = await res.json();
+    if(!resp.ok){alert("❌ "+resp.message); return;}
 
-    if(!resp.ok){ alert("❌ "+resp.message); return; }
-
-    data.user = resp.user;
-    data.token = resp.token;
-    data.expires = resp.expiresAt;
+    data = {...resp};
     localStorage.setItem("saho",JSON.stringify(data));
     loadPanel();
-
-  }catch(e){
-    alert("🌐 Sunucuya bağlanılamıyor");
-    console.error(e);
-  }
+  }catch(e){alert("🌐 Server kapalı / ulaşılamıyor"); console.error(e);}
 }
 
 function loadPanel(){
   loginBox.classList.add("hidden");
   panelBox.classList.remove("hidden");
-  welcome.innerText = "Hoşgeldin " + data.user;
-  userInfo.innerText = "Key: " + data.token;
-  if(data.total && data.today){
-    showFinal();
-  }
+
+  welcome.innerText = data.info;
+  info.innerText = "Bitiş Tarihi: "+new Date(data.expiresAt).toLocaleString();
+  banStatus.innerText = data.banStatus;
+  playerId.innerText = "Oyuncu ID: "+data.playerId;
+  username.innerText = "Kullanıcı Adı: "+data.username;
+  region.innerText = "Region: "+data.region;
+  level.innerText = "Level: "+data.level;
+  createTime.innerText = "Create Time: "+data.createTime;
+  language.innerText = "Language: "+data.language;
+
+  if(data.totalStars && data.todayStars) showFinal();
 }
 
 function saveStars(){
-  data.total = Number(document.getElementById("totalStars").value);
-  data.today = Number(document.getElementById("todayStars").value);
-  data.features = [...document.getElementById("features").selectedOptions].map(o=>o.value);
+  const total = Number(document.getElementById("totalStars").value);
+  const today = Number(document.getElementById("todayStars").value);
+  const features = [...document.getElementById("features").selectedOptions].map(o=>o.value);
+
+  data.totalStars = total;
+  data.todayStars = today;
+  data.features = features;
   localStorage.setItem("saho",JSON.stringify(data));
+
   showFinal();
 }
 
 function showFinal(){
-  const final = data.total + data.today;
-  const box = document.getElementById("resultBox");
-  box.innerHTML = `
-    <h2>📊 Sonuç</h2>
-    <p>Toplam: <b>${data.total}</b></p>
-    <p>Bugün: <b>${data.today}</b></p>
-    <p>🎯 Final: <b>${final}</b></p>
-    <p>🛠 Özellikler: ${data.features.join(", ")}</p>
-  `;
+  const final = data.totalStars + data.todayStars;
+  const box = document.getElementById("finalBox");
+  box.innerHTML = `<h3>📊 Bugünkü Bilgiler</h3>
+                   <p>Toplam Yıldız: ${data.totalStars}</p>
+                   <p>Bugün Kastığınız: ${data.todayStars}</p>
+                   <p>Final: ${final}</p>
+                   <p>Seçilen Özellikler: ${data.features.join(", ")}</p>`;
   box.classList.remove("hidden");
 }
 
-function toggle(id){
-  document.getElementById(id).classList.toggle("hidden");
-}
-
-function resetUser(){
-  localStorage.removeItem("saho");
-  location.reload();
-}
-
-if(data.user) loadPanel();
+function toggle(id){document.getElementById(id).classList.toggle("hidden");}
+function resetUser(){localStorage.removeItem("saho"); location.reload();}
+if(data.playerId) loadPanel();
 </script>
 </body>
 </html>
