@@ -7,176 +7,200 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b1220;
-  --card:#111827;
-  --acc:#22c55e;
-  --warn:#f59e0;
-  --err:#ef4444;
-  --txt:#e5e7eb;
-  --shadow:0 15px 40px rgba(0,0,0,0.6);
+    --bg:#0b1220;
+    --card:#111827;
+    --acc:#22c55e;
+    --warn:#f59e0b;
+    --err:#ef4444;
+    --txt:#e5e7eb;
+    --shadow:0 15px 40px rgba(0,0,0,0.6);
 }
-
-*{box-sizing:border-box;margin:0;padding:0;font-family:Inter;}
-
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Inter;
+}
 body{
-  background:var(--bg);
-  color:var(--txt);
-  min-height:100vh;
-  display:flex;
-  justify-content:center; /* login ortada */
-  align-items:center;
+    background:var(--bg);
+    color:var(--txt);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
 }
-
 .center{
-  display:flex;
-  flex-direction:column;
-  width:100%;
-  max-width:480px;
-  transition:all .3s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    width:100%;
+    max-width:500px;
+    transition:all .3s;
 }
-
-/* Sidebar sorular */
-#sidebar{
-  position:fixed;
-  top:30px;
-  left:30px;
-  width:320px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  z-index:1000;
-}
-
 .card{
-  background:linear-gradient(135deg,#111827,#1c1f2a);
-  border-radius:15px;
-  padding:20px;
-  box-shadow:var(--shadow);
-  transition:all .3s;
-  text-align:left;
-  opacity:1;
+    width:100%;
+    background:linear-gradient(135deg,#111827,#1c1f2a);
+    border-radius:20px;
+    padding:30px;
+    box-shadow:var(--shadow);
+    margin:15px 0;
+    transition:all .3s;
+    text-align:center;
+    opacity:1;
 }
-
-h1,h2{margin:.3em 0;font-weight:800;}
+h1,h2{
+    margin:.3em 0;
+    font-weight:800;
+}
 input,select,button{
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  margin:8px 0;
-  font-size:16px;
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:none;
+    margin:10px 0;
+    font-size:16px;
 }
 button{
-  background:linear-gradient(135deg,#22c55e,#16a34a);
-  color:#fff;
-  font-weight:600;
-  cursor:pointer;
-  transition:.3s;
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+    transition:.3s;
 }
-button:hover{opacity:.9}
-
-.hidden{display:none !important;}
-
+button:hover{
+    opacity:.9;
+}
+.hidden{
+    display:none !important;
+}
 #loadingAnim{
-  width:60px;
-  height:60px;
-  border:6px solid rgba(255,255,255,.2);
-  border-top:6px solid #22c55e;
-  border-radius:50%;
-  animation:spin 1.5s linear infinite;
-  margin:20px auto;
+    width:80px;
+    height:80px;
+    border:8px solid rgba(255,255,255,.2);
+    border-top:8px solid #22c55e;
+    border-radius:50%;
+    animation:spin 1.5s linear infinite;
+    margin:20px auto;
 }
-@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-
+@keyframes spin{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
+}
 .info-box{
-  background:#1f2937;
-  padding:12px;
-  border-radius:10px;
-  margin-top:12px;
+    background:#1f2937;
+    padding:15px;
+    border-radius:12px;
+    margin-top:15px;
 }
-.info-box p{margin:5px 0;font-size:14px;}
+.info-box p{
+    margin:6px 0;
+    font-size:15px;
+}
 .links{
-  display:flex;
-  gap:12px;
-  margin-top:8px;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:10px;
 }
 .links a img{
-  width:32px;
-  height:32px;
-  transition:.3s;
+    width:40px;
+    height:40px;
+    transition:.3s;
 }
-.links a img:hover{transform:scale(1.1);}
-
-input, select{background:#1a1f2d;color:#e5e7eb;}
-select option{background:#111827;color:#fff;}
-
+.links a img:hover{
+    transform:scale(1.1);
+}
+input, select{
+    background:#1a1f2d;
+    color:#e5e7eb;
+}
+select option{
+    background:#111827;
+    color:#fff;
+}
 /* Animations */
-.fadeIn{animation:fadeIn 0.4s ease forwards;opacity:0;}
-.fadeOut{animation:fadeOut 0.4s ease forwards;opacity:1;}
-@keyframes fadeIn{to{opacity:1;}}
-@keyframes fadeOut{to{opacity:0;}}
+.fadeIn{
+    animation:fadeIn 0.5s ease forwards;
+    opacity:0;
+}
+.fadeOut{
+    animation:fadeOut 0.5s ease forwards;
+    opacity:1;
+}
+@keyframes fadeIn{
+    to{opacity:1;}
+}
+@keyframes fadeOut{
+    to{opacity:0;}
+}
 </style>
 </head>
 <body>
 
-<!-- LOGIN EKRANI ORTADA -->
+<!-- Login Screen -->
 <div class="center" id="loginScreen">
-  <div class="card">
-    <h1>License Kontrol</h1>
-    <input id="key" placeholder="License Key (Örn: BLA BLA BLA)">
-    <button onclick="startLogin()">Giriş Yap</button>
-    <div id="loginStatus" style="margin-top:12px;min-height:20px;"></div>
-  </div>
-</div>
-
-<!-- LOADING SCREEN -->
-<div class="center hidden" id="loadingScreen">
-  <div id="loadingAnim"></div>
-  <h2>Kontrol ediliyor...</h2>
-</div>
-
-<!-- PANEL -->
-<div class="center hidden" id="panelScreen">
-  <div class="card">
-    <h1 id="welcomeText">Hoşgeldin!</h1>
-    <div class="info-box">
-      <p id="keyInfo"></p>
-      <p id="expiryInfo"></p>
-      <div class="links">
-        <a href="#" target="_blank" id="instaLink"><img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"></a>
-        <a href="#" target="_blank" id="discordLink"><img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Discord_logo_%282019%29.svg"></a>
-      </div>
+    <div class="card">
+        <h1>License Kontrol</h1>
+        <input id="key" placeholder="License Key (Örn: BLA BLA BLA)">
+        <button onclick="startLogin()">Giriş Yap</button>
+        <div id="loginStatus" style="margin-top:12px;min-height:20px;"></div>
     </div>
-  </div>
 </div>
 
-<!-- SIDEBAR SORULAR -->
-<div id="sidebar" class="hidden">
-  <div class="card fadeIn" id="q1">
-    <h2>Oyunda toplam kaç yıldızın var? (0-999)</h2>
-    <input type="number" id="totalStars" min="0" max="999">
-    <button onclick="submitTotalStars()">Gönder</button>
-    <div id="totalStarsStatus"></div>
-  </div>
-  <div class="card fadeIn hidden" id="q2">
-    <h2>Bugün kaç yıldız kastın? (0-55)</h2>
-    <input type="number" id="todayStars" min="0" max="55">
-    <button onclick="submitTodayStars()">Gönder</button>
-    <div id="todayStarsStatus"></div>
-  </div>
-  <div class="card fadeIn hidden" id="q3">
-    <h2>Panelde hangi özellikleri kullandın / kullanacaksın?</h2>
-    <select id="featureSelect" multiple size="5">
-      <option>Chams</option>
-      <option>Aimbot</option>
-      <option>Fast switch</option>
-      <option>Hex Macro</option>
-      <option>UID Bypass</option>
-    </select>
-    <button onclick="submitFeatures()">Gönder</button>
-    <div id="featureStatus"></div>
-  </div>
-  <div class="card info-box fadeIn hidden" id="finalInfo"></div>
+<!-- Loading Screen -->
+<div class="center hidden" id="loadingScreen">
+    <div id="loadingAnim"></div>
+    <h2>Kontrol ediliyor...</h2>
+</div>
+
+<!-- Panel Screen -->
+<div class="center hidden" id="panelScreen">
+    <div class="card">
+        <h1 id="welcomeText">Hoşgeldin!</h1>
+        <div class="info-box">
+            <p id="keyInfo"></p>
+            <p id="expiryInfo"></p>
+            <div class="links">
+                <a href="#" target="_blank" id="instaLink">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg">
+                </a>
+                <a href="#" target="_blank" id="discordLink">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Discord_logo_%282019%29.svg">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sorular -->
+    <div class="card fadeIn" id="q1">
+        <h2>Oyunda toplam kaç yıldızın var? (0-999)</h2>
+        <input type="number" id="totalStars" min="0" max="999">
+        <button onclick="submitTotalStars()">Gönder</button>
+        <div id="totalStarsStatus"></div>
+    </div>
+
+    <div class="card fadeIn hidden" id="q2">
+        <h2>Bugün kaç yıldız kastın? (0-55)</h2>
+        <input type="number" id="todayStars" min="0" max="55">
+        <button onclick="submitTodayStars()">Gönder</button>
+        <div id="todayStarsStatus"></div>
+    </div>
+
+    <div class="card fadeIn hidden" id="q3">
+        <h2>Panelde hangi özellikleri kullandın / kullanacaksın?</h2>
+        <select id="featureSelect" multiple size="5">
+            <option>Chams</option>
+            <option>Aimbot</option>
+            <option>Fast switch</option>
+            <option>Hex Macro</option>
+            <option>UID Bypass</option>
+        </select>
+        <button onclick="submitFeatures()">Gönder</button>
+        <div id="featureStatus"></div>
+    </div>
+
+    <div class="card info-box fadeIn hidden" id="finalInfo"></div>
 </div>
 
 <script>
@@ -187,104 +211,113 @@ let totalStarsVal = 0;
 let todayStarsVal = 0;
 let featuresSelected = [];
 
-function getHWID(){ 
-  return btoa(navigator.userAgent+screen.width+screen.height+navigator.language+Intl.DateTimeFormat().resolvedOptions().timeZone); 
+function getHWID(){
+    return btoa(navigator.userAgent+screen.width+screen.height+navigator.language+Intl.DateTimeFormat().resolvedOptions().timeZone);
 }
 
 async function startLogin(){
-  const key = document.getElementById("key").value.trim();
-  const status = document.getElementById("loginStatus");
-  if(!key){ status.innerText="❌ Key boş"; return; }
-  status.innerText="Kontrol ediliyor...";
-  try{
-    const res = await fetch(API_URL+"/login",{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({key:key, hwid:getHWID()}) });
-    const data = await res.json();
-    if(!data.ok){ status.innerText="❌ "+data.message; return; }
-    currentKey = key; 
-    showLoading(data);
-  }catch(e){ status.innerText="🌐 Sunucuya bağlanılamıyor"; }
+    const key = document.getElementById("key").value.trim();
+    const status = document.getElementById("loginStatus");
+    if(!key){ status.innerText="❌ Key boş"; return; }
+    status.innerText="Kontrol ediliyor...";
+    try{
+        const res = await fetch(API_URL+"/login",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({key:key, hwid:getHWID()})
+        });
+        const data = await res.json();
+        if(!data.ok){ status.innerText="❌ "+data.message; return; }
+        currentKey = key;
+        showLoading(data);
+    }catch(e){
+        status.innerText="🌐 Sunucuya bağlanılamıyor";
+    }
 }
 
 function showLoading(data){
-  document.getElementById("loginScreen").classList.add("hidden");
-  const loadScreen = document.getElementById("loadingScreen");
-  loadScreen.classList.remove("hidden");
-  setTimeout(()=>{
-    loadScreen.classList.add("hidden");
-    showPanel(data);
-  },2000);
+    document.getElementById("loginScreen").classList.add("hidden");
+    const loadScreen = document.getElementById("loadingScreen");
+    loadScreen.classList.remove("hidden");
+    setTimeout(()=>{
+        loadScreen.classList.add("hidden");
+        showPanel(data);
+    },2000);
 }
 
 function showPanel(data){
-  document.getElementById("panelScreen").classList.remove("hidden");
-  document.getElementById("welcomeText").innerText = "Hoşgeldin "+data.info.split(":")[1].trim();
-  document.getElementById("keyInfo").innerText = data.info;
-  document.getElementById("expiryInfo").innerText = "Bitiş Tarihi: "+new Date(data.expiresAt).toLocaleString();
-  document.getElementById("instaLink").href = data.instagram;
-  document.getElementById("discordLink").href = data.discord;
-
-  // Sorular sidebar göster
-  document.getElementById("sidebar").classList.remove("hidden");
+    const panel = document.getElementById("panelScreen");
+    panel.classList.remove("hidden");
+    document.getElementById("welcomeText").innerText = "Hoşgeldin "+data.info.split(":")[1].trim();
+    document.getElementById("keyInfo").innerText = data.info;
+    document.getElementById("expiryInfo").innerText = "Bitiş Tarihi: "+new Date(data.expiresAt).toLocaleString();
+    document.getElementById("instaLink").href = data.instagram;
+    document.getElementById("discordLink").href = data.discord;
 }
 
+// Sorular step by step
 function nextQuestion(currentId, nextId){
-  const current = document.getElementById(currentId);
-  const next = document.getElementById(nextId);
-  current.classList.add("fadeOut");
-  setTimeout(()=>{
-    current.classList.add("hidden");
-    current.classList.remove("fadeOut");
-    next.classList.remove("hidden");
-    next.classList.add("fadeIn");
-  },500);
+    const current = document.getElementById(currentId);
+    const next = document.getElementById(nextId);
+    current.classList.add("fadeOut");
+    setTimeout(()=>{
+        current.classList.add("hidden");
+        current.classList.remove("fadeOut");
+        next.classList.remove("hidden");
+        next.classList.add("fadeIn");
+    },500);
 }
 
+// Soru 1
 function submitTotalStars(){
-  const val = parseInt(document.getElementById("totalStars").value);
-  const status = document.getElementById("totalStarsStatus");
-  if(isNaN(val) || val<0){ status.innerText="❌ Geçersiz değer"; return; }
-  totalStarsVal = val;
-  status.innerText="✔ Toplam yıldız kaydedildi: "+totalStarsVal;
-  nextQuestion("q1","q2");
+    const val = parseInt(document.getElementById("totalStars").value);
+    const status = document.getElementById("totalStarsStatus");
+    if(isNaN(val) || val<0){ status.innerText="❌ Geçersiz değer"; return; }
+    totalStarsVal = val;
+    status.innerText="✔ Toplam yıldız kaydedildi: "+totalStarsVal;
+    nextQuestion("q1","q2");
 }
 
+// Soru 2
 function submitTodayStars(){
-  const val = parseInt(document.getElementById("todayStars").value);
-  const status = document.getElementById("todayStarsStatus");
-  if(isNaN(val) || val<0){ status.innerText="❌ Geçersiz değer"; return; }
-  if(val>maxStars){
-    const ans = confirm("⚠ Lütfen Paneli kullanmayı bırakın! Onaylıyor musunuz?");
-    if(!ans){ return; }
-    status.innerText="⚠ Limit üstü yıldız girdiniz!";
-    document.getElementById("todayStars").value="";
-    return;
-  }
-  todayStarsVal = val;
-  status.innerText="✔ Bugünkü yıldız kaydedildi: "+todayStarsVal;
-  nextQuestion("q2","q3");
+    const val = parseInt(document.getElementById("todayStars").value);
+    const status = document.getElementById("todayStarsStatus");
+    if(isNaN(val) || val<0){ status.innerText="❌ Geçersiz değer"; return; }
+    if(val>maxStars){
+        const ans = confirm("⚠ Lütfen Paneli kullanmayı bırakın! Onaylıyor musunuz?");
+        if(!ans){ return; }
+        status.innerText="⚠ Limit üstü yıldız girdiniz!";
+        document.getElementById("todayStars").value="";
+        return;
+    }
+    todayStarsVal = val;
+    status.innerText="✔ Bugünkü yıldız kaydedildi: "+todayStarsVal;
+    nextQuestion("q2","q3");
 }
 
+// Soru 3
 function submitFeatures(){
-  const select = document.getElementById("featureSelect");
-  const status = document.getElementById("featureStatus");
-  featuresSelected = Array.from(select.selectedOptions).map(o=>o.value);
-  if(featuresSelected.length==0){ status.innerText="❌ Özellik seçmediniz"; return; }
-  status.innerText="✔ Seçilen Özellikler: "+featuresSelected.join(", ");
-  document.getElementById("q3").classList.add("fadeOut");
-  setTimeout(()=>{
-    document.getElementById("q3").classList.add("hidden");
-    document.getElementById("q3").classList.remove("fadeOut");
-    const final = document.getElementById("finalInfo");
-    final.innerHTML = `<h2>Bugünkü Bilgiler</h2>
-                       <p>Toplam Yıldız: ${totalStarsVal}</p>
-                       <p>Bugün Kastığınız: ${todayStarsVal}</p>
-                       <p>Max Kasabileceğiniz Limit: ${maxStars}</p>
-                       <p>Seçilen Özellikler: ${featuresSelected.join(", ")}</p>`;
-    final.classList.remove("hidden");
-    final.classList.add("fadeIn");
-  },500);
+    const select = document.getElementById("featureSelect");
+    const status = document.getElementById("featureStatus");
+    featuresSelected = Array.from(select.selectedOptions).map(o=>o.value);
+    if(featuresSelected.length==0){ status.innerText="❌ Özellik seçmediniz"; return; }
+    status.innerText="✔ Seçilen Özellikler: "+featuresSelected.join(", ");
+    document.getElementById("q3").classList.add("fadeOut");
+    setTimeout(()=>{
+        document.getElementById("q3").classList.add("hidden");
+        document.getElementById("q3").classList.remove("fadeOut");
+        const final = document.getElementById("finalInfo");
+        final.innerHTML = `
+            <h2>Bugünkü Bilgiler</h2>
+            <p>Toplam Yıldız: ${totalStarsVal}</p>
+            <p>Bugün Kastığınız: ${todayStarsVal}</p>
+            <p>Max Kasabileceğiniz Limit: ${maxStars}</p>
+            <p>Seçilen Özellikler: ${featuresSelected.join(", ")}</p>
+        `;
+        final.classList.remove("hidden");
+        final.classList.add("fadeIn");
+    },500);
 }
 </script>
-
 </body>
 </html>
