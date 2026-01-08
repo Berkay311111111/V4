@@ -304,7 +304,7 @@
                 document.getElementById("level").innerText = "Level: " + (d.level || "Bilinmiyor");
                 document.getElementById("region").innerText = "Region: " + (d.region || "Bilinmiyor");
                 document.getElementById("ban").innerText = "Ban durumu: " + (d.banStatus || "Yok");
-                document.getElementById("createDate").innerText = "Kurulum tarihi: " + (d.createDate || "Bilinmiyor");
+                document.getElementById("createDate").innerText = "Kurulum tarihi: " + (d.createTime || d.createDate || "Bilinmiyor");
                 document.getElementById("language").innerText = "Language: " + (d.language || "Türkçe");
 
                 const ip = await getIP();
