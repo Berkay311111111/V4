@@ -172,7 +172,7 @@
 <body>
     <!-- LOGIN EKRANI -->
     <div class="card" id="loginCard">
-        <h1>🔐 SAHO TITAN ENGINE</h1>
+        <h1>🌐 SAHO TITAN ENGINE</h1>
         <input id="keyInput" placeholder="License Key">
         <button onclick="login()">Giriş Yap</button>
         <div id="loginStatus" class="infoBox hidden"></div>
@@ -184,7 +184,7 @@
 
         <div id="loading" class="hidden">
             <div class="spinner"></div>
-            <p>SAHO TITAN ENGINE serverine bağlanılıyor...</p>
+            <p>SAHO TITAN ENGINE serverine bağlanılıyor... 🌐 </p>
         </div>
 
         <div id="dashboardContent" class="hidden">
@@ -335,7 +335,7 @@
             } catch (err) {
                 dash.classList.add("hidden");
                 document.getElementById("loginCard").classList.remove("hidden");
-                status.innerText = "❌ Sunucu bağlantı hatası veya geçersiz key!";
+                status.innerText = "Sunucu bağlantısı Yok 🌐";
                 status.classList.remove("hidden");
                 console.error(err);
             }
