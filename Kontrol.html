@@ -21,23 +21,155 @@
             --success: #22ff99;
         }
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { min-height: 100vh; background: linear-gradient(145deg, #080b14 0%, #14001f 100%); color: var(--text); font-family: 'Inter', sans-serif; background-attachment: fixed; }
-        .container { min-height: 100vh; padding: 20px 16px; display: flex; flex-direction: column; justify-content: center; }
-        .card { background: rgba(18,24,34,0.94); backdrop-filter: blur(12px); border-radius: 20px; border: 1px solid rgba(0,240,255,0.16); box-shadow: 0 0 50px rgba(0,240,255,0.2); width: 100%; max-width: 1180px; margin: 0 auto; overflow: hidden; }
-        #loginCard { max-width: 460px; padding: 40px 28px; text-align: center; }
-        h1 { font-family: 'Orbitron', sans-serif; font-size: 3.4rem; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 35px var(--glow); margin-bottom: 1.6rem; letter-spacing: 4px; }
-        #keyInput { width: 100%; padding: 16px 20px; font-size: 1.4rem; text-align: center; background: rgba(8,10,18,0.9); border: 1px solid rgba(0,240,255,0.3); border-radius: 12px; color: white; margin: 20px 0 24px; letter-spacing: 3px; }
-        #loginBtn { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; border-radius: 12px; color: #000; font-size: 1.35rem; font-weight: 800; cursor: pointer; transition: all 0.3s; }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #080b14 0%, #14001f 100%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            background-attachment: fixed;
+        }
+        .container {
+            min-height: 100vh;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .card {
+            background: rgba(18,24,34,0.94);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(0,240,255,0.16);
+            box-shadow: 0 0 50px rgba(0,240,255,0.2);
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        #loginCard {
+            max-width: 460px;
+            padding: 40px 28px;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.4rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 35px var(--glow);
+            margin-bottom: 1.6rem;
+            letter-spacing: 4px;
+        }
+        #keyInput {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 1.4rem;
+            text-align: center;
+            background: rgba(8,10,18,0.9);
+            border: 1px solid rgba(0,240,255,0.3);
+            border-radius: 12px;
+            color: white;
+            margin: 20px 0 24px;
+            letter-spacing: 3px;
+        }
+        #loginBtn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-size: 1.35rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
         #loginBtn:hover { transform: translateY(-3px); box-shadow: 0 0 45px rgba(0,240,255,0.65); }
         .status { margin-top: 16px; min-height: 22px; font-size: 1.1rem; }
-        .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 18px 24px; background: rgba(0,0,0,0.18); border-bottom: 1px solid rgba(0,240,255,0.12); }
-        .tab-btn { padding: 10px 26px; background: rgba(255,255,255,0.05); border: 1px solid rgba(0,240,255,0.18); border-radius: 50px; color: white; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-        .tab-btn.active, .tab-btn:hover { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: black; border-color: transparent; box-shadow: 0 0 20px rgba(0,240,255,0.5); }
-        .page { display: none; padding: 32px 28px 44px; }
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px 24px;
+            background: rgba(0,0,0,0.18);
+            border-bottom: 1px solid rgba(0,240,255,0.12);
+        }
+        .tab-btn {
+            padding: 10px 26px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(0,240,255,0.18);
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: black;
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(0,240,255,0.5);
+        }
+        .page {
+            display: none;
+            padding: 32px 28px 44px;
+        }
         .page.active { display: block; }
-        .section-title { font-size: 2.1rem; color: var(--primary); margin-bottom: 28px; text-align: center; }
-        .warning-box { background: rgba(255,51,102,0.12); border: 1px solid var(--err); color: #ff88aa; padding: 18px; border-radius: 14px; margin: 20px 0; line-height: 1.5; }
-        .readonly-key { width: 100%; padding: 20px; font-size: 2.4rem; text-align: center; background: rgba(8,10,18,0.7); border: 2px solid var(--primary); border-radius: 12px; color: var(--primary); margin: 16px 0; letter-spacing: 8px; font-weight: bold; cursor: pointer; user-select: text; }
+        .section-title {
+            font-size: 2.1rem;
+            color: var(--primary);
+            margin-bottom: 28px;
+            text-align: center;
+        }
+        .warning-box {
+            background: rgba(255,51,102,0.12);
+            border: 1px solid var(--err);
+            color: #ff88aa;
+            padding: 18px;
+            border-radius: 14px;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+        button.big-btn {
+            width: 100%;
+            max-width: 420px;
+            padding: 18px;
+            margin: 24px auto;
+            display: block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 12px;
+            color: black;
+            font-size: 1.4rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .readonly-key {
+            width: 100%;
+            padding: 20px;
+            font-size: 2.4rem;
+            text-align: center;
+            background: rgba(8,10,18,0.7);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            color: var(--primary);
+            margin: 16px 0;
+            letter-spacing: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: text;
+        }
+        .manual-reset-box {
+            margin-top: 40px;
+            background: rgba(0,240,255,0.15);
+            border: 1px solid var(--primary);
+            border-radius: 14px;
+            padding: 28px;
+        }
     </style>
 </head>
 <body>
@@ -144,11 +276,14 @@ async function login() {
                             <div class="readonly-key" onclick="navigator.clipboard.writeText(this.innerText); alert('Kopyalandı!')">
                                 ${loggedInKey}
                             </div>
-                            <div style="display:flex; gap:16px; justify-content:center; margin-top:24px;">
+                            <div style="display:flex; gap:16px; justify-content:center; margin-top:24px; flex-wrap: wrap;">
                                 <button class="big-btn" style="background:linear-gradient(135deg,#ffaa00,#cc8800);" onclick="manualReset('web')">WEB HWID SIFIRLA</button>
                                 <button class="big-btn" style="background:linear-gradient(135deg,#ff00d9,#cc00b8);" onclick="manualReset('external')">CHEAT HWID SIFIRLA</button>
                             </div>
                             <div id="manualResetStatus" style="margin-top:28px; text-align:center; font-size:1.35rem; color:#ffaa00; min-height:28px;"></div>
+                        </div>
+                        <div class="warning-box" style="margin-top:32px;">
+                            <strong>Not:</strong> Cheat HWID sıfırlama eşleşme istemez, direkt çalışır.
                         </div>
                     </div>
 
@@ -204,9 +339,14 @@ async function manualReset(type) {
     status.style.color = "#ffaa00";
 
     try {
+        const payload = { key, type };
+        if (type === 'web') {
+            payload.current_hwid = hwid(); // Sadece web için HWID gönder
+        }
+
         const res = await fetchBypass(API_BASE + "/hwid-reset", {
             method: "POST",
-            body: JSON.stringify({ key, current_hwid: hwid(), type })
+            body: JSON.stringify(payload)
         });
         const data = await res.json();
         if (data.success) {
