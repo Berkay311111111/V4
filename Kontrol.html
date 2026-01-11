@@ -265,4 +265,14 @@ function calculateStars() {
     const res = document.getElementById("starResult");
     res.innerHTML = `
         TOPLAM YILDIZ: <span style="font-size:2.2rem;">${total}</span><br><br>
-        RİSK SEVİYESİ: <span style="color:${
+        RİSK SEVİYESİ: <span style="color:${color};">${level}</span><br><br>
+        TAVSİYE: ${msg}
+    `;
+    res.style.background = `rgba(${color === "#22ff99" ? "34,255,153" : color === "#ffaa00" ? "255,170,0" : "255,51,102"}, 0.18)`;
+    res.style.border = `1px solid ${color}`;
+    res.classList.remove("hidden");
+    res.scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body>
+</html>
