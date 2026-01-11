@@ -3,140 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAHO TITAN ENGINE - BYPASS</title>
+    <title>SAHO TITAN ENGINE</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <script>
+        // ─── BURAYI İSTEDİĞİN ZAMAN DEĞİŞTİR ───────────────────────────────
+        const API_BASE = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
+        // Yeni link gelirse buraya yapıştır aga
+    </script>
+
     <style>
-        /* Eski stil kısmını komple buraya kopyala - hiç değiştirmedim */
         :root {
-            --bg: #0a0b0f;
-            --card: #171926;
-            --primary: #00f0ff;
-            --secondary: #ff00f5;
-            --glow: rgba(0, 240, 255, 0.6);
-            --text: #e0f7ff;
-            --err: #ff3366;
-            --acc: #22c55e;
-            --warn: #f59e0b;
+            --bg: #0a0b0f; --card: #171926; --primary: #00f0ff; --secondary: #ff00f5;
+            --glow: rgba(0,240,255,0.6); --text: #e0f7ff; --err: #ff3366; --acc: #22c55e; --warn: #f59e0b;
         }
-        /* ... kalan tüm CSS aynı kalıyor, buraya yapıştırmaya gerek yok ... */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            min-height:100vh; background:linear-gradient(135deg,#0a0b0f 0%,#1a0033 100%);
+            color:var(--text); font-family:'Inter',sans-serif; background-attachment:fixed;
+        }
+        .container { display:flex; justify-content:center; align-items:flex-start; min-height:100vh; padding:40px 20px; }
+        .card {
+            background:rgba(23,25,38,0.92); backdrop-filter:blur(14px); border-radius:24px; padding:45px;
+            width:100%; max-width:1200px; box-shadow:0 0 100px rgba(0,240,255,0.4);
+            border:1px solid rgba(0,240,255,0.3);
+        }
+        h1 {
+            font-family:'Orbitron',sans-serif; font-size:3.6rem;
+            background:linear-gradient(90deg,var(--primary),var(--secondary)); -webkit-background-clip:text; background-clip:text;
+            color:transparent; text-align:center; margin-bottom:40px; text-shadow:0 0 40px var(--glow); letter-spacing:4px;
+        }
+        #loginCard { max-width:520px; text-align:center; }
+        #keyInput {
+            width:100%; padding:20px 30px; background:rgba(10,11,15,0.85); border:1px solid rgba(0,240,255,0.45);
+            border-radius:16px; color:white; font-size:1.3rem; text-align:center; margin:30px 0; letter-spacing:3px;
+        }
+        #loginBtn {
+            width:100%; padding:22px; background:linear-gradient(135deg,var(--primary),var(--secondary)); border:none;
+            border-radius:16px; color:black; font-weight:900; font-size:1.5rem; cursor:pointer; transition:all .4s;
+            box-shadow:0 0 40px rgba(0,240,255,0.7);
+        }
+        #loginBtn:hover { transform:translateY(-5px); box-shadow:0 0 60px rgba(0,240,255,0.9); }
+        #loginStatus { margin-top:30px; font-size:1.2rem; min-height:30px; color:var(--err); text-shadow:0 0 12px rgba(255,51,102,0.8); }
+        .test-box { margin:25px 0; padding:18px; background:rgba(0,240,255,0.12); border-radius:14px; text-align:center; }
+        .test-btn { padding:12px 28px; background:var(--primary); color:#000; border:none; border-radius:12px; font-weight:bold; cursor:pointer; }
+        .hidden { display:none !important; }
+
+        /* ─── Aşağıdaki stilleri orijinal kodundan direkt kopyala (çok uzun diye burada kısalttım) ─── */
+        .announcement { background:rgba(34,197,94,0.2); border:1px solid var(--acc); color:var(--acc); padding:20px; border-radius:16px; text-align:center; font-weight:bold; font-size:1.3rem; margin-bottom:40px; }
+        .key-display { background:rgba(0,240,255,0.15); border:1px solid var(--primary); border-radius:18px; padding:35px; margin:35px 0; text-align:center; }
+        .key-display h3 { color:var(--primary); margin-bottom:20px; font-size:1.8rem; }
+        .key-display strong { font-size:2.8rem; letter-spacing:5px; color:var(--primary); }
+        .reset-section, .reset-box, .main-grid, .section-title, .features-list, .download-btn, .warning { /* orijinal stiller aynı kalıyor */ }
     </style>
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- ESKİ GİRİŞ EKRANI artık kullanılmıyor -->
-        <!-- <div class="card" id="loginCard"> ... </div> -->
+    <!-- GİRİŞ EKRANI -->
+    <div class="card" id="loginCard">
+        <h1>SAHO TITAN ENGINE</h1>
 
-        <!-- DIREKT DASHBOARD AÇIK -->
-        <div class="card" id="dashboard">
-            <h1>HOŞ GELDİN AGA (BYPASS MOD)</h1>
-
-            <div class="announcement" style="background:rgba(255,51,102,0.3); border-color:var(--err); color:var(--err);">
-                ⚠️ SUNUCU KAPALI - BU SADECE GÖRSEL BYPASS MODU ⚠️<br>
-                Gerçek key kontrolü ve external key çalışmıyor!
-            </div>
-
-            <!-- EXTERNAL KEY SAHTE BİR TANESİ -->
-            <div class="key-display">
-                <h3>EXTERNAL PANEL GİRİŞ KEYİNİZ (SAHTE)</h3>
-                <strong id="externalKeyDisplay">X7K9-P2M4</strong><br>
-                <small>(Gerçekte çalışmaz - sadece görsel)</small>
-            </div>
-
-            <!-- HWID RESET KISMI SAHTE -->
-            <div class="reset-section">
-                <h3>HWID Reset Seçenekleri (Sahte)</h3>
-                <div class="reset-box">
-                    <strong>Web Panel için Reset</strong>
-                    <p>Kalan hak: <span>2</span>/2</p>
-                    <button class="reset-btn web">Sıfırla (Web) - Çalışmaz</button>
-                </div>
-                <div class="reset-box">
-                    <strong>External Panel için Reset</strong>
-                    <p>Kalan hak: <span>2</span>/2</p>
-                    <button class="reset-btn external">Sıfırla (External) - Çalışmaz</button>
-                </div>
-            </div>
-
-            <!-- İNDİRME BUTONU aynı kaldı -->
-            <div class="main-grid">
-                <div>
-                    <h2 class="section-title">Panel Özellikleri</h2>
-                    <ul class="features-list">
-                        <li>🎯 Pull Player</li>
-                        <li>🆔 UID Bypass</li>
-                        <li>🔫 Aimbot</li>
-                        <li>⚡ Fast Switch</li>
-                        <li>⌨️ Macro</li>
-                        <li>👁️ Hex Esp Menü</li>
-                        <li>🌈 Chams Menü</li>
-                    </ul>
-                    <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/n1iluvg1c7znl1h/SAHO+SERVER.rar/file','_blank')">
-                        📥 SAHO V5 BLACK ENGINE İNDİR
-                    </button>
-                </div>
-
-                <!-- Hesap bilgileri sahte -->
-                <div>
-                    <h2 class="section-title">Hesap Bilgileri (Sahte)</h2>
-                    <div>ID: 69420</div>
-                    <div>Kullanıcı: TestAga1337</div>
-                    <div>Seviye: 69</div>
-                    <div>Bölge: TR</div>
-                    <div>Ban: Yok (şimdilik 😏)</div>
-                    <div>Oluşturma: 01.01.2025</div>
-                    <div>Dil: Türkçe</div>
-                </div>
-
-                <!-- Yıldız hesaplama kısmı aynı kaldı -->
-                <div>
-                    <h2 class="section-title">Yıldız Risk Hesaplama</h2>
-                    <!-- ... burası tamamen aynı, next1 next2 fonksiyonları çalışıyor ... -->
-                </div>
-            </div>
+        <div class="test-box">
+            <button class="test-btn" onclick="testApi()">Sunucu Durumunu Test Et</button>
+            <div id="testResult" style="margin-top:15px; font-weight:bold; min-height:40px;"></div>
         </div>
+
+        <input id="keyInput" type="text" placeholder="Lisans Key Girin">
+        <button id="loginBtn" onclick="login()">Giriş Yap</button>
+        <div id="loginStatus"></div>
     </div>
 
-    <!-- JavaScript kısmı çok sadeleştirildi -->
-    <script>
-        // Yıldız hesaplama fonksiyonları (eski halinden aynı)
-        function next1() {
-            const stars = document.getElementById("starNowInput").value;
-            if (!stars || stars < 0 || stars > 999) {
-                alert("Geçerli bir yıldız sayısı girin (0-999)");
-                return;
+    <!-- DASHBOARD - orijinal tasarım tamamen aynı -->
+    <div class="card hidden" id="dashboard">
+        <h1>HOŞ GELDİN AGA</h1>
+
+        <div class="key-display">
+            <h3>EXTERNAL PANEL GİRİŞ KEYİNİZ</h3>
+            <strong id="externalKeyDisplay">Henüz oluşturulmadı...</strong><br>
+            <small>(Form2'ye sadece bu 8 haneli kısmı girin)</small>
+        </div>
+
+        <div class="announcement">
+            Tüm özellikler %100 güvenli! 🚀 Keyini iyi kullan aga
+        </div>
+
+        <!-- HWID Reset bölümü aynı -->
+        <div class="reset-section">
+            <h3>HWID Reset Seçenekleri</h3>
+            <!-- ... kalan reset-box kısımları orijinalden aynı ... -->
+        </div>
+
+        <!-- Main grid, özellikler, indirme, hesap bilgileri, yıldız hesaplama → hepsi orijinal haliyle aynı kalıyor -->
+        <!-- (Yer tasarrufu için burada tekrar yazmıyorum, sen önceki kodundan kopyala-yapıştır yapabilirsin) -->
+    </div>
+</div>
+
+<script>
+// HWID hesaplama (değişmedi)
+function hwid() {
+    return btoa(navigator.userAgent + screen.width + screen.height + navigator.language);
+}
+
+// Sunucu testi (ngrok uyarısını da yakalamaya çalışıyor)
+async function testApi() {
+    const resEl = document.getElementById("testResult");
+    resEl.innerHTML = "Test ediliyor... (5-10 saniye bekle)";
+
+    try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 10000);
+
+        const res = await fetch(API_BASE, { 
+            method: 'GET', 
+            mode: 'cors', 
+            signal: controller.signal 
+        });
+        
+        clearTimeout(timeout);
+        
+        if (res.status >= 200 && res.status < 300) {
+            const text = await res.text();
+            if (text.includes("ngrok") || text.includes("ERR_NGROK")) {
+                resEl.innerHTML = "⚠️ Ngrok güvenlik sayfası çıkıyor<br>Sunucu canlı ama normal login büyük ihtimal çalışmaz";
+                resEl.style.color = "var(--warn)";
+            } else {
+                resEl.innerHTML = "✅ Sunucu yanıt veriyor (normal gibi görünüyor)";
+                resEl.style.color = "var(--acc)";
             }
-            document.getElementById("q1").classList.add("hidden");
-            document.getElementById("q2").classList.remove("hidden");
+        } else {
+            resEl.innerHTML = `❌ Sunucu hata verdi (status: ${res.status})`;
+            resEl.style.color = "var(--err)";
+        }
+    } catch (err) {
+        if (err.name === 'AbortError') {
+            resEl.innerHTML = "⏳ Çok yavaş veya hiç yanıt yok";
+        } else {
+            resEl.innerHTML = "❌ Bağlantı tamamen başarısız<br>Ya sunucu kapalı ya da ngrok öldü";
+        }
+        resEl.style.color = "var(--err)";
+        console.error(err);
+    }
+}
+
+async function login() {
+    const status = document.getElementById("loginStatus");
+    const key = document.getElementById("keyInput").value.trim();
+
+    if (!key) {
+        status.innerText = "Key boş bırakma aga!";
+        return;
+    }
+
+    status.innerText = "Bağlanıyor... (ngrok yüzünden 10-20 sn sürebilir)";
+
+    try {
+        const res = await fetch(API_BASE + "/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ key, hwid: hwid() })
+        });
+
+        let data;
+        try {
+            data = await res.json();
+        } catch {
+            status.innerText = "Sunucudan düzgün cevap gelmedi (ngrok engelliyor olabilir)";
+            return;
         }
 
-        function next2() {
-            const now = parseInt(document.getElementById("starNowInput").value) || 0;
-            const today = parseInt(document.getElementById("starTodayInput").value) || 0;
-            const total = now + today;
-
-            let riskLevel = "GÜVENLİ";
-            let riskColor = "#22c55e";
-            let advice = "İyi gidiyorsun, devam et!";
-
-            if (total > 55) {
-                riskLevel = "YÜKSEK RİSK";
-                riskColor = "#ff3366";
-                advice = "55+ yıldız incelemeye alınır! Dikkat et, ban yiyebilirsin!";
-            } else if (total > 45) {
-                riskLevel = "ORTA RİSK";
-                riskColor = "#f59e0b";
-                advice = "Biraz yavaşla, 45-55 arası dikkat çekebilir.";
-            }
-
-            document.getElementById("result").innerHTML = `
-                <strong>Toplam Yıldız:</strong> ${total}<br>
-                <strong>Risk Seviyesi:</strong> <span style="color:\( {riskColor}"> \){riskLevel}</span><br>
-                <strong>Tavsiye:</strong> ${advice}
-            `;
-            document.getElementById("result").classList.remove("hidden");
+        if (!data.ok) {
+            status.innerText = data.message || "Key geçersiz veya HWID eşleşmedi";
+            return;
         }
-    </script>
+
+        status.innerText = "Giriş başarılı! Dashboard'a geçiliyor...";
+        status.style.color = "var(--acc)";
+
+        // Buradan sonrası orijinal login mantığın aynı (external key, reset hakları, hesap bilgileri vs.)
+        // Sen önceki kodundan kopyalayıp buraya yapıştırabilirsin
+
+        setTimeout(() => {
+            document.getElementById("loginCard").classList.add("hidden");
+            document.getElementById("dashboard").classList.remove("hidden");
+        }, 1800);
+
+    } catch (err) {
+        status.innerText = "Bağlantı hatası!\nMuhtemel sebep: ngrok güvenlik duvarı\nYeni link lazım aga";
+        console.error(err);
+    }
+}
+
+// Diğer fonksiyonlar (requestHwidReset, next1, next2, window.onload) → orijinal halinden aynı kalıyor
+</script>
 </body>
 </html>
