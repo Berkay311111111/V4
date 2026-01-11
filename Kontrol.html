@@ -2,391 +2,244 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Saho Secure Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>SAHO TITAN ENGINE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0b0c10;
-            --card: #1f1f2e;
-            --primary: #00fff7;
-            --secondary: #ff00f7;
+            --bg: #0a0b0f;
+            --card: #171926;
+            --primary: #00f0ff;
+            --secondary: #ff00f5;
+            --glow: rgba(0, 240, 255, 0.6);
+            --text: #e0f7ff;
+            --err: #ff3366;
             --acc: #22c55e;
-            --warn: #f59e0b;
-            --err: #ff1f4c;
-            --txt: #e5e7eb;
         }
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            font-family: Inter, sans-serif;
         }
         body {
-            margin: 0;
-            background: var(--bg);
-            color: var(--txt);
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0b0f 0%, #1a0033 100%);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
         }
-        .card {
-            background: linear-gradient(135deg, #1f1f2e, #2c2c3a);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 0 20px rgba(0, 255, 255, .3), 0 0 40px rgba(255, 0, 255, .2);
+        body::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(0,240,255,0.08) 0%, transparent 50%);
+            pointer-events: none;
+            animation: pulse 12s infinite alternate;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.8; }
+        }
+
+        /* LOGIN CARD */
+        .login-card {
+            background: rgba(23, 25, 38, 0.92);
+            backdrop-filter: blur(14px);
+            border-radius: 24px;
+            padding: 60px 50px;
             width: 100%;
-            max-width: 1000px;
-        }
-        h1, h2, h3 {
-            color: var(--primary);
+            max-width: 520px;
+            box-shadow: 0 0 80px rgba(0, 240, 255, 0.35);
+            border: 1px solid rgba(0, 240, 255, 0.25);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1.2s ease-out;
         }
-        .hidden {
-            display: none;
+        .login-card::after {
+            content: "";
+            position: absolute;
+            inset: -50%;
+            background: conic-gradient(from 0deg, transparent, rgba(0,240,255,0.12), transparent);
+            animation: rotateGlow 18s linear infinite;
+            pointer-events: none;
         }
-        input, button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 12px;
-            margin-top: 10px;
-            font-size: 16px;
-            background: #111827;
-            color: var(--txt);
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-        button {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.3s;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(60px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        button:hover {
-            opacity: 0.8;
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.2rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 40px;
+            text-shadow: 0 0 25px var(--glow);
+            letter-spacing: 4px;
         }
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid rgba(255, 255, 255, .2);
-            border-top: 6px solid var(--acc);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: auto;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg) }
-        }
-        .infoBox {
-            background: rgba(0, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 12px;
-            margin-top: 10px;
-            font-size: 14px;
-            text-align: center;
-        }
-        .announcement {
-            background: linear-gradient(135deg, rgba(0, 255, 247, 0.2), rgba(255, 0, 247, 0.2));
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 15px;
-            color: var(--acc);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-        }
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 25px;
+        .input-group {
+            position: relative;
             margin: 30px 0;
         }
-        .reset-section {
-            background: rgba(245, 158, 11, 0.12);
-            border: 1px solid rgba(245, 158, 11, 0.4);
-            border-radius: 12px;
-            padding: 18px;
-            margin: 25px 0;
-        }
-        .reset-btn {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            font-size: 17px;
-            margin-top: 12px;
-        }
-        .reset-btn.external {
-            background: linear-gradient(135deg, #ff00f7, #d500f9);
-        }
-        .reset-info {
-            font-size: 14px;
-            margin-top: 10px;
-            color: #f59e0b;
+        input {
+            width: 100%;
+            padding: 18px 24px;
+            background: rgba(10, 11, 15, 0.75);
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            border-radius: 14px;
+            color: white;
+            font-size: 1.15rem;
+            transition: all 0.4s ease;
             text-align: center;
+            letter-spacing: 2px;
         }
-        .warning {
-            background: rgba(255, 31, 76, 0.1);
-            color: #ff1f4c;
-            border: 1px solid #ff1f4c;
-            border-radius: 12px;
-            padding: 15px;
-            margin-top: 12px;
-            font-size: 14px;
-            text-align: center;
-            font-weight: 700;
-            line-height: 1.4;
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.5);
+            transform: scale(1.02);
         }
-        .reset-box {
-            background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 12px 0;
-            font-size: 14px;
+        input::placeholder {
+            color: rgba(224, 247, 255, 0.4);
         }
-        @media (max-width: 868px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
+        button {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 14px;
+            color: black;
+            font-weight: 800;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
+            margin-top: 20px;
+            letter-spacing: 1px;
         }
+        button:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.85);
+        }
+        #loginStatus {
+            margin-top: 25px;
+            font-size: 1.1rem;
+            color: var(--err);
+            text-shadow: 0 0 10px rgba(255, 51, 102, 0.7);
+            min-height: 25px;
+        }
+
+        /* DASHBOARD (basit placeholder - istersen genişlet) */
+        .dashboard-card {
+            background: rgba(23, 25, 38, 0.92);
+            backdrop-filter: blur(14px);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 1100px;
+            box-shadow: 0 0 80px rgba(0, 240, 255, 0.35);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            animation: fadeInUp 1s ease-out;
+        }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
     <!-- LOGIN EKRANI -->
-    <div class="card" id="loginCard">
-        <h1>🌐 SAHO TITAN ENGINE</h1>
-        <input id="keyInput" placeholder="License Key">
-        <button onclick="login()">Giriş Yap</button>
-        <div id="loginStatus" class="infoBox hidden"></div>
+    <div class="login-card" id="loginCard">
+        <h1>SAHO TITAN ENGINE</h1>
+        <div class="input-group">
+            <input id="keyInput" type="text" placeholder="LİSANS KEYİNİ GİRİN" autocomplete="off">
+        </div>
+        <button onclick="login()">GİRİŞ YAP</button>
+        <div id="loginStatus"></div>
     </div>
 
-    <!-- DASHBOARD -->
-    <div class="card hidden" id="dashboard">
-        <h1>Saho V5 Black Engine</h1>
-
-        <div id="loading" class="hidden">
-            <div class="spinner"></div>
-            <p>SAHO TITAN ENGINE serverine bağlanılıyor... 🌐</p>
-        </div>
-
-        <div id="dashboardContent" class="hidden">
-            <!-- Anons -->
-            <div class="announcement">
-                Güncellenmiş Paneldeki Özellikler Hepsi 100% Safe! 🚀 Güvenle Kullan!
-            </div>
-
-            <!-- HWID RESET SEÇENEKLERİ -->
-            <div class="reset-section">
-                <h3>🔄 HWID Reset Seçenekleri</h3>
-
-                <div class="reset-box">
-                    <strong>HWID Reset For Web</strong><br>
-                    <small>(Bu tarayıcı / Web panel için)</small>
-                    <p>Kalan hak: <strong id="resetLeftWeb">2</strong>/2</p>
-                    <button class="reset-btn" onclick="requestHwidReset('web')">Sıfırla (Web)</button>
-                </div>
-
-                <div class="reset-box">
-                    <strong>HWID Reset For External Panel</strong><br>
-                    <small>(CERT_INSTALL - Masaüstü uygulama için)</small>
-                    <p>Kalan hak: <strong id="resetLeftExternal">2</strong>/2</p>
-                    <button class="reset-btn external" onclick="requestHwidReset('external')">Sıfırla (External)</button>
-                </div>
-
-                <div class="reset-info" id="resetStatus"></div>
-            </div>
-
-            <!-- Ana İçerik Grid -->
-            <div class="main-grid">
-                <!-- Sol - Özellikler + İndirme -->
-                <div class="features-section">
-                    <h2>Saho V5 Black Engine Panel Özellikleri</h2>
-                    <ul>
-                        <li>🎯 Pull Player</li>
-                        <li>🆔 UID Bypass</li>
-                        <li>🔫 Aimbot</li>
-                        <li>⚡ Fast Switch</li>
-                        <li>⌨️ Macro</li>
-                        <li>👁️ Hex Esp Menü</li>
-                        <li>🌈 Chams Menü</li>
-                    </ul>
-                    <div class="download-note">Güvenle indirip hemen kullanmaya başla!</div>
-                    <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/n1iluvg1c7znl1h/SAHO+SERVER.rar/file', '_blank')">
-                        📥 SAHO V5 BLACK ENGINE İNDİR
-                    </button>
-                </div>
-
-                <!-- Orta - Hesap Bilgileri -->
-                <div class="account-info">
-                    <h2>👤 Hesap Bilgileri</h2>
-                    <div id="info"></div>
-                    <div id="playerId"></div>
-                    <div id="username"></div>
-                    <div id="level"></div>
-                    <div id="region"></div>
-                    <div id="ban"></div>
-                    <div id="createDate"></div>
-                    <div id="language"></div>
-                    <div class="infoBox" id="extraInfo"></div>
-                </div>
-
-                <!-- Sağ - Yıldız Hesaplama (kısaltılmış) -->
-                <div id="questionPanel">
-                    <div id="q1">
-                        <p>📊 Şu an hesabınız kaç yıldız?</p>
-                        <input type="number" id="starNowInput" min="50" max="999">
-                        <button onclick="next1()">Devam</button>
-                        <div class="warning">
-                            ⚠️ 55 yıldızın üstü incelemeye alınır!<br>
-                            BR'de max 20 kill, üst üste 16 kill alma!<br>
-                            Ortalama 8-13 kill arası tutmaya çalışın...
-                        </div>
-                    </div>
-                    <!-- q2 ve q3 burada olmalı ama sen kısaltmıştın, istersen tam halini ekleriz -->
-                </div>
-            </div>
+    <!-- DASHBOARD (placeholder - önceki dashboard kodunu buraya koyabilirsin) -->
+    <div class="dashboard-card hidden" id="dashboard">
+        <h1 style="font-family: 'Orbitron'; margin-bottom: 30px;">HOŞ GELDİN</h1>
+        <p style="font-size: 1.2rem; text-align: center; opacity: 0.9;">
+            Titan Engine paneline başarıyla giriş yaptın.<br>
+            HWID reset seçenekleri ve özellikler aşağıda.
+        </p>
+        <!-- Buraya önceki reset bölümleri, özellikler, yıldız hesaplama vs. koyabilirsin -->
+        <!-- Örnek: -->
+        <div style="margin-top: 40px; text-align: center;">
+            <button style="padding: 15px 40px; font-size: 1.2rem;" onclick="alert('HWID reset başlatılıyor...')">
+                HWID RESET BAŞLAT
+            </button>
         </div>
     </div>
 
     <script>
         const API = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
-        let mainKey = "";
-        let resetCountWeb = 0;
-        let resetCountExternal = 0;
-        const MAX_RESET = 2;
 
         function hwid() {
             return btoa(navigator.userAgent + screen.width + screen.height + navigator.language);
         }
 
         async function login() {
-            mainKey = document.getElementById("keyInput").value.trim();
+            const key = document.getElementById("keyInput").value.trim();
             const status = document.getElementById("loginStatus");
-            status.classList.add("hidden");
-            status.innerText = "";
 
-            if (!mainKey) {
+            if (!key) {
                 status.innerText = "❌ Key boş olamaz!";
-                status.classList.remove("hidden");
                 return;
             }
 
-            document.getElementById("loginCard").classList.add("hidden");
-            document.getElementById("dashboard").classList.remove("hidden");
-            document.getElementById("loading").classList.remove("hidden");
-
-            await new Promise(r => setTimeout(r, 3000));
-            document.getElementById("loading").classList.add("hidden");
+            status.innerText = "Bağlanıyor... Lütfen bekleyin";
 
             try {
-                const r = await fetch(API + "/login", {
+                const res = await fetch(API + "/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ key: mainKey, hwid: hwid() })
-                });
-
-                const d = await r.json();
-
-                if (!d.ok) {
-                    document.getElementById("dashboard").classList.add("hidden");
-                    document.getElementById("loginCard").classList.remove("hidden");
-                    status.innerText = "❌ " + (d.message || "Geçersiz Key veya HWID uyuşmazlığı");
-                    status.classList.remove("hidden");
-                    return;
-                }
-
-                // Reset sayaçlarını sunucudan al
-                resetCountWeb = d.resetCountWeb || 0;
-                resetCountExternal = d.resetCountExternal || 0;
-
-                updateResetDisplay();
-
-                document.getElementById("dashboardContent").classList.remove("hidden");
-
-                document.getElementById("info").innerText = d.info || "Hoş geldin!";
-                document.getElementById("playerId").innerText = "Oyuncu ID: " + (d.playerId || "Bilinmiyor");
-                document.getElementById("username").innerText = "Kullanıcı: " + (d.username || "Bilinmiyor");
-                document.getElementById("level").innerText = "Level: " + (d.level || "Bilinmiyor");
-                document.getElementById("region").innerText = "Region: " + (d.region || "Bilinmiyor");
-                document.getElementById("ban").innerText = "Ban durumu: " + (d.banStatus || "Yok");
-                document.getElementById("createDate").innerText = "Kurulum tarihi: " + (d.createTime || "Bilinmiyor");
-                document.getElementById("language").innerText = "Language: " + (d.language || "Türkçe");
-
-                const ip = await fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => d.ip).catch(() => "Bilinmiyor");
-                document.getElementById("extraInfo").innerText = `IP: ${ip}\nTarayıcı: ${navigator.userAgent}\nSaat: ${new Date().toLocaleString('tr-TR')}`;
-            } catch (err) {
-                document.getElementById("dashboard").classList.add("hidden");
-                document.getElementById("loginCard").classList.remove("hidden");
-                status.innerText = "Sunucu bağlantısı kurulamadı 🌐";
-                status.classList.remove("hidden");
-                console.error(err);
-            }
-        }
-
-        function updateResetDisplay() {
-            document.getElementById("resetLeftWeb").innerText = MAX_RESET - resetCountWeb;
-            document.getElementById("resetLeftExternal").innerText = MAX_RESET - resetCountExternal;
-
-            const status = document.getElementById("resetStatus");
-
-            if (resetCountWeb >= MAX_RESET && resetCountExternal >= MAX_RESET) {
-                status.innerHTML = `Her iki reset hakkı da doldu.<br>3. sıfırlama için UID: <strong>7442955706</strong> 'e <strong>200</strong> elmas gönderin!`;
-                status.style.color = "#ff1f4c";
-            } else {
-                status.innerHTML = "";
-            }
-        }
-
-        async function requestHwidReset(type) {
-            const count = type === 'web' ? resetCountWeb : resetCountExternal;
-            if (count >= MAX_RESET) {
-                alert(`[${type.toUpperCase()}] Ücretsiz reset hakkın kalmadı!`);
-                return;
-            }
-
-            if (!confirm(`[${type.toUpperCase()}] HWID sıfırlamak istediğine emin misin?`)) return;
-
-            const status = document.getElementById("resetStatus");
-            status.innerHTML = `[${type.toUpperCase()}] Sıfırlama işlemi başlatılıyor...`;
-
-            try {
-                const res = await fetch(API + "/hwid-reset", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        key: mainKey,
-                        current_hwid: hwid(),
-                        type: type
-                    })
+                    body: JSON.stringify({ key, hwid: hwid() })
                 });
 
                 const data = await res.json();
 
-                if (data.success) {
-                    if (type === 'web') {
-                        resetCountWeb++;
-                    } else {
-                        resetCountExternal++;
-                    }
-
-                    status.innerHTML = `✅ [${type.toUpperCase()}] HWID başarıyla sıfırlandı!<br>Kalan hak: ${MAX_RESET - (type === 'web' ? resetCountWeb : resetCountExternal)}`;
-                    updateResetDisplay();
-
-                    // İstersen otomatik sayfa yenileme
-                    // setTimeout(() => location.reload(), 2500);
-                } else {
-                    status.innerHTML = "❌ " + (data.message || "İşlem başarısız");
-                    status.style.color = "#ff1f4c";
+                if (!data.ok) {
+                    status.innerText = "❌ " + (data.message || "Geçersiz key veya HWID uyuşmazlığı");
+                    return;
                 }
+
+                // Başarılı giriş
+                status.innerText = "✅ Giriş başarılı! Panel yükleniyor...";
+
+                // Eğer random key üretildiyse göster
+                if (data.generatedKey) {
+                    setTimeout(() => {
+                        alert(`Ana key için otomatik giriş kodu oluşturuldu!\n\nTITAN SERVER KEY GIRISINIZ: ${data.generatedKey}\n\nBu kodu not al!`);
+                    }, 800);
+                }
+
+                if (data.externalGeneratedKey) {
+                    setTimeout(() => {
+                        alert(`External Panel için yeni key oluşturuldu!\n\nKey: ${data.externalGeneratedKey}\nTam key: ${data.externalFullKey}\n\nNot almayı unutma!`);
+                    }, 1200);
+                }
+
+                // Dashboard'a geçiş
+                setTimeout(() => {
+                    document.getElementById("loginCard").classList.add("hidden");
+                    document.getElementById("dashboard").classList.remove("hidden");
+                }, 1500);
+
             } catch (err) {
-                status.innerHTML = "⚠️ Sunucu ile iletişim kurulamadı";
-                status.style.color = "#ff1f4c";
+                status.innerText = "⚠️ Sunucu bağlantısı başarısız";
                 console.error(err);
             }
-        }
-
-        // Yıldız hesaplama (kısaltılmış hali - tam halini istersen eklerim)
-        function next1() {
-            // ... devamı
         }
     </script>
 </body>
