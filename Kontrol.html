@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Roboto+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
+
     <script>
         const API_BASE = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
         const BYPASS_HEADER = { 'ngrok-skip-browser-warning': '69420' };
@@ -21,270 +21,272 @@
             --accent: #ff00d9;
             --text: #f2fbff;
             --text-dim: #88aaff;
-            --glow-p: 0 0 30px rgba(0,229,255,0.5);
-            --glow-a: 0 0 40px rgba(255,0,217,0.4);
+            --glow: 0 0 30px rgba(0,229,255,0.5);
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
 
         html, body {
-            height:100%;
+            height: 100%;
             background: var(--bg-darker);
             color: var(--text);
             font-family: 'Roboto Mono', monospace;
             overflow: hidden;
             background-image: 
-                radial-gradient(circle at 15% 25%, rgba(0,229,255,0.07) 0%, transparent 45%),
-                radial-gradient(circle at 85% 75%, rgba(255,0,217,0.06) 0%, transparent 50%);
+                radial-gradient(circle at 20% 30%, rgba(0,229,255,0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255,0,217,0.05) 0%, transparent 55%);
         }
 
-        .layout {
-            height: 100vh;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            position: relative;
+        body {
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Sidebar login öncesi gizli, giriş sonrası görünür */
+        .app-wrapper {
+            flex: 1;
+            display: flex;
+            height: 100%;
+        }
+
+        /* Sidebar */
         .sidebar {
-            background: linear-gradient(180deg, rgba(3,7,22,0.96) 0%, rgba(1,4,16,0.98) 100%);
+            width: 280px;
+            background: linear-gradient(180deg, rgba(3,7,22,0.97) 0%, rgba(1,4,16,0.99) 100%);
             backdrop-filter: blur(12px);
-            border-right: 1px solid rgba(0,229,255,0.16);
-            padding: 3rem 1.5rem;
+            border-right: 1px solid rgba(0,229,255,0.15);
+            padding: 2.5rem 1.4rem;
             display: none;
             flex-direction: column;
-            gap: 1rem;
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 280px;
-            z-index: 10;
+            gap: 1.1rem;
+            flex-shrink: 0;
         }
 
         .logo {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 3.6rem;
-            letter-spacing: 10px;
+            font-size: 3.4rem;
+            letter-spacing: 9px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: var(--glow-p);
+            text-shadow: var(--glow);
             text-align: center;
-            margin-bottom: 3.5rem;
-            animation: neonPulse 12s ease-in-out infinite;
+            margin-bottom: 3rem;
+            animation: pulse 10s infinite alternate;
         }
 
-        @keyframes neonPulse {
-            0%,100% { filter: brightness(1); }
-            50%     { filter: brightness(1.35); }
+        @keyframes pulse {
+            from { filter: brightness(1); }
+            to   { filter: brightness(1.3); }
         }
 
         .tab-btn {
-            padding: 1.2rem 1.8rem;
+            padding: 1.15rem 1.6rem;
             font-size: 1.05rem;
             font-weight: 500;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(0,229,255,0.18);
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(0,229,255,0.2);
             border-radius: 10px;
             color: var(--text-dim);
             cursor: pointer;
-            transition: all 0.35s ease;
+            transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1.4px;
+            letter-spacing: 1.3px;
         }
 
         .tab-btn:hover, .tab-btn.active {
-            background: linear-gradient(135deg, rgba(0,229,255,0.16), rgba(255,0,217,0.12));
+            background: linear-gradient(135deg, rgba(0,229,255,0.18), rgba(255,0,217,0.14));
             border-color: var(--primary);
             color: white;
-            box-shadow: var(--glow-p);
-            transform: translateX(8px);
+            box-shadow: var(--glow);
+            transform: translateX(6px);
         }
 
-        .main-content {
-            grid-column: 1 / -1;          /* Login öncesi tam genişlik */
+        /* İçerik alanı */
+        .main-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 3rem 4rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            transition: margin-left 0.6s ease;
+            transition: padding-left 0.5s ease;
         }
 
-        /* Giriş yaptıktan sonra sidebar açılınca içeriği sağa kaydır */
-        .sidebar-visible .main-content {
-            margin-left: 280px;
-            grid-column: 2 / -1;
+        /* Login öncesi tam ortada */
+        .login-mode .main-area {
+            padding: 2rem;
+            justify-content: center;
+        }
+
+        /* Login sonrası biraz daha dengeli padding */
+        .logged-in .main-area {
+            padding-left: 3rem;
+            padding-right: 4rem;
         }
 
         .login-box {
             width: 100%;
-            max-width: 580px;
+            max-width: 560px;
             text-align: center;
         }
 
         .login-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 6.2rem;
+            font-size: 6rem;
             font-weight: 900;
-            letter-spacing: 16px;
+            letter-spacing: 14px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 3.8rem;
-            text-shadow: var(--glow-p);
+            margin-bottom: 3.5rem;
+            text-shadow: var(--glow);
         }
 
         #keyInput {
             width: 100%;
-            padding: 1.8rem 2.4rem;
-            font-size: 2.1rem;
+            padding: 1.7rem 2rem;
+            font-size: 2rem;
             text-align: center;
-            background: rgba(3,9,28,0.72);
+            background: rgba(4,10,30,0.75);
             border: 2px solid rgba(0,229,255,0.35);
             border-radius: 14px;
             color: var(--primary);
-            letter-spacing: 12px;
-            margin: 2.5rem 0 3rem;
-            transition: all 0.4s;
+            letter-spacing: 10px;
+            margin: 2.2rem 0 2.8rem;
         }
 
         #keyInput:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: var(--glow-p);
-            background: rgba(3,11,32,0.85);
+            box-shadow: var(--glow);
         }
 
         #loginBtn {
             width: 100%;
-            padding: 1.7rem;
-            font-size: 1.7rem;
+            padding: 1.6rem;
+            font-size: 1.65rem;
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             color: #000;
             border: none;
             border-radius: 14px;
             cursor: pointer;
-            box-shadow: var(--glow-p);
-            transition: all 0.45s;
+            box-shadow: var(--glow);
+            transition: all 0.4s;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2.5px;
         }
 
         #loginBtn:hover {
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 0 90px rgba(0,229,255,0.7);
+            transform: translateY(-5px);
+            box-shadow: 0 0 80px rgba(0,229,255,0.7);
         }
 
         #loginStatus {
-            margin-top: 2.5rem;
-            font-size: 1.45rem;
-            min-height: 40px;
+            margin-top: 2.2rem;
+            font-size: 1.4rem;
+            min-height: 35px;
         }
 
-        .page { display:none; }
-        .page.active { display:block; }
+        .page { display: none; width: 100%; max-width: 1100px; margin: 0 auto; }
+        .page.active { display: block; }
 
         .section-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             font-weight: 900;
-            letter-spacing: 8px;
+            letter-spacing: 7px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             text-align: center;
-            margin: 1.5rem 0 3rem;
-            text-shadow: 0 0 40px rgba(0,229,255,0.5);
+            margin: 1rem 0 2.8rem;
+            text-shadow: 0 0 35px rgba(0,229,255,0.5);
         }
 
         .key-display {
-            padding: 1.9rem;
-            font-size: 3.8rem;
-            letter-spacing: 18px;
+            padding: 1.7rem;
+            font-size: 3.5rem;
+            letter-spacing: 16px;
             text-align: center;
-            background: rgba(0,35,70,0.32);
+            background: rgba(0,40,80,0.3);
             border: 2px dashed var(--primary);
             border-radius: 16px;
             color: var(--primary);
             cursor: pointer;
-            transition: all 0.4s;
-            margin: 2.8rem 0;
+            transition: all 0.35s;
+            margin: 2.5rem 0;
         }
 
         .key-display:hover {
             border-style: solid;
-            box-shadow: var(--glow-p);
+            box-shadow: var(--glow);
             transform: scale(1.01);
         }
 
-        .big-action-btn {
+        .big-btn {
             width: 100%;
-            padding: 1.6rem;
-            font-size: 1.55rem;
+            padding: 1.5rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #000;
             border: none;
             border-radius: 14px;
             cursor: pointer;
-            margin: 2rem 0;
+            margin: 1.8rem 0;
             transition: all 0.4s;
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
-        .big-action-btn:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 0 90px rgba(0,229,255,0.7);
+        .big-btn:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 0 70px rgba(0,229,255,0.65);
         }
 
-        .btn-orange { background: linear-gradient(90deg, #ffcc00, #ff4400); }
+        .btn-orange { background: linear-gradient(90deg, #ffcc00, #ff5500); }
         .btn-purple { background: linear-gradient(90deg, var(--accent), #c400b0); }
 
         .input-field {
             width: 100%;
-            padding: 1.6rem 2.2rem;
-            font-size: 1.6rem;
-            background: rgba(3,9,28,0.72);
+            padding: 1.5rem 2rem;
+            font-size: 1.55rem;
+            background: rgba(4,10,30,0.75);
             border: 2px solid rgba(0,229,255,0.3);
             border-radius: 12px;
             color: var(--primary);
-            margin: 1.5rem 0;
-            transition: all 0.35s;
+            margin: 1.4rem 0;
         }
 
         .input-field:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: var(--glow-p);
+            box-shadow: var(--glow);
         }
 
         @media (max-width: 1100px) {
-            .layout { grid-template-columns: 1fr; }
+            .app-wrapper { flex-direction: column; }
             .sidebar {
-                position: relative;
                 width: 100%;
                 height: auto;
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;
                 padding: 1.5rem;
+                gap: 0.9rem;
                 border-right: none;
                 border-bottom: 1px solid rgba(0,229,255,0.2);
             }
-            .sidebar-visible .main-content { margin-left: 0; }
-            .main-content { padding: 2rem; }
+            .main-area { padding: 2rem 2.5rem; }
         }
     </style>
 </head>
-<body>
+<body class="login-mode">
 
-<div class="layout">
+<div class="app-wrapper">
     <div class="sidebar" id="sidebar">
         <div class="logo">SAHO TITAN</div>
         <button class="tab-btn active" onclick="showPage('home', event)">ANA EKRAN</button>
@@ -294,17 +296,19 @@
         <button class="tab-btn" onclick="showPage('download', event)">İNDİR</button>
     </div>
 
-    <div class="main-content" id="mainContent">
+    <div class="main-area" id="mainArea">
         <div class="login-box" id="loginCard">
             <div class="login-title">SAHO TITAN</div>
             <input id="keyInput" type="text" placeholder="LİSANS KEY" autocomplete="off"/>
-            <button id="loginBtn" class="big-action-btn" onclick="login()">GİRİŞ YAP</button>
+            <button id="loginBtn" class="big-btn" onclick="login()">GİRİŞ YAP</button>
             <div id="loginStatus"></div>
         </div>
     </div>
 </div>
 
 <script>
+// ────────────────────────────── Login & Dashboard ──────────────────────────────
+
 const fetchBypass = (url, options = {}) => {
     options.headers = { ...options.headers, ...BYPASS_HEADER, 'Content-Type': 'application/json' };
     return fetch(url, options);
@@ -347,37 +351,33 @@ async function login() {
         status.innerText = "Giriş başarılı ✓";
         status.style.color = "#00ff9d";
 
-        // Sidebar'ı göster + body'ye class ekle
+        // Mod değiştir + sidebar göster
+        document.body.classList.remove("login-mode");
+        document.body.classList.add("logged-in");
         document.getElementById("sidebar").style.display = "flex";
-        document.body.classList.add("sidebar-visible");
 
         setTimeout(() => {
             document.getElementById("loginCard").remove();
 
-            document.getElementById("mainContent").innerHTML = `
+            document.getElementById("mainArea").innerHTML = `
                 <div id="home" class="page active">
                     <h2 class="section-title">HOŞ GELDİN KRAL</h2>
-                    <div style="text-align:center;max-width:900px;">
-                        <div style="font-size:1.8rem;color:var(--primary);margin:1.5rem 0;">C# Cheat Kodun:</div>
+                    <div style="text-align:center;">
+                        <div style="font-size:1.7rem;color:var(--primary);margin:1.4rem 0;">C# Cheat Kodun:</div>
                         <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı!')">
                             ${d.externalCode || "HENÜZ ÜRETİLMEDİ"}
                         </div>
-                        <p style="margin-top:1.6rem;font-size:1.3rem;">Cheat'e yapıştır kral</p>
+                        <p style="margin-top:1.5rem;font-size:1.25rem;">Cheat'e yapıştır reis</p>
                     </div>
-                    <div style="background:rgba(255,51,102,0.18);border:1px solid rgba(255,51,102,0.45);border-radius:14px;padding:2rem;margin:3rem auto;max-width:800px;font-size:1.2rem;">
-                        <strong>UYARI:</strong> Kod sana özeldir • Kimseye verme • HWID reset soldan!
+                    <div style="background:rgba(255,51,102,0.18);border:1px solid rgba(255,51,102,0.45);border-radius:14px;padding:1.8rem;margin:2.5rem auto;max-width:800px;font-size:1.15rem;">
+                        <strong>UYARI:</strong> Kod sana özel • Kimseye verme • Reset menüden!
                     </div>
                 </div>
 
-                <div id="info" class="page">
-                    <h2 class="section-title">HESAP BİLGİLERİ</h2>
-                    <!-- ... diğer sayfalar aynı kalabilir ... -->
-                </div>
-
-                <!-- Diğer sayfaları da aynı şekilde buraya ekleyebilirsin -->
-                <!-- info, hwid, stars, download sayfaları önceki mesajdaki gibi -->
+                <!-- Diğer sayfalar (info, hwid, stars, download) buraya gelecek -->
+                <!-- İstersen onları da ekleyebilirsin, şimdilik sadece home gösteriliyor -->
             `;
-        }, 700);
+        }, 600);
     } catch (err) {
         status.innerText = "Bağlantı hatası";
         status.style.color = "#ff3366";
@@ -391,8 +391,6 @@ function showPage(pageId, event) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
 }
-
-// diğer fonksiyonlar (manualReset, calculateStars) aynı kalabilir
 </script>
 </body>
 </html>
