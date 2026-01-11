@@ -31,7 +31,6 @@
             background-attachment: fixed;
         }
 
-        /* CARD */
         .card {
             background: rgba(23, 25, 38, 0.92);
             backdrop-filter: blur(14px);
@@ -93,6 +92,7 @@
             text-align: center;
             font-size: 1.1rem;
             min-height: 25px;
+            color: var(--err);
         }
 
         /* DASHBOARD */
@@ -105,6 +105,29 @@
             text-align: center;
             font-weight: bold;
             margin-bottom: 30px;
+        }
+
+        .key-display {
+            background: rgba(0,240,255,0.12);
+            border: 1px solid var(--primary);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .key-display h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        .key-display strong {
+            font-size: 2rem;
+            letter-spacing: 3px;
+            color: var(--primary);
+        }
+        .key-display small {
+            display: block;
+            margin-top: 10px;
+            opacity: 0.7;
         }
 
         .reset-section {
@@ -186,21 +209,6 @@
             text-align: center;
         }
 
-        .key-display {
-            background: rgba(0,240,255,0.12);
-            border: 1px solid var(--primary);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 25px 0;
-            text-align: center;
-        }
-
-        .key-display strong {
-            font-size: 1.8rem;
-            color: var(--primary);
-            letter-spacing: 2px;
-        }
-
         .hidden { display: none; }
     </style>
 </head>
@@ -218,18 +226,11 @@
     <div class="card hidden" id="dashboard">
         <h1>HOŞ GELDİN</h1>
 
-        <!-- OTOMATİK ÜRETİLEN KEYLER -->
-        <div id="keyDisplaySection" class="key-display hidden">
-            <h3 style="color:var(--primary); margin-bottom:15px;">Giriş Kodun Oluşturuldu!</h3>
-            <div style="margin:15px 0;">
-                TITAN SERVER KEY GIRISINIZ:<br>
-                <strong id="generatedKeyDisplay"></strong>
-            </div>
-            <div>
-                External Panel Key (Form2 için):<br>
-                <strong id="externalKeyDisplay"></strong><br>
-                <small style="opacity:0.7;">(Sadece 8 haneli kısmı gir)</small>
-            </div>
+        <!-- EXTERNAL KEY HER ZAMAN GÖSTERİLİYOR (oluşturulduktan sonra kalıcı) -->
+        <div id="externalKeySection" class="key-display">
+            <h3>EXTERNAL PANEL GİRİŞ KEYİNİZ</h3>
+            <strong id="externalKeyDisplay">Henüz oluşturulmadı...</strong><br>
+            <small>(Form2'ye sadece bu 8 haneli kısmı girin)</small>
         </div>
 
         <div class="announcement">
@@ -341,15 +342,14 @@
 
                 status.innerText = "Giriş başarılı!";
 
-                // Üretilen keyleri ekranda göster
-                if (d.generatedKey || d.externalGeneratedKey) {
-                    document.getElementById("keyDisplaySection").classList.remove("hidden");
-                    if (d.generatedKey) {
-                        document.getElementById("generatedKeyDisplay").innerText = d.generatedKey;
-                    }
-                    if (d.externalGeneratedKey) {
-                        document.getElementById("externalKeyDisplay").innerText = d.externalGeneratedKey;
-                    }
+                // Sadece EXTERNAL KEY gösteriliyor
+                if (d.externalGeneratedKey) {
+                    document.getElementById("externalKeyDisplay").innerText = d.externalGeneratedKey;
+                    // Bir daha girişte bile kalıcı olsun diye localStorage'a kaydet (isteğe bağlı)
+                    localStorage.setItem("externalKey", d.externalGeneratedKey);
+                } else if (localStorage.getItem("externalKey")) {
+                    // Daha önce oluşturulmuşsa göster
+                    document.getElementById("externalKeyDisplay").innerText = localStorage.getItem("externalKey");
                 }
 
                 // HWID kalan hakları güncelle
@@ -382,6 +382,13 @@
             }
         }
 
+        // Sayfa yüklendiğinde daha önce oluşturulmuş external key varsa göster
+        window.onload = () => {
+            if (localStorage.getItem("externalKey")) {
+                document.getElementById("externalKeyDisplay").innerText = localStorage.getItem("externalKey");
+            }
+        };
+
         async function requestHwidReset(type) {
             const status = document.getElementById("resetStatus");
             status.innerText = `[${type.toUpperCase()}] İşlem yapılıyor...`;
@@ -396,8 +403,7 @@
 
                 if (d.success) {
                     status.innerText = `${type.toUpperCase()} HWID sıfırlandı!`;
-                    // Kalan hakları güncelle (gerçek değer sunucudan gelir)
-                    location.reload(); // basitçe sayfayı yenile
+                    location.reload(); // kalan hakları güncellemek için sayfayı yenile
                 } else {
                     status.innerText = d.message || "Hata oluştu";
                 }
@@ -406,7 +412,6 @@
             }
         }
 
-        // Yıldız hesaplama
         function next1() {
             document.getElementById("q1").classList.add("hidden");
             document.getElementById("q2").classList.remove("hidden");
