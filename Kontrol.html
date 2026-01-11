@@ -7,10 +7,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
     <script>
         const API_BASE = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
         const BYPASS_HEADER = { 'ngrok-skip-browser-warning': '69420' };
     </script>
+
     <style>
         :root {
             --bg: #02040d;
@@ -24,28 +26,33 @@
             --glow-danger: 0 0 30px rgba(255,51,102,0.55);
             --surface: rgba(5,10,28,0.78);
         }
+
         * { margin:0; padding:0; box-sizing:border-box; }
+
         html, body {
             height: 100%;
             background: var(--bg-darker);
             color: var(--text);
             font-family: 'JetBrains Mono', monospace;
             overflow: hidden;
-            background-image:
+            background-image: 
                 radial-gradient(circle at 20% 30%, rgba(0,229,255,0.05) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(255,0,217,0.04) 0%, transparent 55%);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+
         body {
             display: flex;
             flex-direction: column;
         }
+
         .app-wrapper {
             flex: 1;
             display: flex;
             height: 100%;
         }
+
         .sidebar {
             width: 300px;
             background: linear-gradient(180deg, rgba(3,7,22,0.95) 0%, rgba(1,4,16,0.97) 100%);
@@ -57,6 +64,7 @@
             gap: 1rem;
             flex-shrink: 0;
         }
+
         .logo {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
@@ -70,6 +78,7 @@
             text-align: center;
             margin-bottom: 2.8rem;
         }
+
         .tab-btn {
             padding: 1rem 1.5rem;
             font-size: 1rem;
@@ -83,6 +92,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+
         .tab-btn:hover, .tab-btn.active {
             background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(255,0,217,0.12));
             border-color: var(--primary);
@@ -90,6 +100,7 @@
             box-shadow: var(--glow);
             transform: translateX(4px);
         }
+
         .main-area {
             flex: 1;
             overflow-y: auto;
@@ -98,22 +109,26 @@
             justify-content: flex-start;
             align-items: flex-start;
         }
+
         .login-mode .main-area {
             padding: 1.5rem;
             justify-content: center;
             align-items: center;
         }
+
         .content-container {
             width: 100%;
             max-width: 1000px;
             margin: 0 auto;
         }
+
         .login-box {
             width: 100%;
             max-width: 540px;
             text-align: center;
             margin: 0 auto;
         }
+
         .login-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 5.2rem;
@@ -126,6 +141,7 @@
             margin-bottom: 3rem;
             text-shadow: var(--glow);
         }
+
         #keyInput {
             width: 100%;
             padding: 1.5rem 1.8rem;
@@ -139,11 +155,13 @@
             margin: 2rem 0 2.5rem;
             transition: all 0.35s;
         }
+
         #keyInput:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: var(--glow);
         }
+
         #loginBtn {
             width: 100%;
             padding: 1.5rem;
@@ -159,17 +177,21 @@
             text-transform: uppercase;
             letter-spacing: 2px;
         }
+
         #loginBtn:hover {
             transform: translateY(-5px);
             box-shadow: 0 0 70px rgba(0,229,255,0.65);
         }
+
         #loginStatus {
             margin-top: 2rem;
             font-size: 1.3rem;
             min-height: 35px;
         }
+
         .page { display: none; }
         .page.active { display: block; }
+
         .section-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 2.9rem;
@@ -183,6 +205,7 @@
             margin: 1.2rem 0 2.5rem;
             text-shadow: 0 0 30px rgba(0,229,255,0.45);
         }
+
         .key-display {
             padding: 1.6rem;
             font-size: 3.2rem;
@@ -196,11 +219,13 @@
             transition: all 0.35s;
             margin: 2rem 0;
         }
+
         .key-display:hover {
             border-style: solid;
             box-shadow: var(--glow);
             transform: scale(1.01);
         }
+
         .big-btn {
             width: 100%;
             padding: 1.4rem;
@@ -214,12 +239,15 @@
             transition: all 0.35s;
             text-transform: uppercase;
         }
+
         .big-btn:hover {
             transform: translateY(-5px);
             box-shadow: 0 0 60px rgba(0,229,255,0.6);
         }
+
         .btn-orange { background: linear-gradient(90deg, #ffcc00, #ff5500); }
         .btn-purple { background: linear-gradient(90deg, var(--accent), #c400b0); }
+
         .input-field {
             width: 100%;
             padding: 1.4rem 1.8rem;
@@ -231,11 +259,13 @@
             margin: 1.3rem 0;
             transition: all 0.3s;
         }
+
         .input-field:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: var(--glow);
         }
+
         .warning-box, .critical-warning, .security-info {
             background: rgba(255,51,102,0.18);
             border: 2px solid rgba(255,51,102,0.5);
@@ -247,6 +277,7 @@
             box-shadow: var(--glow-danger);
             animation: dangerPulse 5s infinite alternate;
         }
+
         .security-info {
             background: rgba(0,229,255,0.1);
             border: 1px solid rgba(0,229,255,0.4);
@@ -254,39 +285,18 @@
             animation: none;
             font-size: 1rem;
         }
+
         .critical-warning {
             background: rgba(255,51,102,0.25);
             border: 3px solid var(--danger);
             font-size: 1.15rem;
         }
-        #sessionExpiredModal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.92);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        .modal-content {
-            background: rgba(5,10,28,0.95);
-            border: 2px solid var(--danger);
-            border-radius: 16px;
-            padding: 3rem 2.5rem;
-            text-align: center;
-            max-width: 520px;
-            box-shadow: var(--glow-danger);
-        }
-        .modal-title {
-            color: var(--danger);
-            font-size: 2.4rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 0 15px rgba(255,51,102,0.7);
-        }
+
         @keyframes dangerPulse {
             from { opacity: 0.9; transform: scale(1); }
-            to { opacity: 1; transform: scale(1.008); }
+            to   { opacity: 1;   transform: scale(1.008); }
         }
+
         @media (max-width: 1100px) {
             .app-wrapper { flex-direction: column; }
             .sidebar {
@@ -306,19 +316,6 @@
     </style>
 </head>
 <body class="login-mode">
-
-<div id="sessionExpiredModal">
-    <div class="modal-content">
-        <h2 class="modal-title">OTURUM SONLANDIRILDI</h2>
-        <p style="font-size:1.3rem;margin:1.5rem 0;line-height:1.5;">
-            Lisans anahtarınız geçerliliğini yitirdi veya başka bir yerde kullanıldı.<br>
-            Güvenlik nedeniyle oturumunuz kapatıldı.
-        </p>
-        <button class="big-btn" style="background:#ff3366;color:white;" onclick="location.reload()">
-            TEKRAR GİRİŞ YAP
-        </button>
-    </div>
-</div>
 
 <div class="app-wrapper">
     <div class="sidebar" id="sidebar">
@@ -344,12 +341,8 @@
 
 <script>
 // ──────────────────────────────────────────────────────────────────────────────
-// SAHO TITAN DASHBOARD - SADECE KEY İLE LİSANS KONTROL (HWID sadece login'de)
-// 6 saniyede bir kontrol, 8 başarısızda çıkış
+// TAM DASHBOARD - Tüm sayfalar, tüm özellikler dahil (son hali)
 // ──────────────────────────────────────────────────────────────────────────────
-
-const CHECK_INTERVAL_MS = 3000;     // 6 saniye - stabilite için ideal
-const MAX_FAILED_CHECKS = 1;        // ~48 saniye tolerans
 
 const fetchBypass = (url, options = {}) => {
     options.headers = { ...options.headers, ...BYPASS_HEADER, 'Content-Type': 'application/json' };
@@ -361,54 +354,6 @@ function hwid() {
 }
 
 let loggedInKey = "";
-let licenseCheckerInterval = null;
-let failedCheckCount = 0;
-
-async function startLicenseChecker() {
-    if (licenseCheckerInterval) clearInterval(licenseCheckerInterval);
-
-    licenseCheckerInterval = setInterval(async () => {
-        try {
-            console.log("[LISANS KONTROL] İstek atılıyor...", new Date().toLocaleTimeString());
-
-            const res = await fetchBypass(API_BASE + "/check-license", {
-                method: "POST",
-                body: JSON.stringify({ 
-                    key: loggedInKey
-                    // HWID BURADA YOK - sadece key kontrolü
-                })
-            });
-
-            console.log("[LISANS KONTROL] HTTP Status:", res.status);
-
-            if (!res.ok) {
-                throw new Error(`HTTP ${res.status}`);
-            }
-
-            const data = await res.json();
-            console.log("[LISANS KONTROL] Server cevabı:", data);
-
-            if (!data.ok || !data.valid) {
-                throw new Error("Lisans geçersiz");
-            }
-
-            console.log("[LISANS KONTROL] → GEÇERLİ ✓");
-            failedCheckCount = 0;
-
-        } catch (err) {
-            failedCheckCount++;
-            console.warn(`[LISANS KONTROL] Hata ${failedCheckCount}/${MAX_FAILED_CHECKS}:`, err.message);
-
-            if (failedCheckCount >= MAX_FAILED_CHECKS) {
-                console.error("[LISANS KONTROL] Maksimum hata aşıldı → Çıkış");
-                clearInterval(licenseCheckerInterval);
-                licenseCheckerInterval = null;
-                document.getElementById("sessionExpiredModal").style.display = "flex";
-                document.querySelector(".app-wrapper").style.filter = "blur(4px)";
-            }
-        }
-    }, CHECK_INTERVAL_MS);
-}
 
 async function login() {
     const key = document.getElementById("keyInput").value.trim();
@@ -427,7 +372,7 @@ async function login() {
     try {
         const res = await fetchBypass(API_BASE + "/login", {
             method: "POST",
-            body: JSON.stringify({ key, hwid: hwid() }) // HWID sadece ilk girişte
+            body: JSON.stringify({ key, hwid: hwid() })
         });
 
         const d = await res.json();
@@ -447,6 +392,7 @@ async function login() {
 
         setTimeout(() => {
             document.getElementById("loginCard").remove();
+
             document.getElementById("mainArea").innerHTML = `
                 <div class="content-container">
                     <div id="home" class="page active">
@@ -510,11 +456,20 @@ async function login() {
 
                     <div id="download" class="page">
                         <h2 class="section-title">İNDİRME MERKEZİ</h2>
+                        
                         <div class="critical-warning">
                             <strong>KRİTİK UYARI - OKUMADAN İNDİRME!</strong><br><br>
                             EXE'mizi kurduğunuz andan itibaren yaptığınız, girdiğiniz, kullandığınız, kayıt olduğunuz TÜM başka panel veya internaller TITAN SERVER tarafından kayıt altına alınmaktadır.<br><br>
-                            Farklı bir EXE'den hesabınız yasaklanırsa ve bunu bizim EXE'miz yüzünden olduğunu söylerseniz KEY'iniz ANINDA iptal edilecektir.
+                            Farklı bir EXE'den hesabınız yasaklanırsa ve bunu bizim EXE'miz yüzünden olduğunu söylerseniz KEY'iniz ANINDA iptal edilecektir ve bilgisayarınız rahmetine kavuşturulacaktır. Sürpriz virüsler yiyeceksiniz!
                         </div>
+
+                        <div class="critical-warning" style="margin-top:2rem;">
+                            <strong>CRACK / KIRMA TEŞEBBÜSÜ UYARISI</strong><br><br>
+                            Paneldeki TÜM mantık ve çalışma sistemi server tarafından izlenmektedir.<br>
+                            Herhangi bir şekilde cracklemeye çalışırsanız alacağınız kodlar KALICI BAN kodları olacaktır.<br>
+                            Saniyesinde server tarafınızdan MAIN UID'iniz kalıcı banlanacaktır (oyundan ve serverden).
+                        </div>
+
                         <button class="big-btn" style="margin-top:2.5rem;" onclick="window.open('https://www.mediafire.com/file/a3gwmxk6dr13jqc/Saho.rar/file','_blank')">
                             SAHO V5 BLACK ENGINE İNDİR
                         </button>
@@ -532,12 +487,7 @@ async function login() {
                     document.getElementById("extraInfo").innerText = 
                         `IP: Bilinmiyor\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
                 });
-
-            // ★★★ LİSANS KONTROL BAŞLAT ★★★
-            startLicenseChecker();
-
         }, 600);
-
     } catch (err) {
         status.innerText = "Bağlantı hatası";
         status.style.color = "#ff3366";
@@ -586,7 +536,7 @@ async function manualReset(type) {
 function calculateStars() {
     const today = parseInt(document.getElementById("starToday").value) || 0;
     const now = parseInt(document.getElementById("starNow").value) || 0;
-    
+
     let level = "GÜVENLİ";
     let color = "#00ff9d";
     let msg = "Sorunsuz devam et kral! 🔥";
