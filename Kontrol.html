@@ -27,8 +27,15 @@
             background: linear-gradient(135deg, #0a0b0f 0%, #1a0033 100%);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            padding: 30px 20px;
             background-attachment: fixed;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px 20px;
         }
 
         .card {
@@ -37,62 +44,64 @@
             border-radius: 24px;
             padding: 40px;
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 1100px;
             box-shadow: 0 0 80px rgba(0, 240, 255, 0.35);
             border: 1px solid rgba(0, 240, 255, 0.25);
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.2rem;
+            font-size: 3.4rem;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 0 0 25px var(--glow);
-            letter-spacing: 2px;
+            margin-bottom: 35px;
+            text-shadow: 0 0 30px var(--glow);
+            letter-spacing: 3px;
         }
 
-        /* LOGIN */
+        /* LOGIN KISMI ORTADA */
         #loginCard {
-            max-width: 500px;
+            max-width: 520px;
+            text-align: center;
         }
         #keyInput {
             width: 100%;
-            padding: 18px;
+            padding: 18px 24px;
             background: rgba(10, 11, 15, 0.8);
             border: 1px solid rgba(0, 240, 255, 0.4);
-            border-radius: 12px;
+            border-radius: 14px;
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             text-align: center;
-            margin: 20px 0;
+            margin: 25px 0;
+            letter-spacing: 2px;
         }
         #loginBtn {
             width: 100%;
-            padding: 18px;
+            padding: 20px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             color: black;
-            font-weight: 800;
-            font-size: 1.3rem;
+            font-weight: 900;
+            font-size: 1.4rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.4s;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
         }
         #loginBtn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.7);
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.85);
         }
         #loginStatus {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 1.1rem;
-            min-height: 25px;
+            margin-top: 25px;
+            font-size: 1.15rem;
+            min-height: 30px;
             color: var(--err);
+            text-shadow: 0 0 10px rgba(255,51,102,0.7);
         }
 
         /* DASHBOARD */
@@ -100,113 +109,130 @@
             background: rgba(34, 197, 94, 0.15);
             border: 1px solid var(--acc);
             color: var(--acc);
-            padding: 15px;
-            border-radius: 12px;
+            padding: 18px;
+            border-radius: 14px;
             text-align: center;
             font-weight: bold;
-            margin-bottom: 30px;
+            font-size: 1.2rem;
+            margin-bottom: 35px;
         }
 
         .key-display {
             background: rgba(0,240,255,0.12);
             border: 1px solid var(--primary);
             border-radius: 16px;
-            padding: 25px;
+            padding: 30px;
             margin: 30px 0;
             text-align: center;
         }
         .key-display h3 {
             color: var(--primary);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
         }
         .key-display strong {
-            font-size: 2rem;
-            letter-spacing: 3px;
+            font-size: 2.4rem;
+            letter-spacing: 4px;
             color: var(--primary);
         }
         .key-display small {
             display: block;
-            margin-top: 10px;
-            opacity: 0.7;
+            margin-top: 15px;
+            opacity: 0.8;
+            font-size: 1rem;
         }
 
         .reset-section {
             background: rgba(245, 158, 11, 0.1);
             border: 1px solid rgba(245, 158, 11, 0.4);
             border-radius: 16px;
-            padding: 25px;
-            margin: 30px 0;
+            padding: 30px;
+            margin: 40px 0;
         }
 
         .reset-box {
             background: rgba(255,255,255,0.05);
-            padding: 18px;
-            border-radius: 12px;
-            margin: 15px 0;
+            padding: 20px;
+            border-radius: 14px;
+            margin: 20px 0;
         }
 
         .reset-btn {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             color: white;
             font-weight: bold;
+            font-size: 1.2rem;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 12px;
+            transition: all 0.3s;
         }
-
         .reset-btn.web { background: linear-gradient(135deg, #f59e0b, #d97706); }
         .reset-btn.external { background: linear-gradient(135deg, #ff00f5, #d500f9); }
+        .reset-btn:hover { transform: scale(1.03); }
 
         .main-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
         }
 
         .section-title {
-            font-size: 1.6rem;
-            margin-bottom: 15px;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
             color: var(--primary);
+            text-align: center;
         }
 
         .features-list li {
             background: rgba(0,240,255,0.08);
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 10px;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 12px;
+            font-size: 1.1rem;
         }
 
         .download-btn {
             width: 100%;
-            padding: 18px;
+            padding: 20px;
             background: linear-gradient(135deg, var(--acc), #16a34a);
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             color: white;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 25px;
+            transition: all 0.3s;
+        }
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(34,197,94,0.6);
         }
 
         .account-info div {
             background: rgba(0,240,255,0.08);
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 10px;
+            padding: 14px;
+            margin: 10px 0;
+            border-radius: 12px;
+            font-size: 1.1rem;
         }
 
         .warning {
             background: rgba(255,51,102,0.15);
             border: 1px solid var(--err);
             color: var(--err);
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 20px;
-            font-size: 0.95rem;
+            padding: 20px;
+            border-radius: 14px;
+            margin: 30px 0;
+            font-size: 1rem;
             text-align: center;
+            line-height: 1.6;
+        }
+        .warning strong {
+            color: #ff6688;
         }
 
         .hidden { display: none; }
@@ -226,7 +252,7 @@
     <div class="card hidden" id="dashboard">
         <h1>HOŞ GELDİN</h1>
 
-        <!-- EXTERNAL KEY HER ZAMAN GÖSTERİLİYOR (oluşturulduktan sonra kalıcı) -->
+        <!-- EXTERNAL KEY (Kalıcı Gösterim) -->
         <div id="externalKeySection" class="key-display">
             <h3>EXTERNAL PANEL GİRİŞ KEYİNİZ</h3>
             <strong id="externalKeyDisplay">Henüz oluşturulmadı...</strong><br>
@@ -234,7 +260,7 @@
         </div>
 
         <div class="announcement">
-            Paneldeki tüm özellikler %100 güvenli! 🚀 Keyini iyi kullan aga
+            Tüm özellikler %100 güvenli! 🚀 Keyini iyi kullan aga
         </div>
 
         <!-- HWID RESET -->
@@ -250,7 +276,7 @@
                 <p>Kalan hak: <span id="resetLeftExternal">2</span>/2</p>
                 <button class="reset-btn external" onclick="requestHwidReset('external')">Sıfırla (External)</button>
             </div>
-            <div id="resetStatus" style="margin-top:20px; text-align:center; font-weight:bold;"></div>
+            <div id="resetStatus" style="margin-top:25px; text-align:center; font-weight:bold; font-size:1.1rem;"></div>
         </div>
 
         <!-- ANA İÇERİK -->
@@ -283,27 +309,36 @@
                 <div id="ban"></div>
                 <div id="createDate"></div>
                 <div id="language"></div>
-                <div id="extraInfo" style="margin-top:15px; background:rgba(0,240,255,0.08); padding:12px; border-radius:10px;"></div>
+                <div id="extraInfo" style="margin-top:20px; background:rgba(0,240,255,0.08); padding:15px; border-radius:12px; white-space:pre-wrap;"></div>
             </div>
 
-            <!-- Yıldız Hesaplama -->
+            <!-- Yıldız Hesaplama (Kapsamlı + Şık) -->
             <div>
                 <h2 class="section-title">Yıldız Risk Hesaplama</h2>
                 <div id="q1">
-                    <p>Şu anki yıldız sayınız?</p>
-                    <input type="number" id="starNowInput" min="0" max="999">
+                    <p>Şu an hesabınızda toplam kaç yıldız var?</p>
+                    <input type="number" id="starNowInput" min="0" max="999" placeholder="Örn: 120">
                     <button onclick="next1()">Devam</button>
                     <div class="warning">
-                        55 yıldızın üstü risklidir!<br>
-                        BR'de max 20 kill, üst üste 16 kill almayın.
+                        <strong>ÖNEMLİ UYARILAR:</strong><br>
+                        • 55 yıldızın üstü incelemeye alınır!<br>
+                        • BR modunda maksimum 20 kill alın!<br>
+                        • Üst üste 16+ kill kesinlikle yasaktır!<br>
+                        • Ortalama kill sayınız 8-13 arası olsun.<br>
+                        • Kafa vuruş oranınız %85'i geçmesin!<br>
+                        • Başka exe/panel kullanmayın, hepsi loglanır!
                     </div>
                 </div>
+
                 <div id="q2" class="hidden">
-                    <p>Bugün kaç yıldız aldınız?</p>
-                    <input type="number" id="starTodayInput" min="0" max="100">
+                    <p>Bugün kaç yıldız kastınız?</p>
+                    <input type="number" id="starTodayInput" min="0" max="100" placeholder="Örn: 12">
                     <button onclick="next2()">Hesapla</button>
                 </div>
-                <div id="result" class="hidden" style="margin-top:20px; padding:15px; background:rgba(0,240,255,0.1); border-radius:12px;"></div>
+
+                <div id="result" class="hidden" style="margin-top:25px; padding:20px; background:rgba(0,240,255,0.1); border-radius:14px; text-align:center; font-size:1.2rem;">
+                    <!-- Sonuç buraya gelecek -->
+                </div>
             </div>
         </div>
     </div>
@@ -325,7 +360,7 @@
                 return;
             }
 
-            status.innerText = "Bağlanıyor...";
+            status.innerText = "Bağlanıyor... Lütfen bekleyin";
 
             try {
                 const res = await fetch(API + "/login", {
@@ -342,13 +377,11 @@
 
                 status.innerText = "Giriş başarılı!";
 
-                // Sadece EXTERNAL KEY gösteriliyor
+                // External key gösterimi (her zaman kalıcı)
                 if (d.externalGeneratedKey) {
                     document.getElementById("externalKeyDisplay").innerText = d.externalGeneratedKey;
-                    // Bir daha girişte bile kalıcı olsun diye localStorage'a kaydet (isteğe bağlı)
                     localStorage.setItem("externalKey", d.externalGeneratedKey);
                 } else if (localStorage.getItem("externalKey")) {
-                    // Daha önce oluşturulmuşsa göster
                     document.getElementById("externalKeyDisplay").innerText = localStorage.getItem("externalKey");
                 }
 
@@ -369,12 +402,12 @@
                 document.getElementById("language").innerText = "Dil: " + (d.language || "Türkçe");
 
                 const ip = await fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>d.ip).catch(()=> "Bilinmiyor");
-                document.getElementById("extraInfo").innerText = `IP: ${ip}\nTarayıcı: ${navigator.userAgent}`;
+                document.getElementById("extraInfo").innerText = `IP: ${ip}\nTarayıcı: ${navigator.userAgent}\nGiriş saati: ${new Date().toLocaleString('tr-TR')}`;
 
                 setTimeout(() => {
                     document.getElementById("loginCard").classList.add("hidden");
                     document.getElementById("dashboard").classList.remove("hidden");
-                }, 1000);
+                }, 1200);
 
             } catch (err) {
                 status.innerText = "Sunucuya bağlanılamadı";
@@ -382,7 +415,7 @@
             }
         }
 
-        // Sayfa yüklendiğinde daha önce oluşturulmuş external key varsa göster
+        // Sayfa yüklendiğinde external key varsa göster
         window.onload = () => {
             if (localStorage.getItem("externalKey")) {
                 document.getElementById("externalKeyDisplay").innerText = localStorage.getItem("externalKey");
@@ -403,7 +436,7 @@
 
                 if (d.success) {
                     status.innerText = `${type.toUpperCase()} HWID sıfırlandı!`;
-                    location.reload(); // kalan hakları güncellemek için sayfayı yenile
+                    location.reload(); // kalan hakları ve bilgileri güncelle
                 } else {
                     status.innerText = d.message || "Hata oluştu";
                 }
@@ -413,6 +446,11 @@
         }
 
         function next1() {
+            const stars = document.getElementById("starNowInput").value;
+            if (!stars || stars < 0 || stars > 999) {
+                alert("Geçerli bir yıldız sayısı girin (0-999)");
+                return;
+            }
             document.getElementById("q1").classList.add("hidden");
             document.getElementById("q2").classList.remove("hidden");
         }
@@ -421,9 +459,25 @@
             const now = parseInt(document.getElementById("starNowInput").value) || 0;
             const today = parseInt(document.getElementById("starTodayInput").value) || 0;
             const total = now + today;
+
+            let riskLevel = "GÜVENLİ";
+            let riskColor = var(--acc);
+            let advice = "İyi gidiyorsun, devam et!";
+
+            if (total > 55) {
+                riskLevel = "YÜKSEK RİSK";
+                riskColor = var(--err);
+                advice = "55+ yıldız incelemeye alınır! Dikkat et, ban yiyebilirsin!";
+            } else if (total > 45) {
+                riskLevel = "ORTA RİSK";
+                riskColor = var(--warn);
+                advice = "Biraz yavaşla, 45-55 arası dikkat çekebilir.";
+            }
+
             document.getElementById("result").innerHTML = `
-                Toplam Yıldız: <strong>${total}</strong><br>
-                Durum: ${total > 55 ? "<span style='color:var(--err)'>Riskli!</span>" : "<span style='color:var(--acc)'>Güvenli</span>"}
+                <strong>Toplam Yıldız:</strong> ${total}<br>
+                <strong>Risk Seviyesi:</strong> <span style="color:${riskColor}">${riskLevel}</span><br>
+                <strong>Tavsiye:</strong> ${advice}
             `;
             document.getElementById("result").classList.remove("hidden");
         }
