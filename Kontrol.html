@@ -27,153 +27,152 @@
             background: linear-gradient(135deg, #0a0b0f 0%, #1a0033 100%);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            position: relative;
-        }
-        body::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(0,240,255,0.08) 0%, transparent 50%);
-            pointer-events: none;
+            padding: 30px 20px;
+            background-attachment: fixed;
         }
 
+        /* CARD */
         .card {
             background: rgba(23, 25, 38, 0.92);
             backdrop-filter: blur(14px);
             border-radius: 24px;
             padding: 40px;
             width: 100%;
-            max-width: 1100px;
+            max-width: 1200px;
+            margin: 0 auto;
             box-shadow: 0 0 80px rgba(0, 240, 255, 0.35);
             border: 1px solid rgba(0, 240, 255, 0.25);
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
+            font-size: 3.2rem;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             text-align: center;
             margin-bottom: 30px;
-            text-shadow: 0 0 20px var(--glow);
+            text-shadow: 0 0 25px var(--glow);
+            letter-spacing: 2px;
         }
 
-        input, button {
+        /* LOGIN */
+        #loginCard {
+            max-width: 500px;
+        }
+        #keyInput {
             width: 100%;
-            padding: 14px;
-            margin: 10px 0;
+            padding: 18px;
+            background: rgba(10, 11, 15, 0.8);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            border-radius: 12px;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 20px 0;
+        }
+        #loginBtn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none;
             border-radius: 12px;
-            font-size: 1.1rem;
-        }
-
-        input {
-            background: rgba(10, 11, 15, 0.75);
-            color: white;
-            border: 1px solid rgba(0, 240, 255, 0.35);
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
-        }
-
-        button {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: black;
-            font-weight: bold;
+            font-weight: 800;
+            font-size: 1.3rem;
             cursor: pointer;
             transition: all 0.3s;
         }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+        #loginBtn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.7);
+        }
+        #loginStatus {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            min-height: 25px;
         }
 
-        .hidden { display: none; }
-
+        /* DASHBOARD */
         .announcement {
             background: rgba(34, 197, 94, 0.15);
             border: 1px solid var(--acc);
             color: var(--acc);
-            padding: 12px;
+            padding: 15px;
             border-radius: 12px;
             text-align: center;
-            margin-bottom: 25px;
             font-weight: bold;
+            margin-bottom: 30px;
         }
 
         .reset-section {
             background: rgba(245, 158, 11, 0.1);
             border: 1px solid rgba(245, 158, 11, 0.4);
             border-radius: 16px;
-            padding: 20px;
+            padding: 25px;
             margin: 30px 0;
         }
 
         .reset-box {
             background: rgba(255,255,255,0.05);
-            padding: 15px;
+            padding: 18px;
             border-radius: 12px;
-            margin: 12px 0;
+            margin: 15px 0;
         }
 
         .reset-btn {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: white;
-            padding: 12px;
+            width: 100%;
+            padding: 14px;
             border: none;
             border-radius: 10px;
-            cursor: pointer;
+            color: white;
             font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
         }
 
-        .reset-btn.external {
-            background: linear-gradient(135deg, #ff00f5, #d500f9);
-        }
+        .reset-btn.web { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .reset-btn.external { background: linear-gradient(135deg, #ff00f5, #d500f9); }
 
         .main-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px;
         }
 
-        .features-section ul {
-            list-style: none;
-            padding: 0;
+        .section-title {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: var(--primary);
         }
 
-        .features-section li {
+        .features-list li {
             background: rgba(0,240,255,0.08);
-            padding: 10px;
+            padding: 12px;
             margin: 8px 0;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .download-btn {
+            width: 100%;
+            padding: 18px;
             background: linear-gradient(135deg, var(--acc), #16a34a);
-            color: white;
-            padding: 16px;
             border: none;
             border-radius: 12px;
-            font-size: 1.2rem;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         .account-info div {
             background: rgba(0,240,255,0.08);
-            padding: 10px;
+            padding: 12px;
             margin: 8px 0;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .warning {
@@ -184,47 +183,81 @@
             border-radius: 12px;
             margin-top: 20px;
             font-size: 0.95rem;
+            text-align: center;
         }
+
+        .key-display {
+            background: rgba(0,240,255,0.12);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .key-display strong {
+            font-size: 1.8rem;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN -->
+    <!-- GİRİŞ EKRANI -->
     <div class="card" id="loginCard">
         <h1>SAHO TITAN ENGINE</h1>
-        <input id="keyInput" type="text" placeholder="Lisans Key">
-        <button onclick="login()">Giriş Yap</button>
-        <div id="loginStatus" style="margin-top:15px; min-height:20px; text-align:center; color:var(--err);"></div>
+        <input id="keyInput" type="text" placeholder="Lisans Key Girin">
+        <button id="loginBtn" onclick="login()">Giriş Yap</button>
+        <div id="loginStatus"></div>
     </div>
 
     <!-- DASHBOARD -->
     <div class="card hidden" id="dashboard">
-        <div class="announcement">
-            Tüm özellikler %100 güvenli! 🚀 Keyini iyi kullan aga
+        <h1>HOŞ GELDİN</h1>
+
+        <!-- OTOMATİK ÜRETİLEN KEYLER -->
+        <div id="keyDisplaySection" class="key-display hidden">
+            <h3 style="color:var(--primary); margin-bottom:15px;">Giriş Kodun Oluşturuldu!</h3>
+            <div style="margin:15px 0;">
+                TITAN SERVER KEY GIRISINIZ:<br>
+                <strong id="generatedKeyDisplay"></strong>
+            </div>
+            <div>
+                External Panel Key (Form2 için):<br>
+                <strong id="externalKeyDisplay"></strong><br>
+                <small style="opacity:0.7;">(Sadece 8 haneli kısmı gir)</small>
+            </div>
         </div>
 
-        <!-- HWID Reset -->
+        <div class="announcement">
+            Paneldeki tüm özellikler %100 güvenli! 🚀 Keyini iyi kullan aga
+        </div>
+
+        <!-- HWID RESET -->
         <div class="reset-section">
             <h3>HWID Reset Seçenekleri</h3>
             <div class="reset-box">
-                <strong>Web için HWID Reset</strong>
+                <strong>Web Panel için Reset</strong>
                 <p>Kalan hak: <span id="resetLeftWeb">2</span>/2</p>
-                <button class="reset-btn" onclick="requestHwidReset('web')">Sıfırla (Web)</button>
+                <button class="reset-btn web" onclick="requestHwidReset('web')">Sıfırla (Web)</button>
             </div>
             <div class="reset-box">
-                <strong>External Panel için HWID Reset</strong>
+                <strong>External Panel için Reset</strong>
                 <p>Kalan hak: <span id="resetLeftExternal">2</span>/2</p>
                 <button class="reset-btn external" onclick="requestHwidReset('external')">Sıfırla (External)</button>
             </div>
-            <div id="resetStatus" style="margin-top:15px; text-align:center;"></div>
+            <div id="resetStatus" style="margin-top:20px; text-align:center; font-weight:bold;"></div>
         </div>
 
-        <!-- Ana Grid -->
+        <!-- ANA İÇERİK -->
         <div class="main-grid">
             <!-- Özellikler -->
-            <div class="features-section">
-                <h2>Panel Özellikleri</h2>
-                <ul>
+            <div>
+                <h2 class="section-title">Panel Özellikleri</h2>
+                <ul class="features-list">
                     <li>🎯 Pull Player</li>
                     <li>🆔 UID Bypass</li>
                     <li>🔫 Aimbot</li>
@@ -234,13 +267,13 @@
                     <li>🌈 Chams Menü</li>
                 </ul>
                 <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/n1iluvg1c7znl1h/SAHO+SERVER.rar/file','_blank')">
-                    📥 SAHO V5 İNDİR
+                    📥 SAHO V5 BLACK ENGINE İNDİR
                 </button>
             </div>
 
             <!-- Hesap Bilgileri -->
-            <div class="account-info">
-                <h2>Hesap Bilgileri</h2>
+            <div>
+                <h2 class="section-title">Hesap Bilgileri</h2>
                 <div id="info"></div>
                 <div id="playerId"></div>
                 <div id="username"></div>
@@ -249,19 +282,19 @@
                 <div id="ban"></div>
                 <div id="createDate"></div>
                 <div id="language"></div>
-                <div id="extraInfo" style="margin-top:15px;"></div>
+                <div id="extraInfo" style="margin-top:15px; background:rgba(0,240,255,0.08); padding:12px; border-radius:10px;"></div>
             </div>
 
             <!-- Yıldız Hesaplama -->
             <div>
-                <h2>Yıldız Risk Hesaplama</h2>
+                <h2 class="section-title">Yıldız Risk Hesaplama</h2>
                 <div id="q1">
                     <p>Şu anki yıldız sayınız?</p>
                     <input type="number" id="starNowInput" min="0" max="999">
                     <button onclick="next1()">Devam</button>
                     <div class="warning">
-                        55 yıldızın üstü riskli olabilir!<br>
-                        Ortalama kill sayısına dikkat edin.
+                        55 yıldızın üstü risklidir!<br>
+                        BR'de max 20 kill, üst üste 16 kill almayın.
                     </div>
                 </div>
                 <div id="q2" class="hidden">
@@ -275,11 +308,8 @@
     </div>
 
     <script>
-        const API = "https://loan-nonbureaucratic-janeth.ngrok-free.dev"; // burayı kendi ngrok adresinle değiştir
+        const API = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
         let mainKey = "";
-        let resetCountWeb = 0;
-        let resetCountExternal = 0;
-        const MAX_RESET = 2;
 
         function hwid() {
             return btoa(navigator.userAgent + screen.width + screen.height + navigator.language);
@@ -309,12 +339,26 @@
                     return;
                 }
 
-                resetCountWeb = d.resetCountWeb || 0;
-                resetCountExternal = d.resetCountExternal || 0;
-                document.getElementById("resetLeftWeb").innerText = MAX_RESET - resetCountWeb;
-                document.getElementById("resetLeftExternal").innerText = MAX_RESET - resetCountExternal;
+                status.innerText = "Giriş başarılı!";
 
-                // Hesap bilgilerini doldur
+                // Üretilen keyleri ekranda göster
+                if (d.generatedKey || d.externalGeneratedKey) {
+                    document.getElementById("keyDisplaySection").classList.remove("hidden");
+                    if (d.generatedKey) {
+                        document.getElementById("generatedKeyDisplay").innerText = d.generatedKey;
+                    }
+                    if (d.externalGeneratedKey) {
+                        document.getElementById("externalKeyDisplay").innerText = d.externalGeneratedKey;
+                    }
+                }
+
+                // HWID kalan hakları güncelle
+                const resetWeb = d.resetCountWeb || 0;
+                const resetExt = d.resetCountExternal || 0;
+                document.getElementById("resetLeftWeb").innerText = 2 - resetWeb;
+                document.getElementById("resetLeftExternal").innerText = 2 - resetExt;
+
+                // Hesap bilgileri doldur
                 document.getElementById("info").innerText = d.info || "Hoş geldin!";
                 document.getElementById("playerId").innerText = "ID: " + (d.playerId || "-");
                 document.getElementById("username").innerText = "Kullanıcı: " + (d.username || "-");
@@ -327,15 +371,11 @@
                 const ip = await fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>d.ip).catch(()=> "Bilinmiyor");
                 document.getElementById("extraInfo").innerText = `IP: ${ip}\nTarayıcı: ${navigator.userAgent}`;
 
-                status.innerText = "Giriş başarılı!";
                 setTimeout(() => {
                     document.getElementById("loginCard").classList.add("hidden");
                     document.getElementById("dashboard").classList.remove("hidden");
                 }, 1000);
 
-                if (d.externalGeneratedKey) {
-                    alert(`External panel için key oluşturuldu!\nKey: ${d.externalGeneratedKey}\nTam key: ${d.externalFullKey}`);
-                }
             } catch (err) {
                 status.innerText = "Sunucuya bağlanılamadı";
                 console.error(err);
@@ -343,15 +383,8 @@
         }
 
         async function requestHwidReset(type) {
-            const count = type === 'web' ? resetCountWeb : resetCountExternal;
-            if (count >= MAX_RESET) {
-                alert(`[${type.toUpperCase()}] Hakkın bitmiş aga!`);
-                return;
-            }
-            if (!confirm(`[${type.toUpperCase()}] HWID sıfırlamak istiyon mu?`)) return;
-
             const status = document.getElementById("resetStatus");
-            status.innerText = "İşlem yapılıyor...";
+            status.innerText = `[${type.toUpperCase()}] İşlem yapılıyor...`;
 
             try {
                 const res = await fetch(API + "/hwid-reset", {
@@ -362,10 +395,9 @@
                 const d = await res.json();
 
                 if (d.success) {
-                    if (type === 'web') resetCountWeb++; else resetCountExternal++;
-                    document.getElementById("resetLeftWeb").innerText = MAX_RESET - resetCountWeb;
-                    document.getElementById("resetLeftExternal").innerText = MAX_RESET - resetCountExternal;
-                    status.innerText = `${type.toUpperCase()} HWID sıfırlandı! Kalan hak: ${MAX_RESET - (type === 'web' ? resetCountWeb : resetCountExternal)}`;
+                    status.innerText = `${type.toUpperCase()} HWID sıfırlandı!`;
+                    // Kalan hakları güncelle (gerçek değer sunucudan gelir)
+                    location.reload(); // basitçe sayfayı yenile
                 } else {
                     status.innerText = d.message || "Hata oluştu";
                 }
@@ -374,21 +406,19 @@
             }
         }
 
+        // Yıldız hesaplama
         function next1() {
-            const stars = document.getElementById("starNowInput").value;
-            if (!stars) return;
             document.getElementById("q1").classList.add("hidden");
             document.getElementById("q2").classList.remove("hidden");
         }
 
         function next2() {
-            document.getElementById("q2").classList.add("hidden");
-            const now = document.getElementById("starNowInput").value;
-            const today = document.getElementById("starTodayInput").value;
-            const total = parseInt(now) + parseInt(today);
+            const now = parseInt(document.getElementById("starNowInput").value) || 0;
+            const today = parseInt(document.getElementById("starTodayInput").value) || 0;
+            const total = now + today;
             document.getElementById("result").innerHTML = `
-                <strong>Toplam yıldız:</strong> ${total}<br>
-                <strong>Durum:</strong> ${total > 55 ? "Riskli olabilir!" : "Güvenli görünüyor"}
+                Toplam Yıldız: <strong>${total}</strong><br>
+                Durum: ${total > 55 ? "<span style='color:var(--err)'>Riskli!</span>" : "<span style='color:var(--acc)'>Güvenli</span>"}
             `;
             document.getElementById("result").classList.remove("hidden");
         }
