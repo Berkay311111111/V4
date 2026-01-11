@@ -311,7 +311,7 @@
     <div class="modal-content">
         <h2 class="modal-title">OTURUM SONLANDIRILDI</h2>
         <p style="font-size:1.3rem;margin:1.5rem 0;line-height:1.5;">
-            Lisans anahtarınız geçerliliğini yitirdi veya başka bir cihazda kullanıldı.<br>
+            Lisans anahtarınız geçerliliğini yitirdi veya başka bir yerde kullanıldı.<br>
             Güvenlik nedeniyle oturumunuz kapatıldı.
         </p>
         <button class="big-btn" style="background:#ff3366;color:white;" onclick="location.reload()">
@@ -344,8 +344,12 @@
 
 <script>
 // ──────────────────────────────────────────────────────────────────────────────
-// SAHO TITAN DASHBOARD - 2 SANİYEDE BİR LİSANS KONTROL + GÜZEL ÇIKIŞ EKRANI
+// SAHO TITAN DASHBOARD - SADECE KEY İLE LİSANS KONTROL (HWID sadece login'de)
+// 6 saniyede bir kontrol, 8 başarısızda çıkış
 // ──────────────────────────────────────────────────────────────────────────────
+
+const CHECK_INTERVAL_MS = 6000;     // 6 saniye - stabilite için ideal
+const MAX_FAILED_CHECKS = 8;        // ~48 saniye tolerans
 
 const fetchBypass = (url, options = {}) => {
     options.headers = { ...options.headers, ...BYPASS_HEADER, 'Content-Type': 'application/json' };
@@ -359,50 +363,51 @@ function hwid() {
 let loggedInKey = "";
 let licenseCheckerInterval = null;
 let failedCheckCount = 0;
-const MAX_FAILED_CHECKS = 5; // 10 saniye tolerans (2sn x 5)
 
 async function startLicenseChecker() {
-    if (licenseCheckerInterval) {
-        clearInterval(licenseCheckerInterval);
-    }
+    if (licenseCheckerInterval) clearInterval(licenseCheckerInterval);
 
     licenseCheckerInterval = setInterval(async () => {
         try {
+            console.log("[LISANS KONTROL] İstek atılıyor...", new Date().toLocaleTimeString());
+
             const res = await fetchBypass(API_BASE + "/check-license", {
                 method: "POST",
                 body: JSON.stringify({ 
-                    key: loggedInKey,
-                    hwid: hwid()  // ekstra güvenlik için HWID de gönderiyoruz
+                    key: loggedInKey
+                    // HWID BURADA YOK - sadece key kontrolü
                 })
             });
 
-            if (!res.ok) throw new Error("Server error");
+            console.log("[LISANS KONTROL] HTTP Status:", res.status);
 
-            const data = await res.json();
-
-            if (!data.ok || !data.valid) {
-                throw new Error("License invalid");
+            if (!res.ok) {
+                throw new Error(`HTTP ${res.status}`);
             }
 
-            // Başarılı → sayacı sıfırla
+            const data = await res.json();
+            console.log("[LISANS KONTROL] Server cevabı:", data);
+
+            if (!data.ok || !data.valid) {
+                throw new Error("Lisans geçersiz");
+            }
+
+            console.log("[LISANS KONTROL] → GEÇERLİ ✓");
             failedCheckCount = 0;
 
         } catch (err) {
             failedCheckCount++;
-            console.warn(`Lisans kontrol hatası (${failedCheckCount}/${MAX_FAILED_CHECKS})`);
+            console.warn(`[LISANS KONTROL] Hata ${failedCheckCount}/${MAX_FAILED_CHECKS}:`, err.message);
 
             if (failedCheckCount >= MAX_FAILED_CHECKS) {
+                console.error("[LISANS KONTROL] Maksimum hata aşıldı → Çıkış");
                 clearInterval(licenseCheckerInterval);
                 licenseCheckerInterval = null;
-                
-                // Güzel çıkış ekranı göster
                 document.getElementById("sessionExpiredModal").style.display = "flex";
-                
-                // Arka planı biraz bulanıklaştırabiliriz (isteğe bağlı)
                 document.querySelector(".app-wrapper").style.filter = "blur(4px)";
             }
         }
-    }, 2000); // ← HER 2 SANİYE
+    }, CHECK_INTERVAL_MS);
 }
 
 async function login() {
@@ -422,7 +427,7 @@ async function login() {
     try {
         const res = await fetchBypass(API_BASE + "/login", {
             method: "POST",
-            body: JSON.stringify({ key, hwid: hwid() })
+            body: JSON.stringify({ key, hwid: hwid() }) // HWID sadece ilk girişte
         });
 
         const d = await res.json();
@@ -508,7 +513,7 @@ async function login() {
                         <div class="critical-warning">
                             <strong>KRİTİK UYARI - OKUMADAN İNDİRME!</strong><br><br>
                             EXE'mizi kurduğunuz andan itibaren yaptığınız, girdiğiniz, kullandığınız, kayıt olduğunuz TÜM başka panel veya internaller TITAN SERVER tarafından kayıt altına alınmaktadır.<br><br>
-                            Farklı bir EXE'den hesabınız yasaklanırsa ve bunu bizim EXE'miz yüzünden olduğunu söylerseniz KEY'iniz ANINDA iptal edilecektir ve bilgisayarınız rahmetine kavuşturulacaktır.
+                            Farklı bir EXE'den hesabınız yasaklanırsa ve bunu bizim EXE'miz yüzünden olduğunu söylerseniz KEY'iniz ANINDA iptal edilecektir.
                         </div>
                         <button class="big-btn" style="margin-top:2.5rem;" onclick="window.open('https://www.mediafire.com/file/a3gwmxk6dr13jqc/Saho.rar/file','_blank')">
                             SAHO V5 BLACK ENGINE İNDİR
@@ -517,7 +522,6 @@ async function login() {
                 </div>
             `;
 
-            // IP + ekstra bilgi çekme
             fetch('https://api.ipify.org?format=json')
                 .then(r => r.json())
                 .then(ipData => {
@@ -529,7 +533,7 @@ async function login() {
                         `IP: Bilinmiyor\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
                 });
 
-            // ★★★ EN ÖNEMLİ KISIM ★★★
+            // ★★★ LİSANS KONTROL BAŞLAT ★★★
             startLicenseChecker();
 
         }, 600);
