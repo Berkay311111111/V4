@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAHO TITAN - 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
     <script>
-        const API_BASE = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
+        const API_BASE = "https://loan-nonbureaucratic-janeth.ngrok-free.dev"; // NGROK adresini kendi sunucunla değiştir
         const BYPASS_HEADER = { 'ngrok-skip-browser-warning': '69420' };
     </script>
-
     <style>
         :root {
             --bg: #080b14;
@@ -89,9 +87,7 @@
             transition: all 0.3s;
         }
         #loginBtn:hover { transform: translateY(-3px); box-shadow: 0 0 45px rgba(0,240,255,0.65); }
-
         .status { margin-top: 16px; min-height: 22px; font-size: 1.1rem; }
-
         .tabs {
             display: flex;
             flex-wrap: wrap;
@@ -117,20 +113,17 @@
             border-color: transparent;
             box-shadow: 0 0 20px rgba(0,240,255,0.5);
         }
-
         .page {
             display: none;
             padding: 32px 28px 44px;
         }
         .page.active { display: block; }
-
         .section-title {
             font-size: 2.1rem;
             color: var(--primary);
             margin-bottom: 28px;
             text-align: center;
         }
-
         .warning-box {
             background: rgba(255,51,102,0.12);
             border: 1px solid var(--err);
@@ -140,7 +133,6 @@
             margin: 20px 0;
             line-height: 1.5;
         }
-
         button.big-btn {
             width: 100%;
             max-width: 420px;
@@ -155,8 +147,7 @@
             font-weight: 700;
             cursor: pointer;
         }
-
-        input[type="number"] {
+        input[type="text"], input[type="number"] {
             width: 100%;
             padding: 16px;
             font-size: 1.4rem;
@@ -167,10 +158,16 @@
             color: white;
             margin: 12px 0 20px;
         }
+        .manual-reset-box {
+            margin-top: 40px;
+            background: rgba(0,240,255,0.1);
+            border: 1px solid var(--primary);
+            border-radius: 14px;
+            padding: 24px;
+        }
     </style>
 </head>
 <body>
-
 <div class="container" id="mainContainer">
     <div class="card" id="loginCard">
         <h1>SAHO TITAN</h1>
@@ -193,13 +190,12 @@ function hwid() {
 async function login() {
     const key = document.getElementById("keyInput").value.trim();
     const status = document.getElementById("loginStatus");
-    
+   
     if (!key) {
         status.innerText = "Key gir aga";
         status.style.color = "var(--err)";
         return;
     }
-
     status.innerText = "Bağlanıyor...";
     status.style.color = "white";
 
@@ -209,19 +205,16 @@ async function login() {
             body: JSON.stringify({ key, hwid: hwid() })
         });
         const d = await res.json();
-
         if (!d.ok) {
             status.innerText = d.message || "Key/HWID hatalı";
             status.style.color = "var(--err)";
             return;
         }
-
         status.innerText = "Giriş tamam ✓";
         status.style.color = "var(--success)";
 
         setTimeout(() => {
             document.getElementById("loginCard").remove();
-
             const dashboardHTML = `
                 <div class="card" id="dashboard">
                     <h1>SAHO TITAN</h1>
@@ -242,7 +235,7 @@ async function login() {
                             </div>
                         </div>
                         <div class="warning-box">
-                            <strong>DİKKAT:</strong><br>• Keyini kimseye verme<br>• Çoklu cihaz kullanma<br>• Reset hakkın sınırlı
+                            <strong>DİKKAT:</strong><br>• Keyini kimseye verme<br>• Çoklu cihaz kullanma<br>• Reset hakkın sınırlı (2 tane)
                         </div>
                     </div>
 
@@ -255,7 +248,7 @@ async function login() {
                                 {label:"Seviye", value:d.level},
                                 {label:"Bölge", value:d.region},
                                 {label:"Ban Durumu", value:d.ban || "Yok"},
-                                {label:"Oluşturma", value:d.createDate}
+                                {label:"Oluşturma", value:d.createTime || d.createDate}
                             ].map(item => `
                                 <div style="padding:14px;background:rgba(0,240,255,0.06);border-radius:10px;margin:10px 0;">
                                     <strong>${item.label}:</strong> ${item.value || "-"}
@@ -267,6 +260,8 @@ async function login() {
 
                     <div id="hwid" class="page">
                         <h2 class="section-title">HWID Reset</h2>
+
+                        <!-- Mevcut butonlar (eski sistem) -->
                         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:24px;margin-top:32px;">
                             <div style="background:rgba(255,170,0,0.1);border:1px solid #ffaa00;border-radius:14px;padding:28px;">
                                 <h3>Web Panel Reset</h3>
@@ -279,6 +274,19 @@ async function login() {
                                 <button class="big-btn" style="background:linear-gradient(135deg,#ff00d9,#cc00b8);" onclick="requestHwidReset('external')">SIFIRLA</button>
                             </div>
                         </div>
+
+                        <!-- YENİ: Manuel Key Girişli Reset -->
+                        <div class="manual-reset-box">
+                            <h3>Manuel HWID Reset (Key Girerek)</h3>
+                            <p style="margin:12px 0;">HWID'ini sıfırlamak istediğin key'i gir (EXT-... veya ana key):</p>
+                            <input type="text" id="manualKeyInput" placeholder="EXT-XXXXXX veya ana key (örn: SAHO)" autocomplete="off">
+                            <div style="display:flex; gap:16px; justify-content:center; margin-top:20px;">
+                                <button class="big-btn" style="background:linear-gradient(135deg,#ffaa00,#cc8800);" onclick="manualReset('web')">WEB RESET</button>
+                                <button class="big-btn" style="background:linear-gradient(135deg,#ff00d9,#cc00b8);" onclick="manualReset('external')">EXTERNAL RESET</button>
+                            </div>
+                            <div id="manualResetStatus" style="margin-top:24px; text-align:center; font-size:1.35rem; color:#ffaa00; min-height:28px;"></div>
+                        </div>
+
                         <div id="resetStatus" style="margin-top:40px;text-align:center;font-size:1.35rem;color:#ffaa00;min-height:28px;"></div>
                     </div>
 
@@ -287,12 +295,9 @@ async function login() {
                         <div style="max-width:720px;margin:0 auto;">
                             <p style="font-size:1.35rem;margin:20px 0 8px;">Şu anki toplam yıldız:</p>
                             <input type="number" id="starNow" placeholder="Örn: 142">
-                            
                             <p style="font-size:1.35rem;margin:28px 0 8px;">Bugün aldığın yıldız:</p>
                             <input type="number" id="starToday" placeholder="Örn: 11">
-                            
                             <button class="big-btn" onclick="calculateStars()">HESAPLA</button>
-                            
                             <div id="starResult" style="margin-top:32px;padding:28px;border-radius:14px;text-align:center;font-size:1.55rem;font-weight:700;display:none;"></div>
                         </div>
                     </div>
@@ -303,7 +308,6 @@ async function login() {
                     </div>
                 </div>
             `;
-
             document.getElementById("mainContainer").innerHTML = dashboardHTML;
 
             if (d.externalGeneratedKey) localStorage.setItem("externalKey", d.externalGeneratedKey);
@@ -313,18 +317,16 @@ async function login() {
             fetch('https://api.ipify.org?format=json')
                 .then(r => r.json())
                 .then(ipData => {
-                    document.getElementById("extraInfo").innerText = 
+                    document.getElementById("extraInfo").innerText =
                         `IP: ${ipData.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
                 })
                 .catch(() => {
-                    document.getElementById("extraInfo").innerText = 
+                    document.getElementById("extraInfo").innerText =
                         `IP: Bilinmiyor\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
                 });
-
         }, 500);
-
     } catch (err) {
-        status.innerText = "Bağlantı hatası";
+        status.innerText = "Bağlantı hatası: " + err.message;
         status.style.color = "var(--err)";
     }
 }
@@ -357,10 +359,44 @@ async function requestHwidReset(type) {
     }
 }
 
+// YENİ: Manuel Reset Fonksiyonu
+async function manualReset(type) {
+    const key = document.getElementById("manualKeyInput").value.trim();
+    const status = document.getElementById("manualResetStatus");
+    
+    if (!key) {
+        status.innerText = "Key gir aga!";
+        status.style.color = "var(--err)";
+        return;
+    }
+    
+    status.innerText = `[${type.toUpperCase()}] İşlem başlatılıyor... (${key})`;
+    status.style.color = "#ffaa00";
+
+    try {
+        const res = await fetchBypass(API_BASE + "/hwid-reset", {
+            method: "POST",
+            body: JSON.stringify({ key, current_hwid: hwid(), type })
+        });
+        const data = await res.json();
+        if (data.success) {
+            status.innerText = "Başarıyla sıfırlandı! Yenileniyor...";
+            status.style.color = "var(--success)";
+            setTimeout(() => location.reload(), 1500);
+        } else {
+            status.innerText = data.message || "Sıfırlama başarısız";
+            status.style.color = "var(--err)";
+        }
+    } catch (err) {
+        status.innerText = "Bağlantı hatası: " + err.message;
+        status.style.color = "var(--err)";
+    }
+}
+
 function calculateStars() {
     const today = parseInt(document.getElementById("starToday").value) || 0;
     const now = parseInt(document.getElementById("starNow").value) || 0;
-    
+   
     localStorage.setItem('saho_star_data', JSON.stringify({
         now, today, timestamp: Date.now()
     }));
