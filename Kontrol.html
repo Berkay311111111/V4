@@ -16,7 +16,10 @@
             --err: #ff1f4c;
             --txt: #e5e7eb;
         }
-        * { box-sizing: border-box; font-family: Inter, sans-serif; }
+        * {
+            box-sizing: border-box;
+            font-family: Inter, sans-serif;
+        }
         body {
             margin: 0;
             background: var(--bg);
@@ -31,12 +34,17 @@
             background: linear-gradient(135deg, #1f1f2e, #2c2c3a);
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 0 20px rgba(0,255,255,.3), 0 0 40px rgba(255,0,255,.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, .3), 0 0 40px rgba(255, 0, 255, .2);
             width: 100%;
             max-width: 1000px;
         }
-        h1, h2, h3 { color: var(--primary); text-align: center; }
-        .hidden { display: none; }
+        h1, h2, h3 {
+            color: var(--primary);
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
         input, button {
             width: 100%;
             padding: 12px;
@@ -54,18 +62,23 @@
             cursor: pointer;
             transition: 0.3s;
         }
-        button:hover { opacity: 0.8; }
+        button:hover {
+            opacity: 0.8;
+        }
         .spinner {
-            width: 60px; height: 60px;
-            border: 6px solid rgba(255,255,255,.2);
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(255, 255, 255, .2);
             border-top: 6px solid var(--acc);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: auto;
         }
-        @keyframes spin { to { transform: rotate(360deg) } }
+        @keyframes spin {
+            to { transform: rotate(360deg) }
+        }
         .infoBox {
-            background: rgba(0,255,255,0.1);
+            background: rgba(0, 255, 255, 0.1);
             padding: 10px;
             border-radius: 12px;
             margin-top: 10px;
@@ -73,7 +86,7 @@
             text-align: center;
         }
         .announcement {
-            background: linear-gradient(135deg, rgba(0,255,247,0.2), rgba(255,0,247,0.2));
+            background: linear-gradient(135deg, rgba(0, 255, 247, 0.2), rgba(255, 0, 247, 0.2));
             padding: 12px;
             border-radius: 12px;
             margin-bottom: 20px;
@@ -81,7 +94,7 @@
             font-weight: 700;
             font-size: 15px;
             color: var(--acc);
-            border: 1px solid rgba(0,255,255,0.3);
+            border: 1px solid rgba(0, 255, 255, 0.3);
         }
         .main-grid {
             display: grid;
@@ -90,8 +103,8 @@
             margin: 30px 0;
         }
         .reset-section {
-            background: rgba(245,158,11,0.12);
-            border: 1px solid rgba(245,158,11,0.4);
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.4);
             border-radius: 12px;
             padding: 18px;
             margin: 25px 0;
@@ -101,9 +114,17 @@
             font-size: 17px;
             margin-top: 12px;
         }
-        .reset-info { font-size: 14px; margin-top: 10px; color: #f59e0b; text-align: center; }
+        .reset-btn.external {
+            background: linear-gradient(135deg, #ff00f7, #d500f9);
+        }
+        .reset-info {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #f59e0b;
+            text-align: center;
+        }
         .warning {
-            background: rgba(255,31,76,0.1);
+            background: rgba(255, 31, 76, 0.1);
             color: #ff1f4c;
             border: 1px solid #ff1f4c;
             border-radius: 12px;
@@ -114,12 +135,23 @@
             font-weight: 700;
             line-height: 1.4;
         }
-        @media (max-width: 868px) { .main-grid { grid-template-columns: 1fr; } }
+        .reset-box {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 12px 0;
+            font-size: 14px;
+        }
+        @media (max-width: 868px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN -->
+    <!-- LOGIN EKRANI -->
     <div class="card" id="loginCard">
         <h1>🌐 SAHO TITAN ENGINE</h1>
         <input id="keyInput" placeholder="License Key">
@@ -130,28 +162,44 @@
     <!-- DASHBOARD -->
     <div class="card hidden" id="dashboard">
         <h1>Saho V5 Black Engine</h1>
+
         <div id="loading" class="hidden">
             <div class="spinner"></div>
             <p>SAHO TITAN ENGINE serverine bağlanılıyor... 🌐</p>
         </div>
 
         <div id="dashboardContent" class="hidden">
+            <!-- Anons -->
             <div class="announcement">
-                Güncellenmiş Paneldeki Özellikler Hepsi 100% Safe! 🚀
+                Güncellenmiş Paneldeki Özellikler Hepsi 100% Safe! 🚀 Güvenle Kullan!
             </div>
 
-            <!-- HWID RESET BÖLÜMÜ -->
+            <!-- HWID RESET SEÇENEKLERİ -->
             <div class="reset-section">
-                <h3>🔄 HWID Reset</h3>
-                <p>Kalan sıfırlama hakkınız: <strong id="resetLeft">2</strong>/2</p>
-                <button class="reset-btn" id="resetButton" onclick="requestHwidReset()">HWID Sıfırla</button>
+                <h3>🔄 HWID Reset Seçenekleri</h3>
+
+                <div class="reset-box">
+                    <strong>HWID Reset For Web</strong><br>
+                    <small>(Bu tarayıcı / Web panel için)</small>
+                    <p>Kalan hak: <strong id="resetLeftWeb">2</strong>/2</p>
+                    <button class="reset-btn" onclick="requestHwidReset('web')">Sıfırla (Web)</button>
+                </div>
+
+                <div class="reset-box">
+                    <strong>HWID Reset For External Panel</strong><br>
+                    <small>(CERT_INSTALL - Masaüstü uygulama için)</small>
+                    <p>Kalan hak: <strong id="resetLeftExternal">2</strong>/2</p>
+                    <button class="reset-btn external" onclick="requestHwidReset('external')">Sıfırla (External)</button>
+                </div>
+
                 <div class="reset-info" id="resetStatus"></div>
             </div>
 
+            <!-- Ana İçerik Grid -->
             <div class="main-grid">
-                <!-- Özellikler + İndirme -->
+                <!-- Sol - Özellikler + İndirme -->
                 <div class="features-section">
-                    <h2>Panel Özellikleri</h2>
+                    <h2>Saho V5 Black Engine Panel Özellikleri</h2>
                     <ul>
                         <li>🎯 Pull Player</li>
                         <li>🆔 UID Bypass</li>
@@ -161,13 +209,13 @@
                         <li>👁️ Hex Esp Menü</li>
                         <li>🌈 Chams Menü</li>
                     </ul>
-                    <div class="download-note">Güvenle indir!</div>
-                    <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/n1iluvg1c7znl1h/SAHO+SERVER.rar/file','_blank')">
-                        📥 SAHO V5 İNDİR
+                    <div class="download-note">Güvenle indirip hemen kullanmaya başla!</div>
+                    <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/n1iluvg1c7znl1h/SAHO+SERVER.rar/file', '_blank')">
+                        📥 SAHO V5 BLACK ENGINE İNDİR
                     </button>
                 </div>
 
-                <!-- Hesap Bilgileri -->
+                <!-- Orta - Hesap Bilgileri -->
                 <div class="account-info">
                     <h2>👤 Hesap Bilgileri</h2>
                     <div id="info"></div>
@@ -181,143 +229,165 @@
                     <div class="infoBox" id="extraInfo"></div>
                 </div>
 
-                <!-- Yıldız Hesaplama (kısaltılmış hali) -->
+                <!-- Sağ - Yıldız Hesaplama (kısaltılmış) -->
                 <div id="questionPanel">
                     <div id="q1">
-                        <p>Şu an hesabınız kaç yıldız?</p>
+                        <p>📊 Şu an hesabınız kaç yıldız?</p>
                         <input type="number" id="starNowInput" min="50" max="999">
                         <button onclick="next1()">Devam</button>
+                        <div class="warning">
+                            ⚠️ 55 yıldızın üstü incelemeye alınır!<br>
+                            BR'de max 20 kill, üst üste 16 kill alma!<br>
+                            Ortalama 8-13 kill arası tutmaya çalışın...
+                        </div>
                     </div>
-                    <!-- diğer sorular... -->
+                    <!-- q2 ve q3 burada olmalı ama sen kısaltmıştın, istersen tam halini ekleriz -->
                 </div>
             </div>
         </div>
     </div>
 
-<script>
-const API = "http://localhost:3000"; // ngrok kullanıyorsan değiştir
-let resetCount = 0;
-const MAX_RESET = 2;
+    <script>
+        const API = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
+        let mainKey = "";
+        let resetCountWeb = 0;
+        let resetCountExternal = 0;
+        const MAX_RESET = 2;
 
-function hwid() {
-    return btoa(navigator.userAgent + screen.width + screen.height);
-}
-
-async function login() {
-    const key = document.getElementById("keyInput").value.trim();
-    const status = document.getElementById("loginStatus");
-    status.classList.add("hidden");
-    if (!key) {
-        status.innerText = "❌ Key boş olamaz!";
-        status.classList.remove("hidden");
-        return;
-    }
-
-    document.getElementById("loginCard").classList.add("hidden");
-    document.getElementById("dashboard").classList.remove("hidden");
-    document.getElementById("loading").classList.remove("hidden");
-
-    await new Promise(r => setTimeout(r, 2500));
-    document.getElementById("loading").classList.add("hidden");
-
-    try {
-        const r = await fetch(API + "/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ key, hwid: hwid() })
-        });
-        const d = await r.json();
-
-        if (!d.ok) {
-            document.getElementById("dashboard").classList.add("hidden");
-            document.getElementById("loginCard").classList.remove("hidden");
-            status.innerText = "❌ " + d.message;
-            status.classList.remove("hidden");
-            return;
+        function hwid() {
+            return btoa(navigator.userAgent + screen.width + screen.height + navigator.language);
         }
 
-        resetCount = d.resetCount || 0;
-        updateResetDisplay();
+        async function login() {
+            mainKey = document.getElementById("keyInput").value.trim();
+            const status = document.getElementById("loginStatus");
+            status.classList.add("hidden");
+            status.innerText = "";
 
-        document.getElementById("dashboardContent").classList.remove("hidden");
-        document.getElementById("info").innerText = d.info;
-        document.getElementById("playerId").innerText = "ID: " + d.playerId;
-        document.getElementById("username").innerText = "Kullanıcı: " + d.username;
-        document.getElementById("level").innerText = "Level: " + d.level;
-        document.getElementById("region").innerText = "Bölge: " + d.region;
-        document.getElementById("ban").innerText = "Ban: " + d.banStatus;
-        document.getElementById("createDate").innerText = "Oluşturma: " + d.createTime;
-        document.getElementById("language").innerText = "Dil: " + d.language;
-        document.getElementById("extraInfo").innerText = `IP: Bekleniyor...`;
-    } catch (err) {
-        document.getElementById("dashboard").classList.add("hidden");
-        document.getElementById("loginCard").classList.remove("hidden");
-        status.innerText = "Sunucu bağlantı hatası";
-        status.classList.remove("hidden");
-    }
-}
+            if (!mainKey) {
+                status.innerText = "❌ Key boş olamaz!";
+                status.classList.remove("hidden");
+                return;
+            }
 
-function updateResetDisplay() {
-    const left = MAX_RESET - resetCount;
-    document.getElementById("resetLeft").innerText = left;
-    const btn = document.getElementById("resetButton");
-    const status = document.getElementById("resetStatus");
+            document.getElementById("loginCard").classList.add("hidden");
+            document.getElementById("dashboard").classList.remove("hidden");
+            document.getElementById("loading").classList.remove("hidden");
 
-    if (left <= 0) {
-        btn.disabled = true;
-        btn.style.opacity = "0.4";
-        status.innerHTML = `Limit doldu.<br>3. sıfırlama için UID: <strong>7442955706</strong> 'e <strong>200</strong> elmas gönderin!`;
-        status.style.color = "#ff1f4c";
-    } else {
-        btn.disabled = false;
-        btn.style.opacity = "1";
-        status.innerHTML = "";
-    }
-}
+            await new Promise(r => setTimeout(r, 3000));
+            document.getElementById("loading").classList.add("hidden");
 
-async function requestHwidReset() {
-    if (MAX_RESET - resetCount <= 0) {
-        alert("Ücretsiz hakkın bitti! 3. reset için ödeme gerekiyor.");
-        return;
-    }
+            try {
+                const r = await fetch(API + "/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ key: mainKey, hwid: hwid() })
+                });
 
-    if (!confirm("HWID'ı hemen sıfırlamak istediğine emin misin?")) return;
+                const d = await r.json();
 
-    const status = document.getElementById("resetStatus");
-    status.innerHTML = "Sıfırlanıyor...";
+                if (!d.ok) {
+                    document.getElementById("dashboard").classList.add("hidden");
+                    document.getElementById("loginCard").classList.remove("hidden");
+                    status.innerText = "❌ " + (d.message || "Geçersiz Key veya HWID uyuşmazlığı");
+                    status.classList.remove("hidden");
+                    return;
+                }
 
-    try {
-        const res = await fetch(API + "/hwid-reset", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                key: document.getElementById("keyInput").value.trim(),
-                current_hwid: hwid()
-            })
-        });
+                // Reset sayaçlarını sunucudan al
+                resetCountWeb = d.resetCountWeb || 0;
+                resetCountExternal = d.resetCountExternal || 0;
 
-        const data = await res.json();
+                updateResetDisplay();
 
-        if (data.success) {
-            resetCount = data.newResetCount || resetCount + 1;
-            status.innerHTML = `✅ HWID sıfırlandı!<br>Kalan hak: ${MAX_RESET - resetCount}`;
-            updateResetDisplay();
-            // İstersen otomatik logout veya sayfa yenileme ekle
-            // setTimeout(() => location.reload(), 1500);
-        } else {
-            status.innerHTML = "❌ " + data.message;
-            status.style.color = "#ff1f4c";
+                document.getElementById("dashboardContent").classList.remove("hidden");
+
+                document.getElementById("info").innerText = d.info || "Hoş geldin!";
+                document.getElementById("playerId").innerText = "Oyuncu ID: " + (d.playerId || "Bilinmiyor");
+                document.getElementById("username").innerText = "Kullanıcı: " + (d.username || "Bilinmiyor");
+                document.getElementById("level").innerText = "Level: " + (d.level || "Bilinmiyor");
+                document.getElementById("region").innerText = "Region: " + (d.region || "Bilinmiyor");
+                document.getElementById("ban").innerText = "Ban durumu: " + (d.banStatus || "Yok");
+                document.getElementById("createDate").innerText = "Kurulum tarihi: " + (d.createTime || "Bilinmiyor");
+                document.getElementById("language").innerText = "Language: " + (d.language || "Türkçe");
+
+                const ip = await fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => d.ip).catch(() => "Bilinmiyor");
+                document.getElementById("extraInfo").innerText = `IP: ${ip}\nTarayıcı: ${navigator.userAgent}\nSaat: ${new Date().toLocaleString('tr-TR')}`;
+            } catch (err) {
+                document.getElementById("dashboard").classList.add("hidden");
+                document.getElementById("loginCard").classList.remove("hidden");
+                status.innerText = "Sunucu bağlantısı kurulamadı 🌐";
+                status.classList.remove("hidden");
+                console.error(err);
+            }
         }
-    } catch (err) {
-        status.innerHTML = "⚠️ Bağlantı hatası";
-        status.style.color = "#ff1f4c";
-    }
-}
 
-// Yıldız hesaplama fonksiyonları (kısaltılmış)
-function next1() { /* ... */ }
-function next2() { /* ... */ }
-function calculate() { /* ... */ }
-</script>
+        function updateResetDisplay() {
+            document.getElementById("resetLeftWeb").innerText = MAX_RESET - resetCountWeb;
+            document.getElementById("resetLeftExternal").innerText = MAX_RESET - resetCountExternal;
+
+            const status = document.getElementById("resetStatus");
+
+            if (resetCountWeb >= MAX_RESET && resetCountExternal >= MAX_RESET) {
+                status.innerHTML = `Her iki reset hakkı da doldu.<br>3. sıfırlama için UID: <strong>7442955706</strong> 'e <strong>200</strong> elmas gönderin!`;
+                status.style.color = "#ff1f4c";
+            } else {
+                status.innerHTML = "";
+            }
+        }
+
+        async function requestHwidReset(type) {
+            const count = type === 'web' ? resetCountWeb : resetCountExternal;
+            if (count >= MAX_RESET) {
+                alert(`[${type.toUpperCase()}] Ücretsiz reset hakkın kalmadı!`);
+                return;
+            }
+
+            if (!confirm(`[${type.toUpperCase()}] HWID sıfırlamak istediğine emin misin?`)) return;
+
+            const status = document.getElementById("resetStatus");
+            status.innerHTML = `[${type.toUpperCase()}] Sıfırlama işlemi başlatılıyor...`;
+
+            try {
+                const res = await fetch(API + "/hwid-reset", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        key: mainKey,
+                        current_hwid: hwid(),
+                        type: type
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    if (type === 'web') {
+                        resetCountWeb++;
+                    } else {
+                        resetCountExternal++;
+                    }
+
+                    status.innerHTML = `✅ [${type.toUpperCase()}] HWID başarıyla sıfırlandı!<br>Kalan hak: ${MAX_RESET - (type === 'web' ? resetCountWeb : resetCountExternal)}`;
+                    updateResetDisplay();
+
+                    // İstersen otomatik sayfa yenileme
+                    // setTimeout(() => location.reload(), 2500);
+                } else {
+                    status.innerHTML = "❌ " + (data.message || "İşlem başarısız");
+                    status.style.color = "#ff1f4c";
+                }
+            } catch (err) {
+                status.innerHTML = "⚠️ Sunucu ile iletişim kurulamadı";
+                status.style.color = "#ff1f4c";
+                console.error(err);
+            }
+        }
+
+        // Yıldız hesaplama (kısaltılmış hali - tam halini istersen eklerim)
+        function next1() {
+            // ... devamı
+        }
+    </script>
 </body>
 </html>
