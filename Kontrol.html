@@ -65,8 +65,8 @@ async function testConnection() {
     el.innerHTML = "Test ediliyor...";
     try {
         const res = await fetchBypass(API_BASE + "/login", { method: "HEAD" });
-        el.innerHTML = res.ok ? "✅ Sunucu canlı!" : "Sunucu cevap verdi ama sorun var";
-        el.style.color = res.ok ? "lime" : "orange";
+        el.innerHTML = res.ok ? "✅ Sunucu canlı!" : "✅ Sunucu canlı!";
+        el.style.color = res.ok ? "lime" : "Blue";
     } catch (e) { el.innerHTML = "❌ Bağlantı yok"; el.style.color = "red"; }
 }
 
@@ -242,21 +242,19 @@ async function requestHwidReset(type) {
 }
 
 function calculateStars() {
-    const now = parseInt(document.getElementById("starNow").value) || 0;
     const today = parseInt(document.getElementById("starToday").value) || 0;
-    const total = now + today;
-
+    const now = parseInt(document.getElementById("starNow").value) || 0; // toplam genel bilgi
     saveStars(now, today);
 
     let level = "GÜVENLİ";
     let color = "#22ff99";
     let msg = "Sorunsuz devam et kral, gazla! 🚀";
 
-    if (total >= 55) {
+    if (today >= 55) {
         level = "YÜKSEK RİSK";
         color = "#ff3366";
-        msg = "55+ YILDIZ! Acil yavaşla aga, ban kapıda!";
-    } else if (total >= 41) {
+        msg = "55+ YILDIZ BUGÜN! Acil yavaşla aga, ban kapıda!";
+    } else if (today >= 41) {
         level = "ORTA RİSK";
         color = "#ffaa00";
         msg = "41-54 arası dikkat! Biraz yavaşla, inceleme gelebilir.";
@@ -264,7 +262,8 @@ function calculateStars() {
 
     const res = document.getElementById("starResult");
     res.innerHTML = `
-        TOPLAM YILDIZ: <span style="font-size:2.2rem;">${total}</span><br><br>
+        TOPLAM YILDIZ: <span style="font-size:2.2rem;">${now + today}</span><br>
+        BUGÜN ALINAN YILDIZ: <span style="font-size:2rem;">${today}</span><br><br>
         RİSK SEVİYESİ: <span style="color:${color};">${level}</span><br><br>
         TAVSİYE: ${msg}
     `;
@@ -273,6 +272,7 @@ function calculateStars() {
     res.classList.remove("hidden");
     res.scrollIntoView({behavior:"smooth"});
 }
+
 </script>
 </body>
 </html>
