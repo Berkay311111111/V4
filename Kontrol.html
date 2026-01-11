@@ -70,6 +70,7 @@ async function testConnection() {
     } catch (e) { el.innerHTML = "❌ Bağlantı yok"; el.style.color = "red"; }
 }
 
+// LocalStorage yıldız verisi
 function loadSavedStars() {
     const saved = localStorage.getItem('saho_star_data');
     if (!saved) return;
@@ -77,8 +78,7 @@ function loadSavedStars() {
     try {
         const data = JSON.parse(saved);
         const now = Date.now();
-        // 10 saat = 36000000 ms
-        if (now - data.timestamp > 36000000) {
+        if (now - data.timestamp > 36000000) { // 10 saat
             localStorage.removeItem('saho_star_data');
             return;
         }
@@ -91,11 +91,7 @@ function loadSavedStars() {
 }
 
 function saveStars(now, today) {
-    const data = {
-        now: now,
-        today: today,
-        timestamp: Date.now()
-    };
+    const data = { now, today, timestamp: Date.now() };
     localStorage.setItem('saho_star_data', JSON.stringify(data));
 }
 
@@ -119,18 +115,17 @@ async function login() {
 
         status.innerText = "Giriş başarılı!";
         status.style.color = "lime";
-
         document.getElementById("loginCard").remove();
 
         const dashboardHTML = `
             <div class="card" id="dashboard">
                 <h1>SAHO TITAN</h1>
                 <div class="tabs">
-                    <button class="tab-btn active" onclick="showPage('home')">Ana Sayfa</button>
-                    <button class="tab-btn" onclick="showPage('info')">Hesap Bilgileri</button>
-                    <button class="tab-btn" onclick="showPage('hwid')">HWID Reset</button>
-                    <button class="tab-btn" onclick="showPage('stars')">Yıldız Hesaplama</button>
-                    <button class="tab-btn" onclick="showPage('download')">İndirmeler</button>
+                    <button class="tab-btn active" onclick="showPage('home', event)">Ana Sayfa</button>
+                    <button class="tab-btn" onclick="showPage('info', event)">Hesap Bilgileri</button>
+                    <button class="tab-btn" onclick="showPage('hwid', event)">HWID Reset</button>
+                    <button class="tab-btn" onclick="showPage('stars', event)">Yıldız Hesaplama</button>
+                    <button class="tab-btn" onclick="showPage('download', event)">İndirmeler</button>
                 </div>
 
                 <div id="home" class="page active">
@@ -195,7 +190,7 @@ async function login() {
 
                 <div id="download" class="page">
                     <h2 class="section-title">İndirme Merkezi</h2>
-                    <button class="big-btn" onclick="window.open('https://www.mediafire.com/file/n1iluvg1c7znl1h/SAHO+SERVER.rar/file','_blank')">SAHO V5 BLACK ENGINE İNDİR</button>
+                    <button class="big-btn" onclick="window.open('https://www.mediafire.com/file/a3gwmxk6dr13jqc/Saho.rar/file','_blank')">SAHO V5 BLACK ENGINE İNDİR</button>
                 </div>
             </div>
         `;
@@ -203,14 +198,12 @@ async function login() {
         document.getElementById("mainContainer").innerHTML = dashboardHTML;
 
         if (d.externalGeneratedKey) localStorage.setItem("externalKey", d.externalGeneratedKey);
-
         document.getElementById("resetLeftWeb").innerText = 2 - (d.resetCountWeb || 0);
         document.getElementById("resetLeftExternal").innerText = 2 - (d.resetCountExternal || 0);
 
         const ip = await fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>d.ip).catch(()=> "Bilinmiyor");
         document.getElementById("extraInfo").innerText = `IP: ${ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
 
-        // Yıldız bilgilerini yükle (otomatik doldur)
         loadSavedStars();
 
     } catch (err) {
@@ -218,20 +211,23 @@ async function login() {
     }
 }
 
-function showPage(pageId) {
+function showPage(pageId, event) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     event.currentTarget.classList.add('active');
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
+
+    if (pageId === 'stars') setTimeout(loadSavedStars, 100);
 }
 
 async function requestHwidReset(type) {
     const status = document.getElementById("resetStatus");
     status.innerText = `[${type.toUpperCase()}] İşlem başlatılıyor...`;
     try {
+        const key = localStorage.getItem("externalKey") || "";
         const res = await fetchBypass(API_BASE + "/hwid-reset", {
             method: "POST",
-            body: JSON.stringify({ key: document.getElementById("keyInput")?.value?.trim() || "", current_hwid: hwid(), type })
+            body: JSON.stringify({ key, current_hwid: hwid(), type })
         });
         const data = await res.json();
         if (data.success) {
@@ -250,7 +246,6 @@ function calculateStars() {
     const today = parseInt(document.getElementById("starToday").value) || 0;
     const total = now + today;
 
-    // Verileri kaydet
     saveStars(now, today);
 
     let level = "GÜVENLİ";
@@ -265,23 +260,9 @@ function calculateStars() {
         level = "ORTA RİSK";
         color = "#ffaa00";
         msg = "41-54 arası dikkat! Biraz yavaşla, inceleme gelebilir.";
-    } else {
-        level = "GÜVENLİ";
-        color = "#22ff99";
-        msg = "40 ve altı, temiz! Rahat rahat devam.";
     }
 
     const res = document.getElementById("starResult");
     res.innerHTML = `
         TOPLAM YILDIZ: <span style="font-size:2.2rem;">${total}</span><br><br>
-        RİSK SEVİYESİ: <span style="color:${color};">${level}</span><br><br>
-        TAVSİYE: ${msg}
-    `;
-    res.style.background = `rgba(${color === "#22ff99" ? "34,255,153" : color === "#ffaa00" ? "255,170,0" : "255,51,102"}, 0.18)`;
-    res.style.border = `1px solid ${color}`;
-    res.classList.remove("hidden");
-    res.scrollIntoView({behavior:"smooth"});
-}
-</script>
-</body>
-</html>
+        RİSK SEVİYESİ: <span style="color:${
