@@ -34,6 +34,7 @@
         .warning-box { background: rgba(255,51,102,0.15); border: 1px solid var(--err); color: #ff88aa; padding: 20px; border-radius: 16px; margin: 25px 0; line-height: 1.6; }
         .hidden { display: none !important; }
         button.big-btn { width:100%; max-width:500px; padding:20px; margin:20px auto; display:block; background:linear-gradient(135deg,var(--primary),var(--secondary)); border:none; border-radius:14px; color:black; font-size:1.5rem; font-weight:bold; cursor:pointer; }
+        input[type="number"] { width:100%; padding:18px; font-size:1.4rem; text-align:center; background:rgba(10,12,20,0.7); border:1px solid rgba(0,234,255,0.4); border-radius:12px; color:white; }
     </style>
 </head>
 <body>
@@ -67,6 +68,35 @@ async function testConnection() {
         el.innerHTML = res.ok ? "✅ Sunucu canlı!" : "Sunucu cevap verdi ama sorun var";
         el.style.color = res.ok ? "lime" : "orange";
     } catch (e) { el.innerHTML = "❌ Bağlantı yok"; el.style.color = "red"; }
+}
+
+function loadSavedStars() {
+    const saved = localStorage.getItem('saho_star_data');
+    if (!saved) return;
+
+    try {
+        const data = JSON.parse(saved);
+        const now = Date.now();
+        // 10 saat = 36000000 ms
+        if (now - data.timestamp > 36000000) {
+            localStorage.removeItem('saho_star_data');
+            return;
+        }
+
+        const nowInput = document.getElementById('starNow');
+        const todayInput = document.getElementById('starToday');
+        if (nowInput) nowInput.value = data.now || '';
+        if (todayInput) todayInput.value = data.today || '';
+    } catch(e) {}
+}
+
+function saveStars(now, today) {
+    const data = {
+        now: now,
+        today: today,
+        timestamp: Date.now()
+    };
+    localStorage.setItem('saho_star_data', JSON.stringify(data));
 }
 
 async function login() {
@@ -149,14 +179,17 @@ async function login() {
                 </div>
 
                 <div id="stars" class="page">
-                    <h2 class="section-title">Yıldız Risk Hesaplama</h2>
+                    <h2 class="section-title">Yıldız Risk Hesaplama (2026)</h2>
                     <div style="max-width:800px;margin:0 auto;">
-                        <p style="font-size:1.3rem;margin:20px 0;">Şu anki toplam yıldız:</p>
-                        <input type="number" id="starNow" class="star-input" style="width:100%;padding:18px;font-size:1.4rem;text-align:center;background:rgba(10,12,20,0.7);border:1px solid rgba(0,234,255,0.4);border-radius:12px;color:white;" placeholder="Örn: 142">
+                        <p style="font-size:1.3rem;margin:20px 0;">Şu anki toplam yıldız miktarı:</p>
+                        <input type="number" id="starNow" placeholder="Örn: 142">
+                        
                         <p style="font-size:1.3rem;margin:30px 0 10px;">Bugün aldığın yıldız:</p>
-                        <input type="number" id="starToday" class="star-input" style="width:100%;padding:18px;font-size:1.4rem;text-align:center;background:rgba(10,12,20,0.7);border:1px solid rgba(0,234,255,0.4);border-radius:12px;color:white;" placeholder="Örn: 11">
+                        <input type="number" id="starToday" placeholder="Örn: 11">
+                        
                         <button class="big-btn" onclick="calculateStars()">HESAPLA</button>
-                        <div id="starResult" class="hidden" style="margin-top:30px;padding:30px;background:rgba(0,234,255,0.12);border-radius:16px;text-align:center;font-size:1.6rem;"></div>
+                        
+                        <div id="starResult" class="hidden" style="margin-top:30px;padding:30px;border-radius:16px;text-align:center;font-size:1.6rem;font-weight:bold;"></div>
                     </div>
                 </div>
 
@@ -171,13 +204,14 @@ async function login() {
 
         if (d.externalGeneratedKey) localStorage.setItem("externalKey", d.externalGeneratedKey);
 
-        // Reset hakları (API'den geliyorsa doldur, yoksa 2 göster)
         document.getElementById("resetLeftWeb").innerText = 2 - (d.resetCountWeb || 0);
         document.getElementById("resetLeftExternal").innerText = 2 - (d.resetCountExternal || 0);
 
-        // Extra info
         const ip = await fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>d.ip).catch(()=> "Bilinmiyor");
         document.getElementById("extraInfo").innerText = `IP: ${ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
+
+        // Yıldız bilgilerini yükle (otomatik doldur)
+        loadSavedStars();
 
     } catch (err) {
         status.innerText = "Bağlantı hatası: " + err.message;
@@ -216,13 +250,35 @@ function calculateStars() {
     const today = parseInt(document.getElementById("starToday").value) || 0;
     const total = now + today;
 
-    let level = "GÜVENLİ", color = "lime", msg = "Devam et kral!";
-    if (total >= 60) { level = "ÇOK YÜKSEK RİSK"; color = "red"; msg = "Acil yavaşla!"; }
-    else if (total >= 48) { level = "YÜKSEK RİSK"; color = "orange"; msg = "Dikkatli ol aga"; }
-    else if (total >= 35) { level = "ORTA RİSK"; color = "yellow"; msg = "Günlük 10-14 arası tut"; }
+    // Verileri kaydet
+    saveStars(now, today);
+
+    let level = "GÜVENLİ";
+    let color = "#22ff99";
+    let msg = "Sorunsuz devam et kral, gazla! 🚀";
+
+    if (total >= 55) {
+        level = "YÜKSEK RİSK";
+        color = "#ff3366";
+        msg = "55+ YILDIZ! Acil yavaşla aga, ban kapıda!";
+    } else if (total >= 41) {
+        level = "ORTA RİSK";
+        color = "#ffaa00";
+        msg = "41-54 arası dikkat! Biraz yavaşla, inceleme gelebilir.";
+    } else {
+        level = "GÜVENLİ";
+        color = "#22ff99";
+        msg = "40 ve altı, temiz! Rahat rahat devam.";
+    }
 
     const res = document.getElementById("starResult");
-    res.innerHTML = `Toplam: <strong>${total}</strong><br>Risk: <span style="color:${color};font-weight:bold;">${level}</span><br><br>Tavsiye: ${msg}`;
+    res.innerHTML = `
+        TOPLAM YILDIZ: <span style="font-size:2.2rem;">${total}</span><br><br>
+        RİSK SEVİYESİ: <span style="color:${color};">${level}</span><br><br>
+        TAVSİYE: ${msg}
+    `;
+    res.style.background = `rgba(${color === "#22ff99" ? "34,255,153" : color === "#ffaa00" ? "255,170,0" : "255,51,102"}, 0.18)`;
+    res.style.border = `1px solid ${color}`;
     res.classList.remove("hidden");
     res.scrollIntoView({behavior:"smooth"});
 }
