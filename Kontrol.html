@@ -277,14 +277,14 @@ function updateResetDisplay() {
 
 async function requestHwidReset() {
     if (MAX_RESET - resetCount <= 0) {
-        alert("Ücretsiz hakkın bitti!");
+        alert("Ücretsiz hakkın bitti! 3. reset için ödeme gerekiyor.");
         return;
     }
 
-    if (!confirm("HWID sıfırlamak istediğine emin misin?")) return;
+    if (!confirm("HWID'ı hemen sıfırlamak istediğine emin misin?")) return;
 
     const status = document.getElementById("resetStatus");
-    status.innerHTML = "Talep gönderiliyor...";
+    status.innerHTML = "Sıfırlanıyor...";
 
     try {
         const res = await fetch(API + "/hwid-reset", {
@@ -299,9 +299,11 @@ async function requestHwidReset() {
         const data = await res.json();
 
         if (data.success) {
-            resetCount++;
-            status.innerHTML = `✅ Talep alındı!<br>2 dk içinde sıfırlanacak.<br>Kalan hak: ${MAX_RESET - resetCount}`;
+            resetCount = data.newResetCount || resetCount + 1;
+            status.innerHTML = `✅ HWID sıfırlandı!<br>Kalan hak: ${MAX_RESET - resetCount}`;
             updateResetDisplay();
+            // İstersen otomatik logout veya sayfa yenileme ekle
+            // setTimeout(() => location.reload(), 1500);
         } else {
             status.innerHTML = "❌ " + data.message;
             status.style.color = "#ff1f4c";
