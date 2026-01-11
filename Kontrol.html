@@ -22,6 +22,7 @@
             --text: #f2fbff;
             --text-dim: #88aaff;
             --glow: 0 0 30px rgba(0,229,255,0.5);
+            --surface: rgba(5,10,28,0.75);
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -48,13 +49,12 @@
             height: 100%;
         }
 
-        /* Sidebar */
         .sidebar {
             width: 280px;
             background: linear-gradient(180deg, rgba(3,7,22,0.97) 0%, rgba(1,4,16,0.99) 100%);
             backdrop-filter: blur(12px);
             border-right: 1px solid rgba(0,229,255,0.15);
-            padding: 2.5rem 1.4rem;
+            padding: 2.8rem 1.5rem;
             display: none;
             flex-direction: column;
             gap: 1.1rem;
@@ -64,25 +64,25 @@
         .logo {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 3.4rem;
-            letter-spacing: 9px;
+            font-size: 3.5rem;
+            letter-spacing: 10px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             text-shadow: var(--glow);
             text-align: center;
-            margin-bottom: 3rem;
-            animation: pulse 10s infinite alternate;
+            margin-bottom: 3.2rem;
+            animation: pulse 12s infinite alternate;
         }
 
         @keyframes pulse {
             from { filter: brightness(1); }
-            to   { filter: brightness(1.3); }
+            to   { filter: brightness(1.35); }
         }
 
         .tab-btn {
-            padding: 1.15rem 1.6rem;
+            padding: 1.2rem 1.7rem;
             font-size: 1.05rem;
             font-weight: 500;
             background: rgba(255,255,255,0.035);
@@ -90,7 +90,7 @@
             border-radius: 10px;
             color: var(--text-dim);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.35s ease;
             text-transform: uppercase;
             letter-spacing: 1.3px;
         }
@@ -103,7 +103,6 @@
             transform: translateX(6px);
         }
 
-        /* İçerik alanı */
         .main-area {
             flex: 1;
             overflow-y: auto;
@@ -111,19 +110,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: padding-left 0.5s ease;
+            transition: padding 0.5s ease;
         }
 
-        /* Login öncesi tam ortada */
         .login-mode .main-area {
             padding: 2rem;
-            justify-content: center;
         }
 
-        /* Login sonrası biraz daha dengeli padding */
         .logged-in .main-area {
-            padding-left: 3rem;
-            padding-right: 4rem;
+            padding: 3rem 4rem 3rem 3rem;
         }
 
         .login-box {
@@ -134,28 +129,29 @@
 
         .login-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 6rem;
+            font-size: 6.2rem;
             font-weight: 900;
-            letter-spacing: 14px;
+            letter-spacing: 15px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 3.5rem;
+            margin-bottom: 3.8rem;
             text-shadow: var(--glow);
         }
 
         #keyInput {
             width: 100%;
-            padding: 1.7rem 2rem;
-            font-size: 2rem;
+            padding: 1.8rem 2.2rem;
+            font-size: 2.1rem;
             text-align: center;
-            background: rgba(4,10,30,0.75);
+            background: var(--surface);
             border: 2px solid rgba(0,229,255,0.35);
             border-radius: 14px;
             color: var(--primary);
             letter-spacing: 10px;
-            margin: 2.2rem 0 2.8rem;
+            margin: 2.5rem 0 3rem;
+            transition: all 0.4s;
         }
 
         #keyInput:focus {
@@ -166,8 +162,8 @@
 
         #loginBtn {
             width: 100%;
-            padding: 1.6rem;
-            font-size: 1.65rem;
+            padding: 1.7rem;
+            font-size: 1.7rem;
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             color: #000;
@@ -175,63 +171,68 @@
             border-radius: 14px;
             cursor: pointer;
             box-shadow: var(--glow);
-            transition: all 0.4s;
+            transition: all 0.45s;
             text-transform: uppercase;
-            letter-spacing: 2.5px;
+            letter-spacing: 2.8px;
         }
 
         #loginBtn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 80px rgba(0,229,255,0.7);
+            transform: translateY(-6px);
+            box-shadow: 0 0 90px rgba(0,229,255,0.75);
         }
 
         #loginStatus {
-            margin-top: 2.2rem;
-            font-size: 1.4rem;
-            min-height: 35px;
+            margin-top: 2.5rem;
+            font-size: 1.45rem;
+            min-height: 40px;
         }
 
-        .page { display: none; width: 100%; max-width: 1100px; margin: 0 auto; }
+        .page { 
+            display: none; 
+            width: 100%; 
+            max-width: 1100px; 
+            margin: 0 auto; 
+        }
         .page.active { display: block; }
 
         .section-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.2rem;
+            font-size: 3.4rem;
             font-weight: 900;
-            letter-spacing: 7px;
+            letter-spacing: 8px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             text-align: center;
-            margin: 1rem 0 2.8rem;
-            text-shadow: 0 0 35px rgba(0,229,255,0.5);
+            margin: 1.5rem 0 3rem;
+            text-shadow: 0 0 40px rgba(0,229,255,0.5);
         }
 
         .key-display {
-            padding: 1.7rem;
-            font-size: 3.5rem;
-            letter-spacing: 16px;
+            padding: 1.8rem;
+            font-size: 3.6rem;
+            letter-spacing: 18px;
             text-align: center;
             background: rgba(0,40,80,0.3);
             border: 2px dashed var(--primary);
             border-radius: 16px;
             color: var(--primary);
             cursor: pointer;
-            transition: all 0.35s;
+            transition: all 0.4s;
             margin: 2.5rem 0;
         }
 
         .key-display:hover {
             border-style: solid;
             box-shadow: var(--glow);
-            transform: scale(1.01);
+            transform: scale(1.012);
         }
 
         .big-btn {
             width: 100%;
-            padding: 1.5rem;
-            font-size: 1.5rem;
+            padding: 1.6rem;
+            font-size: 1.55rem;
             font-weight: 700;
             color: #000;
             border: none;
@@ -243,8 +244,8 @@
         }
 
         .big-btn:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 0 70px rgba(0,229,255,0.65);
+            transform: translateY(-7px);
+            box-shadow: 0 0 80px rgba(0,229,255,0.7);
         }
 
         .btn-orange { background: linear-gradient(90deg, #ffcc00, #ff5500); }
@@ -252,19 +253,30 @@
 
         .input-field {
             width: 100%;
-            padding: 1.5rem 2rem;
-            font-size: 1.55rem;
-            background: rgba(4,10,30,0.75);
+            padding: 1.6rem 2.2rem;
+            font-size: 1.6rem;
+            background: var(--surface);
             border: 2px solid rgba(0,229,255,0.3);
             border-radius: 12px;
             color: var(--primary);
-            margin: 1.4rem 0;
+            margin: 1.5rem 0;
+            transition: all 0.35s;
         }
 
         .input-field:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: var(--glow);
+        }
+
+        .warning-box {
+            background: rgba(255,51,102,0.18);
+            border: 1px solid rgba(255,51,102,0.45);
+            border-radius: 14px;
+            padding: 1.8rem;
+            margin: 2.5rem auto;
+            max-width: 800px;
+            font-size: 1.15rem;
         }
 
         @media (max-width: 1100px) {
@@ -280,7 +292,7 @@
                 border-right: none;
                 border-bottom: 1px solid rgba(0,229,255,0.2);
             }
-            .main-area { padding: 2rem 2.5rem; }
+            .main-area { padding: 2.5rem 2.8rem; }
         }
     </style>
 </head>
@@ -307,7 +319,9 @@
 </div>
 
 <script>
-// ────────────────────────────── Login & Dashboard ──────────────────────────────
+// ──────────────────────────────────────────────────────────────────────────────
+// FULL DASHBOARD SCRIPT - Tüm sayfalar dahil
+// ──────────────────────────────────────────────────────────────────────────────
 
 const fetchBypass = (url, options = {}) => {
     options.headers = { ...options.headers, ...BYPASS_HEADER, 'Content-Type': 'application/json' };
@@ -362,22 +376,76 @@ async function login() {
             document.getElementById("mainArea").innerHTML = `
                 <div id="home" class="page active">
                     <h2 class="section-title">HOŞ GELDİN KRAL</h2>
-                    <div style="text-align:center;">
-                        <div style="font-size:1.7rem;color:var(--primary);margin:1.4rem 0;">C# Cheat Kodun:</div>
+                    <div style="text-align:center;max-width:900px;margin:0 auto;">
+                        <div style="font-size:1.8rem;color:var(--primary);margin:1.5rem 0;">C# Cheat Kodun:</div>
                         <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı!')">
                             ${d.externalCode || "HENÜZ ÜRETİLMEDİ"}
                         </div>
-                        <p style="margin-top:1.5rem;font-size:1.25rem;">Cheat'e yapıştır reis</p>
+                        <p style="margin-top:1.6rem;font-size:1.3rem;">Cheat'e yapıştır reis</p>
                     </div>
-                    <div style="background:rgba(255,51,102,0.18);border:1px solid rgba(255,51,102,0.45);border-radius:14px;padding:1.8rem;margin:2.5rem auto;max-width:800px;font-size:1.15rem;">
-                        <strong>UYARI:</strong> Kod sana özel • Kimseye verme • Reset menüden!
+                    <div class="warning-box">
+                        <strong>UYARI:</strong> Kod sadece sana özel • Kimseye verme • HWID reset soldan menüden!
                     </div>
                 </div>
 
-                <!-- Diğer sayfalar (info, hwid, stars, download) buraya gelecek -->
-                <!-- İstersen onları da ekleyebilirsin, şimdilik sadece home gösteriliyor -->
+                <div id="info" class="page">
+                    <h2 class="section-title">HESAP BİLGİLERİ</h2>
+                    <div style="max-width:900px;margin:0 auto;">
+                        ${[
+                            {label:"ID", value:d.playerId},
+                            {label:"Kullanıcı", value:d.username},
+                            {label:"Seviye", value:d.level},
+                            {label:"Bölge", value:d.region},
+                            {label:"Ban Durumu", value:d.ban || "Yok"},
+                            {label:"Oluşturma Tarihi", value:d.createTime || d.createDate}
+                        ].map(item => `
+                            <div style="padding:1.3rem;background:rgba(0,229,255,0.08);border-radius:12px;margin:1.3rem 0;font-size:1.25rem;">
+                                <strong>${item.label}:</strong> ${item.value || "-"}
+                            </div>
+                        `).join('')}
+                        <div id="extraInfo" style="margin-top:2.5rem;padding:1.6rem;background:rgba(0,229,255,0.1);border-radius:14px;font-size:1.15rem;"></div>
+                    </div>
+                </div>
+
+                <div id="hwid" class="page">
+                    <h2 class="section-title">HWID RESET</h2>
+                    <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı!')">
+                        ${loggedInKey}
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-top:3rem;">
+                        <button class="big-btn btn-orange" onclick="manualReset('web')">WEB HWID SIFIRLA</button>
+                        <button class="big-btn btn-purple" onclick="manualReset('external')">CHEAT HWID SIFIRLA</button>
+                    </div>
+                    <div id="manualResetStatus" style="margin-top:3rem;text-align:center;font-size:1.5rem;color:#ffcc00;"></div>
+                </div>
+
+                <div id="stars" class="page">
+                    <h2 class="section-title">YILDIZ RİSK HESAPLAMA</h2>
+                    <input type="number" id="starNow" placeholder="Şu anki toplam yıldız" class="input-field">
+                    <input type="number" id="starToday" placeholder="Bugün aldığın yıldız" class="input-field">
+                    <button class="big-btn" onclick="calculateStars()">HESAPLA</button>
+                    <div id="starResult" style="margin-top:3rem;padding:2rem;border-radius:14px;text-align:center;display:none;font-size:1.6rem;"></div>
+                </div>
+
+                <div id="download" class="page">
+                    <h2 class="section-title">İNDİRME MERKEZİ</h2>
+                    <button class="big-btn" onclick="window.open('https://www.mediafire.com/file/a3gwmxk6dr13jqc/Saho.rar/file','_blank')">
+                        SAHO V5 BLACK ENGINE İNDİR
+                    </button>
+                </div>
             `;
-        }, 600);
+
+            fetch('https://api.ipify.org?format=json')
+                .then(r => r.json())
+                .then(ipData => {
+                    document.getElementById("extraInfo").innerText = 
+                        `IP: ${ipData.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
+                })
+                .catch(() => {
+                    document.getElementById("extraInfo").innerText = 
+                        `IP: Bilinmiyor\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
+                });
+        }, 700);
     } catch (err) {
         status.innerText = "Bağlantı hatası";
         status.style.color = "#ff3366";
@@ -390,6 +458,67 @@ function showPage(pageId, event) {
     
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
+}
+
+async function manualReset(type) {
+    const key = loggedInKey;
+    const status = document.getElementById("manualResetStatus");
+    status.innerText = `[${type.toUpperCase()}] İşlem başlatılıyor...`;
+    status.style.color = "#ffcc00";
+
+    try {
+        const payload = { key, type };
+        if (type === 'web') payload.current_hwid = hwid();
+
+        const res = await fetchBypass(API_BASE + "/hwid-reset", {
+            method: "POST",
+            body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            status.innerText = "Başarıyla sıfırlandı!";
+            status.style.color = "#00ff9d";
+            setTimeout(() => location.reload(), 2000);
+        } else {
+            status.innerText = data.message || "Sıfırlama başarısız";
+            status.style.color = "#ff3366";
+        }
+    } catch (err) {
+        status.innerText = "Bağlantı hatası";
+        status.style.color = "#ff3366";
+    }
+}
+
+function calculateStars() {
+    const today = parseInt(document.getElementById("starToday").value) || 0;
+    const now = parseInt(document.getElementById("starNow").value) || 0;
+
+    let level = "GÜVENLİ";
+    let color = "#00ff9d";
+    let msg = "Sorunsuz devam et kral! 🔥";
+
+    if (today >= 55) {
+        level = "KRİTİK RİSK";
+        color = "#ff3366";
+        msg = "55+ YILDIZ BUGÜN! Acilen yavaşla!";
+    } else if (today >= 41) {
+        level = "YÜKSEK RİSK";
+        color = "#ffaa00";
+        msg = "41-54 arası dikkatli ol!";
+    }
+
+    const res = document.getElementById("starResult");
+    res.innerHTML = `
+        TOPLAM: <strong style="color:${color};font-size:3.2rem;">${now + today}</strong><br>
+        BUGÜN: ${today}<br><br>
+        RİSK: <strong style="color:${color};">${level}</strong><br>
+        ${msg}
+    `;
+    res.style.background = `rgba(${color === "#00ff9d" ? "0,255,157" : color === "#ff3366" ? "255,51,102" : "255,170,0"}, 0.2)`;
+    res.style.border = `2px solid ${color}`;
+    res.style.display = "block";
 }
 </script>
 </body>
