@@ -19,9 +19,12 @@
             --bg-darker: #00050f;
             --primary: #00e5ff;
             --accent: #ff00d9;
+            --danger: #ff3366;
+            --danger-glow: 0 0 45px rgba(255,51,102,0.7);
             --text: #f2fbff;
             --text-dim: #88aaff;
             --glow: 0 0 30px rgba(0,229,255,0.5);
+            --glow-danger: 0 0 50px rgba(255,51,102,0.65);
             --surface: rgba(5,10,28,0.75);
         }
 
@@ -270,13 +273,44 @@
         }
 
         .warning-box {
-            background: rgba(255,51,102,0.18);
-            border: 1px solid rgba(255,51,102,0.45);
+            background: rgba(255,51,102,0.22);
+            border: 2px solid rgba(255,51,102,0.55);
+            border-radius: 14px;
+            padding: 1.8rem 2.2rem;
+            margin: 2.5rem auto;
+            max-width: 900px;
+            font-size: 1.15rem;
+            box-shadow: var(--glow-danger);
+            animation: dangerPulse 4s infinite alternate;
+        }
+
+        .critical-warning {
+            background: rgba(255,51,102,0.28);
+            border: 3px solid var(--danger);
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            margin: 3rem auto;
+            max-width: 950px;
+            font-size: 1.25rem;
+            font-weight: 500;
+            box-shadow: var(--glow-danger);
+            animation: dangerPulse 3s infinite alternate;
+        }
+
+        @keyframes dangerPulse {
+            from { opacity: 0.85; transform: scale(1); }
+            to   { opacity: 1;   transform: scale(1.015); }
+        }
+
+        .security-info {
+            background: rgba(0,229,255,0.12);
+            border: 1px solid rgba(0,229,255,0.4);
             border-radius: 14px;
             padding: 1.8rem;
-            margin: 2.5rem auto;
-            max-width: 800px;
-            font-size: 1.15rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
 
         @media (max-width: 1100px) {
@@ -320,7 +354,7 @@
 
 <script>
 // ──────────────────────────────────────────────────────────────────────────────
-// FULL DASHBOARD SCRIPT - Tüm sayfalar dahil
+// FULL DASHBOARD SCRIPT - Tüm sayfalar + yeni uyarılar dahil
 // ──────────────────────────────────────────────────────────────────────────────
 
 const fetchBypass = (url, options = {}) => {
@@ -365,7 +399,6 @@ async function login() {
         status.innerText = "Giriş başarılı ✓";
         status.style.color = "#00ff9d";
 
-        // Mod değiştir + sidebar göster
         document.body.classList.remove("login-mode");
         document.body.classList.add("logged-in");
         document.getElementById("sidebar").style.display = "flex";
@@ -376,7 +409,13 @@ async function login() {
             document.getElementById("mainArea").innerHTML = `
                 <div id="home" class="page active">
                     <h2 class="section-title">HOŞ GELDİN KRAL</h2>
-                    <div style="text-align:center;max-width:900px;margin:0 auto;">
+                    <div class="security-info">
+                        <strong>ÖNEMLİ BİLGİ:</strong> Bizim EXE'mizdeki HER ŞEY %100 güvenli ve tamamen server tabanlı çalışır.<br>
+                        UID Bypass • Hiçbir kod enjeksiyonu yok • Tamamen Titan Server Aimbot & Memory bağlantısı<br>
+                        Fast Switch • Tüm sniper silahlarında çalışıyor • Chams Menü x64 • Tamamen el yapımı<br>
+                        Bluestacks MSI x64/x32 bit uyumlu • Yer görme ve x64/x32 destekli ESP menüsü mevcut
+                    </div>
+                    <div style="text-align:center;max-width:900px;margin:2rem auto;">
                         <div style="font-size:1.8rem;color:var(--primary);margin:1.5rem 0;">C# Cheat Kodun:</div>
                         <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı!')">
                             ${d.externalCode || "HENÜZ ÜRETİLMEDİ"}
@@ -429,7 +468,21 @@ async function login() {
 
                 <div id="download" class="page">
                     <h2 class="section-title">İNDİRME MERKEZİ</h2>
-                    <button class="big-btn" onclick="window.open('https://www.mediafire.com/file/a3gwmxk6dr13jqc/Saho.rar/file','_blank')">
+                    
+                    <div class="critical-warning">
+                        <strong>KRİTİK UYARI - OKUMADAN İNDİRME!</strong><br><br>
+                        EXE'mizi kurduğunuz andan itibaren yaptığınız, girdiğiniz, kullandığınız, kayıt olduğunuz TÜM başka panel veya internaller TITAN SERVER tarafından kayıt altına alınmaktadır.<br><br>
+                        Farklı bir EXE'den hesabınız yasaklanırsa ve bunu bizim EXE'miz yüzünden olduğunu söylerseniz KEY'iniz ANINDA iptal edilecektir ve bilgisayarınız rahmetine kavuşturulacaktır. Sürpriz virüsler yiyeceksiniz!
+                    </div>
+
+                    <div class="critical-warning" style="margin-top:2.5rem;">
+                        <strong>CRACK / KIRMA TEŞEBBÜSÜ UYARISI</strong><br><br>
+                        Paneldeki TÜM mantık ve çalışma sistemi server tarafından izlenmektedir.<br>
+                        Herhangi bir şekilde cracklemeye çalışırsanız alacağınız kodlar KALICI BAN kodları olacaktır.<br>
+                        Saniyesinde server tarafınızdan MAIN UID'iniz kalıcı banlanacaktır (oyundan ve serverden).
+                    </div>
+
+                    <button class="big-btn" style="margin-top:3rem;" onclick="window.open('https://www.mediafire.com/file/a3gwmxk6dr13jqc/Saho.rar/file','_blank')">
                         SAHO V5 BLACK ENGINE İNDİR
                     </button>
                 </div>
