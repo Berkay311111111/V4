@@ -7,9 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <script>
-        // ─── BURAYI İSTEDİĞİN ZAMAN DEĞİŞTİR ───────────────────────────────
         const API_BASE = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
-        // Yeni link gelirse buraya yapıştır aga
+        const BYPASS_HEADER = { 'ngrok-skip-browser-warning': '69420' }; // Bypass çalışıyor kanka
     </script>
 
     <style>
@@ -30,8 +29,9 @@
         }
         h1 {
             font-family:'Orbitron',sans-serif; font-size:3.6rem;
-            background:linear-gradient(90deg,var(--primary),var(--secondary)); -webkit-background-clip:text; background-clip:text;
-            color:transparent; text-align:center; margin-bottom:40px; text-shadow:0 0 40px var(--glow); letter-spacing:4px;
+            background:linear-gradient(90deg,var(--primary),var(--secondary)); -webkit-background-clip:text;
+            background-clip:text; color:transparent; text-align:center; margin-bottom:40px;
+            text-shadow:0 0 40px var(--glow); letter-spacing:4px;
         }
         #loginCard { max-width:520px; text-align:center; }
         #keyInput {
@@ -45,29 +45,45 @@
         }
         #loginBtn:hover { transform:translateY(-5px); box-shadow:0 0 60px rgba(0,240,255,0.9); }
         #loginStatus { margin-top:30px; font-size:1.2rem; min-height:30px; color:var(--err); text-shadow:0 0 12px rgba(255,51,102,0.8); }
-        .test-box { margin:25px 0; padding:18px; background:rgba(0,240,255,0.12); border-radius:14px; text-align:center; }
-        .test-btn { padding:12px 28px; background:var(--primary); color:#000; border:none; border-radius:12px; font-weight:bold; cursor:pointer; }
+        .test-box { margin:20px 0; padding:15px; background:rgba(0,240,255,0.1); border-radius:12px; text-align:center; }
+        .test-btn { padding:10px 24px; background:var(--primary); color:black; border:none; border-radius:12px; cursor:pointer; font-weight:bold; }
         .hidden { display:none !important; }
 
-        /* ─── Aşağıdaki stilleri orijinal kodundan direkt kopyala (çok uzun diye burada kısalttım) ─── */
+        /* Dashboard stilleri - orijinal */
         .announcement { background:rgba(34,197,94,0.2); border:1px solid var(--acc); color:var(--acc); padding:20px; border-radius:16px; text-align:center; font-weight:bold; font-size:1.3rem; margin-bottom:40px; }
         .key-display { background:rgba(0,240,255,0.15); border:1px solid var(--primary); border-radius:18px; padding:35px; margin:35px 0; text-align:center; }
         .key-display h3 { color:var(--primary); margin-bottom:20px; font-size:1.8rem; }
         .key-display strong { font-size:2.8rem; letter-spacing:5px; color:var(--primary); }
-        .reset-section, .reset-box, .main-grid, .section-title, .features-list, .download-btn, .warning { /* orijinal stiller aynı kalıyor */ }
+        .reset-section { background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.45); border-radius:18px; padding:35px; margin:40px 0; }
+        .reset-box { background:rgba(255,255,255,0.06); padding:22px; border-radius:14px; margin:20px 0; }
+        .reset-btn { width:100%; padding:18px; border:none; border-radius:14px; color:white; font-weight:bold; font-size:1.3rem; cursor:pointer; margin-top:15px; transition:all 0.3s; }
+        .reset-btn.web { background:linear-gradient(135deg,#f59e0b,#d97706); }
+        .reset-btn.external { background:linear-gradient(135deg,#ff00f5,#d500f9); }
+        .reset-btn:hover { transform:scale(1.04); }
+        .main-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:35px; }
+        .section-title { font-size:1.9rem; margin-bottom:25px; color:var(--primary); text-align:center; }
+        .features-list li { background:rgba(0,240,255,0.09); padding:15px; margin:12px 0; border-radius:12px; font-size:1.15rem; }
+        .download-btn {
+            width:100%; padding:22px; background:linear-gradient(135deg,var(--acc),#16a34a); border:none;
+            border-radius:16px; color:white; font-size:1.5rem; font-weight:bold; cursor:pointer; margin-top:30px; transition:all 0.3s;
+        }
+        .download-btn:hover { transform:translateY(-5px); box-shadow:0 0 40px rgba(34,197,94,0.7); }
+        .account-info div { background:rgba(0,240,255,0.09); padding:15px; margin:12px 0; border-radius:12px; font-size:1.15rem; }
+        .warning { background:rgba(255,51,102,0.18); border:1px solid var(--err); color:var(--err); padding:25px; border-radius:16px; margin:35px 0; font-size:1.05rem; text-align:center; line-height:1.7; }
+        .warning strong { color:#ff6688; }
     </style>
 </head>
 <body>
 
 <div class="container">
 
-    <!-- GİRİŞ EKRANI -->
+    <!-- LOGIN -->
     <div class="card" id="loginCard">
         <h1>SAHO TITAN ENGINE</h1>
-
+        
         <div class="test-box">
-            <button class="test-btn" onclick="testApi()">Sunucu Durumunu Test Et</button>
-            <div id="testResult" style="margin-top:15px; font-weight:bold; min-height:40px;"></div>
+            <button class="test-btn" onclick="testConnection()">Sunucuyu Test Et (Bypass Aktif)</button>
+            <div id="testResult" style="margin-top:15px; font-weight:bold;"></div>
         </div>
 
         <input id="keyInput" type="text" placeholder="Lisans Key Girin">
@@ -75,7 +91,7 @@
         <div id="loginStatus"></div>
     </div>
 
-    <!-- DASHBOARD - orijinal tasarım tamamen aynı -->
+    <!-- DASHBOARD -->
     <div class="card hidden" id="dashboard">
         <h1>HOŞ GELDİN AGA</h1>
 
@@ -89,113 +105,246 @@
             Tüm özellikler %100 güvenli! 🚀 Keyini iyi kullan aga
         </div>
 
-        <!-- HWID Reset bölümü aynı -->
+        <!-- HWID RESET -->
         <div class="reset-section">
             <h3>HWID Reset Seçenekleri</h3>
-            <!-- ... kalan reset-box kısımları orijinalden aynı ... -->
+            <div class="reset-box">
+                <strong>Web Panel için Reset</strong>
+                <p>Kalan hak: <span id="resetLeftWeb">2</span>/2</p>
+                <button class="reset-btn web" onclick="requestHwidReset('web')">Sıfırla (Web)</button>
+            </div>
+            <div class="reset-box">
+                <strong>External Panel için Reset</strong>
+                <p>Kalan hak: <span id="resetLeftExternal">2</span>/2</p>
+                <button class="reset-btn external" onclick="requestHwidReset('external')">Sıfırla (External)</button>
+            </div>
+            <div id="resetStatus" style="margin-top:25px; text-align:center; font-weight:bold; font-size:1.2rem; color:var(--warn);"></div>
         </div>
 
-        <!-- Main grid, özellikler, indirme, hesap bilgileri, yıldız hesaplama → hepsi orijinal haliyle aynı kalıyor -->
-        <!-- (Yer tasarrufu için burada tekrar yazmıyorum, sen önceki kodundan kopyala-yapıştır yapabilirsin) -->
+        <div class="main-grid">
+            <!-- Özellikler -->
+            <div>
+                <h2 class="section-title">Panel Özellikleri</h2>
+                <ul class="features-list">
+                    <li>🎯 Pull Player</li>
+                    <li>🆔 UID Bypass</li>
+                    <li>🔫 Aimbot</li>
+                    <li>⚡ Fast Switch</li>
+                    <li>⌨️ Macro</li>
+                    <li>👁️ Hex Esp Menü</li>
+                    <li>🌈 Chams Menü</li>
+                </ul>
+                <button class="download-btn" onclick="window.open('https://www.mediafire.com/file/n1iluvg1c7znl1h/SAHO+SERVER.rar/file','_blank')">
+                    📥 SAHO V5 BLACK ENGINE İNDİR
+                </button>
+            </div>
+
+            <!-- Hesap Bilgileri -->
+            <div>
+                <h2 class="section-title">Hesap Bilgileri</h2>
+                <div id="info"></div>
+                <div id="playerId"></div>
+                <div id="username"></div>
+                <div id="level"></div>
+                <div id="region"></div>
+                <div id="ban"></div>
+                <div id="createDate"></div>
+                <div id="language"></div>
+                <div id="extraInfo" style="margin-top:20px; background:rgba(0,240,255,0.08); padding:15px; border-radius:12px; white-space:pre-wrap;"></div>
+            </div>
+
+            <!-- Yıldız Hesaplama -->
+            <div>
+                <h2 class="section-title">Yıldız Risk Hesaplama</h2>
+                <div id="q1">
+                    <p>Şu an hesabınızda toplam kaç yıldız var?</p>
+                    <input type="number" id="starNowInput" min="0" max="999" placeholder="Örn: 120">
+                    <button onclick="next1()">Devam</button>
+                    <div class="warning">
+                        <strong>ÖNEMLİ UYARILAR:</strong><br>
+                        • 55 yıldızın üstü incelemeye alınır!<br>
+                        • BR modunda maksimum 20 kill alın!<br>
+                        • Üst üste 16+ kill kesinlikle yasaktır!<br>
+                        • Ortalama kill sayınız 8-13 arası olsun.<br>
+                        • Kafa vuruş oranınız %85'i geçmesin!<br>
+                        • Başka exe/panel kullanmayın, hepsi loglanır!
+                    </div>
+                </div>
+
+                <div id="q2" class="hidden">
+                    <p>Bugün kaç yıldız kastınız?</p>
+                    <input type="number" id="starTodayInput" min="0" max="100" placeholder="Örn: 12">
+                    <button onclick="next2()">Hesapla</button>
+                </div>
+
+                <div id="result" class="hidden" style="margin-top:30px; padding:25px; background:rgba(0,240,255,0.12); border-radius:16px; text-align:center; font-size:1.3rem;"></div>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
-// HWID hesaplama (değişmedi)
+// Bypass'lı fetch helper
+const fetchBypass = (url, options = {}) => {
+    options.headers = { ...options.headers, ...BYPASS_HEADER, 'Content-Type': 'application/json' };
+    return fetch(url, options);
+};
+
 function hwid() {
     return btoa(navigator.userAgent + screen.width + screen.height + navigator.language);
 }
 
-// Sunucu testi (ngrok uyarısını da yakalamaya çalışıyor)
-async function testApi() {
-    const resEl = document.getElementById("testResult");
-    resEl.innerHTML = "Test ediliyor... (5-10 saniye bekle)";
+async function testConnection() {
+    const el = document.getElementById("testResult");
+    el.innerHTML = "Test ediliyor...";
 
     try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 10000);
-
-        const res = await fetch(API_BASE, { 
-            method: 'GET', 
-            mode: 'cors', 
-            signal: controller.signal 
-        });
-        
-        clearTimeout(timeout);
-        
-        if (res.status >= 200 && res.status < 300) {
-            const text = await res.text();
-            if (text.includes("ngrok") || text.includes("ERR_NGROK")) {
-                resEl.innerHTML = "⚠️ Ngrok güvenlik sayfası çıkıyor<br>Sunucu canlı ama normal login büyük ihtimal çalışmaz";
-                resEl.style.color = "var(--warn)";
-            } else {
-                resEl.innerHTML = "✅ Sunucu yanıt veriyor (normal gibi görünüyor)";
-                resEl.style.color = "var(--acc)";
-            }
+        const res = await fetchBypass(API_BASE + "/login", { method: "HEAD" });
+        if (res.ok) {
+            el.innerHTML = "✅ Sunucu canlı ve bypass çalışıyor!";
+            el.style.color = "var(--acc)";
         } else {
-            resEl.innerHTML = `❌ Sunucu hata verdi (status: ${res.status})`;
-            resEl.style.color = "var(--err)";
+            el.innerHTML = "⚠️ Sunucu var ama cevap hatalı (" + res.status + ")";
+            el.style.color = "var(--warn)";
         }
-    } catch (err) {
-        if (err.name === 'AbortError') {
-            resEl.innerHTML = "⏳ Çok yavaş veya hiç yanıt yok";
-        } else {
-            resEl.innerHTML = "❌ Bağlantı tamamen başarısız<br>Ya sunucu kapalı ya da ngrok öldü";
-        }
-        resEl.style.color = "var(--err)";
-        console.error(err);
+    } catch (e) {
+        el.innerHTML = "❌ Bağlantı yok veya ngrok hala engelliyor<br>" + e.message;
+        el.style.color = "var(--err)";
     }
 }
 
 async function login() {
-    const status = document.getElementById("loginStatus");
     const key = document.getElementById("keyInput").value.trim();
+    const status = document.getElementById("loginStatus");
 
-    if (!key) {
-        status.innerText = "Key boş bırakma aga!";
-        return;
-    }
+    if (!key) { status.innerText = "Key boş aga!"; return; }
 
-    status.innerText = "Bağlanıyor... (ngrok yüzünden 10-20 sn sürebilir)";
+    status.innerText = "Bağlanıyor... (bypass aktif)";
 
     try {
-        const res = await fetch(API_BASE + "/login", {
+        const res = await fetchBypass(API_BASE + "/login", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ key, hwid: hwid() })
         });
 
-        let data;
-        try {
-            data = await res.json();
-        } catch {
-            status.innerText = "Sunucudan düzgün cevap gelmedi (ngrok engelliyor olabilir)";
+        const d = await res.json();
+
+        if (!d.ok) {
+            status.innerText = d.message || "Key/HWID geçersiz!";
             return;
         }
 
-        if (!data.ok) {
-            status.innerText = data.message || "Key geçersiz veya HWID eşleşmedi";
-            return;
-        }
-
-        status.innerText = "Giriş başarılı! Dashboard'a geçiliyor...";
+        status.innerText = "Giriş başarılı! Yükleniyor...";
         status.style.color = "var(--acc)";
 
-        // Buradan sonrası orijinal login mantığın aynı (external key, reset hakları, hesap bilgileri vs.)
-        // Sen önceki kodundan kopyalayıp buraya yapıştırabilirsin
+        // External key
+        if (d.externalGeneratedKey) {
+            document.getElementById("externalKeyDisplay").innerText = d.externalGeneratedKey;
+            localStorage.setItem("externalKey", d.externalGeneratedKey);
+        } else if (localStorage.getItem("externalKey")) {
+            document.getElementById("externalKeyDisplay").innerText = localStorage.getItem("externalKey");
+        }
+
+        // Reset hakları
+        document.getElementById("resetLeftWeb").innerText = 2 - (d.resetCountWeb || 0);
+        document.getElementById("resetLeftExternal").innerText = 2 - (d.resetCountExternal || 0);
+
+        // Hesap bilgileri
+        document.getElementById("info").innerText = d.info || "Hoş geldin kral!";
+        document.getElementById("playerId").innerText = "ID: " + (d.playerId || "-");
+        document.getElementById("username").innerText = "Kullanıcı: " + (d.username || "-");
+        document.getElementById("level").innerText = "Seviye: " + (d.level || "-");
+        document.getElementById("region").innerText = "Bölge: " + (d.region || "-");
+        document.getElementById("ban").innerText = "Ban: " + (d.banStatus || "Yok");
+        document.getElementById("createDate").innerText = "Oluşturma: " + (d.createTime || "-");
+        document.getElementById("language").innerText = "Dil: " + (d.language || "Türkçe");
+
+        const ip = await fetch('https://api.ipify.org?format=json')
+            .then(r => r.json()).then(d => d.ip).catch(() => "Bilinmiyor");
+
+        document.getElementById("extraInfo").innerText = 
+            `IP: ${ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
 
         setTimeout(() => {
             document.getElementById("loginCard").classList.add("hidden");
             document.getElementById("dashboard").classList.remove("hidden");
-        }, 1800);
+        }, 1200);
 
     } catch (err) {
-        status.innerText = "Bağlantı hatası!\nMuhtemel sebep: ngrok güvenlik duvarı\nYeni link lazım aga";
-        console.error(err);
+        status.innerText = "Bağlantı hatası! Sunucu kapalı olabilir.\n" + err.message;
     }
 }
 
-// Diğer fonksiyonlar (requestHwidReset, next1, next2, window.onload) → orijinal halinden aynı kalıyor
+async function requestHwidReset(type) {
+    const status = document.getElementById("resetStatus");
+    status.innerText = `[${type.toUpperCase()}] İşlem başlatılıyor...`;
+
+    try {
+        const res = await fetchBypass(API_BASE + "/hwid-reset", {
+            method: "POST",
+            body: JSON.stringify({ 
+                key: document.getElementById("keyInput").value.trim(), 
+                current_hwid: hwid(), 
+                type 
+            })
+        });
+
+        const d = await res.json();
+
+        if (d.success) {
+            status.innerText = `${type.toUpperCase()} HWID başarıyla sıfırlandı! Sayfa yenileniyor...`;
+            setTimeout(() => location.reload(), 1500);
+        } else {
+            status.innerText = d.message || "Sıfırlama başarısız";
+        }
+    } catch (err) {
+        status.innerText = "Hata: " + err.message;
+    }
+}
+
+function next1() {
+    const val = document.getElementById("starNowInput").value;
+    if (!val || val < 0 || val > 999) {
+        alert("0-999 arası geçerli sayı gir aga");
+        return;
+    }
+    document.getElementById("q1").classList.add("hidden");
+    document.getElementById("q2").classList.remove("hidden");
+}
+
+function next2() {
+    const now = parseInt(document.getElementById("starNowInput").value) || 0;
+    const today = parseInt(document.getElementById("starTodayInput").value) || 0;
+    const total = now + today;
+
+    let level = "GÜVENLİ";
+    let color = "var(--acc)";
+    let msg = "Devam et kral, sorun yok!";
+
+    if (total > 55) {
+        level = "YÜKSEK RİSK";
+        color = "var(--err)";
+        msg = "55+ yıldız ban yeme riski çok yüksek! Yavaşla!";
+    } else if (total > 45) {
+        level = "ORTA RİSK";
+        color = "var(--warn)";
+        msg = "45-55 arası dikkat çekebilir, yavaşla aga.";
+    }
+
+    document.getElementById("result").innerHTML = `
+        <strong>Toplam Yıldız:</strong> ${total}<br>
+        <strong>Risk:</strong> <span style="color:\( {color}"> \){level}</span><br>
+        <strong>Tavsiye:</strong> ${msg}
+    `;
+    document.getElementById("result").classList.remove("hidden");
+}
+
+// Sayfa yüklenince external key varsa göster
+window.onload = () => {
+    if (localStorage.getItem("externalKey")) {
+        document.getElementById("externalKeyDisplay").innerText = localStorage.getItem("externalKey");
+    }
+};
 </script>
 </body>
 </html>
