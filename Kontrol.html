@@ -349,7 +349,7 @@
 // ──────────────────────────────────────────────────────────────────────────────
 
 const CHECK_INTERVAL_MS = 6000;     // 6 saniye - stabilite için ideal
-const MAX_FAILED_CHECKS = 8;        // ~48 saniye tolerans
+const MAX_FAILED_CHECKS = 1;        // ~48 saniye tolerans
 
 const fetchBypass = (url, options = {}) => {
     options.headers = { ...options.headers, ...BYPASS_HEADER, 'Content-Type': 'application/json' };
