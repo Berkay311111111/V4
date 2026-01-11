@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAHO TITAN - 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
     <script>
         const API_BASE = "https://loan-nonbureaucratic-janeth.ngrok-free.dev";
         const BYPASS_HEADER = { 'ngrok-skip-browser-warning': '69420' };
     </script>
-
     <style>
         :root {
             --bg: #080b14;
@@ -23,154 +21,26 @@
             --success: #22ff99;
         }
         * { margin:0; padding:0; box-sizing:border-box; }
-        body {
-            min-height: 100vh;
-            background: linear-gradient(145deg, #080b14 0%, #14001f 100%);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            background-attachment: fixed;
-        }
-        .container {
-            min-height: 100vh;
-            padding: 20px 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .card {
-            background: rgba(18,24,34,0.94);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            border: 1px solid rgba(0,240,255,0.16);
-            box-shadow: 0 0 50px rgba(0,240,255,0.2);
-            width: 100%;
-            max-width: 1180px;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-        #loginCard {
-            max-width: 460px;
-            padding: 40px 28px;
-            text-align: center;
-        }
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.4rem;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 35px var(--glow);
-            margin-bottom: 1.6rem;
-            letter-spacing: 4px;
-        }
-        #keyInput {
-            width: 100%;
-            padding: 16px 20px;
-            font-size: 1.4rem;
-            text-align: center;
-            background: rgba(8,10,18,0.9);
-            border: 1px solid rgba(0,240,255,0.3);
-            border-radius: 12px;
-            color: white;
-            margin: 20px 0 24px;
-            letter-spacing: 3px;
-        }
-        #loginBtn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none;
-            border-radius: 12px;
-            color: #000;
-            font-size: 1.35rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+        body { min-height: 100vh; background: linear-gradient(145deg, #080b14 0%, #14001f 100%); color: var(--text); font-family: 'Inter', sans-serif; background-attachment: fixed; }
+        .container { min-height: 100vh; padding: 20px 16px; display: flex; flex-direction: column; justify-content: center; }
+        .card { background: rgba(18,24,34,0.94); backdrop-filter: blur(12px); border-radius: 20px; border: 1px solid rgba(0,240,255,0.16); box-shadow: 0 0 50px rgba(0,240,255,0.2); width: 100%; max-width: 1180px; margin: 0 auto; overflow: hidden; }
+        #loginCard { max-width: 460px; padding: 40px 28px; text-align: center; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 3.4rem; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 35px var(--glow); margin-bottom: 1.6rem; letter-spacing: 4px; }
+        #keyInput { width: 100%; padding: 16px 20px; font-size: 1.4rem; text-align: center; background: rgba(8,10,18,0.9); border: 1px solid rgba(0,240,255,0.3); border-radius: 12px; color: white; margin: 20px 0 24px; letter-spacing: 3px; }
+        #loginBtn { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; border-radius: 12px; color: #000; font-size: 1.35rem; font-weight: 800; cursor: pointer; transition: all 0.3s; }
         #loginBtn:hover { transform: translateY(-3px); box-shadow: 0 0 45px rgba(0,240,255,0.65); }
-
         .status { margin-top: 16px; min-height: 22px; font-size: 1.1rem; }
-
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            padding: 18px 24px;
-            background: rgba(0,0,0,0.18);
-            border-bottom: 1px solid rgba(0,240,255,0.12);
-        }
-        .tab-btn {
-            padding: 10px 26px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(0,240,255,0.18);
-            border-radius: 50px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .tab-btn.active, .tab-btn:hover {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: black;
-            border-color: transparent;
-            box-shadow: 0 0 20px rgba(0,240,255,0.5);
-        }
-
-        .page {
-            display: none;
-            padding: 32px 28px 44px;
-        }
+        .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 18px 24px; background: rgba(0,0,0,0.18); border-bottom: 1px solid rgba(0,240,255,0.12); }
+        .tab-btn { padding: 10px 26px; background: rgba(255,255,255,0.05); border: 1px solid rgba(0,240,255,0.18); border-radius: 50px; color: white; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .tab-btn.active, .tab-btn:hover { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: black; border-color: transparent; box-shadow: 0 0 20px rgba(0,240,255,0.5); }
+        .page { display: none; padding: 32px 28px 44px; }
         .page.active { display: block; }
-
-        .section-title {
-            font-size: 2.1rem;
-            color: var(--primary);
-            margin-bottom: 28px;
-            text-align: center;
-        }
-
-        .warning-box {
-            background: rgba(255,51,102,0.12);
-            border: 1px solid var(--err);
-            color: #ff88aa;
-            padding: 18px;
-            border-radius: 14px;
-            margin: 20px 0;
-            line-height: 1.5;
-        }
-
-        button.big-btn {
-            width: 100%;
-            max-width: 420px;
-            padding: 18px;
-            margin: 24px auto;
-            display: block;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none;
-            border-radius: 12px;
-            color: black;
-            font-size: 1.4rem;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        input[type="number"] {
-            width: 100%;
-            padding: 16px;
-            font-size: 1.4rem;
-            text-align: center;
-            background: rgba(8,10,18,0.8);
-            border: 1px solid rgba(0,240,255,0.3);
-            border-radius: 10px;
-            color: white;
-            margin: 12px 0 20px;
-        }
+        .section-title { font-size: 2.1rem; color: var(--primary); margin-bottom: 28px; text-align: center; }
+        .warning-box { background: rgba(255,51,102,0.12); border: 1px solid var(--err); color: #ff88aa; padding: 18px; border-radius: 14px; margin: 20px 0; line-height: 1.5; }
+        .readonly-key { width: 100%; padding: 20px; font-size: 2.4rem; text-align: center; background: rgba(8,10,18,0.7); border: 2px solid var(--primary); border-radius: 12px; color: var(--primary); margin: 16px 0; letter-spacing: 8px; font-weight: bold; cursor: pointer; user-select: text; }
     </style>
 </head>
 <body>
-
 <div class="container" id="mainContainer">
     <div class="card" id="loginCard">
         <h1>SAHO TITAN</h1>
@@ -190,10 +60,13 @@ function hwid() {
     return btoa(navigator.userAgent + screen.width + screen.height + navigator.language);
 }
 
+let loggedInKey = "";
+
 async function login() {
     const key = document.getElementById("keyInput").value.trim();
+    loggedInKey = key;
     const status = document.getElementById("loginStatus");
-    
+
     if (!key) {
         status.innerText = "Key gir aga";
         status.style.color = "var(--err)";
@@ -209,19 +82,16 @@ async function login() {
             body: JSON.stringify({ key, hwid: hwid() })
         });
         const d = await res.json();
-
         if (!d.ok) {
             status.innerText = d.message || "Key/HWID hatalı";
             status.style.color = "var(--err)";
             return;
         }
-
         status.innerText = "Giriş tamam ✓";
         status.style.color = "var(--success)";
 
         setTimeout(() => {
             document.getElementById("loginCard").remove();
-
             const dashboardHTML = `
                 <div class="card" id="dashboard">
                     <h1>SAHO TITAN</h1>
@@ -236,13 +106,14 @@ async function login() {
                     <div id="home" class="page active">
                         <h2 class="section-title">Hoş Geldin Kral</h2>
                         <div style="text-align:center; margin:40px 0;">
-                            <div style="font-size:1.5rem;color:var(--primary);">External Keyin:</div>
-                            <div style="font-size:2.8rem;letter-spacing:5px;font-weight:800;color:var(--primary);background:rgba(0,240,255,0.1);padding:18px;border-radius:14px;display:inline-block;margin-top:12px;">
-                                ${d.externalGeneratedKey || localStorage.getItem("externalKey") || "Henüz yok"}
+                            <div style="font-size:1.5rem;color:var(--primary);">C# Cheat İçin 8 Haneli Kodun:</div>
+                            <div class="readonly-key" onclick="navigator.clipboard.writeText(this.innerText); alert('Kod kopyalandı!')">
+                                ${d.externalCode || "Henüz üretilmedi"}
                             </div>
+                            <p style="margin-top:16px; font-size:1.2rem;">Bu kodu C# cheat girişine yapıştır!</p>
                         </div>
                         <div class="warning-box">
-                            <strong>DİKKAT:</strong><br>• Keyini kimseye verme<br>• Çoklu cihaz kullanma<br>• Reset hakkın sınırlı
+                            <strong>DİKKAT:</strong><br>• Bu kod senin için özel<br>• Kimseye verme<br>• HWID resetini buradan yap
                         </div>
                     </div>
 
@@ -255,7 +126,7 @@ async function login() {
                                 {label:"Seviye", value:d.level},
                                 {label:"Bölge", value:d.region},
                                 {label:"Ban Durumu", value:d.ban || "Yok"},
-                                {label:"Oluşturma", value:d.createDate}
+                                {label:"Oluşturma", value:d.createTime || d.createDate}
                             ].map(item => `
                                 <div style="padding:14px;background:rgba(0,240,255,0.06);border-radius:10px;margin:10px 0;">
                                     <strong>${item.label}:</strong> ${item.value || "-"}
@@ -267,19 +138,18 @@ async function login() {
 
                     <div id="hwid" class="page">
                         <h2 class="section-title">HWID Reset</h2>
-                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:24px;margin-top:32px;">
-                            <div style="background:rgba(255,170,0,0.1);border:1px solid #ffaa00;border-radius:14px;padding:28px;">
-                                <h3>Web Panel Reset</h3>
-                                <p style="margin:18px 0;font-size:1.3rem;">Kalan: <strong><span id="resetLeftWeb">2</span>/2</strong></p>
-                                <button class="big-btn" style="background:linear-gradient(135deg,#ffaa00,#cc8800);" onclick="requestHwidReset('web')">SIFIRLA</button>
+                        <div class="manual-reset-box">
+                            <h3>HWID Sıfırlama</h3>
+                            <p style="margin:12px 0;">Sıfırlamak istediğin ana key (salt okunur):</p>
+                            <div class="readonly-key" onclick="navigator.clipboard.writeText(this.innerText); alert('Kopyalandı!')">
+                                ${loggedInKey}
                             </div>
-                            <div style="background:rgba(255,0,229,0.1);border:1px solid #ff00d9;border-radius:14px;padding:28px;">
-                                <h3>External Reset</h3>
-                                <p style="margin:18px 0;font-size:1.3rem;">Kalan: <strong><span id="resetLeftExternal">2</span>/2</strong></p>
-                                <button class="big-btn" style="background:linear-gradient(135deg,#ff00d9,#cc00b8);" onclick="requestHwidReset('external')">SIFIRLA</button>
+                            <div style="display:flex; gap:16px; justify-content:center; margin-top:24px;">
+                                <button class="big-btn" style="background:linear-gradient(135deg,#ffaa00,#cc8800);" onclick="manualReset('web')">WEB HWID SIFIRLA</button>
+                                <button class="big-btn" style="background:linear-gradient(135deg,#ff00d9,#cc00b8);" onclick="manualReset('external')">CHEAT HWID SIFIRLA</button>
                             </div>
+                            <div id="manualResetStatus" style="margin-top:28px; text-align:center; font-size:1.35rem; color:#ffaa00; min-height:28px;"></div>
                         </div>
-                        <div id="resetStatus" style="margin-top:40px;text-align:center;font-size:1.35rem;color:#ffaa00;min-height:28px;"></div>
                     </div>
 
                     <div id="stars" class="page">
@@ -287,12 +157,9 @@ async function login() {
                         <div style="max-width:720px;margin:0 auto;">
                             <p style="font-size:1.35rem;margin:20px 0 8px;">Şu anki toplam yıldız:</p>
                             <input type="number" id="starNow" placeholder="Örn: 142">
-                            
                             <p style="font-size:1.35rem;margin:28px 0 8px;">Bugün aldığın yıldız:</p>
                             <input type="number" id="starToday" placeholder="Örn: 11">
-                            
                             <button class="big-btn" onclick="calculateStars()">HESAPLA</button>
-                            
                             <div id="starResult" style="margin-top:32px;padding:28px;border-radius:14px;text-align:center;font-size:1.55rem;font-weight:700;display:none;"></div>
                         </div>
                     </div>
@@ -303,28 +170,21 @@ async function login() {
                     </div>
                 </div>
             `;
-
             document.getElementById("mainContainer").innerHTML = dashboardHTML;
-
-            if (d.externalGeneratedKey) localStorage.setItem("externalKey", d.externalGeneratedKey);
-            document.getElementById("resetLeftWeb").innerText = 2 - (d.resetCountWeb || 0);
-            document.getElementById("resetLeftExternal").innerText = 2 - (d.resetCountExternal || 0);
 
             fetch('https://api.ipify.org?format=json')
                 .then(r => r.json())
                 .then(ipData => {
-                    document.getElementById("extraInfo").innerText = 
+                    document.getElementById("extraInfo").innerText =
                         `IP: ${ipData.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
                 })
                 .catch(() => {
-                    document.getElementById("extraInfo").innerText = 
+                    document.getElementById("extraInfo").innerText =
                         `IP: Bilinmiyor\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
                 });
-
         }, 500);
-
     } catch (err) {
-        status.innerText = "Bağlantı hatası";
+        status.innerText = "Bağlantı hatası: " + err.message;
         status.style.color = "var(--err)";
     }
 }
@@ -336,11 +196,14 @@ function showPage(pageId, event) {
     document.getElementById(pageId).classList.add('active');
 }
 
-async function requestHwidReset(type) {
-    const status = document.getElementById("resetStatus");
-    status.innerText = `[${type.toUpperCase()}] İşlem başlatılıyor...`;
+async function manualReset(type) {
+    const key = loggedInKey;
+    const status = document.getElementById("manualResetStatus");
+    
+    status.innerText = `[${type.toUpperCase()}] İşlem başlatılıyor... (${key})`;
+    status.style.color = "#ffaa00";
+
     try {
-        const key = localStorage.getItem("externalKey") || "";
         const res = await fetchBypass(API_BASE + "/hwid-reset", {
             method: "POST",
             body: JSON.stringify({ key, current_hwid: hwid(), type })
@@ -348,22 +211,22 @@ async function requestHwidReset(type) {
         const data = await res.json();
         if (data.success) {
             status.innerText = "Başarıyla sıfırlandı! Yenileniyor...";
-            setTimeout(() => location.reload(), 1200);
+            status.style.color = "var(--success)";
+            setTimeout(() => location.reload(), 1500);
         } else {
             status.innerText = data.message || "Sıfırlama başarısız";
+            status.style.color = "var(--err)";
         }
     } catch (err) {
-        status.innerText = "Hata: " + err.message;
+        status.innerText = "Bağlantı hatası: " + err.message;
+        status.style.color = "var(--err)";
     }
 }
 
 function calculateStars() {
     const today = parseInt(document.getElementById("starToday").value) || 0;
     const now = parseInt(document.getElementById("starNow").value) || 0;
-    
-    localStorage.setItem('saho_star_data', JSON.stringify({
-        now, today, timestamp: Date.now()
-    }));
+    localStorage.setItem('saho_star_data', JSON.stringify({ now, today, timestamp: Date.now() }));
 
     let level = "GÜVENLİ";
     let color = "var(--success)";
