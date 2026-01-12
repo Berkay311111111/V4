@@ -13,21 +13,22 @@
     </script>
     <style>
         :root {
-            --bg: #0a0e17;
-            --bg-darker: #05070f;
-            --primary: #5ce1e6;       /* Soğuk cyan-mavi */
-            --primary-dim: #3ba5aa;
-            --accent: #7c5eff;        /* Hafif indigo-mor */
-            --accent-dim: #5a3fd1;
-            --text: #e8f0ff;
-            --text-dim: #a3bffa;
-            --surface: rgba(15,20,40,0.65);
-            --border: rgba(92,225,230,0.18);
-            --glow: 0 0 18px rgba(92,225,230,0.32);
-            --glow-accent: 0 0 22px rgba(124,94,255,0.28);
-            --danger: #ff4d6a;
-            --warning: #ffaa4d;
+            --bg: #0b0005;
+            --bg-darker: #040001;
+            --primary: #ff1a4d;       /* Neon kırmızı ana */
+            --primary-dim: #c41238;
+            --accent: #d6007a;        /* Neon pembe-kırmızı-mor */
+            --accent-dim: #a5005c;
+            --text: #ffe6ed;
+            --text-dim: #ff99aa;
+            --surface: rgba(18, 0, 8, 0.72);
+            --border: rgba(255, 26, 77, 0.24);
+            --glow: 0 0 20px rgba(255, 26, 77, 0.48);
+            --glow-accent: 0 0 26px rgba(214, 0, 122, 0.40);
+            --danger: #ff3366;
+            --warning: #ff6b4d;
         }
+
         * { margin:0; padding:0; box-sizing:border-box; }
         html, body {
             height: 100%;
@@ -36,8 +37,8 @@
             font-family: 'JetBrains Mono', monospace;
             overflow: hidden;
             background-image:
-                radial-gradient(circle at 15% 25%, rgba(92,225,230,0.04) 0%, transparent 60%),
-                radial-gradient(circle at 85% 75%, rgba(124,94,255,0.035) 0%, transparent 65%);
+                radial-gradient(circle at 20% 30%, rgba(255, 26, 77, 0.07) 0%, transparent 70%),
+                radial-gradient(circle at 80% 70%, rgba(214, 0, 122, 0.06) 0%, transparent 75%);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
@@ -52,8 +53,8 @@
         }
         .sidebar {
             width: 300px;
-            background: linear-gradient(180deg, rgba(10,14,30,0.92) 0%, rgba(5,8,20,0.95) 100%);
-            backdrop-filter: blur(12px);
+            background: linear-gradient(180deg, rgba(10,0,5,0.94) 0%, rgba(4,0,2,0.97) 100%);
+            backdrop-filter: blur(14px);
             border-right: 1px solid var(--border);
             padding: 2.4rem 1.6rem;
             display: none;
@@ -78,7 +79,7 @@
             padding: 1.1rem 1.6rem;
             font-size: 0.98rem;
             font-weight: 500;
-            background: rgba(255,255,255,0.025);
+            background: rgba(255,255,255,0.02);
             border: 1px solid var(--border);
             border-radius: 9px;
             color: var(--text-dim);
@@ -87,7 +88,7 @@
             letter-spacing: 0.8px;
         }
         .tab-btn:hover, .tab-btn.active {
-            background: linear-gradient(135deg, rgba(92,225,230,0.12), rgba(124,94,255,0.09));
+            background: linear-gradient(135deg, rgba(255,26,77,0.18), rgba(214,0,122,0.13));
             border-color: var(--primary);
             color: white;
             box-shadow: var(--glow);
@@ -153,7 +154,7 @@
             font-size: 1.45rem;
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary), var(--accent));
-            color: #0a0e17;
+            color: #0b0005;
             border: none;
             border-radius: 12px;
             cursor: pointer;
@@ -162,8 +163,8 @@
             letter-spacing: 1.5px;
         }
         #loginBtn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 0 65px rgba(92,225,230,0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 0 70px rgba(255, 26, 77, 0.65);
         }
         #loginStatus {
             margin-top: 2.2rem;
@@ -183,14 +184,14 @@
             color: transparent;
             text-align: center;
             margin: 1.4rem 0 2.8rem;
-            text-shadow: 0 0 25px rgba(92,225,230,0.35);
+            text-shadow: 0 0 25px rgba(255,26,77,0.40);
         }
         .key-display {
             padding: 1.7rem;
             font-size: 3rem;
             letter-spacing: 13px;
             text-align: center;
-            background: rgba(15,30,60,0.35);
+            background: rgba(20,0,10,0.40);
             border: 2px dashed var(--primary);
             border-radius: 14px;
             color: var(--primary);
@@ -208,7 +209,7 @@
             padding: 1.5rem;
             font-size: 1.35rem;
             font-weight: 700;
-            color: #0a0e17;
+            color: #0b0005;
             border: none;
             border-radius: 12px;
             cursor: pointer;
@@ -217,11 +218,11 @@
             letter-spacing: 1px;
         }
         .big-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 0 55px rgba(92,225,230,0.48);
+            transform: translateY(-5px);
+            box-shadow: 0 0 60px rgba(255,26,77,0.55);
         }
-        .btn-orange { background: linear-gradient(90deg, #ffaa4d, #ff6b4d); }
-        .btn-purple  { background: linear-gradient(90deg, var(--accent), #5a3fd1); }
+        .btn-orange { background: linear-gradient(90deg, #ff6b4d, #ff3366); }
+        .btn-purple  { background: linear-gradient(90deg, var(--accent), #a5005c); }
         .input-field {
             width: 100%;
             padding: 1.5rem 1.9rem;
@@ -239,23 +240,22 @@
             box-shadow: var(--glow);
         }
         .warning-box, .critical-warning, .security-info {
-            background: rgba(255,77,106,0.14);
-            border: 2px solid rgba(255,77,106,0.45);
+            background: rgba(255,51,102,0.10);
+            border: 2px solid rgba(255,51,102,0.50);
             border-radius: 13px;
             padding: 1.7rem 2.2rem;
             margin: 2.2rem auto;
             max-width: 960px;
             font-size: 1.05rem;
-            box-shadow: 0 0 25px rgba(255,77,106,0.3);
+            box-shadow: 0 0 28px rgba(255,51,102,0.35);
         }
         .security-info {
-            background: rgba(92,225,230,0.08);
-            border: 1px solid rgba(92,225,230,0.35);
+            background: rgba(255,26,77,0.06);
+            border: 1px solid rgba(255,26,77,0.40);
             box-shadow: var(--glow);
-            animation: none;
         }
         .critical-warning {
-            background: rgba(255,77,106,0.22);
+            background: rgba(255,51,102,0.18);
             border: 3px solid var(--danger);
         }
         @media (max-width: 1100px) {
@@ -301,7 +301,7 @@
 
 <script>
 // ──────────────────────────────────────────────────────────────────────────────
-// TAM DASHBOARD - Tüm sayfalar, tüm özellikler dahil (son hali)
+// TAM DASHBOARD - Neon Kırmızı & Siyah Versiyon
 // ──────────────────────────────────────────────────────────────────────────────
 
 const fetchBypass = (url, options = {}) => {
@@ -344,7 +344,7 @@ async function login() {
         }
 
         status.innerText = "Giriş başarılı ✓";
-        status.style.color = "#00ff9d";
+        status.style.color = "#ff1a4d";
 
         document.body.classList.remove("login-mode");
         document.body.classList.add("logged-in");
@@ -386,11 +386,11 @@ async function login() {
                                 {label:"Ban Durumu", value:d.ban || "Yok"},
                                 {label:"Oluşturma Tarihi", value:d.createTime || d.createDate || "-"}
                             ].map(item => `
-                                <div style="padding:1.2rem;background:rgba(0,229,255,0.08);border-radius:10px;margin:1.1rem 0;font-size:1.15rem;">
+                                <div style="padding:1.2rem;background:rgba(255,26,77,0.08);border-radius:10px;margin:1.1rem 0;font-size:1.15rem;">
                                     <strong>${item.label}:</strong> ${item.value}
                                 </div>
                             `).join('')}
-                            <div id="extraInfo" style="margin-top:2rem;padding:1.4rem;background:rgba(0,229,255,0.1);border-radius:12px;font-size:1rem;"></div>
+                            <div id="extraInfo" style="margin-top:2rem;padding:1.4rem;background:rgba(255,26,77,0.09);border-radius:12px;font-size:1rem;"></div>
                         </div>
                     </div>
 
@@ -403,7 +403,7 @@ async function login() {
                             <button class="big-btn btn-orange" onclick="manualReset('web')">WEB HWID SIFIRLA</button>
                             <button class="big-btn btn-purple" onclick="manualReset('external')">CHEAT HWID SIFIRLA</button>
                         </div>
-                        <div id="manualResetStatus" style="margin-top:2.5rem;text-align:center;font-size:1.4rem;color:#ffcc00;"></div>
+                        <div id="manualResetStatus" style="margin-top:2.5rem;text-align:center;font-size:1.4rem;color:#ff6b4d;"></div>
                     </div>
 
                     <div id="stars" class="page">
@@ -414,24 +414,23 @@ async function login() {
                         <div id="starResult" style="margin-top:2.5rem;padding:1.8rem;border-radius:12px;text-align:center;display:none;font-size:1.5rem;"></div>
                     </div>
 
-  <div id="download" class="page">
-    <h2 class="section-title">İNDİRME MERKEZİ</h2>
-    
-    <div class="critical-warning">
-        <strong>KRİTİK UYARI – OKUMADAN İNDİRMEYİN</strong><br><br>
-        SAHO SERVER EXE’si kurulduğu andan itibaren tüm kullanım ve işlemler kayıt altına alınır. 
-        Farklı bir EXE veya yazılım kullanımından kaynaklanan ban ve sorunlardan SAHO SERVER sorumlu değildir; 
-        bu durumda lisans anahtarı (KEY) tek taraflı olarak iptal edilir. 
-        Yazılımın kullanımına ilişkin tüm sorumluluk kullanıcıya aittir.
-    </div>
+                    <div id="download" class="page">
+                        <h2 class="section-title">İNDİRME MERKEZİ</h2>
+                        
+                        <div class="critical-warning">
+                            <strong>KRİTİK UYARI – OKUMADAN İNDİRMEYİN</strong><br><br>
+                            SAHO SERVER EXE’si kurulduğu andan itibaren tüm kullanım ve işlemler kayıt altına alınır. 
+                            Farklı bir EXE veya yazılım kullanımından kaynaklanan ban ve sorunlardan SAHO SERVER sorumlu değildir; 
+                            bu durumda lisans anahtarı (KEY) tek taraflı olarak iptal edilir. 
+                            Yazılımın kullanımına ilişkin tüm sorumluluk kullanıcıya aittir.
+                        </div>
 
-    <div class="critical-warning" style="margin-top:2rem;">
-        <strong>CRACK / YETKİSİZ MÜDAHALE UYARISI</strong><br><br>
-        Panelin tüm çalışma mantığı ve işlemleri sunucu tarafından anlık olarak izlenmektedir.<br>
-        Her türlü crack, kırma veya yetkisiz müdahale girişimi kalıcı ban ile sonuçlanır.<br>
-        Tespit halinde MAIN UID’iniz oyun ve sunucu dahil olmak üzere süresiz olarak engellenir.
-    </div>
-</div>
+                        <div class="critical-warning" style="margin-top:2rem;">
+                            <strong>CRACK / YETKİSİZ MÜDAHALE UYARISI</strong><br><br>
+                            Panelin tüm çalışma mantığı ve işlemleri sunucu tarafından anlık olarak izlenmektedir.<br>
+                            Her türlü crack, kırma veya yetkisiz müdahale girişimi kalıcı ban ile sonuçlanır.<br>
+                            Tespit halinde MAIN UID’iniz oyun ve sunucu dahil olmak üzere süresiz olarak engellenir.
+                        </div>
 
                         <button class="big-btn" style="margin-top:2.5rem;" onclick="window.open('https://www.mediafire.com/file/syjabpoa0lgkklp/Saho.rar/file','_blank')">
                             SAHO V5 BLACK ENGINE İNDİR
@@ -469,7 +468,7 @@ async function manualReset(type) {
     const key = loggedInKey;
     const status = document.getElementById("manualResetStatus");
     status.innerText = `[${type.toUpperCase()}] İşlem başlatılıyor...`;
-    status.style.color = "#ffcc00";
+    status.style.color = "#ff6b4d";
 
     try {
         const payload = { key, type };
@@ -484,7 +483,7 @@ async function manualReset(type) {
 
         if (data.success) {
             status.innerText = "Başarıyla sıfırlandı!";
-            status.style.color = "#00ff9d";
+            status.style.color = "#ff1a4d";
             setTimeout(() => location.reload(), 1800);
         } else {
             status.innerText = data.message || "Sıfırlama başarısız";
@@ -501,7 +500,7 @@ function calculateStars() {
     const now = parseInt(document.getElementById("starNow").value) || 0;
 
     let level = "GÜVENLİ";
-    let color = "#00ff9d";
+    let color = "#ff1a4d";
     let msg = "Sorunsuz devam et kral! 🔥";
 
     if (today >= 55) {
@@ -510,7 +509,7 @@ function calculateStars() {
         msg = "55+ YILDIZ BUGÜN! Acilen yavaşla!";
     } else if (today >= 41) {
         level = "YÜKSEK RİSK";
-        color = "#ffaa00";
+        color = "#ff6b4d";
         msg = "41-54 arası dikkatli ol!";
     }
 
@@ -521,7 +520,7 @@ function calculateStars() {
         RİSK: <strong style="color:${color};">${level}</strong><br>
         ${msg}
     `;
-    res.style.background = `rgba(${color === "#00ff9d" ? "0,255,157" : color === "#ff3366" ? "255,51,102" : "255,170,0"}, 0.2)`;
+    res.style.background = `rgba(${color === "#ff1a4d" ? "255,26,77" : color === "#ff3366" ? "255,51,102" : "255,107,77"}, 0.18)`;
     res.style.border = `2px solid ${color}`;
     res.style.display = "block";
 }
