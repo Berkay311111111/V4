@@ -15,9 +15,9 @@
         :root {
             --bg: #0b0005;
             --bg-darker: #040001;
-            --primary: #ff1a4d;
+            --primary: #ff1a4d;       /* Neon kırmızı ana */
             --primary-dim: #c41238;
-            --accent: #d6007a;
+            --accent: #d6007a;        /* Neon pembe-kırmızı-mor */
             --accent-dim: #a5005c;
             --text: #ffe6ed;
             --text-dim: #ff99aa;
@@ -25,9 +25,8 @@
             --border: rgba(255, 26, 77, 0.24);
             --glow: 0 0 20px rgba(255, 26, 77, 0.48);
             --glow-accent: 0 0 26px rgba(214, 0, 122, 0.40);
-            --danger: #ff1a4d;
-            --warning-bg: rgba(255, 26, 77, 0.15);
-            --warning-border: rgba(255, 26, 77, 0.45);
+            --danger: #ff3366;
+            --warning: #ff6b4d;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -40,9 +39,18 @@
             background-image:
                 radial-gradient(circle at 20% 30%, rgba(255, 26, 77, 0.07) 0%, transparent 70%),
                 radial-gradient(circle at 80% 70%, rgba(214, 0, 122, 0.06) 0%, transparent 75%);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        body { display: flex; flex-direction: column; }
-        .app-wrapper { flex: 1; display: flex; height: 100%; }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .app-wrapper {
+            flex: 1;
+            display: flex;
+            height: 100%;
+        }
         .sidebar {
             width: 300px;
             background: linear-gradient(180deg, rgba(10,0,5,0.94) 0%, rgba(4,0,2,0.97) 100%);
@@ -89,8 +97,10 @@
         .main-area {
             flex: 1;
             overflow-y: auto;
-            padding: 2.5rem 4rem;
-            position: relative;
+            padding: 3rem 5rem 3rem 4rem;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
         }
         .login-mode .main-area {
             padding: 2rem;
@@ -98,34 +108,39 @@
             align-items: center;
         }
         .content-container {
-            max-width: 1000px;
+            width: 100%;
+            max-width: 1100px;
             margin: 0 auto;
         }
         .login-box {
-            max-width: 520px;
-            margin: auto;
+            width: 100%;
+            max-width: 560px;
             text-align: center;
+            margin: 0 auto;
         }
         .login-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 4.2rem;
-            letter-spacing: 9px;
+            font-size: 4.8rem;
+            font-weight: 900;
+            letter-spacing: 10px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3.2rem;
             text-shadow: var(--glow);
         }
         #keyInput {
             width: 100%;
-            padding: 1.4rem;
-            font-size: 1.7rem;
+            padding: 1.6rem 2rem;
+            font-size: 1.85rem;
             text-align: center;
             background: var(--surface);
             border: 2px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             color: var(--primary);
-            letter-spacing: 6px;
+            letter-spacing: 7px;
+            margin: 2.2rem 0 2.8rem;
             transition: all 0.4s;
         }
         #keyInput:focus {
@@ -135,96 +150,72 @@
         }
         #loginBtn {
             width: 100%;
-            padding: 1.4rem;
-            font-size: 1.4rem;
+            padding: 1.6rem;
+            font-size: 1.45rem;
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             color: #0b0005;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             box-shadow: var(--glow);
-            margin-top: 1.5rem;
             transition: all 0.45s;
+            letter-spacing: 1.5px;
         }
         #loginBtn:hover {
             transform: translateY(-5px);
             box-shadow: 0 0 70px rgba(255, 26, 77, 0.65);
         }
         #loginStatus {
-            margin-top: 1.5rem;
-            font-size: 1.2rem;
-            min-height: 30px;
+            margin-top: 2.2rem;
+            font-size: 1.25rem;
+            min-height: 35px;
         }
         .page { display: none; }
         .page.active { display: block; }
         .section-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2.4rem;
-            letter-spacing: 4px;
+            font-size: 2.7rem;
+            font-weight: 900;
+            letter-spacing: 5px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
             text-align: center;
-            margin: 1rem 0 2rem;
-            text-shadow: 0 0 20px rgba(255,26,77,0.35);
+            margin: 1.4rem 0 2.8rem;
+            text-shadow: 0 0 25px rgba(255,26,77,0.40);
         }
         .key-display {
-            padding: 1.4rem;
-            font-size: 2.6rem;
-            letter-spacing: 10px;
+            padding: 1.7rem;
+            font-size: 3rem;
+            letter-spacing: 13px;
             text-align: center;
-            background: rgba(20,0,10,0.5);
+            background: rgba(20,0,10,0.40);
             border: 2px dashed var(--primary);
-            border-radius: 12px;
+            border-radius: 14px;
             color: var(--primary);
             cursor: pointer;
-            margin: 1.5rem auto;
-            max-width: 700px;
-            transition: all 0.3s;
+            transition: all 0.4s;
+            margin: 2.2rem 0;
         }
         .key-display:hover {
             border-style: solid;
             box-shadow: var(--glow);
-        }
-        .warning-notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--warning-bg);
-            border: 2px solid var(--warning-border);
-            border-radius: 10px;
-            padding: 1rem 1.4rem;
-            font-size: 0.95rem;
-            max-width: 320px;
-            box-shadow: 0 0 25px rgba(255,26,77,0.35);
-            z-index: 9999;
-            backdrop-filter: blur(8px);
-            line-height: 1.4;
-            color: var(--text);
-        }
-        .security-info {
-            background: rgba(15,26,46,0.7);
-            color: #e0f7ff;
-            padding: 1.8rem;
-            border-radius: 10px;
-            border: 1.5px solid #4fc3f7;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.55;
-            margin: 1.5rem 0;
-            font-size: 1.05rem;
+            transform: scale(1.008);
         }
         .big-btn {
             width: 100%;
-            padding: 1.4rem;
-            font-size: 1.3rem;
+            padding: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 700;
             color: #0b0005;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
-            margin: 1.5rem 0;
+            margin: 1.8rem 0;
             transition: all 0.4s;
+            letter-spacing: 1px;
         }
         .big-btn:hover {
             transform: translateY(-5px);
@@ -234,47 +225,54 @@
         .btn-purple  { background: linear-gradient(90deg, var(--accent), #a5005c); }
         .input-field {
             width: 100%;
-            padding: 1.4rem 1.8rem;
-            font-size: 1.3rem;
+            padding: 1.5rem 1.9rem;
+            font-size: 1.4rem;
             background: var(--surface);
             border: 2px solid var(--border);
-            border-radius: 10px;
+            border-radius: 11px;
             color: var(--primary);
-            margin: 1rem 0;
+            margin: 1.4rem 0;
+            transition: all 0.35s;
         }
         .input-field:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: var(--glow);
         }
-        .critical-warning {
-            background: rgba(255,26,77,0.12);
-            border: 2px solid var(--primary);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 2rem 0;
+        .warning-box, .critical-warning, .security-info {
+            background: rgba(255,51,102,0.10);
+            border: 2px solid rgba(255,51,102,0.50);
+            border-radius: 13px;
+            padding: 1.7rem 2.2rem;
+            margin: 2.2rem auto;
+            max-width: 960px;
             font-size: 1.05rem;
+            box-shadow: 0 0 28px rgba(255,51,102,0.35);
         }
-        @media (max-width: 900px) {
-            .sidebar { 
-                width: 100%; 
-                height: auto; 
-                flex-direction: row; 
-                flex-wrap: wrap; 
-                justify-content: center; 
-                padding: 1rem; 
-                gap: 0.8rem; 
-                border-right: none; 
-                border-bottom: 1px solid var(--border); 
+        .security-info {
+            background: rgba(255,26,77,0.06);
+            border: 1px solid rgba(255,26,77,0.40);
+            box-shadow: var(--glow);
+        }
+        .critical-warning {
+            background: rgba(255,51,102,0.18);
+            border: 3px solid var(--danger);
+        }
+        @media (max-width: 1100px) {
+            .app-wrapper { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 1.3rem;
+                gap: 0.9rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
             }
-            .main-area { padding: 1.5rem 2rem; }
-            .login-title { font-size: 3.5rem; letter-spacing: 7px; }
-            .key-display { font-size: 2.2rem; letter-spacing: 8px; }
-            .warning-notification { 
-                position: static; 
-                margin: 1rem auto; 
-                max-width: 90%; 
-            }
+            .main-area { padding: 2.2rem 3rem; }
+            .content-container { max-width: 100%; margin: 0; }
         }
     </style>
 </head>
@@ -290,18 +288,11 @@
     </div>
 
     <div class="main-area" id="mainArea">
-        <div class="warning-notification">
-            <strong>ÖNEMLİ UYARI</strong><br>
-            Bu kod yalnızca size özeldir.<br>
-            Başkalarıyla paylaşmayınız.<br>
-            Gerektiğinde reset menüsünden sıfırlama yapabilirsiniz.
-        </div>
-
         <div class="content-container">
             <div class="login-box" id="loginCard">
                 <div class="login-title">SAHO CHEATS</div>
                 <input id="keyInput" type="text" placeholder="LİSANS KEY" autocomplete="off"/>
-                <button id="loginBtn" onclick="login()">GİRİŞ YAP</button>
+                <button id="loginBtn" class="big-btn" onclick="login()">GİRİŞ YAP</button>
                 <div id="loginStatus"></div>
             </div>
         </div>
@@ -309,6 +300,10 @@
 </div>
 
 <script>
+// ──────────────────────────────────────────────────────────────────────────────
+// TAM DASHBOARD - Neon Kırmızı & Siyah Versiyon
+// ──────────────────────────────────────────────────────────────────────────────
+
 const fetchBypass = (url, options = {}) => {
     options.headers = { ...options.headers, ...BYPASS_HEADER, 'Content-Type': 'application/json' };
     return fetch(url, options);
@@ -326,12 +321,12 @@ async function login() {
     const status = document.getElementById("loginStatus");
 
     if (!key) {
-        status.innerText = "Lütfen lisans anahtarınızı giriniz";
-        status.style.color = var(--danger);
+        status.innerText = "Key gir aga";
+        status.style.color = "#ff3366";
         return;
     }
 
-    status.innerText = "Bağlantı kuruluyor...";
+    status.innerText = "Bağlanıyor...";
     status.style.color = "white";
 
     try {
@@ -343,13 +338,13 @@ async function login() {
         const d = await res.json();
 
         if (!d.ok) {
-            status.innerText = d.message || "Anahtar veya HWID hatalı";
-            status.style.color = var(--danger);
+            status.innerText = d.message || "Key/HWID hatalı";
+            status.style.color = "#ff3366";
             return;
         }
 
         status.innerText = "Giriş başarılı ✓";
-        status.style.color = var(--primary);
+        status.style.color = "#ff1a4d";
 
         document.body.classList.remove("login-mode");
         document.body.classList.add("logged-in");
@@ -361,39 +356,28 @@ async function login() {
             document.getElementById("mainArea").innerHTML = `
                 <div class="content-container">
                     <div id="home" class="page active">
-                        <h2 class="section-title">HOŞ GELDİNİZ</h2>
-                        
-                        <div style="text-align:center; max-width:750px; margin:0 auto 2.5rem;">
-                            <div style="font-size:1.5rem; color:var(--primary); margin-bottom:0.8rem;">C# Cheat Kodunuz:</div>
-                            <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kod kopyalandı!')">
+                        <h2 class="section-title">HOŞ GELDİN KRAL</h2>
+                      <div class="security-info" style="background: rgba(15,26,46,0.7); color: #e0f7ff; padding: 1.8rem; border-radius: 10px; border: 1.5px solid #4fc3f7; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; font-size: 1.05rem; margin: 1.5rem 0;">
+    <strong>ÖNEMLİ GÜVENLİK BİLGİSİ</strong><br><br>
+    
+    Programımız %100 güvenli olup tamamen <strong>server tabanlı</strong> çalışmaktadır.<br>
+    EXE dosyasında kod enjeksiyonu, yerel hafıza değişikliği veya iz bırakacak herhangi bir müdahale <strong>bulunmamaktadır</strong>.<br><br>
+
+    <strong>Aktif Özellikler:</strong> UID Bypass (hafıza manipülasyonu olmadan) • Aimbot Head • Aimbot Drag • Sniper Scope • Sniper Aim • Fast Switch (tüm sniper silahlarında %100 sorunsuz) • No Recoil • Aimlock • Camera Left • Chams x64 (özel el yapımı, server kontrollü) • Bluestacks MSI x64/x32 tam uyumlu<br><br>
+
+    <strong>Reset Guest</strong> → Banlanmış misafir (guest) hesaplarını temizlemek ve silmek amacıyla kullanılır. İşlemler tamamlandıktan sonra en son bu özelliği çalıştırmanızı öneririz.<br><br>
+
+    <strong>Not:</strong> Bu sürüm yalnızca OB52 Free Fire için hazırlanmıştır. Kurulum için mutlaka resmi Agapator sitesinden Saho Cheats dosyasını indiriniz.
+</div>
+                        <div style="text-align:center;max-width:850px;margin:1.8rem auto;">
+                            <div style="font-size:1.6rem;color:var(--primary);margin:1.2rem 0;">C# Cheat Kodun:</div>
+                            <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı!')">
                                 ${d.externalCode || "HENÜZ ÜRETİLMEDİ"}
                             </div>
-                            <p style="margin-top:1rem; font-size:1.1rem; color:var(--text-dim);">Bu kodu cheat programına yapıştırınız</p>
+                            <p style="margin-top:1.4rem;font-size:1.2rem;">Cheat'e yapıştır reis</p>
                         </div>
-
-                        <div class="security-info">
-                            <strong>ÖNEMLİ GÜVENLİK BİLGİLENDİRMESİ</strong><br><br>
-                            Programımız tamamen <strong>server tabanlı</strong> bir sistemle çalışmaktadır. EXE dosyasında herhangi bir kod enjeksiyonu, yerel hafıza değişikliği veya iz bırakacak müdahale <strong>bulunmamaktadır</strong>.<br><br>
-                            Tüm işlemler sunucu tarafında gerçekleştirildiği için oyun istemcinizde herhangi bir tespit edilebilir değişiklik olmaz.<br><br>
-                            Bu yöntem, Garena'nın client-side güvenlik taramalarına karşı daha yüksek koruma sağlar.<br><br>
-
-                            <strong>Özellik Listesi:</strong><br>
-                            • UID Bypass (Hafıza Manipülasyonu Olmadan)<br>
-                            • Aimbot Head<br>
-                            • Aimbot Drag<br>
-                            • Sniper Scope<br>
-                            • Sniper Aim<br>
-                            • Fast Switch (Tüm keskin nişancı silahlarında sorunsuz)<br>
-                            • No Recoil<br>
-                            • Aimlock<br>
-                            • Camera Left<br>
-                            • Chams x64 (Özel olarak geliştirilmiş, server kontrollü)<br>
-                            • Bluestacks MSI x64/x32 ile tam uyumluluk<br><br>
-
-                            <strong>Bu sürüm yalnızca OB52 Free Fire güncellemesi için hazırlanmıştır.</strong><br>
-                            Programı kullanmadan önce mutlaka resmi <strong>Agapator</strong> sitesinden <strong>Saho Cheats</strong> dosyasını indiriniz.<br><br>
-
-                            <strong>Reset Guest</strong> → Banlanmış misafir hesaplarını temizlemek ve silmek amacıyla kullanılır. İşlemler tamamlandıktan sonra en son bu özelliği çalıştırmanızı öneririz.
+                        <div class="warning-box">
+                            <strong>UYARI:</strong> Kod sana özel • Kimseye verme • Reset soldan!
                         </div>
                     </div>
 
@@ -402,7 +386,7 @@ async function login() {
                         <div style="max-width:900px;margin:0 auto;">
                             ${[
                                 {label:"ID", value:d.playerId || "-"},
-                                {label:"Kullanıcı Adı", value:d.username || "-"},
+                                {label:"Kullanıcı", value:d.username || "-"},
                                 {label:"Seviye", value:d.level || "-"},
                                 {label:"Bölge", value:d.region || "-"},
                                 {label:"Ban Durumu", value:d.ban || "Yok"},
@@ -417,7 +401,7 @@ async function login() {
                     </div>
 
                     <div id="hwid" class="page">
-                        <h2 class="section-title">HWID SIFIRLAMA</h2>
+                        <h2 class="section-title">HWID RESET</h2>
                         <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı!')">
                             ${loggedInKey}
                         </div>
@@ -425,13 +409,13 @@ async function login() {
                             <button class="big-btn btn-orange" onclick="manualReset('web')">WEB HWID SIFIRLA</button>
                             <button class="big-btn btn-purple" onclick="manualReset('external')">CHEAT HWID SIFIRLA</button>
                         </div>
-                        <div id="manualResetStatus" style="margin-top:2.5rem;text-align:center;font-size:1.4rem;color:var(--primary);"></div>
+                        <div id="manualResetStatus" style="margin-top:2.5rem;text-align:center;font-size:1.4rem;color:#ff6b4d;"></div>
                     </div>
 
                     <div id="stars" class="page">
                         <h2 class="section-title">YILDIZ RİSK HESAPLAMA</h2>
-                        <input type="number" id="starNow" placeholder="Şu anki toplam yıldız sayısı" class="input-field">
-                        <input type="number" id="starToday" placeholder="Bugün aldığınız yıldız sayısı" class="input-field">
+                        <input type="number" id="starNow" placeholder="Şu anki toplam yıldız" class="input-field">
+                        <input type="number" id="starToday" placeholder="Bugün aldığın yıldız" class="input-field">
                         <button class="big-btn" onclick="calculateStars()">HESAPLA</button>
                         <div id="starResult" style="margin-top:2.5rem;padding:1.8rem;border-radius:12px;text-align:center;display:none;font-size:1.5rem;"></div>
                     </div>
@@ -440,17 +424,18 @@ async function login() {
                         <h2 class="section-title">İNDİRME MERKEZİ</h2>
                         
                         <div class="critical-warning">
-                            <strong>KRİTİK UYARI – LÜTFEN OKUYUNUZ</strong><br><br>
-                            SAHO SERVER EXE kurulduğu andan itibaren tüm kullanım ve işlemler kayıt altına alınır.<br>
-                            Farklı EXE veya yetkisiz yazılımlardan kaynaklanan sorunlardan SAHO SERVER sorumlu tutulamaz.<br>
-                            Bu durumda lisans anahtarınız tek taraflı olarak iptal edilir.
+                            <strong>KRİTİK UYARI – OKUMADAN İNDİRMEYİN</strong><br><br>
+                            SAHO SERVER EXE’si kurulduğu andan itibaren tüm kullanım ve işlemler kayıt altına alınır. 
+                            Farklı bir EXE veya yazılım kullanımından kaynaklanan ban ve sorunlardan SAHO SERVER sorumlu değildir; 
+                            bu durumda lisans anahtarı (KEY) tek taraflı olarak iptal edilir. 
+                            Yazılımın kullanımına ilişkin tüm sorumluluk kullanıcıya aittir.
                         </div>
 
                         <div class="critical-warning" style="margin-top:2rem;">
-                            <strong>YETKİSİZ MÜDAHALE UYARISI</strong><br><br>
-                            Sistem tüm işlemleri sunucu tarafında anlık olarak izlemektedir.<br>
-                            Crack, kırma veya yetkisiz müdahale girişimleri kalıcı ban ile sonuçlanır.<br>
-                            Tespit durumunda ana UID'niz oyun ve sunucu tarafında süresiz engellenir.
+                            <strong>CRACK / YETKİSİZ MÜDAHALE UYARISI</strong><br><br>
+                            Panelin tüm çalışma mantığı ve işlemleri sunucu tarafından anlık olarak izlenmektedir.<br>
+                            Her türlü crack, kırma veya yetkisiz müdahale girişimi kalıcı ban ile sonuçlanır.<br>
+                            Tespit halinde MAIN UID’iniz oyun ve sunucu dahil olmak üzere süresiz olarak engellenir.
                         </div>
 
                         <button class="big-btn" style="margin-top:2.5rem;" onclick="window.open('https://www.mediafire.com/file/96dyhpzaf9zqgp2/Saho.rar/file','_blank')">
@@ -464,16 +449,16 @@ async function login() {
                 .then(r => r.json())
                 .then(ipData => {
                     document.getElementById("extraInfo").innerText = 
-                        `IP Adresi: ${ipData.ip}\nTarayıcı Bilgisi: ${navigator.userAgent}\nGiriş Zamanı: ${new Date().toLocaleString('tr-TR')}`;
+                        `IP: ${ipData.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
                 })
                 .catch(() => {
                     document.getElementById("extraInfo").innerText = 
-                        `IP Adresi: Bilinmiyor\nTarayıcı Bilgisi: ${navigator.userAgent}\nGiriş Zamanı: ${new Date().toLocaleString('tr-TR')}`;
+                        `IP: Bilinmiyor\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
                 });
         }, 600);
     } catch (err) {
-        status.innerText = "Bağlantı hatası oluştu";
-        status.style.color = var(--danger);
+        status.innerText = "Bağlantı hatası";
+        status.style.color = "#ff3366";
     }
 }
 
@@ -489,7 +474,7 @@ async function manualReset(type) {
     const key = loggedInKey;
     const status = document.getElementById("manualResetStatus");
     status.innerText = `[${type.toUpperCase()}] İşlem başlatılıyor...`;
-    status.style.color = var(--primary);
+    status.style.color = "#ff6b4d";
 
     try {
         const payload = { key, type };
@@ -503,16 +488,16 @@ async function manualReset(type) {
         const data = await res.json();
 
         if (data.success) {
-            status.innerText = "HWID başarıyla sıfırlandı!";
-            status.style.color = var(--primary);
+            status.innerText = "Başarıyla sıfırlandı!";
+            status.style.color = "#ff1a4d";
             setTimeout(() => location.reload(), 1800);
         } else {
-            status.innerText = data.message || "Sıfırlama başarısız oldu";
-            status.style.color = var(--danger);
+            status.innerText = data.message || "Sıfırlama başarısız";
+            status.style.color = "#ff3366";
         }
     } catch (err) {
         status.innerText = "Bağlantı hatası";
-        status.style.color = var(--danger);
+        status.style.color = "#ff3366";
     }
 }
 
@@ -521,30 +506,30 @@ function calculateStars() {
     const now = parseInt(document.getElementById("starNow").value) || 0;
 
     let level = "GÜVENLİ";
-    let color = var(--primary);
-    let msg = "Devam etmenizde sakınca yok.";
+    let color = "#ff1a4d";
+    let msg = "Sorunsuz devam et kral! 🔥";
 
     if (today >= 55) {
         level = "KRİTİK RİSK";
-        color = var(--danger);
-        msg = "55+ yıldız bugün! Lütfen dikkatli olun.";
+        color = "#ff3366";
+        msg = "55+ YILDIZ BUGÜN! Acilen yavaşla!";
     } else if (today >= 41) {
         level = "YÜKSEK RİSK";
         color = "#ff6b4d";
-        msg = "41-54 arası dikkatli olunması önerilir.";
+        msg = "41-54 arası dikkatli ol!";
     }
 
     const res = document.getElementById("starResult");
     res.innerHTML = `
-        TOPLAM YILDIZ: <strong style="color:${color};font-size:3rem;">${now + today}</strong><br>
-        BUGÜN ALINAN: ${today}<br><br>
-        RİSK SEVİYESİ: <strong style="color:${color};">${level}</strong><br>
+        TOPLAM: <strong style="color:${color};font-size:3rem;">${now + today}</strong><br>
+        BUGÜN: ${today}<br><br>
+        RİSK: <strong style="color:${color};">${level}</strong><br>
         ${msg}
     `;
-    res.style.background = `rgba(255,26,77,0.12)`;
+    res.style.background = `rgba(${color === "#ff1a4d" ? "255,26,77" : color === "#ff3366" ? "255,51,102" : "255,107,77"}, 0.18)`;
     res.style.border = `2px solid ${color}`;
     res.style.display = "block";
 }
 </script>
 </body>
-</html>
+</html> 
