@@ -25,7 +25,9 @@
             --border: rgba(255, 26, 77, 0.24);
             --glow: 0 0 20px rgba(255, 26, 77, 0.48);
             --glow-accent: 0 0 26px rgba(214, 0, 122, 0.40);
-            --danger: #ff3366;
+            --danger: #ff1a4d;
+            --warning-bg: rgba(255, 26, 77, 0.15);
+            --warning-border: rgba(255, 26, 77, 0.45);
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -38,8 +40,6 @@
             background-image:
                 radial-gradient(circle at 20% 30%, rgba(255, 26, 77, 0.07) 0%, transparent 70%),
                 radial-gradient(circle at 80% 70%, rgba(214, 0, 122, 0.06) 0%, transparent 75%);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
         body { display: flex; flex-direction: column; }
         .app-wrapper { flex: 1; display: flex; height: 100%; }
@@ -191,16 +191,17 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(255,51,102,0.18);
-            border: 2px solid var(--danger);
+            background: var(--warning-bg);
+            border: 2px solid var(--warning-border);
             border-radius: 10px;
             padding: 1rem 1.4rem;
             font-size: 0.95rem;
             max-width: 320px;
-            box-shadow: 0 0 25px rgba(255,51,102,0.4);
+            box-shadow: 0 0 25px rgba(255,26,77,0.35);
             z-index: 9999;
             backdrop-filter: blur(8px);
             line-height: 1.4;
+            color: var(--text);
         }
         .security-info {
             background: rgba(15,26,46,0.7);
@@ -247,8 +248,8 @@
             box-shadow: var(--glow);
         }
         .critical-warning {
-            background: rgba(255,51,102,0.18);
-            border: 2px solid var(--danger);
+            background: rgba(255,26,77,0.12);
+            border: 2px solid var(--primary);
             border-radius: 10px;
             padding: 1.5rem;
             margin: 2rem 0;
@@ -269,6 +270,11 @@
             .main-area { padding: 1.5rem 2rem; }
             .login-title { font-size: 3.5rem; letter-spacing: 7px; }
             .key-display { font-size: 2.2rem; letter-spacing: 8px; }
+            .warning-notification { 
+                position: static; 
+                margin: 1rem auto; 
+                max-width: 90%; 
+            }
         }
     </style>
 </head>
@@ -285,10 +291,10 @@
 
     <div class="main-area" id="mainArea">
         <div class="warning-notification">
-            <strong>ÖNEMLİ UYARI:</strong><br>
-            Bu kod size özeldir.<br>
-            Kimseye vermeyiniz.<br>
-            Reset menüsünden sıfırlama yapabilirsiniz.
+            <strong>ÖNEMLİ UYARI</strong><br>
+            Bu kod yalnızca size özeldir.<br>
+            Başkalarıyla paylaşmayınız.<br>
+            Gerektiğinde reset menüsünden sıfırlama yapabilirsiniz.
         </div>
 
         <div class="content-container">
@@ -320,8 +326,8 @@ async function login() {
     const status = document.getElementById("loginStatus");
 
     if (!key) {
-        status.innerText = "Lütfen lisans key giriniz";
-        status.style.color = "#ff3366";
+        status.innerText = "Lütfen lisans anahtarınızı giriniz";
+        status.style.color = var(--danger);
         return;
     }
 
@@ -337,13 +343,13 @@ async function login() {
         const d = await res.json();
 
         if (!d.ok) {
-            status.innerText = d.message || "Key veya HWID hatalı";
-            status.style.color = "#ff3366";
+            status.innerText = d.message || "Anahtar veya HWID hatalı";
+            status.style.color = var(--danger);
             return;
         }
 
         status.innerText = "Giriş başarılı ✓";
-        status.style.color = "#ff1a4d";
+        status.style.color = var(--primary);
 
         document.body.classList.remove("login-mode");
         document.body.classList.add("logged-in");
@@ -362,13 +368,13 @@ async function login() {
                             <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kod kopyalandı!')">
                                 ${d.externalCode || "HENÜZ ÜRETİLMEDİ"}
                             </div>
-                            <p style="margin-top:1rem; font-size:1.1rem; color:var(--text-dim);">Bu kodu cheat motoruna yapıştırınız</p>
+                            <p style="margin-top:1rem; font-size:1.1rem; color:var(--text-dim);">Bu kodu cheat programına yapıştırınız</p>
                         </div>
 
                         <div class="security-info">
                             <strong>ÖNEMLİ GÜVENLİK BİLGİLENDİRMESİ</strong><br><br>
                             Programımız tamamen <strong>server tabanlı</strong> bir sistemle çalışmaktadır. EXE dosyasında herhangi bir kod enjeksiyonu, yerel hafıza değişikliği veya iz bırakacak müdahale <strong>bulunmamaktadır</strong>.<br><br>
-                            Tüm işlemler sunucu tarafında gerçekleştirildiği için oyun istemcinizde (client) herhangi bir tespit edilebilir değişiklik olmaz.<br><br>
+                            Tüm işlemler sunucu tarafında gerçekleştirildiği için oyun istemcinizde herhangi bir tespit edilebilir değişiklik olmaz.<br><br>
                             Bu yöntem, Garena'nın client-side güvenlik taramalarına karşı daha yüksek koruma sağlar.<br><br>
 
                             <strong>Özellik Listesi:</strong><br>
@@ -387,7 +393,7 @@ async function login() {
                             <strong>Bu sürüm yalnızca OB52 Free Fire güncellemesi için hazırlanmıştır.</strong><br>
                             Programı kullanmadan önce mutlaka resmi <strong>Agapator</strong> sitesinden <strong>Saho Cheats</strong> dosyasını indiriniz.<br><br>
 
-                            <strong>Reset Guest</strong> → Banlanmış misafir (guest) hesaplarını temizlemek ve silmek amacıyla kullanılır. İşlemlerinizi tamamladıktan sonra en son bu özelliği çalıştırmanızı öneririz.
+                            <strong>Reset Guest</strong> → Banlanmış misafir hesaplarını temizlemek ve silmek amacıyla kullanılır. İşlemler tamamlandıktan sonra en son bu özelliği çalıştırmanızı öneririz.
                         </div>
                     </div>
 
@@ -419,7 +425,7 @@ async function login() {
                             <button class="big-btn btn-orange" onclick="manualReset('web')">WEB HWID SIFIRLA</button>
                             <button class="big-btn btn-purple" onclick="manualReset('external')">CHEAT HWID SIFIRLA</button>
                         </div>
-                        <div id="manualResetStatus" style="margin-top:2.5rem;text-align:center;font-size:1.4rem;color:#ff6b4d;"></div>
+                        <div id="manualResetStatus" style="margin-top:2.5rem;text-align:center;font-size:1.4rem;color:var(--primary);"></div>
                     </div>
 
                     <div id="stars" class="page">
@@ -434,18 +440,17 @@ async function login() {
                         <h2 class="section-title">İNDİRME MERKEZİ</h2>
                         
                         <div class="critical-warning">
-                            <strong>KRİTİK UYARI – OKUMADAN İNDİRMEYİNİZ</strong><br><br>
-                            SAHO SERVER EXE’si kurulduğu andan itibaren tüm kullanım ve işlemler kayıt altına alınır.<br>
-                            Farklı bir EXE veya yazılım kullanımından kaynaklanan sorunlardan SAHO SERVER sorumlu değildir.<br>
-                            Bu durumda lisans anahtarı (KEY) tek taraflı olarak iptal edilir.<br>
-                            Yazılımın kullanımına ilişkin tüm sorumluluk kullanıcıya aittir.
+                            <strong>KRİTİK UYARI – LÜTFEN OKUYUNUZ</strong><br><br>
+                            SAHO SERVER EXE kurulduğu andan itibaren tüm kullanım ve işlemler kayıt altına alınır.<br>
+                            Farklı EXE veya yetkisiz yazılımlardan kaynaklanan sorunlardan SAHO SERVER sorumlu tutulamaz.<br>
+                            Bu durumda lisans anahtarınız tek taraflı olarak iptal edilir.
                         </div>
 
                         <div class="critical-warning" style="margin-top:2rem;">
-                            <strong>CRACK / YETKİSİZ MÜDAHALE UYARISI</strong><br><br>
-                            Panelin tüm çalışma mantığı ve işlemleri sunucu tarafından anlık olarak izlenmektedir.<br>
-                            Her türlü crack, kırma veya yetkisiz müdahale girişimi kalıcı ban ile sonuçlanır.<br>
-                            Tespit halinde MAIN UID’iniz oyun ve sunucu tarafında süresiz olarak engellenir.
+                            <strong>YETKİSİZ MÜDAHALE UYARISI</strong><br><br>
+                            Sistem tüm işlemleri sunucu tarafında anlık olarak izlemektedir.<br>
+                            Crack, kırma veya yetkisiz müdahale girişimleri kalıcı ban ile sonuçlanır.<br>
+                            Tespit durumunda ana UID'niz oyun ve sunucu tarafında süresiz engellenir.
                         </div>
 
                         <button class="big-btn" style="margin-top:2.5rem;" onclick="window.open('https://www.mediafire.com/file/96dyhpzaf9zqgp2/Saho.rar/file','_blank')">
@@ -468,7 +473,7 @@ async function login() {
         }, 600);
     } catch (err) {
         status.innerText = "Bağlantı hatası oluştu";
-        status.style.color = "#ff3366";
+        status.style.color = var(--danger);
     }
 }
 
@@ -484,7 +489,7 @@ async function manualReset(type) {
     const key = loggedInKey;
     const status = document.getElementById("manualResetStatus");
     status.innerText = `[${type.toUpperCase()}] İşlem başlatılıyor...`;
-    status.style.color = "#ff6b4d";
+    status.style.color = var(--primary);
 
     try {
         const payload = { key, type };
@@ -499,15 +504,15 @@ async function manualReset(type) {
 
         if (data.success) {
             status.innerText = "HWID başarıyla sıfırlandı!";
-            status.style.color = "#ff1a4d";
+            status.style.color = var(--primary);
             setTimeout(() => location.reload(), 1800);
         } else {
             status.innerText = data.message || "Sıfırlama başarısız oldu";
-            status.style.color = "#ff3366";
+            status.style.color = var(--danger);
         }
     } catch (err) {
         status.innerText = "Bağlantı hatası";
-        status.style.color = "#ff3366";
+        status.style.color = var(--danger);
     }
 }
 
@@ -516,17 +521,17 @@ function calculateStars() {
     const now = parseInt(document.getElementById("starNow").value) || 0;
 
     let level = "GÜVENLİ";
-    let color = "#ff1a4d";
-    let msg = "Sorunsuz devam edebilirsiniz.";
+    let color = var(--primary);
+    let msg = "Devam etmenizde sakınca yok.";
 
     if (today >= 55) {
         level = "KRİTİK RİSK";
-        color = "#ff3366";
-        msg = "55+ yıldız bugün! Acilen yavaşlayın.";
+        color = var(--danger);
+        msg = "55+ yıldız bugün! Lütfen dikkatli olun.";
     } else if (today >= 41) {
         level = "YÜKSEK RİSK";
         color = "#ff6b4d";
-        msg = "41-54 arası dikkatli olun.";
+        msg = "41-54 arası dikkatli olunması önerilir.";
     }
 
     const res = document.getElementById("starResult");
@@ -536,7 +541,7 @@ function calculateStars() {
         RİSK SEVİYESİ: <strong style="color:${color};">${level}</strong><br>
         ${msg}
     `;
-    res.style.background = `rgba(${color === "#ff1a4d" ? "255,26,77" : color === "#ff3366" ? "255,51,102" : "255,107,77"}, 0.18)`;
+    res.style.background = `rgba(255,26,77,0.12)`;
     res.style.border = `2px solid ${color}`;
     res.style.display = "block";
 }
