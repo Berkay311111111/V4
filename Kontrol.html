@@ -403,8 +403,11 @@ async function login() {
         C# Cheat Kodun:
     </div>
 
-    ${(() => {
-       function renderExternalKey(d) {
+    ${renderExternalKey(d)}
+</div>
+
+<script>
+function renderExternalKey(d) {
     const code = d.externalCode || "";
 
     if (!code) {
@@ -453,6 +456,8 @@ async function login() {
         </div>
     `;
 }
+</script>
+
 
 
                     <div id="info" class="page">
