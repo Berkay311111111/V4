@@ -405,26 +405,27 @@ async function login() {
 
     ${(() => {
         const code = d.externalCode || "";
+
         if (!code) {
-            return `
-                <div class="key-display">HENÜZ ÜRETİLMEDİ</div>
-            `;
+            return `<div class="key-display">HENÜZ ÜRETİLMEDİ</div>`;
         }
 
+        // 1️⃣ 8 hane veya az
         if (code.length <= 8) {
             return `
-                <div class="key-display"
-                     onclick="navigator.clipboard.writeText('${code}')">
+                <div class="key-display" onclick="copyWithAnim('${code}')">
                     ${code}
                 </div>
             `;
-        } else {
+        }
+
+        // 2️⃣ 9–16 arası
+        if (code.length <= 16) {
             const mainCode = code.slice(0, 8);
             const bypassCode = code.slice(8);
 
             return `
-                <div class="key-display"
-                     onclick="navigator.clipboard.writeText('${mainCode}')">
+                <div class="key-display" onclick="copyWithAnim('${mainCode}')">
                     ${mainCode}
                 </div>
 
@@ -432,12 +433,28 @@ async function login() {
                     Bypass Kodunuz
                 </div>
 
-                <div class="key-display"
-                     onclick="navigator.clipboard.writeText('${bypassCode}')">
+                <div class="key-display" onclick="copyWithAnim('${bypassCode}')">
                     ${bypassCode}
                 </div>
             `;
         }
+
+        // 3️⃣ 16'dan büyükse
+        const bypassOnly = code.slice(-8);
+
+        return `
+            <div class="key-display" style="opacity:0.6;cursor:default;">
+                External Keyiniz yok
+            </div>
+
+            <div style="margin-top:1.8rem;font-size:1.3rem;color:var(--primary);">
+                Bypass Kodunuz
+            </div>
+
+            <div class="key-display" onclick="copyWithAnim('${bypassOnly}')">
+                ${bypassOnly}
+            </div>
+        `;
     })()}
 
     <p style="margin-top:1.4rem;font-size:1.2rem;">
@@ -448,6 +465,7 @@ async function login() {
 <div class="warning-box">
     <strong>UYARI:</strong> Kod sana özel • Kimseye verme • Reset soldan!
 </div>
+
 
 
                     <div id="info" class="page">
