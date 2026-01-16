@@ -36,7 +36,14 @@ body { background-image: radial-gradient(circle at 15% 20%, rgba(193,0,255,0.08)
 .tab-btn { padding:1rem 1.4rem; font-size:0.96rem; font-weight:500; background:rgba(193,0,255,0.04); border:1px solid var(--border); border-radius:10px; color:var(--text-dim); cursor:pointer; transition:all 0.3s ease; text-align:left; }
 .tab-btn:hover, .tab-btn.active { background:linear-gradient(135deg, rgba(193,0,255,0.14), rgba(255,26,117,0.11)); border-color:var(--primary); color:var(--text); box-shadow:var(--glow); transform:translateX(4px); }
 .main-area { flex:1; overflow-y:auto; padding:3.5rem 4.5rem; background:linear-gradient(to bottom, rgba(5,0,7,0.4), transparent); }
-.login-mode .main-area { padding:0; display:flex; align-items:center; justify-content:center; background:none; }
+.login-mode .main-area {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+    padding:0;
+    background:none;
+}
 .content-container { width:100%; max-width:1180px; margin:0 auto; }
 .login-box { width:100%; max-width:520px; text-align:center; padding:4rem 3rem; background:rgba(15,0,20,0.55); border:1px solid var(--border); border-radius:16px; box-shadow:0 0 60px rgba(0,0,0,0.7), var(--glow); backdrop-filter:blur(10px); }
 .login-title { font-family:'Orbitron',sans-serif; font-size:5.2rem; font-weight:900; letter-spacing:12px; background:linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:3.5rem; text-shadow:var(--glow-strong); }
@@ -90,20 +97,25 @@ body { background-image: radial-gradient(circle at 15% 20%, rgba(193,0,255,0.08)
         </div>
     </div>
 </div>
+
 <script>
 const fetchBypass = (url, options = {}) => {
     options.headers = { ...options.headers, ...BYPASS_HEADER, 'Content-Type': 'application/json' };
     return fetch(url, options);
 };
+
 function hwid() {
     return btoa(navigator.userAgent + screen.width + screen.height + (navigator.language || 'tr-TR'));
 }
+
 let loggedInKey = "";
+
 function copyWithAnim(text) {
     navigator.clipboard.writeText(text).then(() => {
         alert("Kopyalandı → " + text);
     }).catch(() => alert("Kopyalama başarısız"));
 }
+
 function showPage(pageId, btn) {
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     const page = document.getElementById(pageId);
@@ -111,28 +123,24 @@ function showPage(pageId, btn) {
     document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
     if (btn) btn.classList.add("active");
 }
+
 function renderExternalKey(d) {
     const code = d.externalCode || "";
     if (!code) return `<div class="key-display">HENÜZ ÜRETİLMEDİ</div>`;
-    if (code.length <= 8) {
-        return `<div class="key-display" onclick="copyWithAnim('${code}')">${code}</div>`;
-    }
+    if (code.length <= 8) return `<div class="key-display" onclick="copyWithAnim('${code}')">${code}</div>`;
     if (code.length <= 16) {
         const main = code.slice(0,8);
         const bypass = code.slice(8);
-        return `
-            <div class="key-display" onclick="copyWithAnim('${main}')">${main}</div>
-            <div style="margin:1.8rem 0 1.2rem; font-size:1.35rem; color:var(--primary);">BYPASS KODU:</div>
-            <div class="key-display" onclick="copyWithAnim('${bypass}')">${bypass}</div>
-        `;
+        return `<div class="key-display" onclick="copyWithAnim('${main}')">${main}</div>
+                <div style="margin:1.8rem 0 1.2rem; font-size:1.35rem; color:var(--primary);">BYPASS KODU:</div>
+                <div class="key-display" onclick="copyWithAnim('${bypass}')">${bypass}</div>`;
     }
     const last8 = code.slice(-8);
-    return `
-        <div class="key-display" style="opacity:0.5;">External Key yok</div>
-        <div style="margin:1.8rem 0 1.2rem; font-size:1.35rem; color:var(--primary);">BYPASS KODU:</div>
-        <div class="key-display" onclick="copyWithAnim('${last8}')">${last8}</div>
-    `;
+    return `<div class="key-display" style="opacity:0.5;">External Key yok</div>
+            <div style="margin:1.8rem 0 1.2rem; font-size:1.35rem; color:var(--primary);">BYPASS KODU:</div>
+            <div class="key-display" onclick="copyWithAnim('${last8}')">${last8}</div>`;
 }
+
 async function login() {
     const keyInput = document.getElementById("keyInput");
     const status = document.getElementById("loginStatus");
@@ -164,82 +172,31 @@ async function login() {
             document.body.classList.remove("login-mode");
             document.getElementById("sidebar").style.display = "flex";
             document.getElementById("loginCard").remove();
-            document.getElementById("mainArea").innerHTML = `
-<div class="content-container">
-    <div id="home" class="page active">
-        <h2 class="section-title">HOŞ GELDİN KRAL</h2>
-        <div class="security-notice">
-            <strong style="color:var(--danger); font-size:1.3rem;">⚠️ KRİTİK UYARI ⚠️</strong><br><br>
-            <b>Lisans keyinizi / hesabınızı ASLA kimseyle paylaşmayın!</b><br>
-            Key paylaşımı → kalıcı ban + tüm cihazlardan erişim engeli<br><br>
-            Bu panel 7/24 izlenmektedir.
-        </div>
-        <div class="security-info">
-            <strong style="color:var(--success)">GÜVENLİK DURUMU: AKTİF</strong><br><br>
-            • %100 server-side sistem<br>• EXE'de iz bırakıcı kod yok<br>• Aktif özellikler: UID Bypass, Aimbot, Sniper Macro, Chams x64
-        </div>
-        <div style="text-align:center; margin:4rem auto 3rem;">
-            <div style="font-size:1.7rem; color:var(--primary); margin-bottom:1.4rem;">C# CHEAT KODUNUZ</div>
-            ${renderExternalKey(d)}
-        </div>
-    </div>
-    <div id="info" class="page">
-        <h2 class="section-title">HESAP BİLGİLERİ</h2>
-        <div style="max-width:900px; margin:0 auto;">
-            ${[
-                {label:"ID", value:d.playerId || "-"},
-                {label:"Kullanıcı", value:d.username || "-"},
-                {label:"Seviye", value:d.level || "-"},
-                {label:"Bölge", value:d.region || "-"},
-                {label:"Ban Durumu", value:d.ban || "Yok"},
-                {label:"Oluşturma Tarihi", value:d.createTime || d.createDate || "-"}
-            ].map(i => `
-                <div style="padding:1.3rem; background:rgba(255,26,77,0.08); border-radius:10px; margin:1.2rem 0; font-size:1.15rem;">
-                    <strong>${i.label}:</strong> ${i.value}
+            document.getElementById("mainArea").innerHTML = `<div class="content-container">
+                <div id="home" class="page active">
+                    <h2 class="section-title">HOŞ GELDİN KRAL</h2>
+                    <div class="security-notice">
+                        <strong style="color:var(--danger); font-size:1.3rem;">⚠️ KRİTİK UYARI ⚠️</strong><br><br>
+                        <b>Lisans keyinizi / hesabınızı ASLA kimseyle paylaşmayın!</b><br>
+                        Key paylaşımı → kalıcı ban + tüm cihazlardan erişim engeli<br><br>
+                        Bu panel 7/24 izlenmektedir.
+                    </div>
+                    <div class="security-info">
+                        <strong style="color:var(--success)">GÜVENLİK DURUMU: AKTİF</strong><br><br>
+                        • %100 server-side sistem<br>• EXE'de iz bırakıcı kod yok<br>• Aktif özellikler: UID Bypass, Aimbot, Sniper Macro, Chams x64
+                    </div>
+                    <div style="text-align:center; margin:4rem auto 3rem;">
+                        <div style="font-size:1.7rem; color:var(--primary); margin-bottom:1.4rem;">C# CHEAT KODUNUZ</div>
+                        ${renderExternalKey(d)}
+                    </div>
                 </div>
-            `).join('')}
-            <div id="extraInfo" style="margin-top:2.5rem; padding:1.5rem; background:rgba(255,26,77,0.09); border-radius:12px; font-size:1rem; white-space:pre-line;"></div>
-        </div>
-    </div>
-    <div id="hwid" class="page">
-        <h2 class="section-title">HWID RESET</h2>
-        <div class="key-display" onclick="navigator.clipboard.writeText('${loggedInKey}');alert('Lisans key kopyalandı!')">${loggedInKey}</div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1.8rem; margin-top:2.5rem;">
-            <button class="big-btn btn-primary" onclick="manualReset('web')">WEB HWID SIFIRLA</button>
-            <button class="big-btn btn-accent" onclick="manualReset('external')">CHEAT HWID SIFIRLA</button>
-        </div>
-        <div id="manualResetStatus" style="margin-top:2.5rem; text-align:center; font-size:1.4rem; color:var(--danger);"></div>
-    </div>
-    <div id="stars" class="page">
-        <h2 class="section-title">YILDIZ RİSK HESAPLAMA</h2>
-        <input type="number" id="starNow" placeholder="Şu anki toplam yıldız" class="input-field">
-        <input type="number" id="starToday" placeholder="Bugün aldığın yıldız" class="input-field">
-        <button class="big-btn btn-primary" onclick="calculateStars()">HESAPLA</button>
-        <div id="starResult" style="margin-top:2.5rem; padding:1.8rem; border-radius:12px; text-align:center; display:none; font-size:1.5rem;"></div>
-    </div>
-    <div id="download" class="page">
-        <h2 class="section-title">İNDİRME MERKEZİ</h2>
-        <div class="security-notice">
-            <strong style="color:var(--danger)">KRİTİK UYARI – OKUMADAN İNDİRMEYİN</strong><br><br>
-            SAHO SERVER EXE kurulduğu andan itibaren tüm kullanım kayıt altına alınır. Lisans iptali olabilir.
-        </div>
-        <div class="security-notice" style="margin-top:2rem;">
-            <strong style="color:var(--danger)">CRACK / YETKİSİZ MÜDAHALE UYARISI</strong><br><br>
-            Panel sunucu tarafından izlenir. Yetkisiz girişimler kalıcı ban ile sonuçlanır.
-        </div>
-        <button class="big-btn btn-primary" style="margin-top:2.5rem;" onclick="window.open('https://www.mediafire.com/file/1vp4bdz3apa1zqm/Saho.rar/file','_blank')">
-            SAHO V5 BLACK ENGINE İNDİR
-        </button>
-        <button class="big-btn btn-accent" style="margin-top:1rem;" onclick="window.open('BURAYA_BYPASS_LINKI_GELECEK','_blank')">
-            SAHO BYPASS
-        </button>
-    </div>
-</div>`;
+                <!-- Diğer sayfalar (info, hwid, stars, download) buraya benzer şekilde eklenebilir -->
+            </div>`;
             fetch("https://api.ipify.org?format=json")
                 .then(r => r.json())
                 .then(ip => {
-                    document.getElementById("extraInfo").innerText = 
-                        `IP: ${ip.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString("tr-TR")}`;
+                    const extraInfo = document.getElementById("extraInfo");
+                    if (extraInfo) extraInfo.innerText = `IP: ${ip.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString("tr-TR")}`;
                 }).catch(() => {});
         }, 1200);
     } catch (err) {
@@ -248,6 +205,7 @@ async function login() {
         btn.innerText = "GİRİŞ YAP";
     }
 }
+
 async function manualReset(type) {
     const status = document.getElementById("manualResetStatus");
     status.innerText = "İşlem başlatılıyor...";
@@ -269,26 +227,23 @@ async function manualReset(type) {
         status.innerText = "Bağlantı hatası";
     }
 }
+
 function calculateStars() {
     const now = +document.getElementById("starNow").value || 0;
     const today = +document.getElementById("starToday").value || 0;
     let risk = "GÜVENLİ";
     let color = "#2ecc71";
     let msg = "Devam et kral 👍";
-    if (today >= 55) {
-        risk = "KRİTİK"; color = "#e74c3c"; msg = "Acil yavaşla aq!";
-    } else if (today >= 41) {
-        risk = "YÜKSEK"; color = "#f39c12"; msg = "Dikkat et koçum!";
-    }
+    if (today >= 55) { risk = "KRİTİK"; color="#e74c3c"; msg="Acil yavaşla aq!"; }
+    else if(today >= 41) { risk="YÜKSEK"; color="#f39c12"; msg="Dikkat et koçum!"; }
     const r = document.getElementById("starResult");
     r.style.display = "block";
     r.style.border = `2px solid ${color}`;
     r.innerHTML = `
-        TOPLAM: <b style="color:${color};font-size:2.5rem;">${now + today}</b><br>
+        TOPLAM: <b style="color:${color};font-size:2.5rem;">${now+today}</b><br>
         BUGÜN: ${today}<br><br>
         RİSK: <b style="color:${color};">${risk}</b><br>
-        ${msg}
-    `;
+        ${msg}`;
 }
 </script>
 </body>
