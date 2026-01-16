@@ -399,16 +399,56 @@ async function login() {
 </div>
 
                         <div style="text-align:center;max-width:850px;margin:1.8rem auto;">
-                            <div style="font-size:1.6rem;color:var(--primary);margin:1.2rem 0;">C# Cheat Kodun:</div>
-                            <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı!')">
-                                ${d.externalCode || "HENÜZ ÜRETİLMEDİ"}
-                            </div>
-                            <p style="margin-top:1.4rem;font-size:1.2rem;">Cheat'e yapıştır reis</p>
-                        </div>
-                        <div class="warning-box">
-                            <strong>UYARI:</strong> Kod sana özel • Kimseye verme • Reset soldan!
-                        </div>
-                    </div>
+    <div style="font-size:1.6rem;color:var(--primary);margin:1.2rem 0;">
+        C# Cheat Kodun:
+    </div>
+
+    ${(() => {
+        const code = d.externalCode || "";
+        if (!code) {
+            return `
+                <div class="key-display">HENÜZ ÜRETİLMEDİ</div>
+            `;
+        }
+
+        if (code.length <= 8) {
+            return `
+                <div class="key-display"
+                     onclick="navigator.clipboard.writeText('${code}')">
+                    ${code}
+                </div>
+            `;
+        } else {
+            const mainCode = code.slice(0, 8);
+            const bypassCode = code.slice(8);
+
+            return `
+                <div class="key-display"
+                     onclick="navigator.clipboard.writeText('${mainCode}')">
+                    ${mainCode}
+                </div>
+
+                <div style="margin-top:1.8rem;font-size:1.3rem;color:var(--primary);">
+                    Bypass Kodunuz
+                </div>
+
+                <div class="key-display"
+                     onclick="navigator.clipboard.writeText('${bypassCode}')">
+                    ${bypassCode}
+                </div>
+            `;
+        }
+    })()}
+
+    <p style="margin-top:1.4rem;font-size:1.2rem;">
+        Cheat'e yapıştır reis
+    </p>
+</div>
+
+<div class="warning-box">
+    <strong>UYARI:</strong> Kod sana özel • Kimseye verme • Reset soldan!
+</div>
+
 
                     <div id="info" class="page">
                         <h2 class="section-title">HESAP BİLGİLERİ</h2>
