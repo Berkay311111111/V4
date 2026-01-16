@@ -13,22 +13,29 @@
     </script>
     <style>
         :root {
-            --bg: #0b0005;
-            --bg-darker: #040001;
-            --primary: #ff1a4d;
-            --primary-dim: #c41238;
-            --accent: #d6007a;
-            --accent-dim: #a5005c;
-            --text: #ffe6ed;
-            --text-dim: #ff99aa;
-            --surface: rgba(18, 0, 8, 0.72);
-            --border: rgba(255, 26, 77, 0.24);
-            --glow: 0 0 20px rgba(255, 26, 77, 0.48);
-            --glow-accent: 0 0 26px rgba(214, 0, 122, 0.40);
-            --danger: #ff3366;
-            --warning: #ff6b4d;
+            --bg: #080003;
+            --bg-darker: #020001;
+            --primary: #ff1744;
+            --primary-glow: rgba(255, 23, 68, 0.55);
+            --accent: #d500f9;
+            --accent-glow: rgba(213, 0, 249, 0.45);
+            --text: #ffeef2;
+            --text-dim: #ff8cab;
+            --surface: rgba(20, 0, 10, 0.70);
+            --border: rgba(255, 23, 68, 0.35);
+            --glow: 0 0 22px rgba(255, 23, 68, 0.50);
+            --glow-strong: 0 0 35px rgba(255, 23, 68, 0.65);
+            --danger: #ff2d55;
+            --warning: #ff6d00;
+            --success: #ff1744;
         }
-        * { margin:0; padding:0; box-sizing:border-box; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         html, body {
             height: 100%;
             background: var(--bg-darker);
@@ -36,77 +43,265 @@
             font-family: 'JetBrains Mono', monospace;
             overflow: hidden;
             background-image:
-                radial-gradient(circle at 20% 30%, rgba(255, 26, 77, 0.07) 0%, transparent 70%),
-                radial-gradient(circle at 80% 70%, rgba(214, 0, 122, 0.06) 0%, transparent 75%);
+                radial-gradient(circle at 15% 20%, rgba(255, 23, 68, 0.09) 0%, transparent 60%),
+                radial-gradient(circle at 85% 75%, rgba(213, 0, 249, 0.08) 0%, transparent 65%);
         }
-        body { display: flex; flex-direction: column; }
-        .app-wrapper { flex: 1; display: flex; height: 100%; }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-wrapper {
+            flex: 1;
+            display: flex;
+            height: 100%;
+        }
+
         .sidebar {
-            width: 300px;
-            background: linear-gradient(180deg, rgba(10,0,5,0.94) 0%, rgba(4,0,2,0.97) 100%);
-            backdrop-filter: blur(14px);
+            width: 320px;
+            background: linear-gradient(180deg, rgba(15,0,8,0.96) 0%, rgba(5,0,3,0.98) 100%);
+            backdrop-filter: blur(16px);
             border-right: 1px solid var(--border);
-            padding: 2.4rem 1.6rem;
+            padding: 2.5rem 1.8rem;
             display: none;
             flex-direction: column;
-            gap: 1.1rem;
+            gap: 1.2rem;
             flex-shrink: 0;
-            overflow-y: auto;
         }
+
         .logo {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: 2.8rem;
-            letter-spacing: 7px;
+            font-size: 3rem;
+            letter-spacing: 8px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: var(--glow);
+            text-shadow: var(--glow-strong);
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
         }
+
         .tab-btn {
-            padding: 1.1rem 1.6rem;
-            font-size: 0.98rem;
-            font-weight: 500;
-            background: rgba(255,255,255,0.02);
+            padding: 1.2rem 1.8rem;
+            font-size: 1rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.03);
             border: 1px solid var(--border);
-            border-radius: 9px;
+            border-radius: 10px;
             color: var(--text-dim);
             cursor: pointer;
             transition: all 0.35s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+
         .tab-btn:hover, .tab-btn.active {
-            background: linear-gradient(135deg, rgba(255,26,77,0.22), rgba(214,0,122,0.16));
+            background: linear-gradient(135deg, rgba(255,23,68,0.25), rgba(213,0,249,0.18));
             border-color: var(--primary);
             color: white;
             box-shadow: var(--glow);
-            transform: translateX(4px);
+            transform: translateX(5px);
         }
+
         .main-area {
             flex: 1;
             overflow-y: auto;
-            padding: 3rem 5rem 3rem 4rem;
+            padding: 3.5rem 5.5rem 3.5rem 4.5rem;
         }
+
         .login-mode .main-area {
             padding: 2rem;
             justify-content: center;
             align-items: center;
             display: flex;
         }
-        .content-container { width: 100%; max-width: 1100px; margin: 0 auto; }
-        /* Diğer stiller aynı kalıyor, sadece birkaç küçük ek/iyileştirme */
-        .status-message {
-            padding: 1.2rem;
-            border-radius: 10px;
-            margin: 1.5rem 0;
-            font-size: 1.3rem;
+
+        .content-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .login-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: 12px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 3rem;
+            text-shadow: var(--glow-strong);
+        }
+
+        #keyInput {
+            width: 100%;
+            padding: 1.8rem 2.2rem;
+            font-size: 2rem;
             text-align: center;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            color: var(--primary);
+            letter-spacing: 8px;
+            margin: 2.5rem 0 3rem;
             transition: all 0.4s;
         }
-        .success { background: rgba(255,26,77,0.18); border: 2px solid var(--primary); color: var(--primary); }
-        .error { background: rgba(255,51,102,0.18); border: 2px solid var(--danger); color: var(--danger); }
+
+        #keyInput:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: var(--glow-strong);
+        }
+
+        #loginBtn {
+            width: 100%;
+            padding: 1.8rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: #000;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: var(--glow);
+            transition: all 0.45s;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        #loginBtn:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--glow-strong);
+        }
+
+        #loginStatus {
+            margin-top: 2.5rem;
+            font-size: 1.4rem;
+            min-height: 40px;
+        }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.9rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+            margin: 1.5rem 0 3rem;
+            text-shadow: var(--glow);
+        }
+
+        .key-display {
+            padding: 1.8rem;
+            font-size: 3.2rem;
+            letter-spacing: 14px;
+            text-align: center;
+            background: rgba(25,0,12,0.45);
+            border: 2px dashed var(--primary);
+            border-radius: 14px;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.4s;
+            margin: 2.5rem 0;
+            text-shadow: var(--glow);
+        }
+
+        .key-display:hover {
+            border-style: solid;
+            box-shadow: var(--glow-strong);
+            transform: scale(1.01);
+        }
+
+        .big-btn {
+            width: 100%;
+            padding: 1.6rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin: 2rem 0;
+            transition: all 0.45s;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .big-btn:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--glow-strong);
+        }
+
+        .btn-orange { background: linear-gradient(90deg, var(--warning), #ff4500); }
+        .btn-purple { background: linear-gradient(90deg, var(--accent), #a000f0); }
+
+        .input-field {
+            width: 100%;
+            padding: 1.6rem 2rem;
+            font-size: 1.45rem;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--primary);
+            margin: 1.5rem 0;
+            transition: all 0.35s;
+            text-align: center;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: var(--glow-strong);
+        }
+
+        .status {
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            font-size: 1.35rem;
+            text-align: center;
+            min-height: 70px;
+        }
+
+        .success { background: rgba(255,23,68,0.18); border: 2px solid var(--primary); color: var(--primary); box-shadow: var(--glow); }
+        .error   { background: rgba(255,45,85,0.18); border: 2px solid var(--danger); color: var(--danger); }
+
+        .warning-box, .critical-warning {
+            background: rgba(255,45,85,0.12);
+            border: 2px solid rgba(255,45,85,0.45);
+            border-radius: 14px;
+            padding: 1.8rem;
+            margin: 2.5rem auto;
+            max-width: 960px;
+            box-shadow: 0 0 30px rgba(255,45,85,0.35);
+        }
+
+        .critical-warning {
+            border: 3px solid var(--danger);
+            background: rgba(255,45,85,0.20);
+        }
+
+        .security-info {
+            background: rgba(255,23,68,0.08);
+            border: 1.5px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: var(--glow);
+            font-size: 0.82rem;
+            line-height: 1.4;
+        }
+
         @media (max-width: 1100px) {
             .app-wrapper { flex-direction: column; }
             .sidebar {
@@ -115,12 +310,12 @@
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;
-                padding: 1.2rem;
-                gap: 0.8rem;
+                padding: 1.5rem;
+                gap: 1rem;
                 border-right: none;
                 border-bottom: 1px solid var(--border);
             }
-            .main-area { padding: 2rem 2.5rem; }
+            .main-area { padding: 2.5rem 3rem; }
         }
     </style>
 </head>
@@ -134,6 +329,7 @@
         <button class="tab-btn" onclick="showPage('stars', event)">YILDIZ RİSK</button>
         <button class="tab-btn" onclick="showPage('download', event)">İNDİR</button>
     </div>
+
     <div class="main-area" id="mainArea">
         <div class="content-container">
             <div class="login-box" id="loginCard">
@@ -148,7 +344,7 @@
 
 <script>
 // ──────────────────────────────────────────────────────────────────────────────
-// SAHO CHEATS DASHBOARD - 2026 FINAL VERSION
+// SAHO CHEATS 2026 - NEON CYBERPUNK DASHBOARD
 // ──────────────────────────────────────────────────────────────────────────────
 
 const fetchBypass = (url, options = {}) => {
@@ -157,7 +353,14 @@ const fetchBypass = (url, options = {}) => {
 };
 
 function hwid() {
-    return btoa(navigator.userAgent + screen.width + screen.height + navigator.language + (navigator.hardwareConcurrency || ''));
+    return btoa(
+        navigator.userAgent +
+        screen.width + 'x' + screen.height + 'x' + screen.colorDepth +
+        navigator.language +
+        (navigator.hardwareConcurrency || '') +
+        (navigator.deviceMemory || '') +
+        location.hostname
+    );
 }
 
 let loggedInKey = "";
@@ -168,8 +371,8 @@ async function login() {
     const status = document.getElementById("loginStatus");
 
     if (!key) {
-        status.innerText = "Key gir aga";
-        status.style.color = "#ff3366";
+        status.innerText = "Key gir lan!";
+        status.style.color = "var(--danger)";
         return;
     }
 
@@ -181,17 +384,16 @@ async function login() {
             method: "POST",
             body: JSON.stringify({ key, hwid: hwid() })
         });
-
         const d = await res.json();
 
         if (!d.ok) {
-            status.innerText = d.message || "Key/HWID hatalı";
-            status.style.color = "#ff3366";
+            status.innerText = d.message || "Key veya HWID hatalı!";
+            status.style.color = "var(--danger)";
             return;
         }
 
         status.innerText = "Giriş başarılı ✓";
-        status.style.color = "#ff1a4d";
+        status.style.color = "var(--success)";
 
         document.body.classList.remove("login-mode");
         document.body.classList.add("logged-in");
@@ -203,47 +405,32 @@ async function login() {
                 <div class="content-container">
                     <div id="home" class="page active">
                         <h2 class="section-title">HOŞ GELDİN KRAL</h2>
-                        <!-- Güvenlik bilgisi kutusu -->
-                        <div class="security-info" style="
-                            position: fixed;
-                            top: 90px;
-                            right: 24px;
-                            width: 360px;
-                            padding: 1.1rem;
-                            border-radius: 12px;
-                            border: 1.5px solid #ff1a4d;
-                            font-size: 0.78rem;
-                            background: rgba(12,0,6,0.96);
-                            z-index: 9999;
-                            box-shadow: 0 0 25px rgba(255,26,77,0.55);
-                            line-height: 1.4;
-                        ">
-                            <strong style="color:#ff1a4d;">ÖNEMLİ GÜVENLİK BİLGİSİ</strong><br><br>
-                            Sistem %100 <b>server tabanlıdır</b>.<br>
-                            EXE içinde <b>kod enjeksiyonu</b>, <b>yerel hafıza değişimi</b> veya iz bırakacak işlem <b>YOKTUR</b>.<br><br>
-                            <strong>Aktif Özellikler:</strong><br>
-                            • UID Bypass (memory touch yok)<br>
-                            • Aimbot Head / Drag<br>
-                            • Glitch Fire<br>
-                            • No Recoil<br>
-                            • Sniper Scope + Macro<br>
-                            • Fast Switch (tüm sniperlarda stabil)<br>
-                            • Camera Left<br>
-                            • Chams x64 (el yapımı)<br>
-                            • Bluestacks MSI x64/x32 tam uyum<br><br>
-                            <strong>Reset Guest:</strong> Banlı guest kalıntılarını temizler<br>
-                            <strong>Not:</strong> Sadece <b>OB52 Free Fire</b> için!
+
+                        <div style="position:fixed;top:80px;right:20px;width:340px;z-index:9999;">
+                            <div class="security-info">
+                                <strong style="color:var(--primary);font-size:1rem;">GÜVENLİK BİLGİSİ</strong><br><br>
+                                • %100 server tabanlı sistem<br>
+                                • Yerel hafızaya dokunma yok<br>
+                                • UID Bypass (memory touch yok)<br>
+                                • Aimbot Head/Drag, Glitch Fire, No Recoil<br>
+                                • Sniper Scope + Macro, Fast Switch<br>
+                                • Chams x64 (el yapımı)<br>
+                                • Bluestacks MSI x64/x32 tam uyumlu<br><br>
+                                <strong>Reset Guest:</strong> Banlı guest kalıntılarını temizler<br>
+                                <strong>Not:</strong> Sadece OB52 Free Fire
+                            </div>
                         </div>
 
-                        <div style="text-align:center;max-width:850px;margin:1.8rem auto;">
-                            <div style="font-size:1.6rem;color:var(--primary);margin:1.2rem 0;">C# Cheat Kodun:</div>
-                            <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı!')">
+                        <div style="text-align:center;max-width:850px;margin:2rem auto;">
+                            <div style="font-size:1.7rem;color:var(--primary);margin-bottom:1.2rem;">C# Cheat Kodun:</div>
+                            <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı aq!')">
                                 ${d.externalCode || "HENÜZ ÜRETİLMEDİ"}
                             </div>
-                            <p style="margin-top:1.4rem;font-size:1.2rem;">Cheat'e yapıştır reis</p>
+                            <p style="margin-top:1.3rem;font-size:1.2rem;">Cheat'e direkt yapıştır reis</p>
                         </div>
+
                         <div class="warning-box">
-                            <strong>UYARI:</strong> Bu kod sana özel • Kimseye verme • Reset soldan!
+                            <strong>UYARI:</strong> Bu kod sana özel • Sakın paylaşma • Reset solda!
                         </div>
                     </div>
 
@@ -258,11 +445,11 @@ async function login() {
                                 {label:"Ban Durumu", value:d.ban || "Yok"},
                                 {label:"Oluşturma Tarihi", value:d.createTime || d.createDate || "-"}
                             ].map(item => `
-                                <div style="padding:1.2rem;background:rgba(255,26,77,0.08);border-radius:10px;margin:1.1rem 0;font-size:1.15rem;">
+                                <div style="padding:1.3rem;background:rgba(255,23,68,0.10);border-radius:12px;margin:1.2rem 0;font-size:1.2rem;border-left:4px solid var(--primary);">
                                     <strong>${item.label}:</strong> ${item.value}
                                 </div>
                             `).join('')}
-                            <div id="extraInfo" style="margin-top:2rem;padding:1.4rem;background:rgba(255,26,77,0.09);border-radius:12px;font-size:1rem;"></div>
+                            <div id="extraInfo" style="margin-top:2.5rem;padding:1.5rem;background:rgba(255,23,68,0.10);border-radius:12px;font-size:1rem;white-space:pre;"></div>
                         </div>
                     </div>
 
@@ -271,39 +458,38 @@ async function login() {
                         <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı!')">
                             ${loggedInKey}
                         </div>
-                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.8rem;margin:2.5rem 0;">
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin:3rem 0;">
                             <button class="big-btn btn-orange" onclick="manualReset('web')">WEB HWID SIFIRLA</button>
                             <button class="big-btn btn-purple" onclick="manualReset('external')">CHEAT HWID SIFIRLA</button>
                         </div>
-                        <div id="manualResetStatus" class="status-message"></div>
+                        <div id="manualResetStatus" class="status"></div>
                     </div>
 
                     <div id="stars" class="page">
                         <h2 class="section-title">YILDIZ RİSK HESAPLAMA</h2>
                         <input type="number" id="starNow" placeholder="Şu anki toplam yıldız" class="input-field" min="0">
                         <input type="number" id="starToday" placeholder="Bugün aldığın yıldız" class="input-field" min="0">
-                        <button class="big-btn" onclick="calculateStars()">HESAPLA RİSKİ</button>
-                        <div id="starResult" class="status-message" style="display:none;"></div>
+                        <button class="big-btn btn-primary" onclick="calculateStars()">RİSKİ HESAPLA</button>
+                        <div id="starResult" class="status" style="display:none;"></div>
                     </div>
 
                     <div id="download" class="page">
                         <h2 class="section-title">İNDİRME MERKEZİ</h2>
                         <div class="critical-warning">
-                            <strong>KRİTİK UYARI – OKUMADAN İNDİRMEYİN</strong><br><br>
-                            SAHO SERVER EXE’si kurulduğu andan itibaren tüm kullanım ve işlemler kayıt altına alınır.<br>
-                            Farklı EXE/yazılım kullanımından kaynaklanan banlardan SAHO sorumlu değildir.<br>
-                            Lisans anahtarı (KEY) tek taraflı iptal edilir.
+                            <strong>KRİTİK UYARI</strong><br><br>
+                            SAHO EXE kurulduğu andan itibaren tüm işlemler kayıt altındadır.<br>
+                            Farklı exe/yazılım kullanımı → lisans iptali + ban sorumluluğu kullanıcıya aittir.
                         </div>
-                        <div class="critical-warning" style="margin-top:2rem;">
+                        <div class="critical-warning" style="margin-top:2.5rem;">
                             <strong>CRACK / MÜDAHALE UYARISI</strong><br><br>
-                            Panel 7/24 sunucu tarafından izlenmektedir.<br>
-                            Crack, kırma veya yetkisiz müdahale → **KALICI BAN + MAIN UID ENGEL**
+                            Sistem 7/24 izlenmektedir.<br>
+                            Crack, kırma, yetkisiz müdahale → KALICI BAN + MAIN UID ENGEL
                         </div>
-                        <div style="margin-top:3rem; display: flex; flex-direction: column; gap: 1.2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
-                            <button class="big-btn" onclick="window.open('https://www.mediafire.com/file/1vp4bdz3apa1zqm/Saho.rar/file','_blank')">
+                        <div style="margin-top:3.5rem; display:flex; flex-direction:column; gap:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">
+                            <button class="big-btn btn-orange" onclick="window.open('https://www.mediafire.com/file/1vp4bdz3apa1zqm/Saho.rar/file','_blank')">
                                 SAHO V5 BLACK ENGINE İNDİR
                             </button>
-                            <button class="big-btn btn-purple" onclick="window.open('https://example.com/saho-bypass-latest','_blank')">
+                            <button class="big-btn btn-purple" onclick="window.open('https://example.com/saho-bypass','_blank')">
                                 SAHO BYPASS (Güncel)
                             </button>
                         </div>
@@ -315,17 +501,16 @@ async function login() {
                 .then(r => r.json())
                 .then(ipData => {
                     document.getElementById("extraInfo").innerText = 
-                        `IP: ${ipData.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
+                        `IP: ${ipData.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş Zamanı: ${new Date().toLocaleString('tr-TR')}`;
                 })
                 .catch(() => {
                     document.getElementById("extraInfo").innerText = 
-                        `IP: Bilinmiyor\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
+                        `IP: Bilinmiyor\nTarayıcı: ${navigator.userAgent}\nGiriş Zamanı: ${new Date().toLocaleString('tr-TR')}`;
                 });
-        }, 600);
-
+        }, 700);
     } catch (err) {
-        status.innerText = "Bağlantı hatası";
-        status.style.color = "#ff3366";
+        status.innerText = "Bağlantı hatası!";
+        status.style.color = "var(--danger)";
     }
 }
 
@@ -338,14 +523,12 @@ function showPage(pageId, event) {
 }
 
 async function manualReset(type) {
-    const key = loggedInKey;
     const status = document.getElementById("manualResetStatus");
-    
-    status.className = "status-message";
+    status.className = "status";
     status.innerText = `[${type.toUpperCase()}] İşlem başlatılıyor...`;
 
     try {
-        const payload = { key, type };
+        const payload = { key: loggedInKey, type };
         if (type === 'web') payload.current_hwid = hwid();
 
         const res = await fetchBypass(API_BASE + "/hwid-reset", {
@@ -356,16 +539,16 @@ async function manualReset(type) {
         const data = await res.json();
 
         if (data.success) {
-            status.className = "status-message success";
+            status.className = "status success";
             status.innerText = "HWID başarıyla sıfırlandı! ✓\nSayfa yenileniyor...";
             setTimeout(() => location.reload(), 2200);
         } else {
-            status.className = "status-message error";
-            status.innerText = data.message || "Sıfırlama başarısız";
+            status.className = "status error";
+            status.innerText = data.message || "Sıfırlama başarısız!";
         }
     } catch (err) {
-        status.className = "status-message error";
-        status.innerText = "Bağlantı hatası";
+        status.className = "status error";
+        status.innerText = "Bağlantı hatası!";
     }
 }
 
@@ -375,44 +558,42 @@ function calculateStars() {
     const total = now + today;
 
     let level = "GÜVENLİ";
-    let color = "#ff1a4d";
+    let color = "var(--success)";
     let msg = "Sorunsuz devam et kral! 🔥";
 
     if (today >= 60) {
-        level = "KRİTİK RİSK - TEHLİKE!";
-        color = "#ff3366";
+        level = "KRİTİK TEHLİKE!";
+        color = "var(--danger)";
         msg = "60+ YILDIZ BUGÜN! HEMEN DUR!";
     } else if (today >= 45) {
         level = "ÇOK YÜKSEK RİSK";
-        color = "#ff3366";
-        msg = "45+ dikkat! Çok yaklaşmışsın ban'a";
+        color = "var(--danger)";
+        msg = "45+ çok yaklaşmışsın ban'a";
     } else if (today >= 35) {
         level = "YÜKSEK RİSK";
-        color = "#ff6b4d";
+        color = "var(--warning)";
         msg = "35-44 arası yavaşla biraz";
     } else if (today >= 25) {
         level = "ORTA RİSK";
-        color = "#ff8c66";
-        msg = "25+ biraz temkinli ol";
+        color = "var(--warning)";
+        msg = "25+ temkinli ol";
     }
 
     const res = document.getElementById("starResult");
     res.innerHTML = `
-        <div style="font-size:2.6rem;margin-bottom:0.8rem;">
+        <div style="font-size:3rem;margin:1rem 0;">
             TOPLAM: <strong style="color:${color}">${total}</strong>
         </div>
-        <div style="font-size:1.4rem;margin:1rem 0;">
+        <div style="font-size:1.5rem;margin:1.2rem 0;">
             Bugün: ${today} yıldız
         </div>
-        <div style="font-size:2.2rem;margin:1.2rem 0;">
-            RİSK SEVİYESİ:<br>
-            <strong style="color:${color}">${level}</strong>
+        <div style="font-size:2.4rem;margin:1.5rem 0;">
+            RİSK: <strong style="color:${color}">${level}</strong>
         </div>
-        <div style="font-size:1.3rem;">${msg}</div>
+        <div style="font-size:1.4rem;">${msg}</div>
     `;
-    res.style.background = `rgba(${color === "#ff1a4d" ? "255,26,77" : color === "#ff3366" ? "255,51,102" : "255,140,102"}, 0.18)`;
+    res.style.background = `rgba(${color === "var(--success)" ? "255,23,68" : color === "var(--danger)" ? "255,45,85" : "255,109,0"}, 0.18)`;
     res.style.border = `2px solid ${color}`;
-    res.style.color = "white";
     res.style.display = "block";
 }
 </script>
