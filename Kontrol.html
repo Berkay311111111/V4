@@ -1,214 +1,153 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>SAHO CHEATS • 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-
-<script>
-    const API_BASE = "https://developing-ddr-tested-korean.trycloudflare.com";
-    const BYPASS_HEADER = { 'ngrok-skip-browser-warning': '69420' };
-</script>
-
 <style>
-/* --- STYLES SAME AS YOUR ORIGINAL --- */
 :root {
     --bg: #0b0005;
     --bg-darker: #040001;
     --primary: #ff1a4d;
-    --primary-dim: #c41238;
     --accent: #d6007a;
-    --accent-dim: #a5005c;
     --text: #ffe6ed;
     --text-dim: #ff99aa;
-    --surface: rgba(18, 0, 8, 0.72);
-    --border: rgba(255, 26, 77, 0.24);
-    --glow: 0 0 20px rgba(255, 26, 77, 0.48);
-    --glow-accent: 0 0 26px rgba(214, 0, 122, 0.40);
-    --danger: #ff3366;
-    --warning: #ff6b4d;
+    --surface: rgba(18,0,8,0.72);
+    --border: rgba(255,26,77,0.24);
+    --glow: 0 0 20px rgba(255,26,77,0.48);
+    --glow-accent: 0 0 26px rgba(214,0,122,0.40);
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body { height: 100%; background: var(--bg-darker); color: var(--text); font-family: 'JetBrains Mono', monospace; overflow: hidden; }
-body { display:flex; flex-direction: column; }
-/* ... OTHER CSS AS YOU HAD ... */
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;background:var(--bg-darker);color:var(--text);font-family:'JetBrains Mono', monospace;}
+body{display:flex;flex-direction:column;overflow:hidden;}
+.app-wrapper{flex:1;display:flex;height:100%;}
+.sidebar{
+    width:300px;background:linear-gradient(180deg,rgba(10,0,5,0.94) 0%,rgba(4,0,2,0.97) 100%);
+    backdrop-filter:blur(14px);border-right:1px solid var(--border);padding:2.4rem 1.6rem;display:none;flex-direction:column;gap:1.1rem;
+}
+.logo{font-family:'Orbitron',sans-serif;font-weight:900;font-size:2.8rem;letter-spacing:7px;
+    background:linear-gradient(90deg,var(--primary),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:var(--glow);text-align:center;margin-bottom:3rem;
+}
+.tab-btn{padding:1.1rem 1.6rem;font-size:0.98rem;font-weight:500;background:rgba(255,255,255,0.02);border:1px solid var(--border);
+    border-radius:9px;color:var(--text-dim);cursor:pointer;transition:all 0.35s ease;letter-spacing:0.8px;}
+.tab-btn:hover,.tab-btn.active{background:linear-gradient(135deg, rgba(255,26,77,0.18), rgba(214,0,122,0.13));border-color:var(--primary);color:white;box-shadow:var(--glow);transform:translateX(3px);}
+.main-area{flex:1;overflow-y:auto;padding:3rem 5rem 3rem 4rem;display:flex;justify-content:flex-start;align-items:flex-start;}
+.login-mode .main-area{padding:2rem;justify-content:center;align-items:center;}
+.content-container{width:100%;max-width:1100px;margin:0 auto;}
+.login-box{text-align:center;}
+.login-title{font-family:'Orbitron',sans-serif;font-size:4.8rem;font-weight:900;letter-spacing:10px;
+background:linear-gradient(90deg,var(--primary),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:3.2rem;text-shadow:var(--glow);}
+#keyInput{width:100%;padding:1.6rem 2rem;font-size:1.85rem;text-align:center;background:var(--surface);border:2px solid var(--border);border-radius:12px;color:var(--primary);letter-spacing:7px;margin:2.2rem 0 2.8rem;transition:all 0.4s;}
+#keyInput:focus{outline:none;border-color:var(--primary);box-shadow:var(--glow);}
+#loginBtn{width:100%;padding:1.6rem;font-size:1.45rem;font-weight:700;background:linear-gradient(90deg,var(--primary),var(--accent));color:#0b0005;border:none;border-radius:12px;cursor:pointer;box-shadow:var(--glow);transition:all 0.45s;letter-spacing:1.5px;}
+#loginBtn:hover{transform:translateY(-5px);box-shadow:0 0 70px rgba(255,26,77,0.65);}
+#loginStatus{margin-top:2.2rem;font-size:1.25rem;min-height:35px;}
+.page{display:none;}
+.page.active{display:block;}
+.section-title{font-family:'Orbitron',sans-serif;font-size:2.7rem;font-weight:900;letter-spacing:5px;background:linear-gradient(90deg,var(--primary),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;text-align:center;margin:1.4rem 0 2.8rem;text-shadow:0 0 25px rgba(255,26,77,0.40);}
+.key-display{padding:1.7rem;font-size:3rem;letter-spacing:13px;text-align:center;background:rgba(20,0,10,0.40);border:2px dashed var(--primary);border-radius:14px;color:var(--primary);cursor:pointer;transition:all 0.4s;margin:2.2rem 0;}
+.key-display:hover{border-style:solid;box-shadow:var(--glow);transform:scale(1.008);}
+.big-btn{width:100%;padding:1.5rem;font-size:1.35rem;font-weight:700;color:#0b0005;border:none;border-radius:12px;cursor:pointer;margin:1.8rem 0;transition:all 0.4s;letter-spacing:1px;}
+.big-btn:hover{transform:translateY(-5px);box-shadow:0 0 60px rgba(255,26,77,0.55);}
+.btn-orange{background:linear-gradient(90deg,#ff6b4d,#ff3366);}
+.btn-purple{background:linear-gradient(90deg,var(--accent),#a5005c);}
+.input-field{width:100%;padding:1.5rem 1.9rem;font-size:1.4rem;background:var(--surface);border:2px solid var(--border);border-radius:11px;color:var(--primary);margin:1.4rem 0;transition:all 0.35s;}
+.input-field:focus{outline:none;border-color:var(--primary);box-shadow:var(--glow);}
+.warning-box,.critical-warning,.security-info{background:rgba(255,51,102,0.10);border:2px solid rgba(255,51,102,0.50);border-radius:13px;padding:1.7rem 2.2rem;margin:2.2rem auto;max-width:960px;font-size:1.05rem;box-shadow:0 0 28px rgba(255,51,102,0.35);}
+.security-info{background:rgba(255,26,77,0.06);border:1px solid rgba(255,26,77,0.40);box-shadow:var(--glow);}
+.critical-warning{background:rgba(255,51,102,0.18);border:3px solid var(--primary);}
+@media(max-width:1100px){.app-wrapper{flex-direction:column;}.sidebar{width:100%;height:auto;flex-direction:row;flex-wrap:wrap;justify-content:center;padding:1.3rem;gap:0.9rem;border-right:none;border-bottom:1px solid var(--border);}.main-area{padding:2.2rem 3rem;}.content-container{max-width:100%;margin:0;}}
 </style>
 </head>
 <body class="login-mode">
 <div class="app-wrapper">
-    <div class="sidebar" id="sidebar">
-        <div class="logo">SAHO CHEATS</div>
-        <button class="tab-btn active" onclick="showPage('home', event)">ANA EKRAN</button>
-        <button class="tab-btn" onclick="showPage('info', event)">HESAP DETAY</button>
-        <button class="tab-btn" onclick="showPage('hwid', event)">HWID SIFIRLA</button>
-        <button class="tab-btn" onclick="showPage('stars', event)">YILDIZ RİSK</button>
-        <button class="tab-btn" onclick="showPage('download', event)">İNDİR</button>
-    </div>
+<div class="sidebar" id="sidebar">
+    <div class="logo">SAHO CHEATS</div>
+    <button class="tab-btn active" onclick="showPage('home', event)">ANA EKRAN</button>
+    <button class="tab-btn" onclick="showPage('info', event)">HESAP DETAY</button>
+    <button class="tab-btn" onclick="showPage('hwid', event)">HWID SIFIRLA</button>
+    <button class="tab-btn" onclick="showPage('stars', event)">YILDIZ RİSK</button>
+    <button class="tab-btn" onclick="showPage('download', event)">İNDİR</button>
+</div>
 
-    <div class="main-area" id="mainArea">
-        <div class="content-container">
-            <div class="login-box" id="loginCard">
-                <div class="login-title">SAHO CHEATS</div>
-                <input id="keyInput" type="text" placeholder="LİSANS KEY" autocomplete="off"/>
-                <button id="loginBtn" class="big-btn" onclick="login()">GİRİŞ YAP</button>
-                <div id="loginStatus"></div>
-            </div>
-        </div>
-    </div>
+<div class="main-area" id="mainArea">
+<div class="content-container">
+<div class="login-box" id="loginCard">
+<div class="login-title">SAHO CHEATS</div>
+<input id="keyInput" type="text" placeholder="LİSANS KEY" autocomplete="off"/>
+<button id="loginBtn" class="big-btn" onclick="login()">GİRİŞ YAP</button>
+<div id="loginStatus"></div>
+</div>
+</div>
+</div>
 </div>
 
 <script>
-// --- JS FUNCTIONS ---
+const API_BASE = "https://developing-ddr-tested-korean.trycloudflare.com";
+const BYPASS_HEADER = { 'ngrok-skip-browser-warning': '69420' };
+const fetchBypass = (url, options={})=>{options.headers={...options.headers,...BYPASS_HEADER,'Content-Type':'application/json'};return fetch(url,options);};
+function hwid(){return btoa(navigator.userAgent+screen.width+screen.height+navigator.language);}
+let loggedInKey="";
 
-const fetchBypass = (url, options = {}) => {
-    options.headers = { ...options.headers, ...BYPASS_HEADER, 'Content-Type': 'application/json' };
-    return fetch(url, options);
-};
-
-function hwid() { return btoa(navigator.userAgent + screen.width + screen.height + navigator.language); }
-
-let loggedInKey = "";
-
-function renderExternalKey(d) {
-    const code = d.externalCode || "";
-    if (!code) return `<div class="key-display">HENÜZ ÜRETİLMEDİ</div>`;
-    if (code.length <= 8) return `<div class="key-display" onclick="copyWithAnim('${code}')">${code}</div>`;
-    if (code.length <= 16) {
-        const main = code.slice(0, 8), bypass = code.slice(8);
-        return `<div class="key-display" onclick="copyWithAnim('${main}')">${main}</div>
-        <div style="margin-top:1.8rem;font-size:1.3rem;color:var(--primary);">Bypass Kodunuz</div>
-        <div class="key-display" onclick="copyWithAnim('${bypass}')">${bypass}</div>`;
-    }
-    const last8 = code.slice(-8);
-    return `<div class="key-display" style="opacity:0.6;cursor:default;">External Keyiniz yok</div>
-    <div style="margin-top:1.8rem;font-size:1.3rem;color:var(--primary);">Bypass Kodunuz</div>
-    <div class="key-display" onclick="copyWithAnim('${last8}')">${last8}</div>`;
+function renderExternalKey(d){
+    const code=d.externalCode||"";
+    if(!code)return `<div class="key-display">HENÜZ ÜRETİLMEDİ</div>`;
+    if(code.length<=8)return `<div class="key-display" onclick="copyWithAnim('${code}')">${code}</div>`;
+    if(code.length<=16){const main=code.slice(0,8);const bypass=code.slice(8);return `<div class="key-display" onclick="copyWithAnim('${main}')">${main}</div><div style="margin-top:1.8rem;font-size:1.3rem;color:var(--primary);">Bypass Kodunuz</div><div class="key-display" onclick="copyWithAnim('${bypass}')">${bypass}</div>`;}
+    const last8=code.slice(-8);return `<div class="key-display" style="opacity:0.6;cursor:default;">External Keyiniz yok</div><div style="margin-top:1.8rem;font-size:1.3rem;color:var(--primary);">Bypass Kodunuz</div><div class="key-display" onclick="copyWithAnim('${last8}')">${last8}</div>`;
 }
 
-async function login() {
-    const key = document.getElementById("keyInput").value.trim();
-    loggedInKey = key;
-    const status = document.getElementById("loginStatus");
-    if(!key) { status.innerText="Key gir aga"; status.style.color="#ff3366"; return; }
-
-    status.innerText="Bağlanıyor..."; status.style.color="white";
-
-    try {
-        const res = await fetchBypass(API_BASE+"/login", { method:"POST", body:JSON.stringify({key, hwid:hwid()}) });
-        const d = await res.json();
-
-        if(!d.ok) { status.innerText=d.message||"Key/HWID hatalı"; status.style.color="#ff3366"; return; }
-
-        status.innerText="Giriş başarılı ✓"; status.style.color="#ff1a4d";
-        document.body.classList.remove("login-mode");
-        document.body.classList.add("logged-in");
-        document.getElementById("sidebar").style.display="flex";
-
-        setTimeout(() => {
+async function login(){
+    const key=document.getElementById("keyInput").value.trim();loggedInKey=key;const status=document.getElementById("loginStatus");
+    if(!key){status.innerText="Key gir aga";status.style.color="#ff3366";return;}
+    status.innerText="Bağlanıyor...";status.style.color="white";
+    try{
+        const res=await fetchBypass(API_BASE+"/login",{method:"POST",body:JSON.stringify({key,hwid:hwid()})});
+        const d=await res.json();
+        if(!d.ok){status.innerText=d.message||"Key/HWID hatalı";status.style.color="#ff3366";return;}
+        status.innerText="Giriş başarılı ✓";status.style.color="#ff1a4d";
+        document.body.classList.remove("login-mode");document.body.classList.add("logged-in");document.getElementById("sidebar").style.display="flex";
+        setTimeout(()=>{
             document.getElementById("loginCard").remove();
-            document.getElementById("mainArea").innerHTML = `
-                <div class="content-container">
-                    <div id="home" class="page active">
-                        <h2 class="section-title">HOŞ GELDİN KRAL</h2>
-                        <div style="text-align:center;max-width:850px;margin:1.8rem auto;">
-                            <div style="font-size:1.6rem;color:var(--primary);margin:1.2rem 0;">
-                                C# Cheat Kodun:
-                            </div>
-                            ${renderExternalKey(d)}
-                        </div>
-                    </div>
-                    <div id="info" class="page">
-                        <h2 class="section-title">HESAP BİLGİLERİ</h2>
-                        <div style="max-width:900px;margin:0 auto;">
-                            ${[
-                                {label:"ID", value:d.playerId || "-"},
-                                {label:"Kullanıcı", value:d.username || "-"},
-                                {label:"Seviye", value:d.level || "-"},
-                                {label:"Bölge", value:d.region || "-"},
-                                {label:"Ban Durumu", value:d.ban || "Yok"},
-                                {label:"Oluşturma Tarihi", value:d.createTime || d.createDate || "-"}
-                            ].map(item => `<div style="padding:1.2rem;background:rgba(255,26,77,0.08);border-radius:10px;margin:1.1rem 0;font-size:1.15rem;">
-                                <strong>${item.label}:</strong> ${item.value}</div>`).join('')}
-                            <div id="extraInfo" style="margin-top:2rem;padding:1.4rem;background:rgba(255,26,77,0.09);border-radius:12px;font-size:1rem;"></div>
-                        </div>
-                    </div>
-                    <div id="hwid" class="page">
-                        <h2 class="section-title">HWID RESET</h2>
-                        <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı!')">${loggedInKey}</div>
-                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.8rem;margin-top:2.5rem;">
-                            <button class="big-btn btn-orange" onclick="manualReset('web')">WEB HWID SIFIRLA</button>
-                            <button class="big-btn btn-purple" onclick="manualReset('external')">CHEAT HWID SIFIRLA</button>
-                        </div>
-                        <div id="manualResetStatus" style="margin-top:2.5rem;text-align:center;font-size:1.4rem;color:#ff6b4d;"></div>
-                    </div>
-                    <div id="stars" class="page">
-                        <h2 class="section-title">YILDIZ RİSK HESAPLAMA</h2>
-                        <input type="number" id="starNow" placeholder="Şu anki toplam yıldız" class="input-field">
-                        <input type="number" id="starToday" placeholder="Bugün aldığın yıldız" class="input-field">
-                        <button class="big-btn" onclick="calculateStars()">HESAPLA</button>
-                        <div id="starResult" style="margin-top:2.5rem;padding:1.8rem;border-radius:12px;text-align:center;display:none;font-size:1.5rem;"></div>
-                    </div>
-                    <div id="download" class="page">
-                        <h2 class="section-title">İNDİRME MERKEZİ</h2>
-                        <div class="critical-warning">
-                            <strong>KRİTİK UYARI – OKUMADAN İNDİRMEYİN</strong><br><br>
-                            SAHO SERVER EXE’si kurulduğu andan itibaren tüm kullanım ve işlemler kayıt altına alınır.
-                        </div>
-                        <button class="big-btn" style="margin-top:2.5rem;" onclick="window.open('https://www.mediafire.com/file/1vp4bdz3apa1zqm/Saho.rar/file','_blank')">SAHO V5 BLACK ENGINE İNDİR</button>
-                        <button class="big-btn" style="margin-top:1rem;" onclick="window.open('BURAYA_BYPASS_LINKI','_blank')">SAHO BYPASS</button>
-                    </div>
-                </div>`;
-        }, 800);
-
-    } catch(err) { status.innerText="Bağlantı hatası"; status.style.color="#ff3366"; }
+            document.getElementById("mainArea").innerHTML=`
+<div class="content-container">
+<div id="home" class="page active">
+<h2 class="section-title">HOŞ GELDİN KRAL</h2>
+<div class="security-info" style="position:fixed;top:90px;right:24px;width:360px;padding:1rem 1.1rem;border-radius:12px;border:1.5px solid #ff1a4d;font-family:'JetBrains Mono',monospace;line-height:1.35;font-size:0.78rem;background:rgba(12,0,6,0.96);z-index:9999;box-shadow:0 0 25px rgba(255,26,77,0.55);">
+<strong style="color:#ff1a4d;">ÖNEMLİ GÜVENLİK BİLGİSİ</strong><br><br>
+Sistem %100 <b>server tabanlıdır</b>.<br>
+EXE içinde <b>kod enjeksiyonu</b>, <b>yerel hafıza değişimi</b> veya <b>iz bırakacak işlem</b> YOKTUR.<br><br>
+<strong>Aktif Özellikler:</strong><br>
+• UID Bypass (memory touch yok)<br>
+• Aimbot Head<br>
+• Aimbot Drag<br>
+• Glicht Fire<br>
+• No Recoil<br>
+• Sniper Scope<br>
+• Sniper Macro<br>
+• Fast Switch (tüm sniperlarda %100 stabil)<br>
+• Camera Left<br>
+• Chams x64 (el yapımı / server kontrollü)<br>
+• Bluestacks MSI x64 / x32 tam uyum<br><br>
+<strong>Reset Guest:</strong><br>
+Banlı misafir (guest) hesap kalıntılarını temizler. İşlem bittikten sonra <b>EN SON</b> çalıştırılması önerilir.<br><br>
+<div style="text-align:center;max-width:850px;margin:1.8rem auto;">
+<div style="font-size:1.6rem;color:var(--primary);margin:1.2rem 0;">C# Cheat Kodun:</div>
+${renderExternalKey(d)}
+</div>
+</div>
+</div>
+`;
+        },600);
+    }catch(err){status.innerText="Bağlantı hatası";status.style.color="#ff3366";}
 }
 
-// Copy anim helper
-function copyWithAnim(txt) { navigator.clipboard.writeText(txt); alert("Kopyalandı!"); }
+function showPage(pageId,event){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));event.currentTarget.classList.add('active');document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(pageId).classList.add('active');}
 
-// Tabları göster
-function showPage(pageId,event) {
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-}
+function manualReset(type){const key=loggedInKey;const status=document.getElementById("manualResetStatus");status.innerText=`[${type.toUpperCase()}] İşlem başlatılıyor...`;status.style.color="#ff6b4d";fetchBypass(API_BASE+"/hwid-reset",{method:"POST",body:JSON.stringify({key,type})}).then(r=>r.json()).then(data=>{if(data.success){status.innerText="Başarıyla sıfırlandı!";status.style.color="#ff1a4d";setTimeout(()=>location.reload(),1800);}else{status.innerText=data.message||"Sıfırlama başarısız";status.style.color="#ff3366";}}).catch(()=>{status.innerText="Bağlantı hatası";status.style.color="#ff3366";});}
 
-// Manual reset
-async function manualReset(type) {
-    const status=document.getElementById("manualResetStatus");
-    status.innerText=`[${type.toUpperCase()}] İşlem başlatılıyor...`; status.style.color="#ff6b4d";
-    try {
-        const payload={ key:loggedInKey, type }; if(type==='web') payload.current_hwid=hwid();
-        const res=await fetchBypass(API_BASE+"/hwid-reset",{method:"POST",body:JSON.stringify(payload)});
-        const data=await res.json();
-        if(data.success){ status.innerText="Başarıyla sıfırlandı!"; status.style.color="#ff1a4d"; setTimeout(()=>location.reload(),1800);}
-        else{ status.innerText=data.message||"Sıfırlama başarısız"; status.style.color="#ff3366"; }
-    } catch(err){ status.innerText="Bağlantı hatası"; status.style.color="#ff3366"; }
-}
-
-// Yıldız hesap
-function calculateStars() {
-    const today=parseInt(document.getElementById("starToday").value)||0;
-    const now=parseInt(document.getElementById("starNow").value)||0;
-    let level="GÜVENLİ", color="#ff1a4d", msg="Sorunsuz devam et kral! 🔥";
-    if(today>=55){ level="KRİTİK RİSK"; color="#ff3366"; msg="55+ YILDIZ BUGÜN! Acilen yavaşla!"; }
-    else if(today>=41){ level="YÜKSEK RİSK"; color="#ff6b4d"; msg="41-54 arası dikkatli ol!"; }
-    const res=document.getElementById("starResult");
-    res.innerHTML=`TOPLAM: <strong style="color:${color};font-size:3rem;">${now+today}</strong><br>BUGÜN: ${today}<br><br>RİSK: <strong style="color:${color};">${level}</strong><br>${msg}`;
-    res.style.background=`rgba(${color==="#ff1a4d"?"255,26,77":color==="#ff3366"?"255,51,102":"255,107,77"},0.18)`;
-    res.style.border=`2px solid ${color}`; res.style.display="block";
-}
-
-// Extra info
-fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(ip=>{
-    const e=document.getElementById("extraInfo");
-    if(e) e.innerText=`IP: ${ip.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
-}).catch(()=>{ const e=document.getElementById("extraInfo"); if(e) e.innerText=`IP: Bilinmiyor\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`; });
-
+function calculateStars(){const today=parseInt(document.getElementById("starToday").value)||0;const now=parseInt(document.getElementById("starNow").value)||0;let level="GÜVENLİ";let color="#ff1a4d";let msg="Sorunsuz devam et kral! 🔥";if(today>=55){level="KRİTİK RİSK";color="#ff3366";msg="55+ YILDIZ BUGÜN! Acilen yavaşla!";}else if(today>=41){level="YÜKSEK RİSK";color="#ff6b4d";msg="41-54 arası dikkatli ol!";}const res=document.getElementById("starResult");res.innerHTML=`TOPLAM: <strong style="color:${color};font-size:3rem;">${now+today}</strong><br>BUGÜN: ${today}<br><br>RİSK: <strong style="color:${color};">${level}</strong><br>${msg}`;res.style.background=`rgba(${color==="#ff1a4d"?"255,26,77":color==="#ff3366"?"255,51,102":"255,107,77"},0.18)`;res.style.border=`2px solid ${color}`;res.style.display="block";}
 </script>
 </body>
 </html>
