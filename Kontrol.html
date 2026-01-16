@@ -395,10 +395,7 @@ async function login() {
     Banlı misafir (guest) hesap kalıntılarını temizler.
     İşlem bittikten sonra <b>EN SON</b> çalıştırılması önerilir.<br><br>
 
-    <strong>Not:</strong> Yalnızca <b>OB52 Free Fire</b> sürümü içindir.
-</div>
-
-                        <div style="text-align:center;max-width:850px;margin:1.8rem auto;">
+    <div style="text-align:center;max-width:850px;margin:1.8rem auto;">
     <div style="font-size:1.6rem;color:var(--primary);margin:1.2rem 0;">
         C# Cheat Kodun:
     </div>
@@ -406,148 +403,89 @@ async function login() {
     ${renderExternalKey(d)}
 </div>
 
-<script>
-function renderExternalKey(d) {
-    const code = d.externalCode || "";
-
-    if (!code) {
-        return `<div class="key-display">HENÜZ ÜRETİLMEDİ</div>`;
-    }
-
-    if (code.length <= 8) {
-        return `
-            <div class="key-display" onclick="copyWithAnim('${code}')">
-                ${code}
+<div id="info" class="page">
+    <h2 class="section-title">HESAP BİLGİLERİ</h2>
+    <div style="max-width:900px;margin:0 auto;">
+        ${[
+            {label:"ID", value:d.playerId || "-"},
+            {label:"Kullanıcı", value:d.username || "-"},
+            {label:"Seviye", value:d.level || "-"},
+            {label:"Bölge", value:d.region || "-"},
+            {label:"Ban Durumu", value:d.ban || "Yok"},
+            {label:"Oluşturma Tarihi", value:d.createTime || d.createDate || "-"}
+        ].map(item => `
+            <div style="padding:1.2rem;background:rgba(255,26,77,0.08);border-radius:10px;margin:1.1rem 0;font-size:1.15rem;">
+                <strong>${item.label}:</strong> ${item.value}
             </div>
-        `;
-    }
+        `).join('')}
+        <div id="extraInfo" style="margin-top:2rem;padding:1.4rem;background:rgba(255,26,77,0.09);border-radius:12px;font-size:1rem;"></div>
+    </div>
+</div>
 
-    if (code.length <= 16) {
-        const main = code.slice(0, 8);
-        const bypass = code.slice(8);
+<div id="hwid" class="page">
+    <h2 class="section-title">HWID RESET</h2>
+    <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı!')">
+        ${loggedInKey}
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.8rem;margin-top:2.5rem;">
+        <button class="big-btn btn-orange" onclick="manualReset('web')">WEB HWID SIFIRLA</button>
+        <button class="big-btn btn-purple" onclick="manualReset('external')">CHEAT HWID SIFIRLA</button>
+    </div>
+    <div id="manualResetStatus" style="margin-top:2.5rem;text-align:center;font-size:1.4rem;color:#ff6b4d;"></div>
+</div>
 
-        return `
-            <div class="key-display" onclick="copyWithAnim('${main}')">
-                ${main}
-            </div>
+<div id="stars" class="page">
+    <h2 class="section-title">YILDIZ RİSK HESAPLAMA</h2>
+    <input type="number" id="starNow" placeholder="Şu anki toplam yıldız" class="input-field">
+    <input type="number" id="starToday" placeholder="Bugün aldığın yıldız" class="input-field">
+    <button class="big-btn" onclick="calculateStars()">HESAPLA</button>
+    <div id="starResult" style="margin-top:2.5rem;padding:1.8rem;border-radius:12px;text-align:center;display:none;font-size:1.5rem;"></div>
+</div>
 
-            <div style="margin-top:1.8rem;font-size:1.3rem;color:var(--primary);">
-                Bypass Kodunuz
-            </div>
+<div id="download" class="page">
+    <h2 class="section-title">İNDİRME MERKEZİ</h2>
+    
+    <div class="critical-warning">
+        <strong>KRİTİK UYARI – OKUMADAN İNDİRMEYİN</strong><br><br>
+        SAHO SERVER EXE’si kurulduğu andan itibaren tüm kullanım ve işlemler kayıt altına alınır. 
+        Farklı bir EXE veya yazılım kullanımından kaynaklanan ban ve sorunlardan SAHO SERVER sorumlu değildir; 
+        bu durumda lisans anahtarı (KEY) tek taraflı olarak iptal edilir. 
+        Yazılımın kullanımına ilişkin tüm sorumluluk kullanıcıya aittir.
+    </div>
 
-            <div class="key-display" onclick="copyWithAnim('${bypass}')">
-                ${bypass}
-            </div>
-        `;
-    }
+    <div class="critical-warning" style="margin-top:2rem;">
+        <strong>CRACK / YETKİSİZ MÜDAHALE UYARISI</strong><br><br>
+        Panelin tüm çalışma mantığı ve işlemleri sunucu tarafından anlık olarak izlenmektedir.<br>
+        Her türlü crack, kırma veya yetkisiz müdahale girişimi kalıcı ban ile sonuçlanır.<br>
+        Tespit halinde MAIN UID’iniz oyun ve sunucu dahil olmak üzere süresiz olarak engellenir.
+    </div>
 
-    const last8 = code.slice(-8);
-    return `
-        <div class="key-display" style="opacity:0.6;cursor:default;">
-            External Keyiniz yok
-        </div>
-
-        <div style="margin-top:1.8rem;font-size:1.3rem;color:var(--primary);">
-            Bypass Kodunuz
-        </div>
-
-        <div class="key-display" onclick="copyWithAnim('${last8}')">
-            ${last8}
-        </div>
-    `;
-}
-</script>
-
-
-
-                    <div id="info" class="page">
-                        <h2 class="section-title">HESAP BİLGİLERİ</h2>
-                        <div style="max-width:900px;margin:0 auto;">
-                            ${[
-                                {label:"ID", value:d.playerId || "-"},
-                                {label:"Kullanıcı", value:d.username || "-"},
-                                {label:"Seviye", value:d.level || "-"},
-                                {label:"Bölge", value:d.region || "-"},
-                                {label:"Ban Durumu", value:d.ban || "Yok"},
-                                {label:"Oluşturma Tarihi", value:d.createTime || d.createDate || "-"}
-                            ].map(item => `
-                                <div style="padding:1.2rem;background:rgba(255,26,77,0.08);border-radius:10px;margin:1.1rem 0;font-size:1.15rem;">
-                                    <strong>${item.label}:</strong> ${item.value}
-                                </div>
-                            `).join('')}
-                            <div id="extraInfo" style="margin-top:2rem;padding:1.4rem;background:rgba(255,26,77,0.09);border-radius:12px;font-size:1rem;"></div>
-                        </div>
-                    </div>
-
-                    <div id="hwid" class="page">
-                        <h2 class="section-title">HWID RESET</h2>
-                        <div class="key-display" onclick="navigator.clipboard.writeText(this.innerText);alert('Kopyalandı!')">
-                            ${loggedInKey}
-                        </div>
-                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.8rem;margin-top:2.5rem;">
-                            <button class="big-btn btn-orange" onclick="manualReset('web')">WEB HWID SIFIRLA</button>
-                            <button class="big-btn btn-purple" onclick="manualReset('external')">CHEAT HWID SIFIRLA</button>
-                        </div>
-                        <div id="manualResetStatus" style="margin-top:2.5rem;text-align:center;font-size:1.4rem;color:#ff6b4d;"></div>
-                    </div>
-
-                    <div id="stars" class="page">
-                        <h2 class="section-title">YILDIZ RİSK HESAPLAMA</h2>
-                        <input type="number" id="starNow" placeholder="Şu anki toplam yıldız" class="input-field">
-                        <input type="number" id="starToday" placeholder="Bugün aldığın yıldız" class="input-field">
-                        <button class="big-btn" onclick="calculateStars()">HESAPLA</button>
-                        <div id="starResult" style="margin-top:2.5rem;padding:1.8rem;border-radius:12px;text-align:center;display:none;font-size:1.5rem;"></div>
-                    </div>
-
-                    <div id="download" class="page">
-                        <h2 class="section-title">İNDİRME MERKEZİ</h2>
-                        
-                        <div class="critical-warning">
-                            <strong>KRİTİK UYARI – OKUMADAN İNDİRMEYİN</strong><br><br>
-                            SAHO SERVER EXE’si kurulduğu andan itibaren tüm kullanım ve işlemler kayıt altına alınır. 
-                            Farklı bir EXE veya yazılım kullanımından kaynaklanan ban ve sorunlardan SAHO SERVER sorumlu değildir; 
-                            bu durumda lisans anahtarı (KEY) tek taraflı olarak iptal edilir. 
-                            Yazılımın kullanımına ilişkin tüm sorumluluk kullanıcıya aittir.
-                        </div>
-
-                        <div class="critical-warning" style="margin-top:2rem;">
-                            <strong>CRACK / YETKİSİZ MÜDAHALE UYARISI</strong><br><br>
-                            Panelin tüm çalışma mantığı ve işlemleri sunucu tarafından anlık olarak izlenmektedir.<br>
-                            Her türlü crack, kırma veya yetkisiz müdahale girişimi kalıcı ban ile sonuçlanır.<br>
-                            Tespit halinde MAIN UID’iniz oyun ve sunucu dahil olmak üzere süresiz olarak engellenir.
-                        </div>
-
-                       <button class="big-btn" style="margin-top:2.5rem;"
-    onclick="window.open('https://www.mediafire.com/file/1vp4bdz3apa1zqm/Saho.rar/file','_blank')">
-    SAHO V5 BLACK ENGINE İNDİR
+   <button class="big-btn" style="margin-top:2.5rem;"
+onclick="window.open('https://www.mediafire.com/file/1vp4bdz3apa1zqm/Saho.rar/file','_blank')">
+SAHO V5 BLACK ENGINE İNDİR
 </button>
 
 <button class="big-btn" style="margin-top:1rem;"
-    onclick="window.open('BURAYA_BYPASS_LINKI','_blank')">
-    SAHO BYPASS
+onclick="window.open('BURAYA_BYPASS_LINKI','_blank')">
+SAHO BYPASS
 </button>
 
-                    </div>
-                </div>
-            `;
+</div>
 
-            fetch('https://api.ipify.org?format=json')
-                .then(r => r.json())
-                .then(ipData => {
-                    document.getElementById("extraInfo").innerText = 
-                        `IP: ${ipData.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
-                })
-                .catch(() => {
-                    document.getElementById("extraInfo").innerText = 
-                        `IP: Bilinmiyor\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
-                });
-        }, 600);
-    } catch (err) {
-        status.innerText = "Bağlantı hatası";
-        status.style.color = "#ff3366";
-    }
-}
+<script>
+// Extra Info için IP ve tarayıcı bilgisi
+fetch('https://api.ipify.org?format=json')
+    .then(r => r.json())
+    .then(ipData => {
+        document.getElementById("extraInfo").innerText = 
+            `IP: ${ipData.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
+    })
+    .catch(() => {
+        document.getElementById("extraInfo").innerText = 
+            `IP: Bilinmiyor\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString('tr-TR')}`;
+    });
 
+// Tabları gösterme
 function showPage(pageId, event) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     event.currentTarget.classList.add('active');
@@ -556,6 +494,7 @@ function showPage(pageId, event) {
     document.getElementById(pageId).classList.add('active');
 }
 
+// Manual HWID reset
 async function manualReset(type) {
     const key = loggedInKey;
     const status = document.getElementById("manualResetStatus");
@@ -587,6 +526,7 @@ async function manualReset(type) {
     }
 }
 
+// Yıldız risk hesaplama
 function calculateStars() {
     const today = parseInt(document.getElementById("starToday").value) || 0;
     const now = parseInt(document.getElementById("starNow").value) || 0;
