@@ -47,25 +47,24 @@ body.login-mode {
 }
 
 .login-container {
-    width: 600px;       /* biraz daha geniş yaptık */
-    max-width: 95%;     /* ekran küçüldüğünde esnek kalsın */
-    padding: 5rem 3rem; /* daha büyük padding, içerik rahat görünsün */
+    width: 600px;
+    max-width: 95%;
+    padding: 5rem 3rem;
     background: var(--surface);
-    border: 3px solid var(--primary); /* biraz daha kalın sınır */
-    border-radius: 20px;             /* kenarlar biraz daha yuvarlak */
+    border: 3px solid var(--primary);
+    border-radius: 20px;
     box-shadow: var(--glow-strong);
     text-align: center;
 }
 
 .login-title {
-    font-size: 5rem;       /* başlığı büyüttük */
-    letter-spacing: 10px;  /* harf aralığını biraz açtık */
+    font-size: 5rem;
+    letter-spacing: 10px;
     font-weight: 900;
-    margin-bottom: 4rem;   /* başlık ile form arasına boşluk ekledik */
+    margin-bottom: 4rem;
     color: var(--primary);
     text-shadow: var(--glow);
 }
-
 
 /* Input */
 #keyInput, .input-field {
@@ -191,6 +190,7 @@ body:not(.login-mode) .app-wrapper {
     margin-bottom: 1.5rem;
     color: var(--primary);
     cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 /* INFO / NOTICE BOXES */
@@ -203,6 +203,14 @@ body:not(.login-mode) .app-wrapper {
     text-align: center;
     color: var(--primary);
     margin-bottom: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Hover ile büyüme efekti */
+.security-notice:hover, .security-info:hover, .key-display:hover,
+.tab-btn:hover, #loginBtn:hover, .big-btn:hover, .btn-primary:hover, .btn-accent:hover, .btn-danger:hover {
+    transform: scale(1.05);
+    box-shadow: var(--glow-strong);
 }
 
 /* PAGE GÖRÜNÜRLÜĞÜ */
@@ -242,7 +250,6 @@ body:not(.login-mode) .app-wrapper {
         margin-bottom: 2.8rem;
     }
 }
-
 
 </style>
 </head>
