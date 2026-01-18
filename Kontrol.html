@@ -95,8 +95,26 @@ body:not(.login-mode) .app-wrapper{display:flex;width:100%;height:100vh;}
 
 </div>
 
-<!-- Security Status -->
-<div class="security-status" id="securityStatus">GÜVENLİK DURUMU: AKTİF • %100 server-side sistem • EXE'de iz bırakıcı kod yok • UID Bypass, Aimbot Head, Aimbot Drag, Sniper Scope, Sniper Macro, Fast Switch, No Recoil Glicht Fire, Chams x64, Reset Guest</div>
+
+.security-status {
+    position: fixed;
+    bottom: 12px;        /* Alt köşe */
+    right: 12px;         /* Sağ köşe */
+    font-size: 0.75rem;
+    padding: 6px 10px;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    color: var(--primary);
+    z-index: 9999;
+    box-shadow: 0 0 12px rgba(255,255,0,0.6);
+    white-space: normal;  /* Satır kaymasını etkinleştir */
+    display: flex;
+    flex-direction: column; /* Tek sütun */
+    gap: 2px;              /* Satırlar arası boşluk */
+    text-align: right;     /* Sağ hizalı */
+}
+
 
 <script>
 const API_BASE="https://excluding-formatting-greeting-merit.trycloudflare.com";
