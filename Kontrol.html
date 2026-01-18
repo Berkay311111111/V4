@@ -13,13 +13,18 @@
 </script>
 <style>
 :root {
-    --bg: #000000;               /* siyah arka plan */
-    --primary: #ffff00;          /* neon sarı */
-    --primary-dim: #e6e600;     /* mat neon sarı */
-    --glow: 0 0 20px rgba(255,255,0,0.8);
-    --glow-strong: 0 0 40px rgba(255,255,0,1);
+    --bg: #000000;               /* Arka plan siyah */
+    --primary: #ffff00;          /* Neon sarı */
+    --primary-dim: #e6e600;     /* Hafif mat neon */
+    --text: #ffff00;             /* Neon sarı yazılar */
+    --text-dim: #e6e600;         /* Daha mat yazı */
+    --surface: #111111;           /* Koyu kutu zeminleri */
+    --border: rgba(255,255,0,0.3);
+    --glow: 0 0 15px rgba(255,255,0,0.6);
+    --glow-strong: 0 0 30px rgba(255,255,0,0.9);
 }
 
+/* Genel reset */
 * {
     margin: 0;
     padding: 0;
@@ -30,11 +35,11 @@ html, body {
     height: 100%;
     font-family: 'Orbitron', sans-serif;
     background: var(--bg);
-    color: var(--primary);
+    color: var(--text);
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
 }
 
 /* Login modu */
@@ -48,8 +53,8 @@ body.login-mode {
 .login-container {
     width: 400px;
     padding: 2.5rem 2rem;
-    background: var(--primary);         /* neon sarı kutu */
-    color: var(--primary);              /* yazı neon sarı */
+    background: var(--surface);
+    border: 2px solid var(--primary);
     border-radius: 16px;
     box-shadow: var(--glow-strong);
     text-align: center;
@@ -61,7 +66,8 @@ body.login-mode {
     font-weight: 900;
     letter-spacing: 6px;
     margin-bottom: 2rem;
-    text-shadow: var(--glow-strong);
+    color: var(--primary);
+    text-shadow: var(--glow);
 }
 
 /* Input */
@@ -70,15 +76,15 @@ body.login-mode {
     padding: 1.2rem;
     font-size: 1.8rem;
     text-align: center;
-    background: var(--primary);
+    background: #000;
     border: 2px solid var(--primary);
     border-radius: 12px;
-    color: var(--primary);
+    color: var(--text);
+    letter-spacing: 8px;
     margin-bottom: 1.8rem;
     box-shadow: var(--glow);
 }
 
-/* Input focus */
 #keyInput:focus, .input-field:focus {
     outline: none;
     box-shadow: 0 0 20px var(--primary);
@@ -90,30 +96,30 @@ body.login-mode {
     padding: 1.2rem;
     font-size: 1.2rem;
     font-weight: 700;
-    background: var(--primary);
-    color: var(--primary);
-    border: 2px solid var(--primary);
     border-radius: 12px;
-    box-shadow: var(--glow-strong);
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     margin-bottom: 1.2rem;
+    border: 2px solid var(--primary);
+    background: var(--surface);
+    color: var(--primary);
+    box-shadow: var(--glow);
 }
 
-/* Button hover */
 #loginBtn:hover, .big-btn:hover, .btn-primary:hover, .btn-accent:hover, .btn-danger:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 40px var(--primary);
+    box-shadow: var(--glow-strong);
 }
 
-/* Durum mesajı */
+/* Status mesajı */
 #loginStatus {
     font-size: 1rem;
     margin-top: 1rem;
+    color: var(--primary);
     text-shadow: var(--glow);
 }
 
-/* Main app (sidebar + content) */
+/* Main app wrapper */
 .app-wrapper {
     display: flex;
     width: 100%;
@@ -123,12 +129,13 @@ body.login-mode {
 /* Sidebar */
 .sidebar {
     width: 250px;
-    background: var(--primary);
+    background: var(--surface);
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    box-shadow: var(--glow-strong);
+    border-right: 1px solid var(--border);
+    box-shadow: var(--glow);
 }
 
 /* Sidebar logo */
@@ -137,13 +144,14 @@ body.login-mode {
     font-weight: 900;
     text-align: center;
     margin-bottom: 2rem;
+    color: var(--primary);
     text-shadow: var(--glow-strong);
 }
 
 /* Sidebar buttons */
 .tab-btn {
     padding: 1rem;
-    background: var(--primary);
+    background: var(--surface);
     border: 2px solid var(--primary);
     color: var(--primary);
     border-radius: 10px;
@@ -153,7 +161,7 @@ body.login-mode {
 }
 
 .tab-btn:hover, .tab-btn.active {
-    box-shadow: 0 0 30px var(--primary);
+    box-shadow: var(--glow-strong);
     transform: translateX(3px);
 }
 
@@ -165,13 +173,13 @@ body.login-mode {
     overflow-y: auto;
 }
 
-/* Section title */
+/* Section titles */
 .section-title {
     font-size: 2rem;
     font-weight: 900;
     margin-bottom: 1.5rem;
-    text-shadow: var(--glow-strong);
     color: var(--primary);
+    text-shadow: var(--glow-strong);
 }
 
 /* Key display */
@@ -179,18 +187,19 @@ body.login-mode {
     padding: 1.5rem;
     font-size: 2rem;
     text-align: center;
-    background: var(--primary);
+    background: var(--surface);
     border: 2px solid var(--primary);
     border-radius: 12px;
     box-shadow: var(--glow);
     margin-bottom: 1.5rem;
+    color: var(--primary);
     cursor: pointer;
 }
 
 /* Info / notice boxes */
 .security-notice, .security-info {
     padding: 1.5rem;
-    background: var(--primary);
+    background: var(--surface);
     border: 2px solid var(--primary);
     border-radius: 12px;
     box-shadow: var(--glow-strong);
@@ -198,6 +207,7 @@ body.login-mode {
     color: var(--primary);
     margin-bottom: 1.5rem;
 }
+
 
 
 
