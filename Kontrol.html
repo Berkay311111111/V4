@@ -49,22 +49,22 @@ body:not(.login-mode) .app-wrapper{display:flex;width:100%;height:100vh;}
 .key-display:hover{transform:scale(1.05);box-shadow:var(--glow-strong);}
 .security-info{padding:1.5rem;background:var(--surface);border:2px solid var(--primary);border-radius:12px;box-shadow:var(--glow-strong);text-align:center;color:var(--primary);margin-bottom:1.5rem;}
 .neon-warning {
-    color: #ff1a1a; /* Diğer neon tonlarıyla uyumlu kırmızı */
-    font-size: 1.25rem;
-    line-height: 1.5rem;
+    color: #ff1a1a;
+    font-size: 1.6rem; /* Boyutu büyüttüm */
+    line-height: 1.9rem;
 
-    /* Diğer yazıların glow seviyesine denk, ama abartısız */
+    /* Daha pürüzsüz, çok hafif glow */
     text-shadow:
-        0 0 6px rgba(255, 26, 26, 0.65),
-        0 0 12px rgba(255, 26, 26, 0.45),
-        0 0 18px rgba(255, 26, 26, 0.35);
+        0 0 1.5px rgba(255, 0, 0, 1),
+        0 0 3px rgba(255, 0, 0, 0.55);
 
-    padding: 0.8rem 1rem;
+    background: rgba(0,0,0,0.05);
+    padding: 1rem 1.2rem;
     border-radius: 8px;
-
-    /* Arka plan hafif koyu, glow'u öne çıkarır */
-    background: rgba(0,0,0,0.20);
 }
+
+
+
 
 
 
@@ -270,12 +270,18 @@ async function login(){
    
    <h2 class="section-title">İNDİRME MERKEZİ</h2>
     <div class="security-info neon-warning">
-• EXE dosyasını kurduğunuz andan itibaren yapılan tüm işlemler sunucu üzerinde kayıt altına alınır.<br>
-• Crack girişimi, dosya manipülasyonu veya izinsiz paylaşım tespit edilirse tüm sorumluluk kullanıcıya aittir.<br>
-• Yazılımın güvenlik sistemlerini atlatmaya yönelik her türlü deneme otomatik olarak engellenir ve işlem kaydedilir.<br>
-• Lisans yalnızca kişisel kullanım içindir; üçüncü kişilere devredilmesi veya satılması yasaktır.<br>
-• Tespit edilen her türlü kötüye kullanım, hizmete erişimin kalıcı olarak sonlandırılmasına neden olur.<br>
+    <strong>📌 Paylaşım & Kullanım Kuralları</strong><br>
+    • Tüm işlemler sunucuda kayıt altındadır.<br>
+    • Uygulamalarımız kişiseldir; devredilemez veya satılamaz.<br>
+    • Kötüye kullanım kalıcı erişim engeliyle sonuçlanır.<br>
+    <br>
+
+    <strong>⚠️ Crack & İzinsiz İşlemler</strong><br>
+    • Crack veya izinsiz paylaşım tespitinde tüm sorumluluk kullanıcıya aittir.<br>
+    • Güvenlik ihlali girişimleri otomatik olarak engellenir ve kaydedilir.<br>
 </div>
+
+
 
 
     <button class="big-btn" onclick="window.open('https://www.mediafire.com/file/1l6wt8pz09mqua1/Saho.rar/file','_blank')">SAHO EXTERNAL İNDİR</button>
