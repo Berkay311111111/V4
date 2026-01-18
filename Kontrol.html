@@ -13,19 +13,19 @@
 </script>
 <style>
 :root {
-    --bg: #050007;
+    --bg: #050007; /* arka plan kalabilir */
     --bg-darker: #020003;
     --surface: #0f0014;
-    --primary: #ff1a75;
-    --primary-dim: #e60066;
-    --accent: #c300ff;
-    --text: #f0d4ff;
-    --text-dim: #c299d6;
-    --border: rgba(193,0,255,0.18);
-    --glow: 0 0 18px rgba(193,0,255,0.35);
-    --glow-strong: 0 0 32px rgba(255,26,117,0.55);
-    --danger: #ff3366;
-    --success: #00ff9d;
+    --primary: #ffff00;       /* neon sarı */
+    --primary-dim: #e6e600;   /* biraz daha mat neon sarı */
+    --accent: #fff700;        /* neon sarı tonu */
+    --text: #ffff99;          /* neon sarımsı metin */
+    --text-dim: #e6e64d;      /* biraz mat neon sarı metin */
+    --border: rgba(255,255,0,0.18);
+    --glow: 0 0 18px rgba(255,255,0,0.35);
+    --glow-strong: 0 0 32px rgba(255,255,0,0.55);
+    --danger: #ffcc00;        /* neon sarı tonunda uyarı */
+    --success: #ccff00;       /* neon sarı tonunda başarılı mesaj */
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -75,7 +75,7 @@ body.login-mode {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 0 0 20px rgba(193,0,255,0.6);
+    text-shadow: 0 0 20px rgba(255,255,0,0.6);
     text-align: center;
     margin-bottom: 3.5rem;
 }
@@ -92,7 +92,7 @@ body.login-mode {
     text-align: left;
 }
 .tab-btn:hover, .tab-btn.active {
-    background: linear-gradient(135deg, rgba(193,0,255,0.14), rgba(255,26,117,0.11));
+    background: linear-gradient(135deg, rgba(255,255,0,0.14), rgba(255,255,0,0.11));
     border-color: var(--primary);
     color: var(--text);
     box-shadow: var(--glow);
@@ -154,7 +154,7 @@ body.login-mode {
     padding: 1.55rem;
     font-size: 1.45rem;
     font-weight: 700;
-    background: linear-gradient(90deg, var(--primary), #c300ff);
+    background: linear-gradient(90deg, var(--primary), var(--accent));
     color: #000;
     border: none;
     border-radius: 14px;
