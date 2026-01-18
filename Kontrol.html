@@ -13,19 +13,19 @@
 </script>
 <style>
 :root {
-    --bg: #050007; /* arka plan kalabilir */
-    --bg-darker: #020003;
+    --bg: #000000;             /* tamamen siyah arka plan */
+    --bg-darker: #000000;
     --surface: #0f0014;
-    --primary: #ffff00;       /* neon sarı */
-    --primary-dim: #e6e600;   /* biraz daha mat neon sarı */
-    --accent: #fff700;        /* neon sarı tonu */
-    --text: #ffff99;          /* neon sarımsı metin */
-    --text-dim: #e6e64d;      /* biraz mat neon sarı metin */
+    --primary: #ffff00;         /* neon sarı */
+    --primary-dim: #e6e600;    /* biraz daha mat neon sarı */
+    --accent: #ffff00;          /* neon sarı tonu */
+    --text: #ffff99;            /* neon sarımsı metin */
+    --text-dim: #e6e64d;        /* mat neon sarı metin */
     --border: rgba(255,255,0,0.18);
     --glow: 0 0 18px rgba(255,255,0,0.35);
     --glow-strong: 0 0 32px rgba(255,255,0,0.55);
-    --danger: #ffcc00;        /* neon sarı tonunda uyarı */
-    --success: #ccff00;       /* neon sarı tonunda başarılı mesaj */
+    --danger: #ffcc00;          /* neon sarı tonunda uyarı */
+    --success: #ccff00;         /* neon sarı tonunda başarılı mesaj */
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -58,7 +58,7 @@ body.login-mode {
 /* Sidebar */
 .sidebar {
     width: 280px;
-    background: linear-gradient(180deg, #1a1a00 0%, #0a0a00 100%);
+    background: #000; /* saf siyah */
     backdrop-filter: blur(16px);
     border-right: 1px solid var(--border);
     padding: 2.5rem 1.8rem;
@@ -75,7 +75,7 @@ body.login-mode {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 0 0 20px rgba(255,255,0,0.6);
+    text-shadow: var(--glow);
     text-align: center;
     margin-bottom: 3.5rem;
 }
@@ -83,7 +83,7 @@ body.login-mode {
     padding: 1rem 1.4rem;
     font-size: 0.96rem;
     font-weight: 500;
-    background: rgba(193,0,255,0.04);
+    background: rgba(255,255,0,0.04); /* neon sarı */
     border: 1px solid var(--border);
     border-radius: 10px;
     color: var(--text-dim);
@@ -137,7 +137,7 @@ body.login-mode {
     font-size: 2rem;
     text-align: center;
     background: #0a0012;
-    border: 2px solid rgba(255,26,117,0.35);
+    border: 2px solid var(--primary);
     border-radius: 14px;
     color: var(--primary);
     letter-spacing: 9px;
@@ -164,7 +164,7 @@ body.login-mode {
 }
 #loginBtn:hover {
     transform: translateY(-5px) scale(1.025);
-    box-shadow: 0 0 90px rgba(255,26,117,0.75);
+    box-shadow: var(--glow-strong);
 }
 #loginBtn:disabled {
     opacity: 0.45;
@@ -178,9 +178,7 @@ body.login-mode {
     min-height: 2.2rem;
 }
 
-/* Diğer stiller (içerik sayfaları için) */
-.page { display: none; }
-.page.active { display: block; }
+/* Section titles */
 .section-title {
     font-family: 'Orbitron', sans-serif;
     font-size: 3.1rem;
@@ -192,8 +190,10 @@ body.login-mode {
     color: transparent;
     text-align: center;
     margin: 1.5rem 0 3rem;
-    text-shadow: 0 0 30px rgba(193,0,255,0.45);
+    text-shadow: var(--glow-strong);
 }
+
+/* Key display */
 .key-display {
     padding: 1.6rem;
     font-size: 3.2rem;
@@ -212,6 +212,8 @@ body.login-mode {
     box-shadow: var(--glow-strong);
     transform: scale(1.015);
 }
+
+/* Buttons */
 .big-btn {
     width: 100%;
     padding: 1.4rem;
@@ -225,9 +227,11 @@ body.login-mode {
     transition: all 0.4s;
 }
 .big-btn:hover { transform: translateY(-4px); box-shadow: var(--glow-strong); }
-.btn-primary  { background: linear-gradient(90deg, var(--primary), #ff4d94); }
-.btn-accent   { background: linear-gradient(90deg, var(--accent), #9f00cc); }
-.btn-danger   { background: linear-gradient(90deg, #ff3366, #cc0033); }
+.btn-primary  { background: linear-gradient(90deg, var(--primary), var(--accent)); }
+.btn-accent   { background: linear-gradient(90deg, var(--primary), var(--accent)); }
+.btn-danger   { background: linear-gradient(90deg, var(--primary-dim), var(--primary)); }
+
+/* Input fields */
 .input-field {
     width: 100%;
     padding: 1.3rem 1.8rem;
@@ -244,9 +248,11 @@ body.login-mode {
     box-shadow: var(--glow);
     outline: none;
 }
+
+/* Security notices */
 .security-notice {
-    background: rgba(255,51,102,0.12);
-    border: 1px solid rgba(255,51,102,0.5);
+    background: rgba(255,255,0,0.12);
+    border: 1px solid var(--primary);
     border-radius: 12px;
     padding: 1.4rem;
     margin: 2rem auto;
@@ -265,6 +271,7 @@ body.login-mode {
     box-shadow: var(--glow);
     font-size: 1.05rem;
 }
+
 
 @media (max-width: 1100px) {
     .app-wrapper { flex-direction: column; }
