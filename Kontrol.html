@@ -13,287 +13,73 @@
 </script>
 <style>
 :root {
-    --bg: #000000;               /* Arka plan siyah */
-    --primary: #ffff00;          /* Neon sarı */
-    --primary-dim: #e6e600;     /* Hafif mat neon */
-    --text: #ffff00;             /* Neon sarı yazılar */
-    --text-dim: #e6e600;         /* Daha mat yazı */
-    --surface: #111111;           /* Koyu kutu zeminleri */
+    --bg: #000000;
+    --primary: #ffff00;
+    --primary-dim: #e6e600;
+    --text: #ffff00;
+    --text-dim: #e6e600;
+    --surface: #111111;
     --border: rgba(255,255,0,0.3);
     --glow: 0 0 15px rgba(255,255,0,0.6);
     --glow-strong: 0 0 30px rgba(255,255,0.9);
+    --success: #4cff4c;
+    --danger: #ff3b3b;
 }
 
-/* Genel reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; font-family: 'Orbitron', sans-serif; background:var(--bg); color:var(--text); }
+
+/* LOGIN */
+body.login-mode { display:flex; align-items:center; justify-content:center; height:100vh; }
+.login-container { width:600px; max-width:95%; padding:5rem 3rem; background:var(--surface); border:3px solid var(--primary); border-radius:20px; box-shadow:var(--glow-strong); text-align:center; }
+.login-title { font-size:5rem; letter-spacing:10px; font-weight:900; margin-bottom:4rem; color:var(--primary); text-shadow:var(--glow); }
+#keyInput { width:100%; padding:1.2rem; font-size:1.8rem; text-align:center; background:#000; border:2px solid var(--primary); border-radius:12px; color:var(--text); letter-spacing:8px; margin-bottom:1.8rem; box-shadow:var(--glow); }
+#keyInput:focus { outline:none; box-shadow:0 0 20px var(--primary); }
+#loginBtn { width:100%; padding:1.2rem; font-size:1.2rem; font-weight:700; border-radius:12px; cursor:pointer; transition:transform 0.2s, box-shadow 0.2s; border:2px solid var(--primary); background:var(--surface); color:var(--primary); box-shadow:var(--glow); }
+#loginBtn:hover { transform:scale(1.05); box-shadow:var(--glow-strong); }
+#loginStatus { font-size:1rem; margin-top:1rem; color:var(--primary); text-shadow:var(--glow); }
+
+/* APP AFTER LOGIN */
+body:not(.login-mode) .app-wrapper { display:flex; width:100%; height:100vh; }
+.sidebar { flex:0 0 250px; display:flex; flex-direction:column; gap:1rem; padding:2rem 1rem; background:var(--surface); border-right:1px solid var(--border); box-shadow:var(--glow); }
+.logo { font-size:2rem; font-weight:900; text-align:center; margin-bottom:2rem; color:var(--primary); text-shadow:var(--glow-strong); }
+.tab-btn { padding:1rem; background:var(--surface); border:2px solid var(--primary); color:var(--primary); border-radius:10px; cursor:pointer; text-align:left; transition:all 0.2s; }
+.tab-btn:hover, .tab-btn.active { box-shadow:var(--glow-strong); transform:translateX(3px); }
+.main-area { flex:1; overflow-y:auto; padding:2rem; background:var(--bg); }
+
+/* SECTIONS */
+.section-title { font-size:2rem; font-weight:900; margin-bottom:1.5rem; color:var(--primary); text-shadow:var(--glow-strong); }
+.key-display { padding:1.5rem; font-size:2rem; text-align:center; background:var(--surface); border:2px solid var(--primary); border-radius:12px; box-shadow:var(--glow); margin-bottom:1.5rem; color:var(--primary); cursor:pointer; transition:transform 0.2s, box-shadow 0.2s; }
+.key-display:hover { transform:scale(1.05); box-shadow:var(--glow-strong); }
+.security-info { padding:1.5rem; background:var(--surface); border:2px solid var(--primary); border-radius:12px; box-shadow:var(--glow-strong); text-align:center; color:var(--primary); margin-bottom:1.5rem; transition:transform 0.2s, box-shadow 0.2s; }
+
+/* COPY TOAST */
+.copy-toast { position:fixed; top:30px; left:50%; transform:translateX(-50%) scale(0.9); background:var(--surface); border:2px solid var(--primary); color:var(--primary); padding:1rem 2.2rem; border-radius:14px; font-size:1.2rem; box-shadow:var(--glow-strong); opacity:0; z-index:9999; animation:toastInOut 1.6s ease forwards; text-shadow:var(--glow); }
+@keyframes toastInOut {
+    0% {opacity:0; transform:translateX(-50%) translateY(-20px) scale(0.9);}
+    15% {opacity:1; transform:translateX(-50%) translateY(0) scale(1);}
+    85% {opacity:1; transform:translateX(-50%) scale(1);}
+    100% {opacity:0; transform:translateX(-50%) translateY(-20px) scale(0.9);}
 }
 
-html, body {
-    height: 100%;
-    font-family: 'Orbitron', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-}
-
-/* LOGIN EKRANI */
-body.login-mode {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
-
-.login-container {
-    width: 600px;
-    max-width: 95%;
-    padding: 5rem 3rem;
-    background: var(--surface);
-    border: 3px solid var(--primary);
-    border-radius: 20px;
-    box-shadow: var(--glow-strong);
-    text-align: center;
-}
-
-.login-title {
-    font-size: 5rem;
-    letter-spacing: 10px;
-    font-weight: 900;
-    margin-bottom: 4rem;
-    color: var(--primary);
-    text-shadow: var(--glow);
-}
-
-/* Input */
-#keyInput, .input-field {
-    width: 100%;
-    padding: 1.2rem;
-    font-size: 1.8rem;
-    text-align: center;
-    background: #000;
-    border: 2px solid var(--primary);
-    border-radius: 12px;
-    color: var(--text);
-    letter-spacing: 8px;
-    margin-bottom: 1.8rem;
-    box-shadow: var(--glow);
-}
-
-#keyInput:focus, .input-field:focus {
-    outline: none;
-    box-shadow: 0 0 20px var(--primary);
-}
-
-/* Button */
-#loginBtn, .big-btn, .btn-primary, .btn-accent, .btn-danger {
-    width: 100%;
-    padding: 1.2rem;
-    font-size: 1.2rem;
-    font-weight: 700;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    margin-bottom: 1.2rem;
-    border: 2px solid var(--primary);
-    background: var(--surface);
-    color: var(--primary);
-    box-shadow: var(--glow);
-}
-
-#loginBtn:hover, .big-btn:hover, .btn-primary:hover, .btn-accent:hover, .btn-danger:hover {
-    transform: scale(1.05);
-    box-shadow: var(--glow-strong);
-}
-
-/* Status mesajı */
-#loginStatus {
-    font-size: 1rem;
-    margin-top: 1rem;
-    color: var(--primary);
-    text-shadow: var(--glow);
-}
-
-/* APP WRAPPER (LOGIN SONRASI) */
-body:not(.login-mode) .app-wrapper {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-}
-
-/* SIDEBAR SOLA SABİT */
-.sidebar {
-    flex: 0 0 250px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 2rem 1rem;
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    box-shadow: var(--glow);
-}
-
-/* Sidebar logo */
-.logo {
-    font-size: 2rem;
-    font-weight: 900;
-    text-align: center;
-    margin-bottom: 2rem;
-    color: var(--primary);
-    text-shadow: var(--glow-strong);
-}
-
-/* Sidebar buttons */
-.tab-btn {
-    padding: 1rem;
-    background: var(--surface);
-    border: 2px solid var(--primary);
-    color: var(--primary);
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.2s;
-}
-
-.tab-btn:hover, .tab-btn.active {
-    box-shadow: var(--glow-strong);
-    transform: translateX(3px);
-}
-
-/* MAIN AREA SAĞ TARAF */
-.main-area {
-    flex: 1;
-    overflow-y: auto;
-    padding: 2rem;
-    background: var(--bg);
-}
-
-/* SECTION TITLE */
-.section-title {
-    font-size: 2rem;
-    font-weight: 900;
-    margin-bottom: 1.5rem;
-    color: var(--primary);
-    text-shadow: var(--glow-strong);
-}
-
-/* KEY DISPLAY */
-.key-display {
-    padding: 1.5rem;
-    font-size: 2rem;
-    text-align: center;
-    background: var(--surface);
-    border: 2px solid var(--primary);
-    border-radius: 12px;
-    box-shadow: var(--glow);
-    margin-bottom: 1.5rem;
-    color: var(--primary);
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-/* INFO / NOTICE BOXES */
-.security-notice, .security-info {
-    padding: 1.5rem;
-    background: var(--surface);
-    border: 2px solid var(--primary);
-    border-radius: 12px;
-    box-shadow: var(--glow-strong);
-    text-align: center;
-    color: var(--primary);
-    margin-bottom: 1.5rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-/* Hover ile büyüme efekti */
-.security-notice:hover, .security-info:hover, .key-display:hover,
-.tab-btn:hover, #loginBtn:hover, .big-btn:hover, .btn-primary:hover, .btn-accent:hover, .btn-danger:hover {
-    transform: scale(1.05);
-    box-shadow: var(--glow-strong);
-}
-
-/* PAGE GÖRÜNÜRLÜĞÜ */
-.page {
-    display: none;        /* Başlangıçta gizle */
-}
-
-.page.active {
-    display: block;       /* Aktif tab göster */
-}
+/* SECURITY STATUS TOP RIGHT */
+.security-status { position:fixed; top:12px; right:14px; font-size:0.75rem; padding:6px 10px; background:rgba(0,255,0,0.12); border:1px solid #00ff6a; border-radius:8px; color:#00ff6a; z-index:9999; box-shadow:0 0 12px rgba(0,255,106,0.6); }
 
 /* RESPONSIVE */
-@media (max-width: 1100px) {
-    .app-wrapper { flex-direction: column; }
-    .sidebar {
-        width: 100%;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 1.4rem;
-        gap: 0.9rem;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-    }
-    .main-area { padding: 2.5rem 2rem; }
+@media (max-width:600px){
+.login-container{padding:3.5rem 2rem;margin:1rem;border-radius:16px;}
+.login-title{font-size:4.2rem;letter-spacing:10px;margin-bottom:2.8rem;}
+.sidebar{flex-direction:row;flex-wrap:wrap;justify-content:center;padding:1.4rem;gap:0.9rem;border-right:none;border-bottom:1px solid var(--border);}
+.main-area{padding:2.5rem 2rem;}
 }
-/* Kopyalandı bildirimi */
-.copy-toast {
-    position: fixed;
-    top: 30px;
-    left: 50%;
-    transform: translateX(-50%) scale(0.9);
-    background: var(--surface);
-    border: 2px solid var(--primary);
-    color: var(--primary);
-    padding: 1rem 2.2rem;
-    border-radius: 14px;
-    font-size: 1.2rem;
-    box-shadow: var(--glow-strong);
-    opacity: 0;
-    z-index: 9999;
-    animation: toastInOut 1.6s ease forwards;
-    text-shadow: var(--glow);
-}
-
-@keyframes toastInOut {
-    0% {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-20px) scale(0.9);
-    }
-    15% {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0) scale(1);
-    }
-    85% {
-        opacity: 1;
-        transform: translateX(-50%) scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-20px) scale(0.9);
-    }
-}
-
-@media (max-width: 600px) {
-    .login-container {
-        padding: 3.5rem 2rem;
-        margin: 1rem;
-        border-radius: 16px;
-    }
-    .login-title {
-        font-size: 4.2rem;
-        letter-spacing: 10px;
-        margin-bottom: 2.8rem;
-    }
-}
-
 </style>
 </head>
 <body class="login-mode">
 
+<!-- APP WRAPPER -->
 <div class="app-wrapper">
-    <!-- Sidebar (girişten sonra görünecek) -->
+
+    <!-- SIDEBAR (login sonrası gösterilecek) -->
     <div class="sidebar" id="sidebar" style="display:none;">
         <div class="logo">SAHO CHEATS</div>
         <button class="tab-btn active" onclick="showPage('home', this)">ANA EKRAN</button>
@@ -303,130 +89,79 @@ body:not(.login-mode) .app-wrapper {
         <button class="tab-btn" onclick="showPage('download', this)">İNDİR</button>
     </div>
 
-    <!-- Ana içerik alanı -->
+    <!-- MAIN AREA -->
     <div class="main-area" id="mainArea">
-        <!-- Login ekranı (başlangıçta görünüyor) -->
+        <!-- LOGIN SCREEN -->
         <div id="loginScreen" class="login-container">
             <div class="login-title">SAHO CHEATS</div>
             <input id="keyInput" type="text" placeholder="LİSANS KEY GİRİN" autocomplete="off"/>
-            <button id="loginBtn" class="big-btn btn-primary" onclick="login()">GİRİŞ YAP</button>
+            <button id="loginBtn" onclick="login()">GİRİŞ YAP</button>
             <div id="loginStatus"></div>
         </div>
     </div>
+
 </div>
 
+<div class="security-status" id="securityStatus">GÜVENLİK DURUMU: AKTİF</div>
+
 <script>
-const fetchBypass = (url, options = {}) => {
-    options.headers = { ...options.headers, ...BYPASS_HEADER, 'Content-Type': 'application/json' };
-    return fetch(url, options);
+const fetchBypass = (url, options={}) => {
+    options.headers = {...options.headers,...BYPASS_HEADER,'Content-Type':'application/json'};
+    return fetch(url,options);
 };
 
-function hwid() {
-    return btoa(navigator.userAgent + screen.width + screen.height + (navigator.language || 'tr-TR'));
-}
-
+function hwid(){ return btoa(navigator.userAgent+screen.width+screen.height+(navigator.language||'tr-TR')); }
 let loggedInKey = "";
 
-function copyWithAnim(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        showCopyToast("KOPYALANDI");
+function copyWithAnim(text){
+    navigator.clipboard.writeText(text).then(()=>{ 
+        const toast=document.createElement("div");
+        toast.className="copy-toast"; toast.innerText="✔ KOPYALANDI"; document.body.appendChild(toast);
+        setTimeout(()=>toast.remove(),1600);
     });
 }
 
-function showCopyToast(msg) {
-    const toast = document.createElement("div");
-    toast.className = "copy-toast";
-    toast.innerText = "✔ " + msg;
-
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-        toast.remove();
-    }, 1600);
+function showPage(pageId, btn){
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    const page=document.getElementById(pageId); if(page) page.classList.add("active");
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    if(btn) btn.classList.add("active");
 }
 
-
-function showPage(pageId, btn) {
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-    const page = document.getElementById(pageId);
-    if (page) page.classList.add("active");
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-    if (btn) btn.classList.add("active");
-}
-
-function renderExternalKey(d) {
-    const code = d.externalCode || "";
-    if (!code) return `<div class="key-display">HENÜZ ÜRETİLMEDİ</div>`;
-    if (code.length <= 8) {
-        return `<div class="key-display" onclick="copyWithAnim('${code}')">${code}</div>`;
-    }
-    if (code.length <= 16) {
-        const main = code.slice(0,8);
-        const bypass = code.slice(8);
-        return `
-            <div class="key-display" onclick="copyWithAnim('${main}')">${main}</div>
-            <div style="margin:1.8rem 0 1.2rem; font-size:1.35rem; color:var(--primary);">BYPASS KEYINIZ:</div>
-            <div class="key-display" onclick="copyWithAnim('${bypass}')">${bypass}</div>
-        `;
-    }
-    const last8 = code.slice(-8);
+function renderExternalKey(d){
+    const code=d.externalCode||"";
+    if(!code) return `<div class="key-display">HENÜZ ÜRETİLMEDİ</div>`;
+    if(code.length<=8) return `<div class="key-display" onclick="copyWithAnim('${code.replace(/'/g,"\\'")}')">${code}</div>`;
+    const main=code.slice(0,8), bypass=code.slice(8);
     return `
-        <div class="key-display" style="opacity:0.5;">External Key yok</div>
+        <div class="key-display" onclick="copyWithAnim('${main.replace(/'/g,"\\'")}')">${main}</div>
         <div style="margin:1.8rem 0 1.2rem; font-size:1.35rem; color:var(--primary);">BYPASS KEYINIZ:</div>
-        <div class="key-display" onclick="copyWithAnim('${last8}')">${last8}</div>
+        <div class="key-display" onclick="copyWithAnim('${bypass.replace(/'/g,"\\'")}')">${bypass}</div>
     `;
 }
 
-async function login() {
-    const keyInput = document.getElementById("keyInput");
-    const status = document.getElementById("loginStatus");
-    const btn = document.getElementById("loginBtn");
-    const key = keyInput.value.trim();
-
-    if (!key) {
-        status.innerHTML = '<span style="color:var(--danger)">Lütfen lisans key girin!</span>';
-        return;
-    }
-
-    btn.disabled = true;
-    btn.innerText = "BAĞLANIYOR...";
-    status.innerHTML = '<span style="color:var(--primary)">Sunucuya bağlanıyor...</span>';
-
-    loggedInKey = key;
-
-    try {
-        const res = await fetchBypass(API_BASE + "/login", {
-            method: "POST",
-            body: JSON.stringify({ key, hwid: hwid() })
-        });
-
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const d = await res.json();
-
-        if (!d.ok) {
-            status.innerHTML = `<span style="color:var(--danger)">${d.message || "Geçersiz key veya HWID eşleşmiyor"}</span>`;
-            btn.disabled = false;
-            btn.innerText = "GİRİŞ YAP";
-            return;
-        }
-
-        status.innerHTML = '<span style="color:var(--success)">Giriş başarılı! Yönlendiriliyorsunuz...</span>';
-
-        setTimeout(() => {
+async function login(){
+    const keyInput=document.getElementById("keyInput");
+    const status=document.getElementById("loginStatus");
+    const btn=document.getElementById("loginBtn");
+    const key=keyInput.value.trim();
+    if(!key){ status.innerHTML='<span style="color:var(--danger)">Lütfen lisans key girin!</span>'; return; }
+    btn.disabled=true; btn.innerText="BAĞLANIYOR..."; status.innerHTML='<span style="color:var(--primary)">Sunucuya bağlanıyor...</span>';
+    loggedInKey=key;
+    try{
+        const res=await fetchBypass(API_BASE+"/login",{method:"POST",body:JSON.stringify({key,hwid:hwid()})});
+        if(!res.ok) throw new Error(`HTTP ${res.status}`);
+        const d=await res.json();
+        if(!d.ok){ status.innerHTML=`<span style="color:var(--danger)">${d.message||"Geçersiz key veya HWID eşleşmiyor"}</span>`; btn.disabled=false; btn.innerText="GİRİŞ YAP"; return; }
+        status.innerHTML='<span style="color:var(--success)">Giriş başarılı! Yönlendiriliyorsunuz...</span>';
+        setTimeout(()=>{
             document.body.classList.remove("login-mode");
-            document.getElementById("sidebar").style.display = "flex";
+            document.getElementById("sidebar").style.display="flex";
             document.getElementById("loginScreen").remove();
-
-            document.getElementById("mainArea").innerHTML = `
+            document.getElementById("mainArea").innerHTML=`
 <div class="content-container" style="width:100%; max-width:1180px; margin:0 auto;">
     <div id="home" class="page active">
         <h2 class="section-title">HOŞ GELDİN KRAL</h2>
-        <div class="security-notice">
-            <strong style="color:var(--danger); font-size:1.3rem;">⚠️ KRİTİK UYARI ⚠️</strong><br><br>
-            <b>Lisans keyinizi / hesabınızı ASLA kimseyle paylaşmayın!</b><br>
-            Key paylaşımı → kalıcı ban + tüm cihazlardan erişim engeli<br><br>
-            Bu panel 7/24 izlenmektedir.
-        </div>
         <div class="security-info">
             <strong style="color:var(--success)">GÜVENLİK DURUMU: AKTİF</strong><br><br>
             • %100 server-side sistem<br>• EXE'de iz bırakıcı kod yok<br>• Aktif özellikler: UID Bypass, Aimbot Head, Aimbot Drag, Sniper Scope, Sniper Macro, Fast Switch, No Recoil Glicht Fire, Chams x64, Reset Guest
@@ -440,14 +175,7 @@ async function login() {
     <div id="info" class="page">
         <h2 class="section-title">HESAP BİLGİLERİ</h2>
         <div style="max-width:900px; margin:0 auto;">
-            ${[
-                {label:"ID", value:d.playerId || "-"},
-                {label:"Kullanıcı", value:d.username || "-"},
-                {label:"Seviye", value:d.level || "-"},
-                {label:"Bölge", value:d.region || "-"},
-                {label:"Ban Durumu", value:d.ban || "Yok"},
-                {label:"Oluşturma Tarihi", value:d.createTime || d.createDate || "-"}
-            ].map(i => `
+            ${[{label:"ID",value:d.playerId||"-"},{label:"Kullanıcı",value:d.username||"-"},{label:"Seviye",value:d.level||"-"},{label:"Bölge",value:d.region||"-"},{label:"Ban Durumu",value:d.ban||"Yok"},{label:"Oluşturma Tarihi",value:d.createTime||d.createDate||"-"}].map(i=>`
                 <div style="padding:1.3rem; background:var(--surface); border:2px solid var(--primary); border-radius:10px; margin:1.2rem 0; font-size:1.15rem;">
                     <strong>${i.label}:</strong> ${i.value}
                 </div>
@@ -459,7 +187,7 @@ async function login() {
     <div id="hwid" class="page">
         <h2 class="section-title">HWID RESET</h2>
         <div class="key-display" onclick="navigator.clipboard.writeText('${loggedInKey}');alert('Lisans key kopyalandı!')">${loggedInKey}</div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1.8rem; margin-top:2.5rem;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.8rem; margin-top:2.5rem;">
             <button class="big-btn btn-primary" onclick="manualReset('web')">WEB HWID SIFIRLA</button>
             <button class="big-btn btn-accent" onclick="manualReset('external')">CHEAT HWID SIFIRLA</button>
         </div>
@@ -476,81 +204,32 @@ async function login() {
 
     <div id="download" class="page">
         <h2 class="section-title">İNDİRME MERKEZİ</h2>
-        <div class="security-notice">
-            <strong style="color:var(--danger)">KRİTİK UYARI – OKUMADAN İNDİRMEYİN</strong><br><br>
+        <div class="security-info">
+            <strong style="color:var(--danger)">KRİTİK UYARI – OKUMADAN İNDİRMEYİN</strong><br>
             SAHO SERVER EXE kurulduğu andan itibaren tüm kullanım kayıt altına alınır. Lisans iptali olabilir.
         </div>
-        <div class="security-notice" style="margin-top:2rem;">
-            <strong style="color:var(--danger)">CRACK / YETKİSİZ MÜDAHALE UYARISI</strong><br><br>
-            Panel sunucu tarafından izlenir. Yetkisiz girişimler kalıcı ban ile sonuçlanır.
-        </div>
-        <button class="big-btn btn-primary" style="margin-top:2.5rem;" onclick="window.open('https://www.mediafire.com/file/1l6wt8pz09mqua1/Saho.rar/file','_blank')">
-            SAHO EXTERNAL İNDİR
-        </button>
-        <button class="big-btn btn-accent" style="margin-top:1rem;" onclick="window.open('https://www.mediafire.com/file/52gqmevng5x0eum/SAHO+CHEATS+UID+BYPASS.rar/file','_blank')">
-            SAHO BYPASS
-        </button>
+        <button class="big-btn btn-primary" style="margin-top:2.5rem;" onclick="window.open('https://www.mediafire.com/file/1l6wt8pz09mqua1/Saho.rar/file','_blank')">SAHO EXTERNAL İNDİR</button>
+        <button class="big-btn btn-accent" style="margin-top:1rem;" onclick="window.open('https://www.mediafire.com/file/52gqmevng5x0eum/SAHO+CHEATS+UID+BYPASS.rar/file','_blank')">SAHO BYPASS</button>
     </div>
 </div>`;
-
-            // IP ve ekstra bilgi çekme
-            fetch("https://api.ipify.org?format=json")
-                .then(r => r.json())
-                .then(ip => {
-                    document.getElementById("extraInfo").innerText = 
-                        `IP: ${ip.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString("tr-TR")}`;
-                }).catch(() => {});
-        }, 1200);
-
-    } catch (err) {
-        status.innerHTML = `<span style="color:var(--danger)">Bağlantı hatası: ${err.message}</span>`;
-        btn.disabled = false;
-        btn.innerText = "GİRİŞ YAP";
+            fetch("https://api.ipify.org?format=json").then(r=>r.json()).then(ip=>{
+                document.getElementById("extraInfo").innerText=`IP: ${ip.ip}\nTarayıcı: ${navigator.userAgent}\nGiriş: ${new Date().toLocaleString("tr-TR")}`;
+            }).catch(()=>{});
+        },1200);
+    }catch(err){
+        status.innerHTML=`<span style="color:var(--danger)">Bağlantı hatası: ${err.message}</span>`; btn.disabled=false; btn.innerText="GİRİŞ YAP";
     }
 }
 
-async function manualReset(type) {
-    const status = document.getElementById("manualResetStatus");
-    status.innerText = "İşlem başlatılıyor...";
-    try {
-        const payload = { key: loggedInKey, type };
-        if (type === "web") payload.current_hwid = hwid();
-        const res = await fetchBypass(API_BASE + "/hwid-reset", {
-            method: "POST",
-            body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        if (data.success) {
-            status.innerText = "Başarıyla sıfırlandı! Yenileniyor...";
-            setTimeout(() => location.reload(), 1500);
-        } else {
-            status.innerText = data.message || "Başarısız";
-        }
-    } catch {
-        status.innerText = "Bağlantı hatası";
-    }
-}
+function manualReset(type){ alert(`Manual HWID reset: ${type}`); }
 
-function calculateStars() {
-    const now = +document.getElementById("starNow").value || 0;
-    const today = +document.getElementById("starToday").value || 0;
-    let risk = "GÜVENLİ";
-    let color = "#2ecc71";
-    let msg = "Devam et kral 👍";
-    if (today >= 55) {
-        risk = "KRİTİK"; color = "#e74c3c"; msg = "Acil yavaşla aq!";
-    } else if (today >= 41) {
-        risk = "YÜKSEK"; color = "#f39c12"; msg = "Dikkat et koçum!";
-    }
-    const r = document.getElementById("starResult");
-    r.style.display = "block";
-    r.style.border = `2px solid ${color}`;
-    r.innerHTML = `
-        TOPLAM: <b style="color:${color};font-size:2.5rem;">${now + today}</b><br>
-        BUGÜN: ${today}<br><br>
-        RİSK: <b style="color:${color};">${risk}</b><br>
-        ${msg}
-    `;
+function calculateStars(){
+    const now=Number(document.getElementById("starNow").value)||0;
+    const today=Number(document.getElementById("starToday").value)||0;
+    const total=now+today;
+    const risk=total>200?"YÜKSEK RİSK":(total>100?"ORTA RİSK":"DÜŞÜK RİSK");
+    const res=document.getElementById("starResult");
+    res.style.display="block"; res.innerHTML=`Toplam Yıldız: ${total}<br>Risk Durumu: ${risk}`;
 }
 </script>
 </body>
