@@ -50,14 +50,19 @@ body:not(.login-mode) .app-wrapper{display:flex;width:100%;height:100vh;}
 .neon-warning{
     color: #ff3b3b; /* Neon kırmızı */
     border-color: #ff3b3b;
+    font-size: 1.3rem;      /* Daha büyük yazı */
+    line-height: 1.6rem;    /* Satırlar arasında daha rahat boşluk */
     text-shadow:
-        0 0 5px rgba(255,59,59,0.8),
+        0 0 5px rgba(255,59,59,0.9),
         0 0 10px rgba(255,59,59,0.8),
-        0 0 20px rgba(255,59,59,0.9);
+        0 0 25px rgba(255,59,59,1);
     box-shadow:
-        0 0 15px rgba(255,59,59,0.6),
-        inset 0 0 10px rgba(255,59,59,0.4);
+        0 0 20px rgba(255,59,59,0.6),
+        inset 0 0 12px rgba(255,59,59,0.4);
+    padding: 1rem;           /* İçerik biraz rahat dursun */
+    border-radius: 10px;     /* Hafif yuvarlak kenar */
 }
+
 
 /* Copy toast */
 .copy-toast{position:fixed;top:30px;left:50%;transform:translateX(-50%) scale(0.9);background:var(--surface);border:2px solid var(--primary);color:var(--primary);padding:1rem 2.2rem;border-radius:14px;font-size:1.2rem;box-shadow:var(--glow-strong);opacity:0;z-index:9999;animation:toastInOut 1.6s ease forwards;text-shadow:var(--glow);}
