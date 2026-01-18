@@ -237,6 +237,43 @@ body:not(.login-mode) .app-wrapper {
     }
     .main-area { padding: 2.5rem 2rem; }
 }
+/* Kopyalandı bildirimi */
+.copy-toast {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    background: var(--surface);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 1rem 2.2rem;
+    border-radius: 14px;
+    font-size: 1.2rem;
+    box-shadow: var(--glow-strong);
+    opacity: 0;
+    z-index: 9999;
+    animation: toastInOut 1.6s ease forwards;
+    text-shadow: var(--glow);
+}
+
+@keyframes toastInOut {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px) scale(0.9);
+    }
+    15% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+    85% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px) scale(0.9);
+    }
+}
 
 @media (max-width: 600px) {
     .login-container {
@@ -292,9 +329,22 @@ let loggedInKey = "";
 
 function copyWithAnim(text) {
     navigator.clipboard.writeText(text).then(() => {
-        alert("Kopyalandı → " + text);
-    }).catch(() => alert("Kopyalama başarısız"));
+        showCopyToast("KOPYALANDI");
+    });
 }
+
+function showCopyToast(msg) {
+    const toast = document.createElement("div");
+    toast.className = "copy-toast";
+    toast.innerText = "✔ " + msg;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 1600);
+}
+
 
 function showPage(pageId, btn) {
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
