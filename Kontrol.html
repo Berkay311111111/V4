@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#000;
+  --bg:#1a1a1a; /* Siyah yerine daha yumuşak gri */
   --primary:#ffff00;
   --text:#ffff00;
   --surface:#111;
@@ -19,6 +19,7 @@
   --success:#4cff4c;
   --danger:#ff3b3b;
 }
+
 
 /* Genel reset */
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -48,16 +49,25 @@ body:not(.login-mode) .app-wrapper{display:flex;width:100%;height:100vh;}
 .key-display:hover{transform:scale(1.05);box-shadow:var(--glow-strong);}
 .security-info{padding:1.5rem;background:var(--surface);border:2px solid var(--primary);border-radius:12px;box-shadow:var(--glow-strong);text-align:center;color:var(--primary);margin-bottom:1.5rem;}
 .neon-warning {
-    color: #ff3b3b;       /* Neon kırmızı */
-    font-size: 1.25rem;   /* Yeterince büyük ama abartı değil */
+    color: #ff1a1a; /* Diğer neon tonlarıyla uyumlu kırmızı */
+    font-size: 1.25rem;
     line-height: 1.5rem;
+
+    /* Diğer yazıların glow seviyesine denk, ama abartısız */
     text-shadow:
-        0 0 3px rgba(255,59,59,0.7),
-        0 0 6px rgba(255,59,59,0.5);
+        0 0 6px rgba(255, 26, 26, 0.65),
+        0 0 12px rgba(255, 26, 26, 0.45),
+        0 0 18px rgba(255, 26, 26, 0.35);
+
     padding: 0.8rem 1rem;
     border-radius: 8px;
-    background: rgba(0,0,0,0.15); /* Hafif kontrast için arkaplan ekledim */
+
+    /* Arka plan hafif koyu, glow'u öne çıkarır */
+    background: rgba(0,0,0,0.20);
 }
+
+
+
 
 
 
@@ -257,7 +267,17 @@ async function login(){
 
 <!-- DOWNLOAD -->
 <div id="download" class="page">
-    <h2 class="section-title">İNDİRME MERKEZİ</h2>
+   
+   <h2 class="section-title">İNDİRME MERKEZİ</h2>
+    <div class="security-info neon-warning">
+• EXE dosyasını kurduğunuz andan itibaren yapılan tüm işlemler sunucu üzerinde kayıt altına alınır.<br>
+• Crack girişimi, dosya manipülasyonu veya izinsiz paylaşım tespit edilirse tüm sorumluluk kullanıcıya aittir.<br>
+• Yazılımın güvenlik sistemlerini atlatmaya yönelik her türlü deneme otomatik olarak engellenir ve işlem kaydedilir.<br>
+• Lisans yalnızca kişisel kullanım içindir; üçüncü kişilere devredilmesi veya satılması yasaktır.<br>
+• Tespit edilen her türlü kötüye kullanım, hizmete erişimin kalıcı olarak sonlandırılmasına neden olur.<br>
+</div>
+
+
     <button class="big-btn" onclick="window.open('https://www.mediafire.com/file/1l6wt8pz09mqua1/Saho.rar/file','_blank')">SAHO EXTERNAL İNDİR</button>
     <button class="big-btn" onclick="window.open('https://www.mediafire.com/file/52gqmevng5x0eum/SAHO+CHEATS+UID+BYPASS.rar/file','_blank')">SAHO BYPASS</button>
 </div>`;
