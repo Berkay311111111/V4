@@ -24,22 +24,24 @@
     --border: rgba(255,255,0,0.18);
     --glow: 0 0 18px rgba(255,255,0,0.35);
     --glow-strong: 0 0 32px rgba(255,255,0,0.55);
-    --danger: #ffcc00;          /* neon sarı tonunda uyarı */
-    --success: #ccff00;         /* neon sarı tonunda başarılı mesaj */
+    --danger: #ffcc00;
+    --success: #ccff00;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
+
 html, body {
     height:100%;
     font-family:'Inter', system-ui, sans-serif;
-    background:var(--bg-darker);
-    color:var(--text);
+    background: var(--bg-darker);
+    color: var(--text);
     overflow:hidden;
 }
+
 body {
     background-image: 
-        radial-gradient(circle at 15% 20%, rgba(255,255,0,0.08) 0%, transparent 60%),
-        radial-gradient(circle at 85% 75%, rgba(255,255,0,0.07) 0%, transparent 65%);
+        radial-gradient(circle at 15% 20%, rgba(255,255,0,0.05) 0%, transparent 60%),
+        radial-gradient(circle at 85% 75%, rgba(255,255,0,0.05) 0%, transparent 65%);
 }
 
 /* Login modu: tam ekran ortalanmış */
@@ -58,7 +60,7 @@ body.login-mode {
 /* Sidebar */
 .sidebar {
     width: 280px;
-    background: #000; /* saf siyah */
+    background: #000; /* tamamen siyah */
     backdrop-filter: blur(16px);
     border-right: 1px solid var(--border);
     padding: 2.5rem 1.8rem;
@@ -66,6 +68,7 @@ body.login-mode {
     flex-direction: column;
     gap: 1rem;
 }
+
 .logo {
     font-family: 'Orbitron', sans-serif;
     font-size: 2.6rem;
@@ -79,11 +82,12 @@ body.login-mode {
     text-align: center;
     margin-bottom: 3.5rem;
 }
+
 .tab-btn {
     padding: 1rem 1.4rem;
     font-size: 0.96rem;
     font-weight: 500;
-    background: rgba(255,255,0,0.04); /* neon sarı */
+    background: rgba(255,255,0,0.04);
     border: 1px solid var(--border);
     border-radius: 10px;
     color: var(--text-dim);
@@ -91,8 +95,9 @@ body.login-mode {
     transition: all 0.3s ease;
     text-align: left;
 }
+
 .tab-btn:hover, .tab-btn.active {
-    background: linear-gradient(135deg, rgba(255,255,0,0.14), rgba(255,255,0,0.11));
+    background: rgba(255,255,0,0.1);
     border-color: var(--primary);
     color: var(--text);
     box-shadow: var(--glow);
@@ -112,13 +117,14 @@ body.login-mode {
     width: 100%;
     max-width: 540px;
     padding: 4.5rem 3.2rem;
-    background: rgba(255,255,0,0.15);
+    background: rgba(0,0,0,0.85); /* sadece siyah, sarı glow kaldırıldı */
     border: 1px solid var(--border);
     border-radius: 20px;
-    box-shadow: 0 0 70px rgba(0,0,0,0.75), var(--glow-strong);
+    box-shadow: 0 0 70px rgba(0,0,0,0.75);
     backdrop-filter: blur(12px);
     text-align: center;
 }
+
 .login-title {
     font-family: 'Orbitron', sans-serif;
     font-size: 5.6rem;
@@ -131,6 +137,7 @@ body.login-mode {
     margin-bottom: 3.8rem;
     text-shadow: var(--glow-strong);
 }
+
 #keyInput {
     width: 100%;
     padding: 1.5rem;
@@ -144,11 +151,13 @@ body.login-mode {
     margin: 2.8rem 0 3rem;
     transition: all 0.35s;
 }
+
 #keyInput:focus {
     border-color: var(--primary);
     box-shadow: var(--glow-strong);
     outline: none;
 }
+
 #loginBtn {
     width: 100%;
     padding: 1.55rem;
@@ -162,23 +171,29 @@ body.login-mode {
     box-shadow: var(--glow-strong);
     transition: all 0.4s;
 }
+
 #loginBtn:hover {
     transform: translateY(-5px) scale(1.025);
     box-shadow: var(--glow-strong);
 }
+
 #loginBtn:disabled {
     opacity: 0.45;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
 }
+
 #loginStatus {
     margin-top: 2.2rem;
     font-size: 1.25rem;
     min-height: 2.2rem;
 }
 
-/* Section titles */
+/* Diğer stiller (içerik sayfaları için) */
+.page { display: none; }
+.page.active { display: block; }
+
 .section-title {
     font-family: 'Orbitron', sans-serif;
     font-size: 3.1rem;
@@ -193,13 +208,12 @@ body.login-mode {
     text-shadow: var(--glow-strong);
 }
 
-/* Key display */
 .key-display {
     padding: 1.6rem;
     font-size: 3.2rem;
     letter-spacing: 14px;
     text-align: center;
-    background: rgba(15,0,20,0.5);
+    background: rgba(0,0,0,0.5);
     border: 2px dashed var(--primary);
     border-radius: 14px;
     color: var(--primary);
@@ -207,13 +221,13 @@ body.login-mode {
     transition: all 0.35s;
     margin: 2.5rem 0;
 }
+
 .key-display:hover {
     border-style: solid;
     box-shadow: var(--glow-strong);
     transform: scale(1.015);
 }
 
-/* Buttons */
 .big-btn {
     width: 100%;
     padding: 1.4rem;
@@ -226,12 +240,16 @@ body.login-mode {
     margin: 1.6rem 0;
     transition: all 0.4s;
 }
-.big-btn:hover { transform: translateY(-4px); box-shadow: var(--glow-strong); }
+
+.big-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glow-strong);
+}
+
 .btn-primary  { background: linear-gradient(90deg, var(--primary), var(--accent)); }
 .btn-accent   { background: linear-gradient(90deg, var(--primary), var(--accent)); }
 .btn-danger   { background: linear-gradient(90deg, var(--primary-dim), var(--primary)); }
 
-/* Input fields */
 .input-field {
     width: 100%;
     padding: 1.3rem 1.8rem;
@@ -243,16 +261,16 @@ body.login-mode {
     margin: 1.5rem 0;
     transition: all 0.3s;
 }
+
 .input-field:focus {
     border-color: var(--primary);
     box-shadow: var(--glow);
     outline: none;
 }
 
-/* Security notices */
 .security-notice {
-    background: rgba(255,255,0,0.12);
-    border: 1px solid var(--primary);
+    background: rgba(0,0,0,0.6);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 1.4rem;
     margin: 2rem auto;
@@ -261,8 +279,9 @@ body.login-mode {
     line-height: 1.6;
     text-align: center;
 }
+
 .security-info {
-    background: rgba(15,0,20,0.6);
+    background: rgba(0,0,0,0.6);
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 1.8rem;
@@ -272,7 +291,7 @@ body.login-mode {
     font-size: 1.05rem;
 }
 
-
+/* Responsive */
 @media (max-width: 1100px) {
     .app-wrapper { flex-direction: column; }
     .sidebar {
