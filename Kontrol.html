@@ -47,24 +47,25 @@ body.login-mode {
 }
 
 .login-container {
-    width: 500px;       /* biraz daha geniş yaptık */
-    max-width: 90%;
-    padding: 4rem 2.5rem; /* biraz daha yüksek padding */
+    width: 600px;       /* biraz daha geniş yaptık */
+    max-width: 95%;     /* ekran küçüldüğünde esnek kalsın */
+    padding: 5rem 3rem; /* daha büyük padding, içerik rahat görünsün */
     background: var(--surface);
-    border: 2px solid var(--primary);
-    border-radius: 16px;
+    border: 3px solid var(--primary); /* biraz daha kalın sınır */
+    border-radius: 20px;             /* kenarlar biraz daha yuvarlak */
     box-shadow: var(--glow-strong);
     text-align: center;
 }
 
 .login-title {
-    font-size: 5rem;       /* biraz büyüttük */
-    letter-spacing: 8px;
+    font-size: 5rem;       /* başlığı büyüttük */
+    letter-spacing: 10px;  /* harf aralığını biraz açtık */
     font-weight: 900;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;   /* başlık ile form arasına boşluk ekledik */
     color: var(--primary);
     text-shadow: var(--glow);
 }
+
 
 /* Input */
 #keyInput, .input-field {
