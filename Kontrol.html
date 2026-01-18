@@ -13,18 +13,11 @@
 </script>
 <style>
 :root {
-    --bg: #000000;               /* tamamen siyah arka plan */
-    --surface: #0f0014;          /* koyu zemin */
+    --bg: #000000;               /* siyah arka plan */
     --primary: #ffff00;          /* neon sarı */
     --primary-dim: #e6e600;     /* mat neon sarı */
-    --accent: #ffff00;           /* neon sarı tonu */
-    --text: #000000;             /* siyah yazı (neon kutularda okunur) */
-    --text-dim: #222200;         /* hafif koyu sarı */
-    --border: rgba(255,255,0,0.4);
     --glow: 0 0 20px rgba(255,255,0,0.8);
     --glow-strong: 0 0 40px rgba(255,255,0,1);
-    --danger: #ffcc00;
-    --success: #ccff00;
 }
 
 * {
@@ -35,216 +28,177 @@
 
 html, body {
     height: 100%;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Orbitron', sans-serif;
     background: var(--bg);
-    color: var(--text);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
 }
 
-/* Login modu: tam ekran ortalanmış */
+/* Login modu */
 body.login-mode {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--bg);
 }
 
-/* Normal mod: sidebar + içerik */
+/* Login kutusu */
+.login-container {
+    width: 400px;
+    padding: 2.5rem 2rem;
+    background: var(--primary);         /* neon sarı kutu */
+    color: var(--primary);              /* yazı neon sarı */
+    border-radius: 16px;
+    box-shadow: var(--glow-strong);
+    text-align: center;
+}
+
+/* Başlık */
+.login-title {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 6px;
+    margin-bottom: 2rem;
+    text-shadow: var(--glow-strong);
+}
+
+/* Input */
+#keyInput, .input-field {
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.8rem;
+    text-align: center;
+    background: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    color: var(--primary);
+    margin-bottom: 1.8rem;
+    box-shadow: var(--glow);
+}
+
+/* Input focus */
+#keyInput:focus, .input-field:focus {
+    outline: none;
+    box-shadow: 0 0 20px var(--primary);
+}
+
+/* Button */
+#loginBtn, .big-btn, .btn-primary, .btn-accent, .btn-danger {
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: var(--primary);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    box-shadow: var(--glow-strong);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 1.2rem;
+}
+
+/* Button hover */
+#loginBtn:hover, .big-btn:hover, .btn-primary:hover, .btn-accent:hover, .btn-danger:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px var(--primary);
+}
+
+/* Durum mesajı */
+#loginStatus {
+    font-size: 1rem;
+    margin-top: 1rem;
+    text-shadow: var(--glow);
+}
+
+/* Main app (sidebar + content) */
 .app-wrapper {
     display: flex;
+    width: 100%;
     height: 100%;
-    background: var(--bg);
 }
 
 /* Sidebar */
 .sidebar {
-    width: 280px;
-    background: #000;
-    backdrop-filter: blur(16px);
-    border-right: 1px solid var(--border);
-    padding: 2.5rem 1.8rem;
+    width: 250px;
+    background: var(--primary);
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    box-shadow: var(--glow-strong);
 }
 
+/* Sidebar logo */
 .logo {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2.6rem;
+    font-size: 2rem;
     font-weight: 900;
-    letter-spacing: 6px;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: var(--glow);
     text-align: center;
-    margin-bottom: 3.5rem;
+    margin-bottom: 2rem;
+    text-shadow: var(--glow-strong);
 }
 
+/* Sidebar buttons */
 .tab-btn {
-    padding: 1rem 1.4rem;
-    font-size: 0.96rem;
-    font-weight: 500;
-    background: rgba(255,255,0,0.04);
-    border: 1px solid var(--border);
+    padding: 1rem;
+    background: var(--primary);
+    border: 2px solid var(--primary);
+    color: var(--primary);
     border-radius: 10px;
-    color: var(--text-dim);
     cursor: pointer;
-    transition: all 0.3s ease;
     text-align: left;
+    transition: all 0.2s;
 }
 
 .tab-btn:hover, .tab-btn.active {
-    background: rgba(255,255,0,0.1);
-    border-color: var(--primary);
-    color: var(--text);
-    box-shadow: var(--glow);
-    transform: translateX(4px);
+    box-shadow: 0 0 30px var(--primary);
+    transform: translateX(3px);
 }
 
 /* Main area */
 .main-area {
     flex: 1;
-    overflow-y: auto;
-    padding: 3.5rem 4.5rem;
+    padding: 2rem;
     background: var(--bg);
+    overflow-y: auto;
 }
 
-/* Login kutusu */
-.login-container {
-    width: 100%;
-    max-width: 500px;
-    padding: 3.5rem 3rem;
-    background: var(--primary);          /* neon sarı */
-    border: 2px solid var(--primary-dim);
-    border-radius: 20px;
-    box-shadow: var(--glow-strong);
-    text-align: center;
-    position: relative;
-    animation: neonGlow 2s infinite alternate;
-}
-
-/* Neon glow animasyonu */
-@keyframes neonGlow {
-    0% { box-shadow: 0 0 20px var(--glow), 0 0 40px var(--glow-strong); }
-    50% { box-shadow: 0 0 25px var(--glow), 0 0 50px var(--glow-strong); }
-    100% { box-shadow: 0 0 30px var(--glow), 0 0 60px var(--glow-strong); }
-}
-
-.login-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 4.5rem;
+/* Section title */
+.section-title {
+    font-size: 2rem;
     font-weight: 900;
-    letter-spacing: 12px;
-    color: var(--text);
-    text-shadow: 0 0 8px #000, 0 0 12px #000;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
+    text-shadow: var(--glow-strong);
+    color: var(--primary);
 }
 
-/* Input alanı */
-#keyInput, .input-field {
-    width: 100%;
+/* Key display */
+.key-display {
     padding: 1.5rem;
     font-size: 2rem;
     text-align: center;
-    background: #000;
-    border: 2px solid var(--primary-dim);
-    border-radius: 14px;
-    color: var(--text);
-    letter-spacing: 8px;
-    margin-bottom: 2.5rem;
-    transition: all 0.35s;
-}
-
-#keyInput:focus, .input-field:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 15px var(--primary), 0 0 30px var(--primary-dim);
-    outline: none;
-}
-
-/* Buttonlar */
-#loginBtn, .big-btn, .btn-primary, .btn-accent, .btn-danger {
-    width: 100%;
-    padding: 1.5rem;
-    font-size: 1.4rem;
-    font-weight: 700;
-    border-radius: 14px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-transform: uppercase;
+    background: var(--primary);
     border: 2px solid var(--primary);
-}
-
-#loginBtn, .big-btn, .btn-primary, .btn-accent {
-    background: #000;
-    color: var(--primary);
-    box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary-dim);
-}
-
-.btn-danger {
-    background: #000;
-    color: var(--danger);
-    border-color: var(--danger);
-    box-shadow: 0 0 10px var(--danger);
-}
-
-#loginBtn:hover, .big-btn:hover, .btn-primary:hover, .btn-accent:hover, .btn-danger:hover {
-    box-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary-dim);
-    transform: scale(1.05);
-}
-
-/* Sayfalar ve başlıklar */
-.page { display: none; }
-.page.active { display: block; }
-
-.section-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 3.1rem;
-    font-weight: 900;
-    letter-spacing: 6px;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-align: center;
-    margin: 1.5rem 0 3rem;
-    text-shadow: var(--glow-strong);
-}
-
-/* Key display box */
-.key-display {
-    padding: 1.6rem;
-    font-size: 3rem;
-    letter-spacing: 12px;
-    text-align: center;
-    background: #000;
-    border: 2px dashed var(--primary);
-    border-radius: 14px;
-    color: var(--primary);
-    cursor: pointer;
-    transition: all 0.35s;
-    margin: 2.5rem 0;
-}
-
-.key-display:hover {
-    border-style: solid;
-    box-shadow: var(--glow-strong);
-    transform: scale(1.015);
-}
-
-/* Güvenlik ve bilgi kutuları */
-.security-notice, .security-info {
-    background: #000;
-    border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 1.5rem;
-    margin: 2rem auto;
-    max-width: 900px;
-    font-size: 1.05rem;
-    text-align: center;
     box-shadow: var(--glow);
+    margin-bottom: 1.5rem;
+    cursor: pointer;
 }
+
+/* Info / notice boxes */
+.security-notice, .security-info {
+    padding: 1.5rem;
+    background: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    box-shadow: var(--glow-strong);
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
 
 
 /* Responsive */
