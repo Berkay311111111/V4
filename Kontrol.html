@@ -52,8 +52,24 @@ body:not(.login-mode) .app-wrapper{display:flex;width:100%;height:100vh;}
 .copy-toast{position:fixed;top:30px;left:50%;transform:translateX(-50%) scale(0.9);background:var(--surface);border:2px solid var(--primary);color:var(--primary);padding:1rem 2.2rem;border-radius:14px;font-size:1.2rem;box-shadow:var(--glow-strong);opacity:0;z-index:9999;animation:toastInOut 1.6s ease forwards;text-shadow:var(--glow);}
 @keyframes toastInOut{0%{opacity:0;transform:translateX(-50%) translateY(-20px) scale(0.9);}15%{opacity:1;transform:translateX(-50%) translateY(0) scale(1);}85%{opacity:1;transform:translateX(-50%) scale(1);}100%{opacity:0;transform:translateX(-50%) translateY(-20px) scale(0.9);}}
 
-/* Security status top right single line */
-.security-status{position:fixed;top:12px;right:14px;font-size:0.75rem;padding:6px 10px;background:rgba(0,0,0,0.7);border:1px solid var(--primary);border-radius:8px;color:var(--primary);z-index:9999;box-shadow:0 0 12px rgba(255,255,0,0.6);white-space:nowrap;}
+.security-status {
+    position: fixed;
+    bottom: 12px;        /* Alt köşe */
+    right: 12px;         /* Sağ köşe */
+    font-size: 0.75rem;
+    padding: 6px 10px;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    color: var(--primary);
+    z-index: 9999;
+    box-shadow: 0 0 12px rgba(255,255,0,0.6);
+    display: flex;
+    flex-direction: column; /* Tek sütun */
+    gap: 2px;              /* Satırlar arası boşluk */
+    text-align: right;     /* Sağ hizalı */
+}
+
 
 /* Pages */
 .page{display:none;}
@@ -96,24 +112,16 @@ body:not(.login-mode) .app-wrapper{display:flex;width:100%;height:100vh;}
 </div>
 
 
-.security-status {
-    position: fixed;
-    bottom: 12px;        /* Alt köşe */
-    right: 12px;         /* Sağ köşe */
-    font-size: 0.75rem;
-    padding: 6px 10px;
-    background: rgba(0,0,0,0.7);
-    border: 1px solid var(--primary);
-    border-radius: 8px;
-    color: var(--primary);
-    z-index: 9999;
-    box-shadow: 0 0 12px rgba(255,255,0,0.6);
-    white-space: normal;  /* Satır kaymasını etkinleştir */
-    display: flex;
-    flex-direction: column; /* Tek sütun */
-    gap: 2px;              /* Satırlar arası boşluk */
-    text-align: right;     /* Sağ hizalı */
-}
+<!-- Security Status -->
+<div class="security-status" id="securityStatus">
+    <span>GÜVENLİK DURUMU: AKTİF</span>
+    <span>%100 server-side sistem</span>
+    <span>EXE'de iz bırakıcı kod yok</span>
+    <span>UID Bypass, Aimbot Head, Aimbot Drag</span>
+    <span>Sniper Scope, Sniper Macro, Fast Switch</span>
+    <span>No Recoil Glicht Fire, Chams x64, Reset Guest</span>
+</div>
+
 
 
 <script>
