@@ -58,7 +58,7 @@ body.login-mode {
 }
 
 .login-title {
-    font-size: 4rem;       /* biraz büyüttük */
+    font-size: 5rem;       /* biraz büyüttük */
     letter-spacing: 8px;
     font-weight: 900;
     margin-bottom: 3rem;
@@ -390,11 +390,11 @@ async function login() {
                 {label:"Ban Durumu", value:d.ban || "Yok"},
                 {label:"Oluşturma Tarihi", value:d.createTime || d.createDate || "-"}
             ].map(i => `
-                <div style="padding:1.3rem; background:rgba(255,26,77,0.08); border-radius:10px; margin:1.2rem 0; font-size:1.15rem;">
+                <div style="padding:1.3rem; background:var(--surface); border:2px solid var(--primary); border-radius:10px; margin:1.2rem 0; font-size:1.15rem;">
                     <strong>${i.label}:</strong> ${i.value}
                 </div>
             `).join('')}
-            <div id="extraInfo" style="margin-top:2.5rem; padding:1.5rem; background:rgba(255,26,77,0.09); border-radius:12px; font-size:1rem; white-space:pre-line;"></div>
+            <div id="extraInfo" style="margin-top:2.5rem; padding:1.5rem; background:var(--surface); border:2px solid var(--primary); border-radius:12px; font-size:1rem; white-space:pre-line;"></div>
         </div>
     </div>
 
