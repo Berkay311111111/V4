@@ -333,12 +333,34 @@ async function login(){
 }
 
 // Manual reset placeholder
-function manualReset(type){
-    const status=document.getElementById("manualResetStatus");
-    status.innerText="İşlem başlatılıyor...";
-    setTimeout(()=>status.innerText=`${type.toUpperCase()} HWID sıfırlandı!`,1000);
-}
+async function manualReset(type) {
+    const status = document.getElementById("manualResetStatus");
+    status.style.color = "var(--primary)";
+    status.innerText = "İşlem başlatılıyor...";
 
+    try {
+        const res = await fetchBypass(API_BASE + "/hwid-reset", {
+            method: "POST",
+            body: JSON.stringify({
+                key: loggedInKey, 
+                type: type        
+            })
+        });
+
+        const d = await res.json();
+
+        if (d.success) {
+            status.style.color = "#00ff00"; // Yeşil
+            status.innerText = `BAŞARILI: ${d.message} (Kalan Hak: ${2 - d.resetCount})`;
+        } else {
+            status.style.color = "#ff0000"; // Kırmızı
+            status.innerText = `HATA: ${d.message}`;
+        }
+    } catch (err) {
+        status.style.color = "#ff0000";
+        status.innerText = "Sunucu bağlantı hatası!";
+    }
+}
 // Star risk
 function calculateStars(){
     const now = Number(document.getElementById("starNow").value) || 0;
