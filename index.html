@@ -89,15 +89,15 @@ body, html {
 }
 /* LOGIN */
 #loginTab {
-  display: none; /* Varsayılan kapalı, JS ile açılıyor */
-  flex-direction: column;
+  height: 100vh;
+  width: 100%;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* 100% yerine viewport height kullan */
-  width: 100%;
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 999; /* En üstte dursun */
+  background: #000;
 }
 #loginTitle {
   font-size:48px;
