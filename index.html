@@ -35,7 +35,7 @@ body, html {
 #sidebar button {
   margin:10px 0;
   padding:12px;
-  background:rgba(40,40,0,0.7);
+  background:rgba(60,0,0,0.7);
   border:none;
   color:#fff;
   cursor:pointer;
@@ -43,12 +43,12 @@ body, html {
   transition:0.3s;
   text-align:left;
   font-weight:bold;
-  box-shadow: 0 0 5px rgba(255,255,0,0.8);
+  box-shadow: 0 0 5px rgba(255,0,0,0.8);
 }
 #sidebar button:hover {
   background:#ffff00; /* neon-yeşil */
   color:#000;
-  box-shadow: 0 0 15px rgba(255,255,0,0.9);
+  box-shadow: 0 0 15px rgba(255,0,0,0.9);
 }
 /* MAIN */
 #main {
@@ -64,7 +64,7 @@ body, html {
   color:#ffff00;
   text-align:center;
   margin-bottom:30px;
-  text-shadow: 0 0 12px rgba(255,255,0,0.9);
+  text-shadow: 0 0 12px rgba(255,0,0,0.9);
   position: relative; /* sticky yerine relative yaptık */
   top: auto; /* top değerini kaldır */
   padding:10px 0;
@@ -98,7 +98,7 @@ body, html {
   font-weight:bold;
   color:#ffff00;
   margin-bottom:30px;
-  text-shadow: 0 0 12px rgba(255,255,0,0.9);
+  text-shadow: 0 0 12px rgba(255,0,0,0.9);
   transition: color 0.5s, text-shadow 0.5s;
 }
 #loginForm {
@@ -136,14 +136,14 @@ body, html {
   padding:10px;
   background:rgba(20,10,0,0.5);
   border-radius:8px;
-  box-shadow: 0 0 15px rgba(255,255,0,0.8);
+  box-shadow: 0 0 15px rgba(255,0,0,0.8);
   transition: box-shadow 0.5s, border 0.5s;
   color:#fff;
 }
 .item a {
   padding:8px 15px;
   border-radius:6px;
-  background:#333300;
+  background:#660000;
   color:#fff;
   text-decoration:none;
   font-weight:bold;
@@ -167,7 +167,7 @@ body, html {
   font-weight:bold;
   z-index:20;
   transition: background 0.5s, color 0.5s;
-  box-shadow:0 0 10px rgba(255,255,0,0.9);
+  box-shadow:0 0 10px rgba(255,0,0,0.9);
 }
 </style>
 </head>
@@ -903,7 +903,7 @@ document.querySelectorAll('#sidebar button[data-tab]').forEach(b => b.onclick = 
 
 // PARTICLES
 function startParticles() {
-    const CONFIG = { PARTICLE_COUNT: 160, PARTICLE_COLOR: "255,255,0", MAX_DISTANCE: 150, MOUSE_RADIUS: 180, SPEED: 1.4, BACKGROUND_CLEAR: true };
+    const CONFIG = { PARTICLE_COUNT: 160, PARTICLE_COLOR: "255,0,0", MAX_DISTANCE: 150, MOUSE_RADIUS: 180, SPEED: 1.4, BACKGROUND_CLEAR: true };
     let canvas = document.createElement("canvas"), ctx, width, height, particles = [], mouse = { x: null, y: null };
     canvas.id = "particleCanvas"; canvas.style.position = "fixed"; canvas.style.top = 0; canvas.style.left = 0;
     canvas.style.width = "100%"; canvas.style.height = "100%"; canvas.style.zIndex = "0"; canvas.style.pointerEvents = "none";
@@ -989,6 +989,6 @@ document.addEventListener('contextmenu', function(event) {
 })();
 </script>
 
-<audio id="loginMusic" src="https://raw.githubusercontent.com/Berkay311111111/V4/main/bye-bye.mp3" preload="auto"></audio>
+<audio id="loginMusic" src="https://raw.githubusercontent.com/Berkay311111111/V4/main/espeda.mp3.mp3" preload="auto"></audio>
 </body>
 </html>
