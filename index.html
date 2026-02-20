@@ -75,17 +75,15 @@ body, html {
 /* TABLER */
 .tab {
   display: none;
-  width: 100%;
-  /* Taşmayı engellemek için */
-  overflow-x: hidden; 
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.4s ease;
 }
 .tab.active {
-  display: block;
+  display: flex; /* Flex kalsın ki login ortalansın */
+  flex-direction: column;
   opacity: 1;
   transform: translateY(0);
-  /* Sadece içerik bittiği yerde dursun istiyorsan */
-  height: auto; 
-  min-height: min-content;
 }
 /* LOGIN */
 #loginTab {
