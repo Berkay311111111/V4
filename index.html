@@ -52,11 +52,12 @@ body, html {
 }
 /* MAIN */
 #main {
-  flex:1;
-  padding:20px;
-  box-sizing:border-box;
-  overflow-y:auto;
-  position:relative;
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto; /* Kaydırma sadece burada olur */
+  height: 100vh;   /* Ekran boyuna sabitle */
+  position: relative;
 }
 #mainHeader {
   font-size:48px;
@@ -73,25 +74,30 @@ body, html {
 }
 /* TABLER */
 .tab {
-  display:none;
-  opacity:0;
-  transform:translateY(20px);
-  transition:0.4s ease;
+  display: none;
+  width: 100%;
+  /* Taşmayı engellemek için */
+  overflow-x: hidden; 
 }
 .tab.active {
-  display:block;
-  opacity:1;
-  transform:translateY(0);
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  /* Sadece içerik bittiği yerde dursun istiyorsan */
+  height: auto; 
+  min-height: min-content;
 }
 /* LOGIN */
 #loginTab {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  height:100%;
-  z-index:3;
-  background:transparent; /* login arkaplanı yok */
+  display: none; /* Varsayılan kapalı, JS ile açılıyor */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 100% yerine viewport height kullan */
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 #loginTitle {
   font-size:48px;
